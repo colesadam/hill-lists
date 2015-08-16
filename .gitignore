@@ -6,3 +6,6 @@
 .idea/dataSources.ids
 .DS_Store
 /build
+/proguard
+*.log
+app/build

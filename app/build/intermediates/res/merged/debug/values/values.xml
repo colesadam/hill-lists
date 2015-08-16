@@ -28,6 +28,11 @@
     <string name="donalds_desc">The Donalds are named after Percy Donald and his list of hills over 2000 feet in the Scottish Lowlands.</string>
     <string name="donatetext">The British Hills application is free. However the creation and maintenance of the application amount to many hours of work. I intend to keep British Hills both free and without advertising. However, if you like the app and wish to contribute towards it\'s maintenance, please consider making a small donation by clicking on the PayPal button below.</string>
     <string name="droidfuattrib">Parts of this application are based on the Droid-Fu library, used under the Apache License, Version 2.0</string>
+    <!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/build/generated/res/resValues/debug/values/generated.xml -->
+    <eat-comment/>
+    <string name="google_maps_api_key">0WkjGtrJFQkvRGDHGHPHmIYQWGTh48mvgixldDA</string>
+    <!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
     <string name="grahams_button">Grahams</string>
     <string name="grahams_desc">A Graham is a Scottish hill between 2000 and 2499 feet high with a drop of at least 150 metres on all sides.  They were originally referred to as Elsies, but have since been renamed after a compiler of a similar list, Fiona Graham.</string>
     <string name="hello">Hello World, Main!</string>
