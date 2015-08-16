@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_gravity="center_vertical"
+	android:layout_height="match_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_margin="10dip"
+	android:layout_height="match_parent" android:layout_gravity="center|center_vertical">
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_weight="26">
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_hewitts" android:id="@+id/hewitts"
+			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_nuttalls" android:id="@+id/nuttalls"
+			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_marilyns" android:id="@+id/marilyns"
+			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+
+	</LinearLayout>
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_weight="26">
+		<TextView   style="@style/ButtonText" android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_county_tops" android:id="@+id/county_tops"
+			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent" android:background="@drawable/button_text_blue"/>
+
+
+		<TextView   style="@style/ButtonText" android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_deweys" android:id="@+id/deweys"
+			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent" android:background="@drawable/button_text_blue"/>
+
+
+		<TextView   style="@style/ButtonText" android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_trail100" android:id="@+id/trail_100"
+			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent" android:background="@drawable/button_text_blue"/>
+
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_weight="20">
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_iomni" android:id="@+id/iomni"
+			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+
+	</LinearLayout>
+
+
+
+</LinearLayout>
+</LinearLayout>
+
+<!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/other_gb_hills_lists.xml -->

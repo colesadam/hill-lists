@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+<fragment
+    
+    android:name="uk.colessoft.android.hilllist.fragments.DisplayHillListFragment"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:id="@+id/hill_list_fragment"
+    android:layout_weight="50"
+    android:paddingRight="10dip">
+</fragment>
+<fragment
+    
+    android:name="uk.colessoft.android.hilllist.fragments.HillDetailFragment"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:id="@+id/hill_detail_fragment"
+    android:layout_weight="50">
+</fragment>
+</LinearLayout><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout-large-land/hill_list_fragment.xml -->

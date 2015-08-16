@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/values-v11/styles.xml -->
+    <eat-comment/>
+    <style name="MyTheme" parent="android:Theme.Holo">
+		<item name="android:windowNoTitle">false</item>
+		<item name="android:textViewStyle">@style/TextView</item>
+
+
+	</style>
+</resources>

@@ -1,0 +1,5 @@
+
+    <LinearLayout android:id="@+id/desc_munros_item_layout" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical">
+        <TextView android:text="@string/label_donalds" android:id="@+id/grp_label" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+        <TextView android:text="@string/donalds_desc" android:id="@+id/grp_desc" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+    </LinearLayout>

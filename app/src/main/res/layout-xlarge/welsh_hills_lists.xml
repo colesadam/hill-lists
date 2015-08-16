@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_gravity="center_vertical" android:gravity="center_vertical"
+	android:layout_height="300dp" android:layout_margin="80dp">
+
+	<LinearLayout android:orientation="horizontal"
+		android:gravity="center_vertical" android:layout_width="fill_parent"
+		android:layout_marginBottom="1dip" android:layout_height="0dp" android:layout_weight="60">
+		<LinearLayout android:orientation="vertical"
+			android:background="@drawable/button_text" android:layout_weight="33"
+			android:layout_width="0dp" android:layout_height="match_parent"
+			android:layout_margin="10dip" android:gravity="center_vertical">
+			<TextView   style="@style/ButtonText" android:layout_height="wrap_content"
+				android:layout_width="wrap_content" android:text="@string/label_hewitts"
+				android:id="@+id/welsh_hewitts" android:padding="5dip"
+				android:layout_margin="10dip" android:layout_gravity="center_horizontal" />
+
+		</LinearLayout>
+		<LinearLayout android:orientation="vertical"
+			android:background="@drawable/button_text" android:layout_weight="33"
+			android:layout_width="0dp" android:layout_height="match_parent"
+			android:layout_margin="10dip" android:layout_gravity="center_vertical"
+			android:gravity="center_vertical">
+
+			<TextView   style="@style/ButtonText" android:layout_height="wrap_content"
+				android:layout_width="wrap_content" android:text="@string/label_nuttalls"
+				android:id="@+id/welsh_nuttalls" android:padding="5dip"
+				android:layout_margin="10dip" android:layout_gravity="center_vertical|center_horizontal"
+				android:gravity="center_vertical" />
+
+		</LinearLayout>
+		<LinearLayout android:orientation="vertical" android:layout_margin="10dip"
+			android:background="@drawable/button_text" android:layout_weight="33"
+			android:layout_width="0dp" android:layout_height="match_parent"
+			android:gravity="center_vertical" >
+
+			<TextView   style="@style/ButtonText" android:layout_height="wrap_content"
+				android:layout_width="wrap_content" android:text="@string/label_marilyns"
+				android:id="@+id/welsh_marilyns" android:layout_margin="10dip" android:layout_gravity="center_horizontal" android:padding="2dp"/>
+
+		</LinearLayout>
+
+
+
+	</LinearLayout>
+
+
+
+	<LinearLayout android:orientation="vertical" 
+		android:layout_gravity="center_horizontal"
+		android:layout_weight="50" android:layout_height="0dp"
+		android:layout_width="match_parent" android:background="@drawable/button_text_blue" android:gravity="center" android:layout_margin="10dp">
+
+
+		<TextView   style="@style/ButtonText" android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:text="@string/label_allWelsh"
+			android:id="@+id/allwelsh" android:padding="5dip"
+			android:layout_margin="10dip" />
+
+
+
+
+
+	</LinearLayout>
+
+</LinearLayout>
+
+
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_preferences"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/menu_preferences"/>
+    <item
+        android:id="@+id/about_option"
+        android:icon="@drawable/ic_menu_descriptions"
+        android:title="About">
+    </item>
+
+</menu><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/menu/main_menu.xml -->

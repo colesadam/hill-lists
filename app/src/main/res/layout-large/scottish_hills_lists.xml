@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="match_parent" android:layout_gravity="center|center_vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="match_parent" android:layout_margin="20dip" android:layout_gravity="center|center_vertical">
+
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="26">
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_munros" android:id="@+id/munros"
+			android:padding="5dip" 
+			android:layout_height="match_parent" />
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_munro_tops" android:id="@+id/munro_tops"
+			android:padding="5dip" 
+			android:layout_height="match_parent" />
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_murdos" android:id="@+id/murdos"
+			android:padding="5dip" 
+			android:layout_height="match_parent" />
+
+	</LinearLayout>
+
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_weight="20">
+
+		<TextView   style="@style/ButtonText" android:layout_width="0dp"
+			android:layout_weight="50" android:text="@string/label_corbetts"
+			android:id="@+id/corbetts" android:padding="5dip"
+			 android:layout_height="match_parent"
+			android:background="@drawable/button_text_blue" />
+
+
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
+			android:layout_width="0dp" android:layout_weight="50"
+			android:text="@string/label_corbett_tops" android:id="@+id/corbett_tops"
+			android:padding="5dip" android:layout_height="match_parent"
+			 />
+
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_weight="20">
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_donalds" android:id="@+id/donalds"
+			 android:padding="5dip"
+			android:layout_height="match_parent" />
+
+
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			 android:text="@string/label_donald_tops"
+			android:id="@+id/donald_tops" android:padding="5dip"
+			android:layout_height="match_parent" />
+
+	</LinearLayout>
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_weight="20"
+		android:layout_height="0dp">
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_grahams" android:id="@+id/grahams"
+			 android:padding="5dip"
+			android:layout_height="match_parent" />
+
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
+			android:layout_width="0dp" android:layout_weight="33"
+			 android:text="@string/label_graham_tops"
+			android:id="@+id/graham_tops" android:padding="5dip"
+			android:layout_height="match_parent" />
+
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_weight="20">
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			android:text="@string/label_marilyns" android:id="@+id/scottish_marilyns"
+			 android:padding="5dip"
+			android:layout_height="match_parent" />
+
+		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
+			android:layout_width="0dp" android:layout_weight="33"
+			 android:text="@string/label_allScottish"
+			android:id="@+id/allscottish" android:padding="5dip"
+			android:layout_height="match_parent" />
+
+	</LinearLayout>
+
+
+</LinearLayout>
+
+</LinearLayout>

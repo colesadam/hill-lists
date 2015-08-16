@@ -1,0 +1,12 @@
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Main">
+		<CheckBoxPreference android:textColor="@color/white" android:title="@string/pref_metric_heights"
+			android:defaultValue="false" android:summary="Heights in Metres or Feet"
+			android:key="PREF_METRIC_HEIGHTS" />
+		<CheckBoxPreference android:textColor="@color/white" android:title="@string/pref_metric_distances"
+			android:defaultValue="false" android:summary="Distances in miles or kilometres"
+			android:key="PREF_METRIC_DISTANCES" />
+
+	</PreferenceCategory>
+</PreferenceScreen>

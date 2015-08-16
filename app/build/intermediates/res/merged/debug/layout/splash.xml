@@ -1,0 +1,61 @@
+
+<LinearLayout android:layout_width="match_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/linearLayout2" android:layout_height="match_parent" android:layout_gravity="center" android:gravity="center">
+
+	<LinearLayout android:id="@+id/LinearLayout01"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:gravity="center"
+		android:layout_gravity="center" android:background="@drawable/button_text_blue"
+		android:layout_margin="20dp" android:padding="10dp"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<TextView android:id="@+id/TextView01" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="British Hills"
+			android:textSize="36dip" android:gravity="center" android:textColor="@color/h_blue"
+			android:paddingBottom="30dp">
+
+
+		</TextView>
+		<LinearLayout android:layout_height="wrap_content"
+			android:layout_width="match_parent" android:id="@+id/linearLayout1"
+			android:layout_gravity="center" android:gravity="center">
+			<ImageView android:layout_height="wrap_content"
+				android:layout_width="wrap_content" android:id="@+id/imageView1"
+				android:src="@drawable/unitedkingdom"></ImageView>
+			<ImageView android:layout_height="wrap_content"
+				android:layout_width="wrap_content" android:id="@+id/imageView2"
+				android:src="@drawable/scotland"></ImageView>
+			<ImageView android:layout_height="wrap_content"
+				android:layout_width="wrap_content" android:id="@+id/imageView3"
+				android:src="@drawable/wales"></ImageView>
+			<ImageView android:layout_height="wrap_content"
+				android:layout_width="wrap_content" android:id="@+id/imageView4"
+				android:src="@drawable/england"></ImageView>
+		</LinearLayout>
+		<TextView android:id="@+id/TextView02" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="Data from the Database of British Hills v11.6"
+			android:paddingBottom="50dip" android:textSize="18dip"
+
+			android:gravity="center" android:textColor="@color/white">
+
+
+		</TextView>
+
+		<TextView android:id="@+id/TextView03" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/biber_website"
+			android:paddingBottom="50dip" android:textSize="18dip"
+			android:gravity="center" android:textColor="@color/white" />
+
+		<TextView android:id="@+id/TextView04" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/used_with_kind_permission_"
+			android:paddingBottom="10dip" android:textSize="18dip"
+			android:textColor="@color/white" android:gravity="center" />
+
+		<TextView android:id="@+id/TextView01" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/version_number"
+			android:paddingBottom="50dip" android:textSize="18dip"
+			android:textColor="@color/med_grey" android:gravity="center"
+			android:textStyle="bold" />
+
+
+	</LinearLayout>
+</LinearLayout><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/splash.xml -->

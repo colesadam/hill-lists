@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:id="@+id/many_map_rel"
+	android:layout_height="fill_parent">
+
+
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:paddingTop="10dip" android:paddingRight="10dip"
+		android:gravity="right" android:textColor="@color/pale_blue">
+		<ToggleButton android:id="@+id/satellite_button"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textOn="@string/satellite_button" android:textOff="@string/satellite_button" />
+	</LinearLayout>
+
+
+
+</RelativeLayout><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/many_hills_map.xml -->
