@@ -1,38 +1,6 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.objects.Business;
-import uk.colessoft.android.hilllist.objects.ScootXMLHandler;
-import uk.colessoft.android.hilllist.objects.Hill;
-import uk.colessoft.android.hilllist.objects.ScootBusinesses;
-import uk.colessoft.android.hilllist.objects.TinyHill;
-import uk.colessoft.android.hilllist.overlays.BusinessSearchOverlay;
-import uk.colessoft.android.hilllist.overlays.SingleMarkerOverlay;
-import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -47,11 +15,33 @@ import android.widget.Button;
 import android.widget.ToggleButton;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.objects.Business;
+import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.objects.ScootXMLHandler;
+import uk.colessoft.android.hilllist.objects.TinyHill;
+import uk.colessoft.android.hilllist.overlays.BusinessSearchOverlay;
+import uk.colessoft.android.hilllist.overlays.SingleMarkerOverlay;
 
 public class BusinessSearchMapActivity extends FragmentActivity implements
 		LoaderManager.LoaderCallbacks<ArrayList> {

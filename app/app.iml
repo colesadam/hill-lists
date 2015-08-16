@@ -91,5 +91,6 @@
     <orderEntry type="library" exported="" name="droid-fu-1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="1_droid-fu-1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.0.0" level="project" />
+    <orderEntry type="module" module-name="hilllistcore" />
   </component>
 </module>
