@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<com.google.android.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android" 
-	android:id="@+id/many_map_view" android:layout_width="fill_parent" android:layout_height="fill_parent" 
-	android:enabled="true" android:clickable="true" android:apiKey="@string/google_maps_api_key"
-	/> 
-<!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/mapview.xml -->
