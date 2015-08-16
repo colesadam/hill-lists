@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:stretchColumns="1">
+	<TableRow >
+	
+		<TextView   android:id="@+id/hillname_entry" android:width="200dip" android:textColor="@color/white"
+
+			android:layout_gravity="left" />
+
+		<TextView   android:id="@+id/height_entry" android:textColor="@color/white"
+
+			android:layout_gravity="right" />
+
+	</TableRow>
+	<TableRow >
+		<TextView   android:textSize="12dip" android:id="@+id/distance_entry" android:width="200dip"
+			 android:layout_gravity="left" 
+			android:layout_width="fill_parent" android:textColor="@color/mid_green" />
+			<TextView  ></TextView>
+	</TableRow>
+</TableLayout>

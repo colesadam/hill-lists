@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:showAsAction="ifRoom" android:id="@+id/menu_descriptions" android:icon="@drawable/ic_menu_descriptions"
+		android:title="@string/hill_groups_label" />
+
+
+</menu>

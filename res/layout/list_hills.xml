@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="wrap_content">
+	<LinearLayout android:visibility="gone" android:id="@+id/location_progress" 
+		android:orientation="horizontal" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+		android:gravity="center_vertical" android:background="@color/v_dark_grey"
+		android:padding="5dp">
+		<ProgressBar android:layout_height="wrap_content"
+			android:id="@+id/progressBar1" android:layout_width="wrap_content"
+			style="@android:style/Widget.ProgressBar.Small"></ProgressBar>
+		<TextView android:textColor="@color/red" android:layout_height="wrap_content" android:text="@string/refresh_location"
+			android:layout_width="match_parent" android:gravity="right"></TextView>
+	</LinearLayout>
+	<ListView android:id="@+id/myListView" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:textSize="15dip" />
+</LinearLayout>

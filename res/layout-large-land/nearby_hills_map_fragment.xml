@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:orientation="horizontal">
+	<fragment android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsFragment"
+		android:layout_width="0dp" android:layout_height="match_parent"
+		android:id="@+id/nearby_hills_fragment" android:layout_weight="50">
+	</fragment>
+	<fragment android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsMapFragment"
+		android:layout_width="150dp" android:layout_height="match_parent"
+		android:id="@+id/nearby_hills_map_fragment" android:layout_weight="50">
+	</fragment>
+</LinearLayout>

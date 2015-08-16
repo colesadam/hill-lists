@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:paddingBottom="0dip">
+	<LinearLayout android:id="@+id/ln_h"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:layout_width="wrap_content" android:padding="2dp"
+		android:layout_toLeftOf="@+id/check_hill_climbed"
+		android:layout_alignParentLeft="true">
+		<TextView android:id="@+id/name_entry" android:layout_height="wrap_content"
+			android:textColor="@color/white" android:layout_alignParentTop="true"
+			android:layout_alignParentLeft="true"
+			android:text="Cairn Toul - Stob Coire an t-Saighdeir"
+			android:layout_width="wrap_content" />
+		<TextView android:layout_width="wrap_content" android:id="@+id/number_entry"
+			android:textColor="@color/pale_blue" android:textSize="14dip"
+			android:layout_height="wrap_content" android:layout_below="@+id/check_hill_climbed"
+			android:text="3,625ft" />
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/rowid"
+			android:visibility="gone" />
+
+	</LinearLayout>
+
+
+
+	<CheckBox android:id="@+id/check_hill_climbed"
+		android:layout_height="wrap_content" android:layout_alignParentTop="true"
+		android:layout_alignParentRight="true" android:layout_width="wrap_content"
+		android:gravity="right|top" android:focusable="false" />
+
+
+
+
+
+</RelativeLayout>
