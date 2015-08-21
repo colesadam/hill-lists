@@ -1,35 +1,25 @@
 package uk.colessoft.android.hilllist.database;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.zip.ZipInputStream;
-
-import uk.colessoft.android.hilllist.objects.Hill;
-
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.database.sqlite.SQLiteStatement;
-import android.net.ParseException;
+import android.database.sqlite.SQLiteException;
 import android.os.Environment;
-import android.text.format.DateFormat;
 import android.util.Log;
-import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import uk.colessoft.android.hilllist.objects.Hill;
 
 public class HillDbAdapter {
 	private static final String DATABASE_NAME = "hill-list.db";
