@@ -1,5 +1,6 @@
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
+
 android {
     compileSdkVersion 'Google Inc.:Google APIs:17'
     buildToolsVersion "22.0.1"
@@ -35,6 +36,3 @@ dependencies {
     compile files('/Users/adam/AndroidStudioProjects/hill-list/lib/droid-fu-1.0-SNAPSHOT.jar')
 }
 
-sdkManager {
-    emulatorVersion 'android-17'
-}
