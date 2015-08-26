@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 'Google Inc.:Google APIs:17'
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.0"
 
     defaultConfig {
         applicationId "uk.colessoft.android.hilllist"
