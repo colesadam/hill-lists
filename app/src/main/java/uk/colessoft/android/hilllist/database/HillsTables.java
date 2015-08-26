@@ -2,6 +2,7 @@ package uk.colessoft.android.hilllist.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -10,8 +11,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class HillsTables {
+
+	private static Pattern pattern = Pattern.compile(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+
+	public static long start;
 
 	public static final String KEY_TITLE = "title";
 
@@ -297,6 +303,7 @@ public static final int myrddynDeweyCOLUMN=61;
 	public static void onCreate(SQLiteDatabase database, Context context) {
 		// create tables
 
+		start=System.nanoTime();
 		database.execSQL("PRAGMA foreign_keys=ON;");
 		database.execSQL(HILLS_CREATE);
 		database.execSQL(HILLTYPES_CREATE);
@@ -318,38 +325,48 @@ public static final int myrddynDeweyCOLUMN=61;
 
 			// read and ignore title row
 			reader.readLine();
-			StringBuffer insertHillsBuffer;
+
 			// read each line of text file
+
+			StringBuilder sqlBuilder= new StringBuilder("INSERT INTO " + HILLS_TABLE
+					+ " VALUES(");
+			for(int i=1;i<marilyn_COLUMN;i++)
+				sqlBuilder.append("?,");
+
+			String sql=sqlBuilder.toString();
+			sql=sql.substring(0,sql.length()-1);
+			sql=sql+")";
+
+			SQLiteStatement stmt=database.compileStatement(sql);
+			Log.d(HillsTables.class.getName(),
+					"####Starting insert of hills table after "+(System.nanoTime()-start)/1000000+" ms");
 			while ((line = reader.readLine()) != null) {
-				insertHillsBuffer = new StringBuffer();
-				insertHillsBuffer.append("INSERT INTO " + HILLS_TABLE
-						+ " VALUES (");
-				String[] lineArray = line
-						.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-				// StringTokenizer st = new StringTokenizer(line, ",");
+				profilingLog("Read next line");
+				String[] lineArray = pattern.split(line);
+				profilingLog("Split line");
 				// read lines up to marilyn column - the first type column
+
 				for (String entry : lineArray) {
 					if (col < marilyn_COLUMN) {
-
-						insertHillsBuffer.append("'" + entry.replace("'", "''")
-								+ "',");
-
+						stmt.bindString(col,entry.replace("'", "''"));
 					}
 					col++;
 
 				}
-				insertHillsBuffer.deleteCharAt(insertHillsBuffer.length() - 1);
+				profilingLog("Modified Columns");
+
 				col = 1;
-				insertHillsBuffer.append(")");
-				String statement = insertHillsBuffer.toString();
-				// Log.d(HillsTables.class.getName(),statement);
-				database.execSQL(statement);
+
+				stmt.executeInsert();
+				stmt.clearBindings();
+				profilingLog("Executed statement");
+
 
 			}
 			database.setTransactionSuccessful();
 			database.endTransaction();
 			Log.d(HillsTables.class.getName(),
-					"#################Finished inserting base hill information");
+					"####Finished inserting base hill information after "+(System.nanoTime()-start)/1000000+ "ms");
 		} catch (IOException e) {
 			Log.e(HillsTables.class.getName(),
 					"Failed to populate hills database table", e);
@@ -365,7 +382,7 @@ public static final int myrddynDeweyCOLUMN=61;
 		database.setTransactionSuccessful();
 		database.endTransaction();
 		Log.d(HillsTables.class.getName(),
-				"#################Finished inserting hill type information");
+				"#####Finished inserting hill type information after "+(System.nanoTime()-start)/1000000+" ms");
 
 		// Populate link table for hill types
 
@@ -387,14 +404,13 @@ public static final int myrddynDeweyCOLUMN=61;
 			StringTokenizer st;
 			while ((line = reader.readLine()) != null) {
 
-				String[] lineArray = line
-						.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+				String[] lineArray = pattern.split(line);
 				// read lines up to marilyn column - the first type column
-				StringBuffer insertHillTypesLinkBuffer;
+				StringBuilder insertHillTypesLinkBuilder;
 				hillId = lineArray[0];
 				for (int i = col-1; i < lineArray.length; i++) {
-					insertHillTypesLinkBuffer = new StringBuffer();
-					insertHillTypesLinkBuffer.append("INSERT INTO "
+					insertHillTypesLinkBuilder = new StringBuilder();
+					insertHillTypesLinkBuilder.append("INSERT INTO "
 							+ TYPES_LINK_TABLE + " VALUES (null,");
 					// get next token check to see if it applies
 					String nextToken = lineArray[i];
@@ -406,9 +422,9 @@ public static final int myrddynDeweyCOLUMN=61;
 						// we know that col should reference the correct
 						// value
 						// in the types table
-						insertHillTypesLinkBuffer
-								.append(hillId + "," + (i+1) + ")");
-						database.execSQL(insertHillTypesLinkBuffer.toString());
+						insertHillTypesLinkBuilder
+								.append(hillId + "," + (i + 1) + ")");
+						database.execSQL(insertHillTypesLinkBuilder.toString());
 
 					}
 				}
@@ -416,7 +432,7 @@ public static final int myrddynDeweyCOLUMN=61;
 			database.setTransactionSuccessful();
 			database.endTransaction();
 			Log.d(HillsTables.class.getName(),
-					"#################Finished inserting hill links information");
+					"####Finished inserting hill links information after "+(System.nanoTime()-start)/1000000+" ms");
 		} catch (IOException e) {
 			Log.e(HillsTables.class.getName(),
 					"Failed to populate link database table", e);
@@ -448,8 +464,14 @@ public static final int myrddynDeweyCOLUMN=61;
 			this.importance = importance;
 			this.description=description;
 		}
+
+
 		
 		
+	}
+	private static void profilingLog(String message){
+		Log.d(HillsTables.class.getName(),
+				"####"+message+" at "+(System.nanoTime()-start)+" nanoseconds");
 	}
 
 }
