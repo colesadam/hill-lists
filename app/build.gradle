@@ -34,3 +34,7 @@ android {
 dependencies {
     compile files('/Users/adam/AndroidStudioProjects/hill-list/lib/droid-fu-1.0-SNAPSHOT.jar')
 }
+
+sdkManager {
+    emulatorVersion 'android-17'
+}
