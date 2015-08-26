@@ -10,3 +10,4 @@
 /proguard
 *.log
 app/build
+local.properties
