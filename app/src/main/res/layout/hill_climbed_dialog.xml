@@ -12,7 +12,7 @@
 		android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 	<EditText  android:id="@+id/dialog_climbed_notes"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout
 		android:orientation="horizontal" android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<Button android:text="OK" android:id="@+id/Button_ok"

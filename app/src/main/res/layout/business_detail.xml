@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="wrap_content" android:layout_width="fill_parent">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout
 		android:orientation="vertical" android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 
-		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		<TableLayout
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:stretchColumns="1" android:layout_marginTop="10dip"
 			android:layout_marginLeft="2dip" android:layout_marginRight="2dip">
@@ -28,7 +28,7 @@
 
 		</TableLayout>
 
-		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		<TableLayout
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:stretchColumns="1" android:layout_marginTop="10dip"
 			android:layout_marginLeft="2dip" android:layout_marginRight="2dip">
@@ -51,7 +51,7 @@
 
 		</TableLayout>
 		
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			<LinearLayout
 				android:orientation="vertical" android:layout_width="fill_parent"
 				android:layout_height="wrap_content">
 
