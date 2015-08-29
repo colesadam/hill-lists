@@ -24,19 +24,21 @@ import static org.junit.Assert.assertTrue;
 @Config(constants = BuildConfig.class, sdk=21,manifest = "src/main/AndroidManifest.xml")
 public class DatabaseTest {
 
+    static HillsDatabaseHelper helper;
+    static SQLiteDatabase db;
+
     @Before
-    public void setUp() throws Exception {
+    public  void setUp() throws Exception {
         ShadowLog.stream = System.out;
-        //you other setup here
-    }
+        helper = new HillsDatabaseHelper(RuntimeEnvironment.application);
+
+        db = helper.getReadableDatabase();    }
 
     @Test
     public void databaseIsCreated() throws Exception {
 
         long start=System.nanoTime();
-        HillsDatabaseHelper helper = new HillsDatabaseHelper(RuntimeEnvironment.application);
 
-        SQLiteDatabase db = helper.getReadableDatabase();
 
         Log.d(DatabaseTest.class.getName(),"Took " + (System.nanoTime() - start)/1000000000 + " seconds");
         assertNotNull(db);
