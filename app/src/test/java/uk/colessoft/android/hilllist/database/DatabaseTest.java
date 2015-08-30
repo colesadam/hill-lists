@@ -44,15 +44,15 @@ public class DatabaseTest {
         assertNotNull(db);
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(HillsTables.HILLS_TABLE);
+        queryBuilder.setTables(TableNames.HILLS_TABLE);
 
-        String[] projection = { HillsTables.KEY_HILLNAME,
-                HillsTables.KEY_HEIGHTM, HillsTables.KEY_HEIGHTF,
-                HillsTables.HILLS_TABLE + "." + HillsTables.KEY_ID,
-                HillsTables.KEY_LATITUDE, HillsTables.KEY_LONGITUDE };
+        String[] projection = { ColumnKeys.KEY_HILLNAME,
+                ColumnKeys.KEY_HEIGHTM, ColumnKeys.KEY_HEIGHTF,
+                TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID,
+                ColumnKeys.KEY_LATITUDE, ColumnKeys.KEY_LONGITUDE };
 
         Cursor cursor = queryBuilder.query(db, projection, null,
-                null, null, null, HillsTables.KEY_HEIGHTF + " desc");
+                null, null, null, ColumnKeys.KEY_HEIGHTF + " desc");
 
         assertTrue(cursor.getCount() > 0);
         cursor.moveToFirst();
