@@ -294,8 +294,8 @@ public class HillsTables {
     }
 
     private static void profilingLog(String message) {
-        Log.d(HillsTables.class.getName(),
-                "####" + message + " at " + (System.nanoTime() - start) + " nanoseconds");
+      //  Log.d(HillsTables.class.getName(),
+        //        "####" + message + " at " + (System.nanoTime() - start) + " nanoseconds");
     }
 
 }
