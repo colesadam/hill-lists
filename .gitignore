@@ -1,13 +1,14 @@
-.gradle
-/local.properties
+gradle
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/datasources.xml
 .idea/dataSources.ids
 .idea/libraries
+.idea/runConfigurations.xml
 .DS_Store
-/build
+build
 /proguard
 *.log
 app/build
 local.properties
+.gradle
