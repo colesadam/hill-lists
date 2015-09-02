@@ -41,6 +41,7 @@ public class DatabaseTest {
 
 
         Log.d(DatabaseTest.class.getName(),"Took " + (System.nanoTime() - start)/1000000000 + " seconds");
+        System.out.println("#########Robo test ran");
         assertNotNull(db);
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();

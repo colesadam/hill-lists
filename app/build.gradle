@@ -22,13 +22,44 @@ android {
         }
     }
 
+    productFlavors {
+        unitTest // Creates a new scope which wraps only unit tests
+    }
+
+    sourceSets {
+        unitTest {
+            setRoot('src/test/java')
+        }
+    }
+
     dependencies {
 
         compile 'com.android.support:support-v4:23.0.0'
         compile project(':hilllistcore')
-        testCompile "org.robolectric:robolectric:3.0"
+        unitTestCompile ('org.robolectric:robolectric:3.0')
         compile fileTree(dir: 'libs', include: '*.jar')
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'LICENSE.txt'
+        exclude 'LICENSE'
+    }
+
+
 }
 
 
