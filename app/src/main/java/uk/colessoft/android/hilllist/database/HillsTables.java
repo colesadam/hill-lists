@@ -13,13 +13,20 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+
 public class HillsTables {
+
+    @Inject
+    public HillsTables(String hillsCsv){
+        this.hillsCsv=hillsCsv;
+    }
 
     private static Pattern pattern = Pattern.compile(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
     public static long start;
 
-    static final String HILLS_CSV = "DoBIH_v13_1.csv";
+    public String hillsCsv = "DoBIH_v13_1.csv";
 
     private static final SparseArray<TempHillClassification> hillTypesArray;
 
@@ -124,7 +131,7 @@ public class HillsTables {
             + " references " + TableNames.HILLS_TABLE + "(" + ColumnKeys.KEY_ID + ")," + ColumnKeys.KEY_TYPES_ID
             + " references " + TableNames.HILLTYPES_TABLE + "(" + ColumnKeys.KEY_ID + "))";
 
-    public static void onCreate(SQLiteDatabase database, Context context) {
+    public void onCreate(SQLiteDatabase database, Context context) {
         // create tables
 
         start = System.nanoTime();
@@ -137,7 +144,7 @@ public class HillsTables {
 
         InputStream is;
         try {
-            is = context.getAssets().open(HILLS_CSV);
+            is = context.getAssets().open(hillsCsv);
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
 
@@ -211,7 +218,7 @@ public class HillsTables {
         // Populate link table for hill types
 
         try {
-            is = context.getAssets().open(HILLS_CSV);
+            is = context.getAssets().open(hillsCsv);
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
 
@@ -264,7 +271,7 @@ public class HillsTables {
 
     }
 
-    public static void onUpgrade(SQLiteDatabase database, int oldVersion,
+    public void onUpgrade(SQLiteDatabase database, int oldVersion,
                                  int newVersion, Context context) {
         Log.w(HillsTables.class.getName(), "Upgrading database from version "
                 + oldVersion + " to " + newVersion

@@ -15,11 +15,13 @@ android {
     buildTypes {
         debug {
             resValue "string", "google_maps_api_key", "0WkjGtrJFQkvRGDHGHPHmIYQWGTh48mvgixldDA"
+            testCoverageEnabled true
         }
         release {
             resValue "string", "google_maps_api_key", "0WkjGtrJFQktBbukxd_AgW4VcOrha8cXTw6NjCQ"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            testCoverageEnabled true
         }
     }
 
@@ -32,6 +34,7 @@ android {
         compile fileTree(dir: 'libs', include: '*.jar')
         apt 'com.google.dagger:dagger-compiler:2.0.1'
         compile 'com.google.dagger:dagger:2.0.1'
+        provided 'org.glassfish:javax.annotation:10.0-b28'
 
     }
 
@@ -56,6 +59,46 @@ android {
 
 
 }
+
+apply plugin: 'jacoco'
+
+jacoco {
+    // Use this version for upper ones are broken (with Gradle)
+    // https://github.com/jacoco/jacoco/issues/288
+    toolVersion = "0.7.1.201405082137"
+}
+
+// Edit covered scope if needed
+// For my part I like having the coverage of both application and tests
+def coverageSourceDirs = [
+        '../app/src'
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: '../app/build/intermediates/classes',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('../app/build/jacoco/testUnitTestDebug.exec')
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+}
+//end Jacoco config
 
 
 
