@@ -14,11 +14,16 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
+import dagger.Component;
+import dagger.Module;
+import dagger.Provides;
+import uk.colessoft.android.hilllist.BritishHillsApplication;
 import uk.colessoft.android.hilllist.BuildConfig;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import uk.colessoft.android.hilllist.BritishHillsApplication.BritishHillsApplicationComponent;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk=21,manifest = "src/main/AndroidManifest.xml")
@@ -29,10 +34,24 @@ public class DatabaseTest {
 
     @Before
     public  void setUp() throws Exception {
+        BritishHillsApplication.BritishHillsApplicationComponent appComponent =DaggerDatabaseTest_TestAppComponent.create();
+        ((BritishHillsApplication) RuntimeEnvironment.application).setTestComponent(appComponent);
         ShadowLog.stream = System.out;
         helper = new HillsDatabaseHelper(RuntimeEnvironment.application);
 
         db = helper.getReadableDatabase();    }
+
+    @Component(modules = DatabaseModule.class)
+    interface TestAppComponent extends BritishHillsApplicationComponent {}
+
+    @Module
+    static class DatabaseModule {
+
+        @Provides
+        String provideCsvName() {
+            return "test_data.csv";
+        }
+    }
 
     @Test
     public void databaseIsCreated() throws Exception {
@@ -55,7 +74,7 @@ public class DatabaseTest {
         Cursor cursor = queryBuilder.query(db, projection, null,
                 null, null, null, ColumnKeys.KEY_HEIGHTF + " desc");
 
-        assertTrue(cursor.getCount() > 0);
+        assertTrue(cursor.getCount() == 9);
         cursor.moveToFirst();
         String hill1=cursor.getString(0);
         cursor.moveToNext();
