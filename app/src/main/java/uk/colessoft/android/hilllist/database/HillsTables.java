@@ -17,16 +17,12 @@ import javax.inject.Inject;
 
 public class HillsTables {
 
-    @Inject
-    public HillsTables(String hillsCsv){
-        this.hillsCsv=hillsCsv;
-    }
-
     private static Pattern pattern = Pattern.compile(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
     public static long start;
 
-    public String hillsCsv = "DoBIH_v13_1.csv";
+    @Inject
+    public String hillsCsv;
 
     private static final SparseArray<TempHillClassification> hillTypesArray;
 

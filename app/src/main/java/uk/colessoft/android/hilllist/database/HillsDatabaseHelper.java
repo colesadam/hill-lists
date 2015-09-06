@@ -5,9 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import uk.colessoft.android.hilllist.component.HillsTablesComponent;
-import uk.colessoft.android.hilllist.component.DaggerHillsTablesComponent;
-import uk.colessoft.android.hilllist.module.HillsTablesModule;
+import uk.colessoft.android.hilllist.BritishHillsApplication;
 
 
 public class HillsDatabaseHelper extends SQLiteOpenHelper {
@@ -21,8 +19,8 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
-        HillsTablesComponent component = DaggerHillsTablesComponent.builder().hillsTablesModule(new HillsTablesModule()).build();
-        hTables = component.provideHillsTables();
+        hTables = new HillsTables();
+        ((BritishHillsApplication)BritishHillsApplication.getAppContext()).component().inject(hTables);
 
     }
 
