@@ -65,10 +65,4 @@ public class DatabaseTest {
 
     }
 
-    @Test
-    public void purposefullyFailingTest() throws Exception{
-        assertNotSame("foo","foo");
-    }
-
-
 }
