@@ -82,6 +82,27 @@ public class DatabaseTest {
 
         assertNotSame(hill1, hill2);
 
+        queryBuilder.setTables(TableNames.HILLTYPES_TABLE + "   join "
+                + TableNames.TYPES_LINK_TABLE + " on  "
+                + TableNames.HILLTYPES_TABLE + "._id="
+                + TableNames.TYPES_LINK_TABLE + ".type_id  join "
+                + TableNames.HILLS_TABLE + " on "
+                + TableNames.TYPES_LINK_TABLE + ".hill_id="
+                + TableNames.HILLS_TABLE + "._id");
+        queryBuilder.setDistinct(true);
+
+        String[] projection2 = { ColumnKeys.KEY_HILLNAME,
+                ColumnKeys.KEY_HEIGHTM, ColumnKeys.KEY_HEIGHTF,
+                TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID,
+                ColumnKeys.KEY_LATITUDE, ColumnKeys.KEY_LONGITUDE};
+
+        cursor = queryBuilder.query(db,projection2,TableNames.HILLTYPES_TABLE+"._id=?",new String[]{"32"},null,null,null);
+        cursor.moveToFirst();
+        Log.d(DatabaseTest.class.getName(), cursor.getString(0));
+        cursor.moveToNext();
+        Log.d(DatabaseTest.class.getName(), cursor.getString(0));
+        assertTrue(cursor.getCount() == 9);
+
     }
 
 }
