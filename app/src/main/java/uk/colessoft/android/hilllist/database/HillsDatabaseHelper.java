@@ -12,7 +12,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "hill-list.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 1;
     private HillsTables hTables;
 
     public HillsDatabaseHelper(Context context) {

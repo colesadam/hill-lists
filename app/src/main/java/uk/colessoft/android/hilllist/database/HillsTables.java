@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import uk.colessoft.android.hilllist.BritishHillsApplication;
+
 public class HillsTables {
 
     private static Pattern pattern = Pattern.compile(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
@@ -25,6 +27,10 @@ public class HillsTables {
 
     public void onCreate(SQLiteDatabase database, Context context) {
 
+
+
+        ((BritishHillsApplication) BritishHillsApplication.getAppContext()).component().inject(this);
+        Log.d(HillsTables.class.getName(), "#################" + hillsCsv);
         start = System.nanoTime();
         database.execSQL("PRAGMA foreign_keys=ON;");
         database.execSQL(TableCreationStatements.HILLS_CREATE);
@@ -166,6 +172,8 @@ public class HillsTables {
 
     public void onUpgrade(SQLiteDatabase database, int oldVersion,
                                  int newVersion, Context context) {
+        ((BritishHillsApplication) BritishHillsApplication.getAppContext()).component().inject(this);
+        Log.d(HillsTables.class.getName(), "#################" + hillsCsv);
         Log.w(HillsTables.class.getName(), "Upgrading database from version "
                 + oldVersion + " to " + newVersion
                 + ", which will destroy all old hills data");

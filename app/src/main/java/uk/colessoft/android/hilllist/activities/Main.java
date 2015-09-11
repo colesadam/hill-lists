@@ -2,9 +2,11 @@ package uk.colessoft.android.hilllist.activities;
 
 import java.io.IOException;
 
+import uk.colessoft.android.hilllist.BritishHillsApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.R.layout;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -71,12 +73,15 @@ public class Main extends Activity {
 		setContentView(R.layout.menu);
 
 		HillDbAdapter dbAdapter = new HillDbAdapter(this);
+		HillsDatabaseHelper newDbHelper=new HillsDatabaseHelper(this);
+		newDbHelper.getReadableDatabase();
 		setTitle(getTitle() + " - Choose an Option");
 		boolean successful;
 		
 		try {
 
 			successful = dbAdapter.createDatabase();
+
 
 		} catch (IOException ioe) {
 
