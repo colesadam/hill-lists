@@ -215,14 +215,7 @@ public class HillDbAdapter {
 
 	public Cursor getHillGroup(String groupId, String countryClause,
 			String moreWhere, String orderBy, int filter) {
-		/*
-		 * if (countryClause != null) { countryClause = "AND " + countryClause +
-		 * " "; } else countryClause = ""; if ((moreWhere !=
-		 * null)&&(!"".equals(countryClause))) { moreWhere = "AND " + moreWhere;
-		 * } else if(moreWhere==null){ moreWhere=""; } String where; if
-		 * (groupId!=null) { where = groupId + "='1'" + countryClause +
-		 * moreWhere; } else where=countryClause+moreWhere;
-		 */
+
 		String where;
 
 		if (filter == 1)

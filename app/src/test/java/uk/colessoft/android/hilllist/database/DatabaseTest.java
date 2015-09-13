@@ -24,6 +24,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
+import static uk.colessoft.android.hilllist.database.ColumnKeys.*;
+import static uk.colessoft.android.hilllist.database.TableNames.*;
+
 import uk.colessoft.android.hilllist.BritishHillsApplication.BritishHillsApplicationComponent;
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -72,13 +75,13 @@ public class DatabaseTest {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(TableNames.HILLS_TABLE);
 
-        String[] projection = {ColumnKeys.KEY_HILLNAME,
-                ColumnKeys.KEY_HEIGHTM, ColumnKeys.KEY_HEIGHTF,
-                TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID,
-                ColumnKeys.KEY_LATITUDE, ColumnKeys.KEY_LONGITUDE};
+        String[] projection = {KEY_HILLNAME,
+                KEY_HEIGHTM, KEY_HEIGHTF,
+                HILLS_TABLE + "." + KEY_ID,
+                KEY_LATITUDE, KEY_LONGITUDE};
 
         Cursor cursor = queryBuilder.query(db, projection, null,
-                null, null, null, ColumnKeys.KEY_HEIGHTF + " desc");
+                null, null, null, KEY_HEIGHTF + " desc");
 
         assertTrue(cursor.getCount() == 9);
         cursor.moveToFirst();
@@ -94,28 +97,28 @@ public class DatabaseTest {
     public void linkTablesExist() {
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(TableNames.HILLTYPES_TABLE + "   join "
-                        + TableNames.TYPES_LINK_TABLE + " on  "
-                        + TableNames.HILLTYPES_TABLE + "._id="
-                        + TableNames.TYPES_LINK_TABLE + ".type_id  join "
-                        + TableNames.HILLS_TABLE + " on "
-                        + TableNames.TYPES_LINK_TABLE + ".hill_id="
-                        + TableNames.HILLS_TABLE + "._id"
+        queryBuilder.setTables(HILLTYPES_TABLE + " join "
+                        + TYPES_LINK_TABLE + " on  "
+                        + HILLTYPES_TABLE + "._id="
+                        + TYPES_LINK_TABLE + ".type_id  join "
+                        + HILLS_TABLE + " on "
+                        + TYPES_LINK_TABLE + ".hill_id="
+                        + HILLS_TABLE + "._id"
         );
 
-        String[] projection = {ColumnKeys.KEY_HILLNAME,
-                TableNames.HILLTYPES_TABLE + "." + ColumnKeys.KEY_TITLE,
-                ColumnKeys.KEY_HEIGHTM, ColumnKeys.KEY_HEIGHTF,
-                TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID,
-                ColumnKeys.KEY_LATITUDE, ColumnKeys.KEY_LONGITUDE};
+        String[] projection = {KEY_HILLNAME,
+                HILLTYPES_TABLE + "." + KEY_TITLE,
+                KEY_HEIGHTM, KEY_HEIGHTF,
+                HILLS_TABLE + "." + KEY_ID,
+                KEY_LATITUDE, KEY_LONGITUDE};
 
-        Cursor cursor = queryBuilder.query(db, projection, TableNames.HILLS_TABLE + "._id=?", new String[]{"1"}, null, null, null);
+        Cursor cursor = queryBuilder.query(db, projection, HILLS_TABLE + "._id=?", new String[]{"1"}, null, null, null);
         cursor.moveToFirst();
         Log.d(DatabaseTest.class.getName(), cursor.getString(0));
         Log.d(DatabaseTest.class.getName(), cursor.getString(1));
         assertTrue(cursor.getCount() == 5);
 
-        cursor = queryBuilder.query(db, projection, TableNames.HILLS_TABLE + "._id=? and " + TableNames.HILLTYPES_TABLE + "." + ColumnKeys.KEY_TITLE + "=?", new String[]{"1", "Marilyn"}, null, null, null);
+        cursor = queryBuilder.query(db, projection, HILLS_TABLE + "._id=? and " + HILLTYPES_TABLE + "." + KEY_TITLE + "=?", new String[]{"1", "Marilyn"}, null, null, null);
         assertTrue(cursor.getCount() == 1);
     }
 
