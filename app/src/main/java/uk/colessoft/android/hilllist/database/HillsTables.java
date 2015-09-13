@@ -27,8 +27,6 @@ public class HillsTables {
 
     public void onCreate(SQLiteDatabase database, Context context) {
 
-
-
         ((BritishHillsApplication) BritishHillsApplication.getAppContext()).component().inject(this);
         Log.d(HillsTables.class.getName(), "#################" + hillsCsv);
         start = System.nanoTime();
@@ -69,39 +67,61 @@ public class HillsTables {
 
             // read each line of text file
 
-            StringBuilder sqlBuilder = new StringBuilder("INSERT INTO " + TableNames.HILLS_TABLE
+            StringBuilder hillsInsertStringBuilder = new StringBuilder("INSERT INTO " + TableNames.HILLS_TABLE
                     + " VALUES(");
             for (int i = 1; i < ColumnNumbers.marilyn_COLUMN; i++)
-                sqlBuilder.append("?,");
+                hillsInsertStringBuilder.append("?,");
 
-            String sql = sqlBuilder.toString();
-            sql = sql.substring(0, sql.length() - 1);
-            sql = sql + ")";
+            String insertHillsSql = hillsInsertStringBuilder.toString();
+            insertHillsSql = insertHillsSql.substring(0, insertHillsSql.length() - 1);
+            insertHillsSql = insertHillsSql + ")";
 
-            SQLiteStatement stmt = database.compileStatement(sql);
+            SQLiteStatement insertHillsStatement = database.compileStatement(insertHillsSql);
+
+            StringBuilder insertHillTypesLinkBuilder;
+            insertHillTypesLinkBuilder = new StringBuilder();
+
+            insertHillTypesLinkBuilder.append("INSERT INTO "
+                    + TableNames.TYPES_LINK_TABLE + " VALUES (null,?,?)");
+            SQLiteStatement insertHillTypesStatement = database.compileStatement(insertHillTypesLinkBuilder.toString());
+
             Log.d(HillsTables.class.getName(),
                     "####Starting insert of hills table after " + (System.nanoTime() - start) / 1000000 + " ms");
             while ((line = reader.readLine()) != null) {
-                profilingLog("Read next line");
+
                 String[] lineArray = pattern.split(line);
-                profilingLog("Split line");
-                // read lines up to marilyn column - the first type column
+
 
                 for (String entry : lineArray) {
                     if (col < ColumnNumbers.marilyn_COLUMN) {
-                        stmt.bindString(col, entry.replace("'", "''"));
+                        insertHillsStatement.bindString(col, entry.replace("'", "''"));
+                    }else{
+
+
+                        // get next token check to see if it applies
+                        String nextToken = entry;
+
+                        // The csv column has 1 if the classification applies, 0
+                        // if
+                        // not.
+                        if ("1".equals(nextToken)) {
+                            // we know that col should reference the correct
+                            // value
+                            // in the types table
+                            insertHillTypesStatement.bindString(1,lineArray[0]);
+                            insertHillTypesStatement.bindString(2,String.valueOf(col));
+                            insertHillTypesStatement.executeInsert();
+                            insertHillTypesStatement.clearBindings();
+
+
+                        }
                     }
                     col++;
 
                 }
-                profilingLog("Modified Columns");
 
-                col = 1;
-
-                stmt.executeInsert();
-                stmt.clearBindings();
-                profilingLog("Executed statement");
-
+                insertHillsStatement.executeInsert();
+                insertHillsStatement.clearBindings();
 
             }
             database.setTransactionSuccessful();
@@ -113,60 +133,6 @@ public class HillsTables {
                     "Failed to populate hills database table", e);
         }
 
-
-        // Populate link table for hill types
-
-        try {
-            is = context.getAssets().open(hillsCsv);
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(is));
-
-            // read main hill data into hills table
-            database.beginTransaction();
-            String line = null;
-
-            int col = 32;
-
-            // read and ignore title row
-            reader.readLine();
-            // read each line of text file
-            String hillId = "";
-            StringTokenizer st;
-            while ((line = reader.readLine()) != null) {
-
-                String[] lineArray = pattern.split(line);
-                // read lines up to marilyn column - the first type column
-                StringBuilder insertHillTypesLinkBuilder;
-                hillId = lineArray[0];
-                for (int i = col - 1; i < lineArray.length; i++) {
-                    insertHillTypesLinkBuilder = new StringBuilder();
-                    insertHillTypesLinkBuilder.append("INSERT INTO "
-                            + TableNames.TYPES_LINK_TABLE + " VALUES (null,");
-                    // get next token check to see if it applies
-                    String nextToken = lineArray[i];
-
-                    // The csv column has 1 if the classification applies, 0
-                    // if
-                    // not.
-                    if ("1".equals(nextToken)) {
-                        // we know that col should reference the correct
-                        // value
-                        // in the types table
-                        insertHillTypesLinkBuilder
-                                .append(hillId + "," + (i + 1) + ")");
-                        database.execSQL(insertHillTypesLinkBuilder.toString());
-
-                    }
-                }
-            }
-            database.setTransactionSuccessful();
-            database.endTransaction();
-            Log.d(HillsTables.class.getName(),
-                    "####Finished inserting hill links information after " + (System.nanoTime() - start) / 1000000 + " ms");
-        } catch (IOException e) {
-            Log.e(HillsTables.class.getName(),
-                    "Failed to populate link database table", e);
-        }
 
     }
 
@@ -181,13 +147,6 @@ public class HillsTables {
         database.execSQL("DROP TABLE IF EXISTS " + TableNames.HILLTYPES_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + TableNames.TYPES_LINK_TABLE);
         onCreate(database, context);
-    }
-
-
-
-    private static void profilingLog(String message) {
-      //  Log.d(HillsTables.class.getName(),
-        //        "####" + message + " at " + (System.nanoTime() - start) + " nanoseconds");
     }
 
 }

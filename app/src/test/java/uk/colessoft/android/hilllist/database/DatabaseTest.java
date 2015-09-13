@@ -103,17 +103,20 @@ public class DatabaseTest {
                         + TableNames.HILLS_TABLE + "._id"
         );
 
-        String[] projection2 = {ColumnKeys.KEY_HILLNAME,
-                TableNames.HILLTYPES_TABLE + "." +ColumnKeys.KEY_TITLE,
+        String[] projection = {ColumnKeys.KEY_HILLNAME,
+                TableNames.HILLTYPES_TABLE + "." + ColumnKeys.KEY_TITLE,
                 ColumnKeys.KEY_HEIGHTM, ColumnKeys.KEY_HEIGHTF,
                 TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID,
                 ColumnKeys.KEY_LATITUDE, ColumnKeys.KEY_LONGITUDE};
 
-        Cursor cursor = queryBuilder.query(db, projection2, TableNames.HILLS_TABLE + "._id=?", new String[]{"1"}, null, null, null);
+        Cursor cursor = queryBuilder.query(db, projection, TableNames.HILLS_TABLE + "._id=?", new String[]{"1"}, null, null, null);
         cursor.moveToFirst();
         Log.d(DatabaseTest.class.getName(), cursor.getString(0));
-        Log.d(DatabaseTest.class.getName(),cursor.getString(1));
+        Log.d(DatabaseTest.class.getName(), cursor.getString(1));
         assertTrue(cursor.getCount() == 5);
+
+        cursor = queryBuilder.query(db, projection, TableNames.HILLS_TABLE + "._id=? and " + TableNames.HILLTYPES_TABLE + "." + ColumnKeys.KEY_TITLE + "=?", new String[]{"1", "Marilyn"}, null, null, null);
+        assertTrue(cursor.getCount() == 1);
     }
 
 }
