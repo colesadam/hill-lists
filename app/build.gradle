@@ -37,6 +37,8 @@ android {
         compile 'com.google.dagger:dagger:2.0.1'
         provided 'org.glassfish:javax.annotation:10.0-b28'
         testCompile "org.robolectric:shadows-support-v4:3.0"
+        compile 'com.hannesdorfmann.mosby:mvp:2.0.0'
+        compile 'com.hannesdorfmann.mosby:viewstate:2.0.0'
 
     }
 
