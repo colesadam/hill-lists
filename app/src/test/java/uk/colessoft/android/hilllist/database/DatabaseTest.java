@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,16 +19,22 @@ import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
 import uk.colessoft.android.hilllist.BritishHillsApplication;
+import uk.colessoft.android.hilllist.BritishHillsApplication.BritishHillsApplicationComponent;
 import uk.colessoft.android.hilllist.BuildConfig;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
-
-import static uk.colessoft.android.hilllist.database.ColumnKeys.*;
-import static uk.colessoft.android.hilllist.database.TableNames.*;
-
-import uk.colessoft.android.hilllist.BritishHillsApplication.BritishHillsApplicationComponent;
+import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_HEIGHTF;
+import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_HEIGHTM;
+import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_HILLNAME;
+import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_ID;
+import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_LATITUDE;
+import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_LONGITUDE;
+import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_TITLE;
+import static uk.colessoft.android.hilllist.database.TableNames.HILLS_TABLE;
+import static uk.colessoft.android.hilllist.database.TableNames.HILLTYPES_TABLE;
+import static uk.colessoft.android.hilllist.database.TableNames.TYPES_LINK_TABLE;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21, manifest = "src/main/AndroidManifest.xml")
@@ -47,6 +54,11 @@ public class DatabaseTest {
 
         db = helper.getReadableDatabase();
 
+    }
+
+    @After
+    public void cleanUp(){
+        helper.close();
     }
 
     @Component(modules = DatabaseModule.class)
@@ -88,8 +100,9 @@ public class DatabaseTest {
         String hill1 = cursor.getString(0);
         cursor.moveToNext();
         String hill2 = cursor.getString(0);
-
+        assertNotNull(hill2);
         assertNotSame(hill1, hill2);
+        cursor.close();
 
     }
 
@@ -120,6 +133,7 @@ public class DatabaseTest {
 
         cursor = queryBuilder.query(db, projection, HILLS_TABLE + "._id=? and " + HILLTYPES_TABLE + "." + KEY_TITLE + "=?", new String[]{"1", "Marilyn"}, null, null, null);
         assertTrue(cursor.getCount() == 1);
+        cursor.close();
     }
 
 }

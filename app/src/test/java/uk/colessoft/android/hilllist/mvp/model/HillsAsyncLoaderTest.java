@@ -1,6 +1,4 @@
-package uk.colessoft.android.hilllist.contentprovider;
-
-import android.database.Cursor;
+package uk.colessoft.android.hilllist.mvp.model;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,29 +7,31 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowContentResolver;
 import org.robolectric.shadows.ShadowLog;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
 import uk.colessoft.android.hilllist.BritishHillsApplication;
 import uk.colessoft.android.hilllist.BuildConfig;
-import uk.colessoft.android.hilllist.database.ColumnKeys;
-import uk.colessoft.android.hilllist.database.TableNames;
-
-import static org.junit.Assert.assertEquals;
+import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
+import uk.colessoft.android.hilllist.objects.Hill;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21, manifest = "src/main/AndroidManifest.xml")
-public class HillsContentProviderTest {
+public class HillsAsyncLoaderTest {
 
     private HillsContentProvider provider;
     private ShadowContentResolver scr;
 
     @Before
     public void setup() {
-        BritishHillsApplication.BritishHillsApplicationComponent appComponent = DaggerHillsContentProviderTest_TestAppComponent.create();
+        BritishHillsApplication.BritishHillsApplicationComponent appComponent = DaggerHillsAsyncLoaderTest_TestAppComponent.create();
         ((BritishHillsApplication) RuntimeEnvironment.application).setTestComponent(appComponent);
         ShadowLog.stream = System.out;
         scr = Shadows.shadowOf(RuntimeEnvironment.application.getContentResolver());
@@ -54,11 +54,14 @@ public class HillsContentProviderTest {
     }
 
     @Test
-    public void benChonzieExists() {
-        String[] projection = {ColumnKeys.KEY_HILLNAME};
-        Cursor cursor = scr.query(HillsContentProvider.HILLS_CONTENT_URI, projection, TableNames.HILLS_TABLE + "._id=?", new String[]{"1"}, null);
-        cursor.moveToFirst();
-        assertEquals(cursor.getString(0), "Ben Chonzie");
-        cursor.close();
+    public void loaderReturnsBenChonzie() throws Exception{
+        HillsAsyncLoader task = new HillsAsyncLoader(false,new HillsAsyncLoader.HillsLoaderListener(){
+            public void onSuccess(List<Hill> countries){}
+            public void onError(Exception e){};
+        },RuntimeEnvironment.application);
+        task.execute();
+        ShadowApplication.runBackgroundTasks();
+        List<Hill> hills = task.get(100, TimeUnit.MILLISECONDS);
+        assert(hills.size()==9);
     }
 }

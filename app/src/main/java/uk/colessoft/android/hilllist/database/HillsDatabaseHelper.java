@@ -20,7 +20,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
         hTables = new HillsTables();
-        ((BritishHillsApplication)BritishHillsApplication.getAppContext()).component().inject(hTables);
+       ((BritishHillsApplication)context).component().inject(hTables);
 
     }
 

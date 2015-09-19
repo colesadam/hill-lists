@@ -35,6 +35,13 @@ public class Hill {
 	private Date hillClimbed;
 	private String notes;
 
+	public Hill(int id,String hillname,float heightf,float heightm){
+		this._id=id;
+		this.hillname=hillname;
+		this.heightf=heightf;
+		this.heightm=heightm;
+	}
+
 	public Hill(int id, String section, String hillname, String section2,
 			String region, String area, float heightm, float heightf,
 			String map, String map25, String gridref, String colgridref,

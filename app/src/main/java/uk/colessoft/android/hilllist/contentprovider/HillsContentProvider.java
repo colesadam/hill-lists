@@ -12,9 +12,7 @@ import android.util.Log;
 
 import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.ColumnKeys;
-import uk.colessoft.android.hilllist.database.ColumnNumbers;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
-import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.database.TableNames;
 
 public class HillsContentProvider extends ContentProvider {
@@ -91,18 +89,18 @@ public class HillsContentProvider extends ContentProvider {
 		case HILLS:
 			// Set the table
 			queryBuilder.setTables(TableNames.HILLS_TABLE + " join "
-					+ TableNames.TYPES_LINK_TABLE + " on "
-					+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
-					+ ColumnKeys.KEY_HILL_ID + " left join "
-					+ BaggingTable.BAGGING_TABLE + " on "
-					+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
-					+ BaggingTable.BAGGING_TABLE + "." + ColumnKeys.KEY_ID
-					+ " join " + TableNames.HILLTYPES_TABLE + " on "
-					+ ColumnKeys.KEY_TYPES_ID + "="
-					+ TableNames.HILLTYPES_TABLE + "." + ColumnKeys.KEY_ID
+							+ TableNames.TYPES_LINK_TABLE + " on "
+							+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
+							+ ColumnKeys.KEY_HILL_ID + " left join "
+							+ BaggingTable.BAGGING_TABLE + " on "
+							+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
+							+ BaggingTable.BAGGING_TABLE + "." + ColumnKeys.KEY_ID
+							+ " join " + TableNames.HILLTYPES_TABLE + " on "
+							+ ColumnKeys.KEY_TYPES_ID + "="
+							+ TableNames.HILLTYPES_TABLE + "." + ColumnKeys.KEY_ID
 
 			);
-			queryBuilder.setDistinct(true);
+			//queryBuilder.setDistinct(true);
 			break;
 		case HILL_ID:
 			// Set the table

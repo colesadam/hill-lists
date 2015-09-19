@@ -6,6 +6,11 @@
 		 android:restoreAnyVersion="false"
 		android:restoreNeedsApplication="true" android:theme="@style/MyTheme"
 		android:testOnly="false">
+
+		<provider
+			android:name="uk.colessoft.android.hilllist.contentprovider.HillsContentProvider"
+			android:authorities="uk.colessoft.android.hilllist.contentprovider" >
+		</provider>
 		
 		<activity  android:label="@string/app_name"
 			android:name=".activities.SplashScreenActivity">

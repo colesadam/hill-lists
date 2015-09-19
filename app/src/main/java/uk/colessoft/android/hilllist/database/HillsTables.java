@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -60,7 +59,7 @@ public class HillsTables {
             database.beginTransaction();
             String line = null;
 
-            int col = 1;
+
 
             // read and ignore title row
             reader.readLine();
@@ -88,7 +87,7 @@ public class HillsTables {
             Log.d(HillsTables.class.getName(),
                     "####Starting insert of hills table after " + (System.nanoTime() - start) / 1000000 + " ms");
             while ((line = reader.readLine()) != null) {
-
+                int col = 1;
                 String[] lineArray = pattern.split(line);
 
 
@@ -119,7 +118,6 @@ public class HillsTables {
                     col++;
 
                 }
-
                 insertHillsStatement.executeInsert();
                 insertHillsStatement.clearBindings();
 

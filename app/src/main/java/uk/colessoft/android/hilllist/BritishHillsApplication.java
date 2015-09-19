@@ -19,8 +19,14 @@ public class BritishHillsApplication extends Application{
 
     @Override
     public void onCreate() {
+
         super.onCreate();
         BritishHillsApplication.context=getApplicationContext();
+
+    }
+
+    public BritishHillsApplication(){
+        super();
         mAppComponent = DaggerBritishHillsApplication_BritishHillsApplicationComponent.create();
     }
 
@@ -31,6 +37,7 @@ public class BritishHillsApplication extends Application{
     public BritishHillsApplicationComponent component() {
         return mAppComponent;
     }
+
 
     @Singleton
     @Component(modules = DatabaseModule.class)
