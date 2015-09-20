@@ -40,7 +40,7 @@ public HillsAdapter(Context context){
     private List<Hill> hills;
 
 
-    public void setHills(List<Hill> countries) {
+    public void setHills(List<Hill> hills) {
         this.hills = hills;
     }
 

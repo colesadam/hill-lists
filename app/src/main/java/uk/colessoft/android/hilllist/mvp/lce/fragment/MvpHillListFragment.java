@@ -44,6 +44,7 @@ public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List
         adapter = new HillsAdapter(getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
+
         loadData(false);
     }
 
@@ -60,7 +61,8 @@ public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List
 
     @Override
     public HillsPresenter createPresenter() {
-        return new SimpleHillsPresenter(this.getContext());
+
+        return new SimpleHillsPresenter(this.getContext(),getActivity().getIntent().getExtras());
     }
 
     @Override
