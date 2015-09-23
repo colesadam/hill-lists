@@ -1,8 +1,11 @@
 package uk.colessoft.android.hilllist.mvp;
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hannesdorfmann.annotatedadapter.annotation.Field;
 import com.hannesdorfmann.annotatedadapter.annotation.ViewField;
 import com.hannesdorfmann.annotatedadapter.annotation.ViewType;
 import com.hannesdorfmann.annotatedadapter.support.recyclerview.SupportAnnotatedAdapter;
@@ -17,6 +20,17 @@ public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapte
 public HillsAdapter(Context context){
     super(context);
 }
+
+    static class HillClickListener implements View.OnClickListener {
+
+        public int position;
+
+        public void onClick(View v){
+            listener.positionClicked(position);
+        }
+    }
+
+    static RecyclerItemViewClick listener;
 
     @ViewType(
             layout = R.layout.simple_hill_item,
@@ -35,6 +49,12 @@ public HillsAdapter(Context context){
                             type = TextView.class)
 
 
+            },
+            fields = {
+                    @Field(
+                            type = HillClickListener.class,
+                            name = "clickListener"
+                    )
             }) public final int VIEWTYPE_HILL = 0;
 
     private List<Hill> hills;
@@ -52,11 +72,17 @@ public HillsAdapter(Context context){
         return hills == null ? 0 : hills.size();
     }
 
+
     @Override
     public void bindViewHolder(HillsAdapterHolders.VIEWTYPE_HILLViewHolder vh, int position) {
         vh.name.setText(hills.get(position).getHillname());
         vh.height.setText(String.valueOf(hills.get(position).getHeightf()));
         vh.id.setText(String.valueOf(hills.get(position).get_id()));
+        vh.clickListener.position =  position;
+    }
+
+    public interface RecyclerItemViewClick{
+        void positionClicked(int position);
     }
 
 
