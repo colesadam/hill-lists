@@ -2,7 +2,6 @@ package uk.colessoft.android.hilllist.mvp;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hannesdorfmann.annotatedadapter.annotation.Field;
@@ -17,20 +16,23 @@ import uk.colessoft.android.hilllist.objects.Hill;
 
 public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapterBinder{
 
-public HillsAdapter(Context context){
+public HillsAdapter(Context context,RecyclerItemViewClick inListener){
     super(context);
+    hillSelectedListener=inListener;
 }
 
     static class HillClickListener implements View.OnClickListener {
 
-        public int position;
+        public int id;
 
         public void onClick(View v){
-            listener.positionClicked(position);
+
+
+            hillSelectedListener.hillClicked(id);
         }
     }
 
-    static RecyclerItemViewClick listener;
+    static RecyclerItemViewClick hillSelectedListener;
 
     @ViewType(
             layout = R.layout.simple_hill_item,
@@ -78,11 +80,14 @@ public HillsAdapter(Context context){
         vh.name.setText(hills.get(position).getHillname());
         vh.height.setText(String.valueOf(hills.get(position).getHeightf()));
         vh.id.setText(String.valueOf(hills.get(position).get_id()));
-        vh.clickListener.position =  position;
+
+        vh.clickListener = new HillClickListener();
+        vh.itemView.setOnClickListener(vh.clickListener);
+        vh.clickListener.id=hills.get(position).get_id();
     }
 
     public interface RecyclerItemViewClick{
-        void positionClicked(int position);
+        void hillClicked(int id);
     }
 
 

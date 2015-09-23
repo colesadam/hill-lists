@@ -1,17 +1,15 @@
 package uk.colessoft.android.hilllist.activities;
 
-import uk.colessoft.android.hilllist.R;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
+
+import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
+import uk.colessoft.android.hilllist.mvp.lce.fragment.MvpHillListFragment;
 
 public class DisplayHillListFragmentActivity extends FragmentActivity implements
-		DisplayHillListFragment.OnHillSelectedListener {
+		MvpHillListFragment.OnHillSelectedListener {
 	/** Called when the activity is first created. */
 
 	boolean useMetricHeights;
