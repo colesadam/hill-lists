@@ -1,6 +1,5 @@
 package uk.colessoft.android.hilllist.mvp.lce.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,27 +23,11 @@ import uk.colessoft.android.hilllist.mvp.lce.SimpleHillsPresenter;
 import uk.colessoft.android.hilllist.objects.Hill;
 
 public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List<Hill>, HillsView, HillsPresenter>
-        implements HillsView ,SwipeRefreshLayout.OnRefreshListener, HillsAdapter.RecyclerItemViewClick{
+        implements HillsView ,SwipeRefreshLayout.OnRefreshListener{
 
     @Bind(R.id.recyclerView)RecyclerView recyclerView;
 
     HillsAdapter adapter;
-    private OnHillSelectedListener hillSelectedListener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            hillSelectedListener = (OnHillSelectedListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnHillSelectedListener");
-        }
-    }
-
-    public interface OnHillSelectedListener {
-        public void onHillSelected(int rowid);
-    }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
@@ -58,7 +41,7 @@ public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List
         contentView.setOnRefreshListener(this);
 
         // Setup recycler view
-        adapter = new HillsAdapter(getActivity(),this);
+        adapter = new HillsAdapter(getActivity(), (HillsAdapter.RecyclerItemViewClick) getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 
@@ -108,8 +91,4 @@ public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List
         contentView.setRefreshing(false);
     }
 
-    @Override
-    public void hillClicked(int id) {
-        hillSelectedListener.onHillSelected(id);
-    }
 }

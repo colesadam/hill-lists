@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentActivity;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
-import uk.colessoft.android.hilllist.mvp.lce.fragment.MvpHillListFragment;
+import uk.colessoft.android.hilllist.mvp.HillsAdapter;
 
 public class DisplayHillListFragmentActivity extends FragmentActivity implements
-		MvpHillListFragment.OnHillSelectedListener {
+		HillsAdapter.RecyclerItemViewClick {
 	/** Called when the activity is first created. */
 
 	boolean useMetricHeights;
@@ -25,21 +25,18 @@ public class DisplayHillListFragmentActivity extends FragmentActivity implements
 	}
 
 
-
-	public void onHillSelected(int rowid) {
-
+	@Override
+	public void hillClicked(int id) {
 		HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.hill_detail_fragment);
 
 		if (fragment == null || !fragment.isInLayout()) {
 			Intent intent = new Intent(this, HillDetailFragmentActivity.class);
-			intent.putExtra("rowid", rowid);
+			intent.putExtra("rowid", id);
 			startActivity(intent);
 		} else {
 
-			fragment.updateHill(rowid);
+			fragment.updateHill(id);
 		}
-
 	}
-
 }
