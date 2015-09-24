@@ -15,6 +15,8 @@ android {
         debug {
             resValue "string", "google_maps_api_key", "0WkjGtrJFQkvRGDHGHPHmIYQWGTh48mvgixldDA"
             testCoverageEnabled true
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG  '
         }
         release {
             resValue "string", "google_maps_api_key", "0WkjGtrJFQktBbukxd_AgW4VcOrha8cXTw6NjCQ"

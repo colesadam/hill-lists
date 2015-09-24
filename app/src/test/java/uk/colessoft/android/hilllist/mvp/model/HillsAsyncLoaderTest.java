@@ -1,5 +1,7 @@
 package uk.colessoft.android.hilllist.mvp.model;
 
+import android.os.Bundle;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,7 @@ import dagger.Module;
 import dagger.Provides;
 import uk.colessoft.android.hilllist.BritishHillsApplication;
 import uk.colessoft.android.hilllist.BuildConfig;
+import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
 import uk.colessoft.android.hilllist.objects.Hill;
 
@@ -57,11 +60,17 @@ public class HillsAsyncLoaderTest {
     public void loaderReturnsBenChonzie() throws Exception{
         HillsAsyncLoader task = new HillsAsyncLoader(false,new HillsAsyncLoader.HillsLoaderListener(){
             public void onSuccess(List<Hill> countries){}
-            public void onError(Exception e){};
+            public void onError(Exception e){
+                e.printStackTrace();
+            };
         },RuntimeEnvironment.application);
-        task.execute();
+        Bundle bundle = new Bundle();
+        bundle.putString("hilltype","Munro");
+        bundle.putInt("country", Main.SCOTLAND);
+        task.execute(bundle);
         ShadowApplication.runBackgroundTasks();
         List<Hill> hills = task.get(100, TimeUnit.MILLISECONDS);
-        assert(hills.size()==9);
+        assert(hills.size()==1);
+        assert(hills.get(0).getHillname().equals("Ben Chonzie"));
     }
 }
