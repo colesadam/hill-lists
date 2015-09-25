@@ -12,29 +12,36 @@ import dagger.Provides;
 import uk.colessoft.android.hilllist.database.HillsTables;
 
 
-public class BritishHillsApplication extends Application{
+public class BHApp extends Application{
 
-    private BritishHillsApplicationComponent mAppComponent;
+    private BHAppComponent mAppComponent;
     private static Context context;
 
     @Override
     public void onCreate() {
+
         super.onCreate();
-        BritishHillsApplication.context=getApplicationContext();
-        mAppComponent = DaggerBritishHillsApplication_BritishHillsApplicationComponent.create();
+        BHApp.context=getApplicationContext();
+
+    }
+
+    public BHApp(){
+        super();
+        mAppComponent = DaggerBHApp_BHAppComponent.create();
     }
 
     public static Context getAppContext() {
-        return BritishHillsApplication.context;
+        return BHApp.context;
     }
 
-    public BritishHillsApplicationComponent component() {
+    public BHAppComponent component() {
         return mAppComponent;
     }
 
+
     @Singleton
     @Component(modules = DatabaseModule.class)
-    public interface BritishHillsApplicationComponent {
+    public interface BHAppComponent {
 
         void inject(HillsTables hillsTables);
     }
@@ -52,7 +59,7 @@ public class BritishHillsApplication extends Application{
      * Visible only for testing purposes.
      */
 // @VisibleForTesting
-    public void setTestComponent(BritishHillsApplicationComponent appComponent) {
+    public void setTestComponent(BHAppComponent appComponent) {
         mAppComponent = appComponent;
     }
 }

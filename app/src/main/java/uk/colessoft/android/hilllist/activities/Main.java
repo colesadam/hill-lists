@@ -1,31 +1,23 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.io.IOException;
-
-import uk.colessoft.android.hilllist.BritishHillsApplication;
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.R.layout;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DatabaseUtils;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class Main extends Activity {
 
@@ -73,8 +65,8 @@ public class Main extends Activity {
 		setContentView(R.layout.menu);
 
 		HillDbAdapter dbAdapter = new HillDbAdapter(this);
-		HillsDatabaseHelper newDbHelper=new HillsDatabaseHelper(this);
-		newDbHelper.getReadableDatabase();
+		//HillsDatabaseHelper newDbHelper=new HillsDatabaseHelper(this);
+		//newDbHelper.getReadableDatabase();
 		setTitle(getTitle() + " - Choose an Option");
 		boolean successful;
 		

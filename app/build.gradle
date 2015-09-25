@@ -1,10 +1,9 @@
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
-
 android {
-    compileSdkVersion 'Google Inc.:Google APIs:17'
-    buildToolsVersion "23.0.0"
+    compileSdkVersion 'Google Inc.:Google APIs:23'
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "uk.colessoft.android.hilllist"
@@ -16,6 +15,8 @@ android {
         debug {
             resValue "string", "google_maps_api_key", "0WkjGtrJFQkvRGDHGHPHmIYQWGTh48mvgixldDA"
             testCoverageEnabled true
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG  '
         }
         release {
             resValue "string", "google_maps_api_key", "0WkjGtrJFQktBbukxd_AgW4VcOrha8cXTw6NjCQ"
@@ -28,21 +29,31 @@ android {
 
     dependencies {
 
-        compile 'com.android.support:support-v4:23.0.0'
+        compile 'com.android.support:support-v4:23.0.1'
         compile project(':hilllistcore')
-        testCompile ('org.robolectric:robolectric:3.0')
         compile fileTree(dir: 'libs', include: '*.jar')
-        apt 'com.google.dagger:dagger-compiler:2.0.1'
-        testCompile 'com.google.dagger:dagger-compiler:2.0.1'
         compile 'com.google.dagger:dagger:2.0.1'
+        compile 'com.hannesdorfmann.mosby:mvp:2.0.0'
+        compile 'com.hannesdorfmann.mosby:viewstate:2.0.0'
+        compile 'com.android.support:recyclerview-v7:23.0.1'
+        compile 'com.android.support:appcompat-v7:23.0.1'
+        apt 'com.google.dagger:dagger-compiler:2.0.1'
+        apt 'com.hannesdorfmann.annotatedadapter:processor:1.1.1'
+        compile 'com.hannesdorfmann.annotatedadapter:annotation:1.1.1'
+        compile 'com.hannesdorfmann.annotatedadapter:support-recyclerview:1.1.1'
         provided 'org.glassfish:javax.annotation:10.0-b28'
+        compile 'javax.annotation:javax.annotation-api:1.2'
         testCompile "org.robolectric:shadows-support-v4:3.0"
+        testCompile 'com.google.dagger:dagger-compiler:2.0.1'
+        testCompile('org.robolectric:robolectric:3.0')
+
+        compile 'com.jakewharton:butterknife:7.0.1'
 
     }
 
     lintOptions {
         abortOnError false
-        disable 'TypographyFractions','TypographyQuotes'
+        disable 'TypographyFractions', 'TypographyQuotes'
     }
 
     packagingOptions {
@@ -62,21 +73,17 @@ android {
 
 
 }
-
 apply plugin: 'jacoco'
-
 jacoco {
     // Use this version for upper ones are broken (with Gradle)
     // https://github.com/jacoco/jacoco/issues/288
     toolVersion = "0.7.1.201405082137"
 }
-
 // Edit covered scope if needed
 // For my part I like having the coverage of both application and tests
 def coverageSourceDirs = [
         '../app/src'
 ]
-
 task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
     group = "Reporting"
 
@@ -102,8 +109,5 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
 
 }
 //end Jacoco config
-
-
-
-
-
+dependencies {
+}

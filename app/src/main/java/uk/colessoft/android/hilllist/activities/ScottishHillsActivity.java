@@ -115,19 +115,19 @@ public class ScottishHillsActivity extends Activity {
 		});
 		munros.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_munro, "Munros");
+				showHills("Munro", "Munros");
 			}
 		});
 
 		munro_tops.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_munroTop, "Munro Tops");
+				showHills("Munro Top", "Munro Tops");
 			}
 		});
 
 		murdos.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_murdo, "Murdos");
+				showHills("Murdo", "Murdos");
 			}
 		});
 
