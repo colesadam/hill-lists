@@ -1,11 +1,14 @@
 package uk.colessoft.android.hilllist.mvp.lce.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,10 +37,15 @@ public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstance) {
         super.onViewCreated(view, savedInstance);
         ButterKnife.bind(this, view);
-        // Setup contentView == SwipeRefreshView
+
         contentView.setOnRefreshListener(this);
 
         // Setup recycler view
@@ -72,6 +80,12 @@ public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void loadData(boolean pullToRefresh) {
         presenter.loadHills(pullToRefresh);
 
@@ -89,6 +103,11 @@ public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List
     @Override public void showError(Throwable e, boolean pullToRefresh) {
         super.showError(e, pullToRefresh);
         contentView.setRefreshing(false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.hill_lists_menu, menu);
     }
 
 }

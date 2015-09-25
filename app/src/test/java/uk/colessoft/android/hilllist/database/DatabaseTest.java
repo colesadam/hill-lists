@@ -18,10 +18,10 @@ import org.robolectric.shadows.ShadowLog;
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
-import uk.colessoft.android.hilllist.BritishHillsApplication;
-import uk.colessoft.android.hilllist.BritishHillsApplication.BritishHillsApplicationComponent;
+import uk.colessoft.android.hilllist.BHApp;
 import uk.colessoft.android.hilllist.BuildConfig;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
@@ -45,8 +45,8 @@ public class DatabaseTest {
 
     @Before
     public void setUp() throws Exception {
-        BritishHillsApplication.BritishHillsApplicationComponent appComponent = DaggerDatabaseTest_TestAppComponent.create();
-        ((BritishHillsApplication) RuntimeEnvironment.application).setTestComponent(appComponent);
+        BHApp.BHAppComponent appComponent = DaggerDatabaseTest_TestAppComponent.create();
+        ((BHApp) RuntimeEnvironment.application).setTestComponent(appComponent);
         ShadowLog.stream = System.out;
 
         Log.d(this.toString(), "helper was null");
@@ -62,7 +62,7 @@ public class DatabaseTest {
     }
 
     @Component(modules = DatabaseModule.class)
-    interface TestAppComponent extends BritishHillsApplicationComponent {
+    interface TestAppComponent extends BHApp.BHAppComponent {
     }
 
     @Module
@@ -95,13 +95,38 @@ public class DatabaseTest {
         Cursor cursor = queryBuilder.query(db, projection, null,
                 null, null, null, KEY_HEIGHTF + " desc");
 
-        assertTrue(cursor.getCount() == 9);
+        assertTrue(cursor.getCount() == 10);
         cursor.moveToFirst();
         String hill1 = cursor.getString(0);
         cursor.moveToNext();
         String hill2 = cursor.getString(0);
         assertNotNull(hill2);
         assertNotSame(hill1, hill2);
+        cursor.close();
+
+    }
+
+    @Test
+    public void quotesInHillNamesHandled() throws Exception {
+
+        assertNotNull(db);
+
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(TableNames.HILLS_TABLE);
+
+        String[] projection = {KEY_HILLNAME,
+                KEY_HEIGHTM, KEY_HEIGHTF,
+                HILLS_TABLE + "." + KEY_ID,
+                KEY_LATITUDE, KEY_LONGITUDE};
+
+        Cursor cursor = queryBuilder.query(db, projection, TableNames.HILLS_TABLE + "." + KEY_ID + "=?",
+                new String[]{"18"}, null, null, KEY_HEIGHTF + " desc");
+
+        assertTrue(cursor.getCount() == 1);
+        cursor.moveToFirst();
+        String stuc = cursor.getString(0);
+        System.out.println(stuc);
+        assertEquals("Stuc a'Chroin",stuc);
         cursor.close();
 
     }

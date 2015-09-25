@@ -15,7 +15,7 @@ import org.robolectric.shadows.ShadowLog;
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
-import uk.colessoft.android.hilllist.BritishHillsApplication;
+import uk.colessoft.android.hilllist.BHApp;
 import uk.colessoft.android.hilllist.BuildConfig;
 import uk.colessoft.android.hilllist.database.ColumnKeys;
 import uk.colessoft.android.hilllist.database.TableNames;
@@ -31,8 +31,8 @@ public class HillsContentProviderTest {
 
     @Before
     public void setup() {
-        BritishHillsApplication.BritishHillsApplicationComponent appComponent = DaggerHillsContentProviderTest_TestAppComponent.create();
-        ((BritishHillsApplication) RuntimeEnvironment.application).setTestComponent(appComponent);
+        BHApp.BHAppComponent appComponent = DaggerHillsContentProviderTest_TestAppComponent.create();
+        ((BHApp) RuntimeEnvironment.application).setTestComponent(appComponent);
         ShadowLog.stream = System.out;
         scr = Shadows.shadowOf(RuntimeEnvironment.application.getContentResolver());
         provider = new HillsContentProvider();
@@ -41,7 +41,7 @@ public class HillsContentProviderTest {
     }
 
     @Component(modules = DatabaseModule.class)
-    interface TestAppComponent extends BritishHillsApplication.BritishHillsApplicationComponent {
+    interface TestAppComponent extends BHApp.BHAppComponent {
     }
 
     @Module

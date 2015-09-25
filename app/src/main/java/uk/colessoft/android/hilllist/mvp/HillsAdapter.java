@@ -33,6 +33,8 @@ public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapte
 
         useMetricHeights = prefs.getBoolean(
                 PreferencesActivity.PREF_METRIC_HEIGHTS, false);
+
+        df3.isParseIntegerOnly();
     }
 
     static class HillClickListener implements View.OnClickListener {

@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
-import uk.colessoft.android.hilllist.BritishHillsApplication;
+import uk.colessoft.android.hilllist.BHApp;
 import uk.colessoft.android.hilllist.BuildConfig;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
@@ -34,8 +34,8 @@ public class HillsAsyncLoaderTest {
 
     @Before
     public void setup() {
-        BritishHillsApplication.BritishHillsApplicationComponent appComponent = DaggerHillsAsyncLoaderTest_TestAppComponent.create();
-        ((BritishHillsApplication) RuntimeEnvironment.application).setTestComponent(appComponent);
+        BHApp.BHAppComponent appComponent = DaggerHillsAsyncLoaderTest_TestAppComponent.create();
+        ((BHApp) RuntimeEnvironment.application).setTestComponent(appComponent);
         ShadowLog.stream = System.out;
         scr = Shadows.shadowOf(RuntimeEnvironment.application.getContentResolver());
         provider = new HillsContentProvider();
@@ -44,7 +44,7 @@ public class HillsAsyncLoaderTest {
     }
 
     @Component(modules = DatabaseModule.class)
-    interface TestAppComponent extends BritishHillsApplication.BritishHillsApplicationComponent {
+    interface TestAppComponent extends BHApp.BHAppComponent {
     }
 
     @Module
@@ -70,7 +70,7 @@ public class HillsAsyncLoaderTest {
         task.execute(bundle);
         ShadowApplication.runBackgroundTasks();
         List<Hill> hills = task.get(100, TimeUnit.MILLISECONDS);
-        assert(hills.size()==1);
-        assert(hills.get(0).getHillname().equals("Ben Chonzie"));
+        assert(hills.size()==2);
+        assert(hills.get(1).getHillname().equals("Ben Chonzie"));
     }
 }

@@ -5,13 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import uk.colessoft.android.hilllist.BritishHillsApplication;
-
 
 public class HillsDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
-    private static final String DATABASE_NAME = "hill-list.db";
+    private static final String DATABASE_NAME = "hill-list-device.db";
     private static final int DATABASE_VERSION = 1;
     private HillsTables hTables;
 
@@ -20,7 +18,6 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
         hTables = new HillsTables();
-       ((BritishHillsApplication)context).component().inject(hTables);
 
     }
 
