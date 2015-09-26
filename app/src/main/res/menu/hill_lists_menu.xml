@@ -1,13 +1,16 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<item android:id="@+id/menu_list_alpha" android:icon="@android:drawable/ic_menu_sort_alphabetically"
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_list_alpha"
+		android:icon="@android:drawable/ic_menu_sort_alphabetically"
 		android:title="@string/list_alpha" />
-	<item android:id="@+id/menu_list_height" android:icon="@android:drawable/ic_menu_sort_by_size"
-		android:title="@string/list_by_height" />
-	<item android:id="@+id/menu_show_map" android:icon="@android:drawable/ic_menu_mapmode"
-		android:title="@string/show_map" />
-	<item android:id="@+id/menu_search" android:icon="@android:drawable/ic_menu_search"
-		android:title="@string/search_list" />
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_list_height"
+		android:icon="@android:drawable/ic_menu_sort_by_size" android:title="@string/list_by_height" />
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_show_map"
+		android:icon="@android:drawable/ic_menu_mapmode" android:title="@string/show_map" />
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_search"
+		android:icon="@android:drawable/ic_menu_search" android:title="@string/search_list" />
+
 	<item android:id="@+id/menu_by_distance" android:icon="@drawable/ruler"
 		android:title="@string/list_by_distance" android:visible="false" />
 

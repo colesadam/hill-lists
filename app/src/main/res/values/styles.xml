@@ -3,10 +3,10 @@
 
 
 
-	<style name="MyTheme" parent="android:Theme">
+	<style name="MyTheme" parent="android:Theme.Holo">
 		<item name="android:windowNoTitle">false</item>
 		<item name="android:textViewStyle">@style/TextView</item>
-	
+
 
 	</style>
 
