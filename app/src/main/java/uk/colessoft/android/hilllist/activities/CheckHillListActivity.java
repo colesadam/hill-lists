@@ -1,10 +1,5 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.text.DecimalFormat;
-import java.util.Date;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,6 +23,12 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.util.Date;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
+
 public class CheckHillListActivity extends Activity {
 	/** Called when the activity is first created. */
 
@@ -42,7 +43,7 @@ public class CheckHillListActivity extends Activity {
 
 	private String hilltype;
 	private String hilllistType;
-	private int country;
+	private String country;
 	private String countryClause;
 	private final DecimalFormat df3 = new DecimalFormat();
 
@@ -67,7 +68,7 @@ public class CheckHillListActivity extends Activity {
 		hilllistType = getIntent().getExtras().getString("hilllistType");
 
 		setTitle("Mark Hills as Climbed");
-		country = getIntent().getExtras().getInt("country");
+		country = getIntent().getExtras().getString("country");
 		where = getIntent().getExtras().getString("search");
 
 		switch (country) {

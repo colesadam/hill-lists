@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import java.util.Map;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
 import uk.colessoft.android.hilllist.database.ColumnKeys;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import uk.colessoft.android.hilllist.database.TableNames;
 import uk.colessoft.android.hilllist.objects.Hill;
 
@@ -50,14 +48,8 @@ public class HillsAsyncLoader extends AsyncTask<Bundle,Void,List<Hill>> {
     protected List<Hill> doInBackground(Bundle... params) {
 
         String hilltype = params[0].getString("hilltype");
-        String hilllistType = params[0]
-                .getString("hilllistType");
-        if (!"".equals(hilllistType)) {
-            //getActivity().setTitle(hilllistType);
-        } //else
-           // getActivity().setTitle("Results");
-        int country = params[0].getInt("country");
-        //String where = params[0].getString("search");
+        String country = params[0].getString("country");
+        String where = params[0].getString("search", "");
         String countryClause="";
         switch (country) {
             case Main.SCOTLAND: {
@@ -85,14 +77,14 @@ public class HillsAsyncLoader extends AsyncTask<Bundle,Void,List<Hill>> {
 
         //String[] selectionArgs ={};
         ArrayList<String> selectionArgs = new ArrayList<String>();
-        String where;
+
 //
 //        if (filter == 1)
 //            where = KEY_DATECLIMBED + " NOT NULL";
 //        else if (filter == 2)
 //            where = KEY_DATECLIMBED + " IS NULL";
 //        else
-            where = "";
+
         if (hilltype != null){
             if (!"".equals(where))
                 where = where + " AND ";
@@ -116,7 +108,7 @@ public class HillsAsyncLoader extends AsyncTask<Bundle,Void,List<Hill>> {
 
         Uri dataUri = HillsContentProvider.HILLS_CONTENT_URI;
 
-        String orderBy = "cast(" + ColumnKeys.KEY_HEIGHTF + " as float)" + " desc";
+        String orderBy = params[0].getString("orderBy");
         Cursor dataCursor = mContext.getContentResolver().query(dataUri,new String[]{KEY_HILLNAME,
                 KEY_HEIGHTM, KEY_HEIGHTF,
                 HILLS_TABLE + "." + KEY_ID,

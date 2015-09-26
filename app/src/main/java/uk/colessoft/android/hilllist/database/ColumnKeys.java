@@ -95,5 +95,7 @@ public class ColumnKeys {
     public static final String KEY_un = "un";
     public static final String KEY_HILL_ID = "hill_id";
     public static final String KEY_TYPES_ID = "type_id";
+    public static final String KEY_DATECLIMBED = "dateClimbed";
+    public static final String KEY_NOTES = "notes";
 
 }

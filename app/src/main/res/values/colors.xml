@@ -10,4 +10,7 @@
 <color name="h_blue">#0077ff</color>
 <color name="red">#F21B25</color>
 <color name="v_dark_grey">#070707</color>
+    <color name="colorPrimary">#4caf50</color>
+    <color name="colorPrimaryDark">#347237</color>
+    <color name="colorAccent">#d50000</color>
 </resources>

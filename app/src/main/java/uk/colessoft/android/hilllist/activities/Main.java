@@ -21,10 +21,10 @@ import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class Main extends Activity {
 
-	public static final int SCOTLAND = 1;
-	public static final int WALES = 2;
-	public static final int ENGLAND = 3;
-	public static final int OTHER_GB = 4;
+	public static final String SCOTLAND = "Scotland";
+	public static final String WALES = "Wales";
+	public static final String ENGLAND = "England";
+	public static final String OTHER_GB = "GB";
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -168,7 +168,7 @@ public class Main extends Activity {
 
 	}
 
-	private void showHills(int country) {
+	private void showHills(String country) {
 		Intent intent = null;
 		switch (country) {
 

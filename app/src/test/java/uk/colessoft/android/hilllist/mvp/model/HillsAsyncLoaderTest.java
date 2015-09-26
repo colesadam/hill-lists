@@ -23,6 +23,7 @@ import uk.colessoft.android.hilllist.BHApp;
 import uk.colessoft.android.hilllist.BuildConfig;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
+import uk.colessoft.android.hilllist.database.ColumnKeys;
 import uk.colessoft.android.hilllist.objects.Hill;
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -66,7 +67,9 @@ public class HillsAsyncLoaderTest {
         },RuntimeEnvironment.application);
         Bundle bundle = new Bundle();
         bundle.putString("hilltype","Munro");
-        bundle.putInt("country", Main.SCOTLAND);
+        bundle.putString("country", Main.SCOTLAND);
+        String orderBy = "cast(" + ColumnKeys.KEY_HEIGHTF + " as float)" + " desc";
+        bundle.putString("orderBy",orderBy);
         task.execute(bundle);
         ShadowApplication.runBackgroundTasks();
         List<Hill> hills = task.get(100, TimeUnit.MILLISECONDS);

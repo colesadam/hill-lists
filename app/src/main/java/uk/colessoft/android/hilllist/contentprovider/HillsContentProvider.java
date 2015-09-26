@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
-import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.ColumnKeys;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.database.TableNames;
@@ -92,9 +91,9 @@ public class HillsContentProvider extends ContentProvider {
 							+ TableNames.TYPES_LINK_TABLE + " on "
 							+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
 							+ ColumnKeys.KEY_HILL_ID + " left join "
-							+ BaggingTable.BAGGING_TABLE + " on "
+							+ TableNames.BAGGING_TABLE + " on "
 							+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
-							+ BaggingTable.BAGGING_TABLE + "." + ColumnKeys.KEY_ID
+							+ TableNames.BAGGING_TABLE + "." + ColumnKeys.KEY_ID
 							+ " join " + TableNames.HILLTYPES_TABLE + " on "
 							+ ColumnKeys.KEY_TYPES_ID + "="
 							+ TableNames.HILLTYPES_TABLE + "." + ColumnKeys.KEY_ID
@@ -108,12 +107,13 @@ public class HillsContentProvider extends ContentProvider {
 					+ TableNames.TYPES_LINK_TABLE + " on "
 					+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
 					+ ColumnKeys.KEY_HILL_ID + " left join "
-					+ BaggingTable.BAGGING_TABLE + " on "
+					+ TableNames.BAGGING_TABLE + " on "
 					+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
-					+ BaggingTable.BAGGING_TABLE + "." + ColumnKeys.KEY_ID);
+					+ TableNames.BAGGING_TABLE + "." + ColumnKeys.KEY_ID);
 			// Adding the ID to the original query
 			queryBuilder.appendWhere(TableNames.HILLS_TABLE + "."
 					+ ColumnKeys.KEY_ID + "=" + uri.getLastPathSegment());
+
 			break;
 		case LISTS:
 			queryBuilder.setTables(TableNames.HILLTYPES_TABLE + "   join "

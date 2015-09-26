@@ -58,7 +58,7 @@ public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapte
                             name = "name",
                             type = TextView.class),
                     @ViewField(
-                            id = R.id.number_entry,
+                            id = R.id.list_hill_height,
                             name = "height",
                             type = TextView.class),
                     @ViewField(

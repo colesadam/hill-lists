@@ -73,7 +73,7 @@ public class DisplayHillListFragment extends Fragment implements
 				return true;
 			}
 
-			case R.id.number_entry: {
+			case R.id.list_hill_height: {
 				if (useMetricHeights) {
 					vtext = convText(tv, vtext) + "m";
 				} else
@@ -290,7 +290,7 @@ public class DisplayHillListFragment extends Fragment implements
 	boolean useMetricHeights;
 	private String hilltype;
 	private String hilllistType;
-	private int country;
+	private String country;
 	private String countryClause;
 	private final DecimalFormat df3 = new DecimalFormat();
 	private int filterHills;
@@ -365,7 +365,7 @@ public class DisplayHillListFragment extends Fragment implements
 		}
 		cursorAdapter = new SimpleCursorAdapter(getActivity(),
 				R.layout.simple_hill_item, null, qstrings, new int[] {
-						R.id.name_entry, R.id.number_entry,
+						R.id.name_entry, R.id.list_hill_height,
 						R.id.check_hill_climbed, R.id.rowid },
 				0);
 		cursorAdapter.setViewBinder(new HillsViewBinder());
@@ -443,7 +443,7 @@ public class DisplayHillListFragment extends Fragment implements
 			getActivity().setTitle(hilllistType);
 		} else
 			getActivity().setTitle("Results");
-		country = getActivity().getIntent().getExtras().getInt("country");
+		country = getActivity().getIntent().getExtras().getString("country");
 		where = getActivity().getIntent().getExtras().getString("search");
 
 		switch (country) {

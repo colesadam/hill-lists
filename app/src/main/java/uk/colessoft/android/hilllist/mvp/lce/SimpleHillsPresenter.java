@@ -29,8 +29,10 @@ public class SimpleHillsPresenter extends MvpBasePresenter<HillsView> implements
     }
 
     @Override
-    public void loadHills(final boolean pullToRefresh) {
+    public void loadHills(final boolean pullToRefresh,String orderBy) {
         getView().showLoading(pullToRefresh);
+
+        activityArguments.putString("orderBy",orderBy);
 
         if (hillsLoader != null && !hillsLoader.isCancelled()) {
             hillsLoader.cancel(true);
