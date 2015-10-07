@@ -44,7 +44,7 @@ import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_XCOORD;
 import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_XSECTION;
 import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_YCOORD;
 
-public class HillAsyncLoader extends AsyncTask<Integer,Void,Hill> {
+public class HillAsyncLoader extends AsyncTask<Long,Void,Hill> {
 
     private Context mContext;
     private HillLoaderListener listener;
@@ -61,8 +61,8 @@ public class HillAsyncLoader extends AsyncTask<Integer,Void,Hill> {
     }
 
     @Override
-    protected Hill doInBackground(Integer... params) {
-        int hillId=params[0];
+    protected Hill doInBackground(Long... params) {
+        long hillId=params[0];
         Uri dataUri = Uri.parse(HillsContentProvider.HILLS_CONTENT_URI + "/"
                 + hillId);
 

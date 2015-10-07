@@ -39,7 +39,7 @@ public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapte
 
     static class HillClickListener implements View.OnClickListener {
 
-        public int id;
+        public long id;
 
         public void onClick(View v) {
 
@@ -108,7 +108,7 @@ public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapte
     }
 
     public interface RecyclerItemViewClick {
-        void hillClicked(int id);
+        void hillClicked(long id);
     }
 
     private String convText(float dblAmt) {

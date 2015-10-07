@@ -27,7 +27,7 @@ public class DisplayHillListFragmentActivity extends AppCompatActivity implement
 
 
     @Override
-    public void hillClicked(int id) {
+    public void hillClicked(long id) {
         HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.hill_detail_fragment);
 
@@ -37,7 +37,7 @@ public class DisplayHillListFragmentActivity extends AppCompatActivity implement
             startActivity(intent);
         } else {
 
-            fragment.updateHill(id);
+            //fragment.updateHill(id);
         }
     }
 }

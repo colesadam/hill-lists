@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/med_grey"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="99" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:stretchColumns="1" >
+
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="96dp"
+                    android:layout_height="64dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="false"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/england" />
+
+                <TextView
+                    android:id="@+id/detail_hill_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="1dip"
+                    android:layout_toLeftOf="@id/thumbnail"
+                    android:padding="5dip"
+                    android:text="Hillname"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/detail_hill_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_hill_name"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="0"
+                    style="@style/listItemNames" />
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dip"
+                    android:background="@color/med_grey" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_marginTop="5dip"
+                android:stretchColumns="2"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="@string/label_dateClimbed"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_date_climbed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:textColor="@color/pale_blue" />
+
+                <TextView
+                    android:id="@+id/label_notes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_date_climbed"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="@string/label_notes"
+                    android:textColor="@color/h_blue" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/label_notes"
+                    android:layout_marginLeft="4dp" >
+
+                    <EditText
+                        android:id="@+id/detail_hill_notes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dip"
+                        android:layout_weight="90"
+                        android:background="@drawable/menu_button"
+                        android:padding="5dip"
+                        android:textColor="@color/white" >
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/save_notes"
+                        style="@style/ButtonText"
+                        android:layout_width="30dp"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="1dip"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="10"
+                        android:background="@drawable/button_text_blue_s"
+                        android:gravity="center"
+                        android:text="@string/save_selections" >
+                    </TextView>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_marginTop="5dip"
+                android:stretchColumns="2" >
+
+                <TextView
+                    android:id="@+id/region_label"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="Region"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/region_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="test" />
+
+                <TextView
+                    android:id="@+id/position_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/region_label"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="@string/label_latitude"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_hill_latitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/region_detail"
+                    android:layout_margin="1dip"
+                    android:layout_toLeftOf="@+id/detail_hill_longitude"
+                    android:padding="5dip"
+                    android:textColor="@color/pale_blue" />
+
+                <TextView
+                    android:id="@+id/detail_hill_longitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/region_detail"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:textColor="@color/pale_blue" />
+
+                <TextView
+                    android:id="@+id/osgrid_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/position_label"
+                    android:layout_margin="1dip"
+                    android:padding="4dip"
+                    android:text="@string/label_osgrid"
+                    android:textColor="@color/h_blue"
+                    android:textColorLink="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_hill_osgrid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/detail_hill_latitude"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:textColor="@color/pale_blue" />
+
+                <TextView
+                    android:id="@+id/section_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/osgrid_label"
+                    android:layout_margin="1dip"
+                    android:padding="4dip"
+                    android:text="@string/label_section"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_hill_section"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/detail_hill_osgrid"
+                    android:layout_margin="1dip"
+                    android:padding="5dip" />
+
+                <TextView
+                    android:id="@+id/label_50k"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/section_label"
+                    android:layout_margin="1dip"
+                    android:padding="4dip"
+                    android:text="@string/label_os50k"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_os50k"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/detail_hill_section"
+                    android:layout_margin="1dip"
+                    android:padding="5dip" />
+
+                <TextView
+                    android:id="@+id/label_25k"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_50k"
+                    android:layout_margin="1dip"
+                    android:padding="4dip"
+                    android:text="@string/label_os25k"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_os25k"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/detail_os50k"
+                    android:layout_margin="1dip"
+                    android:padding="5dip" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignBottom="@+id/label_50k"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                   android:background="@color/med_grey" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_marginTop="2dip" >
+
+                <TextView
+                    android:id="@+id/label_summit_features"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dip"
+                    android:padding="4dip"
+                    android:text="@string/label_summit_feature"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_hill_summit_feature"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/label_summit_features"
+                    android:padding="5dip"
+                    android:textColor="@color/pale_blue" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/detail_hill_summit_feature"
+                    android:layout_marginLeft="2dip"
+                    android:background="@color/med_grey" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_marginTop="2dip"
+                android:stretchColumns="2" >
+
+                <TextView
+                    android:id="@+id/label_classification"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:layout_marginTop="0dip"
+                    android:padding="5dip"
+                    android:text="@string/label_classification"
+                    android:textColor="@color/h_blue" />
+
+                <LinearLayout
+                    android:id="@+id/hill_classifications"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/label_classification"
+                    android:layout_margin="2dip"
+                    android:orientation="vertical" >
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/hill_classifications"
+                    android:layout_marginLeft="2dip"
+                    android:background="@color/med_grey" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_marginTop="2dip" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="@string/label_colHeight"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_colheight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:textColor="@color/pale_blue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_colheight"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="@string/label_colGridRef"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_colgridref"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/detail_colheight"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:textColor="@color/pale_blue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_colgridref"
+                    android:layout_margin="1dip"
+                    android:padding="5dip"
+                    android:text="@string/label_drop"
+                    android:textColor="@color/h_blue" />
+
+                <TextView
+                    android:id="@+id/detail_drop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/detail_colgridref"
+                    android:layout_margin="1dip"
+                    android:gravity="right"
+                    android:padding="5dip"
+                    android:textColor="@color/pale_blue" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

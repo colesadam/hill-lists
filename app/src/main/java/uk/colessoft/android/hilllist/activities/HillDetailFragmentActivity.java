@@ -1,50 +1,22 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
-import uk.colessoft.android.hilllist.objects.Hill;
-import uk.colessoft.android.hilllist.overlays.SingleHillOverlay;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Date;
+import java.util.HashMap;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.mvp.lce.fragment.MvpHillDetailFragment;
+import uk.colessoft.android.hilllist.objects.Hill;
 
 public class HillDetailFragmentActivity extends FragmentActivity {
 
@@ -110,11 +82,11 @@ public class HillDetailFragmentActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		updateFromPreferences();
 		setContentView(R.layout.hill_detail_fragment);
-		int rowid = getIntent().getExtras().getInt("rowid");
 
-		HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.hill_detail_fragment);
-		fragment.updateHill(rowid);
+
+
+		MvpHillDetailFragment fragment = (MvpHillDetailFragment)getSupportFragmentManager().findFragmentById(R.id.hill_detail_fragment);
+
 
 	}
 
