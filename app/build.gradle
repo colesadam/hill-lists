@@ -110,4 +110,5 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
 }
 //end Jacoco config
 dependencies {
+    compile 'com.android.support:design:23.0.1'
 }

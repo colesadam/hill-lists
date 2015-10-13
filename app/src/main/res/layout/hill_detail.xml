@@ -1,36 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/med_grey"
-    android:gravity="center"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="99" >
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="192dp">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="2dip"
-                android:stretchColumns="1" >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax">
 
                 <ImageView
-                    android:id="@+id/thumbnail"
-                    android:layout_width="96dp"
-                    android:layout_height="64dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="false"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/england" />
+                    android:id="@+id/hill_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/chlaidheimh"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true" />
 
                 <TextView
                     android:id="@+id/detail_hill_name"
@@ -38,21 +32,48 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="1dip"
-                    android:layout_toLeftOf="@id/thumbnail"
                     android:padding="5dip"
                     android:text="Hillname"
                     android:textColor="@color/white"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:layout_gravity="bottom" />
+            </FrameLayout>
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:stretchColumns="1">
+
 
                 <TextView
                     android:id="@+id/detail_hill_height"
+                    style="@style/listItemNames"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/detail_hill_name"
                     android:layout_margin="1dip"
                     android:padding="5dip"
-                    android:text="0"
-                    style="@style/listItemNames" />
+                    android:text="0" />
 
                 <View
                     android:id="@+id/divider1"
@@ -70,7 +91,7 @@
                 android:layout_marginRight="2dip"
                 android:layout_marginTop="5dip"
                 android:stretchColumns="2"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/label_notes"
-                    android:layout_marginLeft="4dp" >
+                    android:layout_marginLeft="4dp">
 
                     <EditText
                         android:id="@+id/detail_hill_notes"
@@ -114,8 +135,7 @@
                         android:layout_weight="90"
                         android:background="@drawable/menu_button"
                         android:padding="5dip"
-                        android:textColor="@color/white" >
-                    </EditText>
+                        android:textColor="@color/white"></EditText>
 
                     <TextView
                         android:id="@+id/save_notes"
@@ -127,8 +147,7 @@
                         android:layout_weight="10"
                         android:background="@drawable/button_text_blue_s"
                         android:gravity="center"
-                        android:text="@string/save_selections" >
-                    </TextView>
+                        android:text="@string/save_selections"></TextView>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -138,12 +157,12 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:layout_marginTop="5dip"
-                android:stretchColumns="2" >
+                android:stretchColumns="2">
 
                 <TextView
                     android:id="@+id/region_label"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_margin="1dip"
@@ -275,7 +294,7 @@
                     android:layout_alignBottom="@+id/label_50k"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                   android:background="@color/med_grey" />
+                    android:background="@color/med_grey" />
 
             </RelativeLayout>
 
@@ -284,7 +303,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
-                android:layout_marginTop="2dip" >
+                android:layout_marginTop="2dip">
 
                 <TextView
                     android:id="@+id/label_summit_features"
@@ -318,7 +337,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:layout_marginTop="2dip"
-                android:stretchColumns="2" >
+                android:stretchColumns="2">
 
                 <TextView
                     android:id="@+id/label_classification"
@@ -337,8 +356,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/label_classification"
                     android:layout_margin="2dip"
-                    android:orientation="vertical" >
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
 
                 <View
                     android:layout_width="fill_parent"
@@ -353,7 +371,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
-                android:layout_marginTop="2dip" >
+                android:layout_marginTop="2dip">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -412,6 +430,5 @@
                     android:textColor="@color/pale_blue" />
             </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

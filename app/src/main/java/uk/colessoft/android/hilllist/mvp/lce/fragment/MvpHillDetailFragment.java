@@ -1,16 +1,29 @@
 package uk.colessoft.android.hilllist.mvp.lce.fragment;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
+import java.io.InputStream;
 import java.text.DecimalFormat;
 
 import butterknife.Bind;
@@ -27,6 +40,12 @@ public class MvpHillDetailFragment extends MvpFragment<HillView, HillPresenter>
 
     private boolean useMetricHeights;
     private final DecimalFormat df3 = new DecimalFormat();
+
+    @Bind(R.id.hill_photo)
+    ImageView hillPhoto;
+
+    @Bind(R.id.hill_classifications)
+    LinearLayout classificationsLayout;
 
     @Bind(R.id.detail_hill_name)
     TextView hillname;
@@ -67,6 +86,8 @@ public class MvpHillDetailFragment extends MvpFragment<HillView, HillPresenter>
     @Bind(R.id.detail_drop)
     TextView drop;
 
+    private Menu mMenu;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -88,6 +109,7 @@ public class MvpHillDetailFragment extends MvpFragment<HillView, HillPresenter>
 
         useMetricHeights = prefs.getBoolean(
                 PreferencesActivity.PREF_METRIC_HEIGHTS, false);
+
     }
 
     @Nullable
@@ -97,6 +119,9 @@ public class MvpHillDetailFragment extends MvpFragment<HillView, HillPresenter>
 
         View view = inflater.inflate(R.layout.hill_detail, container, false);
         ButterKnife.bind(this, view);
+        Toolbar toolbar = ((Toolbar) view.findViewById(R.id.toolbar));
+        toolbar.inflateMenu(R.menu.hill_detail_menu);
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -130,11 +155,72 @@ public class MvpHillDetailFragment extends MvpFragment<HillView, HillPresenter>
         os50k.setText(hill.getMap());
         os25k.setText(hill.getMap25());
         region.setText(hill.getRegion());
+
+        TextView classificationTextView = null;
+        for (String classification : hill.getClassifications()) {
+
+            classificationTextView = new TextView(getActivity());
+            // classificationTextView.setBackgroundResource(R.color.white);
+            classificationTextView.setText(classification);
+            classificationTextView.setPadding(5, 5, 5, 5);
+            classificationTextView.setTextColor(getResources().getColor(
+                    R.color.pale_blue));
+
+            classificationsLayout.addView(classificationTextView);
+            //classificationTextView.setOnClickListener(detailFilterOnClickListener);
+        }
+        if (classificationTextView != null) {
+
+            classificationTextView.setPadding(5, 5, 5, 5);
+        }
+
+        DownloadImageTask imageTask = new DownloadImageTask(hillPhoto);
+        imageTask.execute("http://www.hill-summitareas.co.uk/Thumbnails/"
+                + hill.get_id() + ".jpg");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //inflater.inflate(R.menu.hill_detail_menu,menu);
+       // mMenu = menu;
     }
 
     private String convText(float dblAmt) {
 
         return df3.format(dblAmt);
 
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            Drawable d1 = bmImage.getDrawable();
+            Drawable d2 = new BitmapDrawable(bmImage.getResources(), result);
+            TransitionDrawable td = new TransitionDrawable( new Drawable[] {
+                    d1,d2});
+
+            bmImage.setImageDrawable(td);
+
+            td.startTransition(500);
+
+        }
     }
 }

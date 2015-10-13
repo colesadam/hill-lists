@@ -3,15 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
 
     <fragment
         android:id="@+id/hill_detail_fragment"
         android:name="uk.colessoft.android.hilllist.mvp.lce.fragment.MvpHillDetailFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"></fragment>
+        ></fragment>
 
 </RelativeLayout>

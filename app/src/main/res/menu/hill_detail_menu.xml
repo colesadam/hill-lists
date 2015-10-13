@@ -1,9 +1,15 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-	<item android:id="@+id/mark_hill_climbed" android:title="@string/mark_hill_climbed"
-		android:icon="@android:drawable/ic_menu_agenda" />
-	<item android:id="@+id/mark_hill_not_climbed" android:title="@string/mark_hill_not_climbed"
-		android:icon="@android:drawable/ic_menu_close_clear_cancel" />
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_show_map"
+		android:icon="@android:drawable/ic_menu_mapmode" android:title="@string/show_map" />
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_show_os_map"
+		android:icon="@android:drawable/ic_menu_mapmode" android:title="@string/show_os_map" />
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_place_search"
+		android:icon="@android:drawable/ic_menu_mapmode" android:title="@string/place_search" />
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_images"
+		android:icon="@android:drawable/ic_menu_mapmode" android:title="@string/show_hill_images" />
+
 
 </menu>

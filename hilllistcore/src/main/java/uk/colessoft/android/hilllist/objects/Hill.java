@@ -1,6 +1,7 @@
 package uk.colessoft.android.hilllist.objects;
 
 import java.util.Date;
+import java.util.List;
 
 public class Hill {
 	int _id;
@@ -34,6 +35,7 @@ public class Hill {
 	private String hillBagging;
 	private Date hillClimbed;
 	private String notes;
+	private List<String> classifications;
 
 	public Hill(int id,String hillname,float heightf,float heightm){
 		this._id=id;
@@ -82,6 +84,14 @@ public class Hill {
 		this.setHillClimbed(hillClimbed);
 		this.setNotes(notes);
 
+	}
+
+	public void setClassifications(List<String> classifications){
+		this.classifications=classifications;
+	}
+
+	public List<String> getClassifications(){
+		return classifications;
 	}
 
 	public int get_id() {

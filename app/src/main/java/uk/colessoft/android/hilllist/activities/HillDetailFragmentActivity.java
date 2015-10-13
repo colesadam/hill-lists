@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -18,7 +18,7 @@ import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import uk.colessoft.android.hilllist.mvp.lce.fragment.MvpHillDetailFragment;
 import uk.colessoft.android.hilllist.objects.Hill;
 
-public class HillDetailFragmentActivity extends FragmentActivity {
+public class HillDetailFragmentActivity extends AppCompatActivity {
 
 	private HillDbAdapter dbAdapter;
 
@@ -83,6 +83,10 @@ public class HillDetailFragmentActivity extends FragmentActivity {
 		updateFromPreferences();
 		setContentView(R.layout.hill_detail_fragment);
 
+		//setSupportActionBar(toolbar);
+		//getSupportActionBar().setTitle(getIntent().getExtras().getString("country"));
+		//getSupportActionBar().setSubtitle(getIntent().getExtras().getString("hilllistType"));
+		//getSupportActionBar().setHomeButtonEnabled(true);
 
 
 		MvpHillDetailFragment fragment = (MvpHillDetailFragment)getSupportFragmentManager().findFragmentById(R.id.hill_detail_fragment);

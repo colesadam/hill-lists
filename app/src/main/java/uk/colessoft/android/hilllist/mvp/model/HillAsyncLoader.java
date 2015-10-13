@@ -8,9 +8,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
+import uk.colessoft.android.hilllist.database.ColumnKeys;
 import uk.colessoft.android.hilllist.objects.Hill;
 
 import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_AREA;
@@ -66,11 +69,27 @@ public class HillAsyncLoader extends AsyncTask<Long,Void,Hill> {
         Uri dataUri = Uri.parse(HillsContentProvider.HILLS_CONTENT_URI + "/"
                 + hillId);
 
-        Cursor cursor = mContext.getContentResolver().query(dataUri, null, null, null, null);
-        
-        if(cursor.moveToFirst())
-            return getHill(cursor);
-        else return null;
+        Cursor cursor = mContext.getContentResolver().query(dataUri, null, null, null, "importance desc");
+
+        List<String> classifications = new ArrayList<String>();
+        Hill hill=null;
+
+        String[] cn=cursor.getColumnNames();
+        for(String c:cn){
+            System.out.println(c);
+        }
+
+        while(cursor.moveToNext()) {
+            if(hill==null)
+                hill=getHill(cursor);
+
+            classifications.add(cursor.getString(cursor.getColumnIndex(ColumnKeys.KEY_TITLE)));
+
+        }
+        if(hill!=null){
+            hill.setClassifications(classifications);
+        }
+        return hill;
     }
 
     @Override protected void onPostExecute(Hill hill) {

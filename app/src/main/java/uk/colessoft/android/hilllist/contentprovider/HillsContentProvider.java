@@ -109,7 +109,10 @@ public class HillsContentProvider extends ContentProvider {
 					+ ColumnKeys.KEY_HILL_ID + " left join "
 					+ TableNames.BAGGING_TABLE + " on "
 					+ TableNames.HILLS_TABLE + "." + ColumnKeys.KEY_ID + "="
-					+ TableNames.BAGGING_TABLE + "." + ColumnKeys.KEY_ID);
+					+ TableNames.BAGGING_TABLE + "." + ColumnKeys.KEY_ID
+					+ " join " + TableNames.HILLTYPES_TABLE + " on "
+					+ ColumnKeys.KEY_TYPES_ID + "="
+					+ TableNames.HILLTYPES_TABLE + "." + ColumnKeys.KEY_ID);
 			// Adding the ID to the original query
 			queryBuilder.appendWhere(TableNames.HILLS_TABLE + "."
 					+ ColumnKeys.KEY_ID + "=" + uri.getLastPathSegment());
