@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import java.io.InputStream;
@@ -28,12 +29,21 @@ import java.text.DecimalFormat;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
+import uk.colessoft.android.hilllist.model.hillsummits.Example;
+import uk.colessoft.android.hilllist.model.hillsummits.Result;
 import uk.colessoft.android.hilllist.mvp.HillPresenter;
 import uk.colessoft.android.hilllist.mvp.HillView;
 import uk.colessoft.android.hilllist.mvp.lce.SimpleHillPresenter;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.service.HillSummitsApi;
 
 public class MvpHillDetailFragment extends MvpFragment<HillView, HillPresenter>
         implements HillView {
@@ -174,15 +184,33 @@ public class MvpHillDetailFragment extends MvpFragment<HillView, HillPresenter>
             classificationTextView.setPadding(5, 5, 5, 5);
         }
 
-        DownloadImageTask imageTask = new DownloadImageTask(hillPhoto);
-        imageTask.execute("http://www.hill-summitareas.co.uk/Thumbnails/"
-                + hill.get_id() + ".jpg");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://hillsummits.piwigo.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        HillSummitsApi api = retrofit.create(HillSummitsApi.class);
+
+        api.search(hill.get_id() + " " + hill.getHillname() + " portrait", "json", "pwg.images.search")
+                .subscribeOn(Schedulers.from(AsyncTask.THREAD_POOL_EXECUTOR))
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Example>() {
+
+            @Override
+            public void call(Example example) {
+                if (example.getResult().getImages().size()>0) {
+                    DownloadImageTask imageTask = new DownloadImageTask(hillPhoto);
+                    imageTask.execute(example.getResult().getImages().get(0).getDerivatives().getXlarge().getUrl());
+                }
+            }
+        });
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //inflater.inflate(R.menu.hill_detail_menu,menu);
-       // mMenu = menu;
+        // mMenu = menu;
     }
 
     private String convText(float dblAmt) {
@@ -214,8 +242,8 @@ public class MvpHillDetailFragment extends MvpFragment<HillView, HillPresenter>
         protected void onPostExecute(Bitmap result) {
             Drawable d1 = bmImage.getDrawable();
             Drawable d2 = new BitmapDrawable(bmImage.getResources(), result);
-            TransitionDrawable td = new TransitionDrawable( new Drawable[] {
-                    d1,d2});
+            TransitionDrawable td = new TransitionDrawable(new Drawable[]{
+                    d1, d2});
 
             bmImage.setImageDrawable(td);
 

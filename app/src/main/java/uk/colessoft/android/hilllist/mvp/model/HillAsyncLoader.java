@@ -14,7 +14,7 @@ import java.util.List;
 
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
 import uk.colessoft.android.hilllist.database.ColumnKeys;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_AREA;
 import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_CLASSIFICATION;

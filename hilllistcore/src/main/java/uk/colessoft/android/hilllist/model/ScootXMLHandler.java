@@ -1,7 +1,6 @@
-package uk.colessoft.android.hilllist.objects;
+package uk.colessoft.android.hilllist.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -9,7 +8,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ScootXMLHandler extends DefaultHandler {
 	StringBuffer buff = null;
-	ScootBusinesses scootBusinesses = new ScootBusinesses();
+	uk.colessoft.android.hilllist.model.ScootBusinesses scootBusinesses = new uk.colessoft.android.hilllist.model.ScootBusinesses();
 	Business tempBusiness;
 	boolean buffering = false;
 	ArrayList tempAddress = new ArrayList();
@@ -141,11 +140,11 @@ public class ScootXMLHandler extends DefaultHandler {
 		}
 	}
 
-	public ScootBusinesses getScootBusinesses() {
+	public uk.colessoft.android.hilllist.model.ScootBusinesses getScootBusinesses() {
 		return scootBusinesses;
 	}
 
-	public void setScootBusinesses(ScootBusinesses scootBusinesses) {
+	public void setScootBusinesses(uk.colessoft.android.hilllist.model.ScootBusinesses scootBusinesses) {
 		this.scootBusinesses = scootBusinesses;
 	}
 }

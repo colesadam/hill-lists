@@ -16,7 +16,7 @@ import java.util.HashMap;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import uk.colessoft.android.hilllist.mvp.lce.fragment.MvpHillDetailFragment;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 public class HillDetailFragmentActivity extends AppCompatActivity {
 

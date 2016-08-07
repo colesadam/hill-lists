@@ -29,7 +29,7 @@ import uk.colessoft.android.hilllist.mvp.HillsAdapter;
 import uk.colessoft.android.hilllist.mvp.HillsPresenter;
 import uk.colessoft.android.hilllist.mvp.HillsView;
 import uk.colessoft.android.hilllist.mvp.lce.SimpleHillsPresenter;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 public class MvpHillListFragment extends MvpLceFragment<SwipeRefreshLayout, List<Hill>, HillsView, HillsPresenter>
         implements HillsView, SwipeRefreshLayout.OnRefreshListener {

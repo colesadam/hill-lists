@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -15,10 +14,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.objects.Business;
-import uk.colessoft.android.hilllist.objects.ScootXMLHandler;
-import uk.colessoft.android.hilllist.objects.TinyHill;
-import android.app.Activity;
+import uk.colessoft.android.hilllist.model.Business;
+import uk.colessoft.android.hilllist.model.ScootXMLHandler;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

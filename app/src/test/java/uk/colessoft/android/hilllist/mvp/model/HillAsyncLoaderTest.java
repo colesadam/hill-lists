@@ -21,7 +21,7 @@ import dagger.Provides;
 import uk.colessoft.android.hilllist.BHApp;
 import uk.colessoft.android.hilllist.BuildConfig;
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21, manifest = "src/main/AndroidManifest.xml")

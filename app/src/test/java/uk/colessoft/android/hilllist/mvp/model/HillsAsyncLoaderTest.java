@@ -24,7 +24,7 @@ import uk.colessoft.android.hilllist.BuildConfig;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
 import uk.colessoft.android.hilllist.database.ColumnKeys;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21, manifest = "src/main/AndroidManifest.xml")

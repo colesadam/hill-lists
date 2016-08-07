@@ -5,11 +5,12 @@ import android.util.Log;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
+import uk.colessoft.android.hilllist.mvp.HillPresenter;
 import uk.colessoft.android.hilllist.mvp.HillView;
 import uk.colessoft.android.hilllist.mvp.model.HillAsyncLoader;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
-public class SimpleHillPresenter extends MvpBasePresenter<HillView> implements uk.colessoft.android.hilllist.mvp.HillPresenter {
+public class SimpleHillPresenter extends MvpBasePresenter<HillView> implements HillPresenter {
 
     private static final String TAG = "SimpleHillsPresenter";
 

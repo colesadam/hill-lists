@@ -15,7 +15,7 @@ import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.contentprovider.HillsContentProvider;
 import uk.colessoft.android.hilllist.database.ColumnKeys;
 import uk.colessoft.android.hilllist.database.TableNames;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_HEIGHTF;
 import static uk.colessoft.android.hilllist.database.ColumnKeys.KEY_HEIGHTM;

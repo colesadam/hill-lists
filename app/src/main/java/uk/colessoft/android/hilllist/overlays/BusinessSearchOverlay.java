@@ -3,25 +3,16 @@ package uk.colessoft.android.hilllist.overlays;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.BusinessDetailActivity;
-import uk.colessoft.android.hilllist.objects.TinyHill;
+import uk.colessoft.android.hilllist.model.TinyHill;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
-import com.google.android.maps.MapView.LayoutParams;
 import com.google.android.maps.OverlayItem;
 
 public class BusinessSearchOverlay extends BalloonItemizedOverlay {

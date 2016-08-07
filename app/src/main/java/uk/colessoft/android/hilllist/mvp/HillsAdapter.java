@@ -16,7 +16,7 @@ import java.util.List;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapterBinder {
 

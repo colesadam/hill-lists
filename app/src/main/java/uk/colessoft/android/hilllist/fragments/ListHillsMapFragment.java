@@ -5,10 +5,9 @@ import java.util.List;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.AdamsSpecialInterface;
-import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSelectedListener;
-import uk.colessoft.android.hilllist.objects.TinyHill;
+import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay;
 import uk.colessoft.android.hilllist.overlays.ManyHillsOverlay;
 

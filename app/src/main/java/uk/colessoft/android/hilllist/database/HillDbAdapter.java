@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 public class HillDbAdapter {
 	private static final String DATABASE_NAME = "hill-list.db";

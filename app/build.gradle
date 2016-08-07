@@ -42,7 +42,14 @@ android {
         compile 'com.hannesdorfmann.annotatedadapter:annotation:1.1.1'
         compile 'com.hannesdorfmann.annotatedadapter:support-recyclerview:1.1.1'
         provided 'org.glassfish:javax.annotation:10.0-b28'
+        compile 'com.google.code.gson:gson:2.4'
         compile 'javax.annotation:javax.annotation-api:1.2'
+        compile 'io.reactivex:rxjava:1.0.14'
+        compile 'io.reactivex:rxandroid:1.0.1'
+        compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
+        compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+        compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+        compile 'com.squareup.sqlbrite:sqlbrite:0.4.1'
         testCompile "org.robolectric:shadows-support-v4:3.0"
         testCompile 'com.google.dagger:dagger-compiler:2.0.1'
         testCompile('org.robolectric:robolectric:3.0')

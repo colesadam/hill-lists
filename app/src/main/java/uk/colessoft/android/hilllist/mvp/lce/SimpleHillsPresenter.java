@@ -10,7 +10,7 @@ import java.util.List;
 
 import uk.colessoft.android.hilllist.mvp.HillsView;
 import uk.colessoft.android.hilllist.mvp.model.HillsAsyncLoader;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
 
 public class SimpleHillsPresenter extends MvpBasePresenter<HillsView> implements uk.colessoft.android.hilllist.mvp.HillsPresenter {
 

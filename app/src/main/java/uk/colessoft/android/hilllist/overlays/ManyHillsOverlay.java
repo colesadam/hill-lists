@@ -5,7 +5,7 @@ import java.util.List;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.HillDetailFragmentActivity;
-import uk.colessoft.android.hilllist.objects.TinyHill;
+import uk.colessoft.android.hilllist.model.TinyHill;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;

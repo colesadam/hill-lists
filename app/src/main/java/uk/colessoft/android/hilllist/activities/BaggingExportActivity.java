@@ -7,11 +7,9 @@ import java.io.IOException;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.dialogs.FolderPicker;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.objects.TinyHill;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 
 import android.database.Cursor;
 import android.os.Bundle;
