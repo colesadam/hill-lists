@@ -2,18 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/Users/adam/Development/sdk/extras/android/m2repository/com/android/support/support-v4/19.0.0/support-v4-19.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="afee690af14bd2c32d400cdf78e746fd45c386fa">
-        <dex dex="/Users/adam/AndroidStudioProjects/hill-list/app/build/intermediates/pre-dexed/debug/support-v4-19.0.0-455646d9de6c2c459f10bb03a35788724a41611a.jar" />
-    </item>
-    <item
-        jar="/Users/adam/AndroidStudioProjects/hill-list/lib/droid-fu-1.0-SNAPSHOT.jar"
+        jar="/Users/adam/AndroidStudioProjects/hill-list/libs/droid-fu-1.0-SNAPSHOT.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="0586edbe236fb21c725c5191588953f4b145a2bb">
-        <dex dex="/Users/adam/AndroidStudioProjects/hill-list/app/build/intermediates/pre-dexed/debug/droid-fu-1.0-SNAPSHOT-a65885a6748e55058ca454ce7b281042b2170c3b.jar" />
+        <dex dex="/Users/adam/AndroidStudioProjects/hill-list/app/build/intermediates/pre-dexed/debug/droid-fu-1.0-SNAPSHOT_1514ee784ac96cb3463686d46f609733be42cfdd.jar" />
+    </item>
+    <item
+        jar="/Users/adam/.android-sdk/extras/android/m2repository/com/android/support/support-v4/19.0.0/support-v4-19.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="afee690af14bd2c32d400cdf78e746fd45c386fa">
+        <dex dex="/Users/adam/AndroidStudioProjects/hill-list/app/build/intermediates/pre-dexed/debug/support-v4-19.0.0_f0ba0463b4c581d9df91c6922c272f23828e2782.jar" />
     </item>
 
 </items>

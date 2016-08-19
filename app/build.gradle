@@ -20,10 +20,9 @@ android {
     dependencies {
 
         compile 'com.android.support:support-v4:19.0.0'
-        compile files('libs/droid-fu-1.0-SNAPSHOT.jar')
     }
 }
 
 dependencies {
-    compile files('/Users/adam/AndroidStudioProjects/hill-list/lib/droid-fu-1.0-SNAPSHOT.jar')
+    compile files('/Users/adam/AndroidStudioProjects/hill-list/libs/droid-fu-1.0-SNAPSHOT.jar')
 }

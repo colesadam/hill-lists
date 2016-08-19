@@ -4,4 +4,4 @@
 	<item android:state_activated="true" android:drawable="@drawable/selected_state" />
 	<item android:state_focused="true" android:drawable="@drawable/selected_state" />
 
-</selector><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/drawable/selector.xml -->
+</selector>

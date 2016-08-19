@@ -4,4 +4,4 @@
     <item android:state_focused="true" android:state_pressed="true" android:drawable="@drawable/selected_menu_button" />
     <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/selected_menu_button" />
     <item android:drawable="@drawable/menu_button" />
-</selector><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/drawable/button_text.xml -->
+</selector>

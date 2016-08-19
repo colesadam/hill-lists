@@ -43,4 +43,3 @@
 	<item android:id="@+id/menu_none_climbed" android:title="@string/mark_none_climbed" />
 
 </menu>
-<!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/menu-v11/hill_lists_menu.xml -->

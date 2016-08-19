@@ -16,4 +16,3 @@
 	<ListView android:id="@+id/myListView" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:textSize="15dip" />
 </LinearLayout>
-<!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/list_hills.xml -->

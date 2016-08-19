@@ -1,32 +1,34 @@
 -- Merging decision tree log ---
 manifest
 ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:2:1-57:12
-	xmlns:android
-		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:3:33-91
 	package
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:2:11-50
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 	android:versionName
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:4:2-27
+		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 	android:versionCode
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:4:28-52
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:3:33-91
 	android:installLocation
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:3:2-32
 application
 ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:5:2-44:16
 	android:label
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:5:45-77
-	android:icon
-		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:5:15-44
-	android:theme
-		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:7:42-72
 	android:testOnly
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:8:3-27
+	android:icon
+		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:5:15-44
 	android:restoreAnyVersion
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:6:4-37
+	android:theme
+		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:7:42-72
 	android:restoreNeedsApplication
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:7:3-41
 activity#uk.colessoft.android.hilllist.activities.SplashScreenActivity
@@ -159,15 +161,15 @@ ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManif
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:48:19-61
 supports-screens
 ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:50:2-55:46
-	android:resizeable
-		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:50:20-45
 	android:largeScreens
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:53:19-46
-	android:anyDensity
-		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:55:19-44
+	android:smallScreens
+		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:51:19-46
 	android:normalScreens
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:52:19-47
 	android:xlargeScreens
 		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:54:19-47
-	android:smallScreens
-		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:51:19-46
+	android:resizeable
+		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:50:20-45
+	android:anyDensity
+		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:55:19-44

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/values/colors.xml -->
-    <eat-comment/>
     <color name="black">#000000</color>
     <color name="dark_blue">#7485B3</color>
     <color name="h_blue">#0077ff</color>
@@ -12,8 +10,6 @@
     <color name="red">#F21B25</color>
     <color name="v_dark_grey">#070707</color>
     <color name="white">#ffffff</color>
-    <!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/values/strings.xml -->
-    <eat-comment/>
     <string name="app_name">British Hills</string>
     <string name="backuprestore"><b>Backup/Restore</b></string>
     <string name="bhdescription">The British Hills application relies on the fantastic efforts of Graham Jackson, Chris Crocker, John Barnard, George Gradwell, Simon Edwardes, Mark Jackson and Jim Bloomer. Please visit http://hills-database.co.uk to read about how the database is constructed and donate to keep the updates coming. The data is licensed under Creative Commons 3.0</string>
@@ -117,8 +113,6 @@
     <string name="viewforecasts"><b>Hill Forecasts</b></string>
     <string name="wainwright_outlying_desc">Wainwright Outlying Fells are hills listed in The Outlying Fells of Lakeland by Alfred Wainwright.</string>
     <string name="wainwrights_desc">The Wainwrights are a group of 214 hills, made famous by the 7 Pictorial Guide to the Lakeland Fells written by Alfred Wainwright.</string>
-    <!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/values/button_style.xml -->
-    <eat-comment/>
     <style name="ButtonText">
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">wrap_content</item>
@@ -132,16 +126,12 @@
 		<item name="android:shadowDy">1</item>
 		<item name="android:shadowRadius">2</item>
 	</style>
-    <!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/values/styles.xml -->
-    <eat-comment/>
     <style name="MyTheme" parent="android:Theme">
 		<item name="android:windowNoTitle">false</item>
 		<item name="android:textViewStyle">@style/TextView</item>
 	
 
 	</style>
-    <!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/values/textview.xml -->
-    <eat-comment/>
     <style name="TextView" parent="@android:style/TextAppearance.Medium">
 
 	

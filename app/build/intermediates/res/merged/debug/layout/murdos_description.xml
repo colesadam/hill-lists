@@ -3,4 +3,3 @@
         <TextView android:text="@string/label_murdos"  android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
         <TextView android:text="@string/murdos_desc"  android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
     </LinearLayout>
-<!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/murdos_description.xml -->

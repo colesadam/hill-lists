@@ -19,4 +19,4 @@
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:gravity="left|center_vertical"
 	/> 
-</LinearLayout><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/folder.xml -->
+</LinearLayout>

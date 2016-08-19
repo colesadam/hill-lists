@@ -9,4 +9,4 @@
 			android:key="PREF_METRIC_DISTANCES" />
 
 	</PreferenceCategory>
-</PreferenceScreen><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/xml/preferences.xml -->
+</PreferenceScreen>

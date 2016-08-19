@@ -9,4 +9,4 @@
 <!-- <com.google.android.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/many_map_view" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:enabled="true"
-	android:clickable="true" android:apiKey="0WkjGtrJFQktBbukxd_AgW4VcOrha8cXTw6NjCQ" />  --><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/mapview.xml -->
+	android:clickable="true" android:apiKey="0WkjGtrJFQktBbukxd_AgW4VcOrha8cXTw6NjCQ" />  -->

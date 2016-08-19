@@ -3,4 +3,4 @@
 	android:orientation="vertical" android:layout_width="fill_parent" android:id="@+id/fmvh"
 	android:layout_height="fill_parent">
 
-</LinearLayout><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/fragment_mapview_holder.xml -->
+</LinearLayout>

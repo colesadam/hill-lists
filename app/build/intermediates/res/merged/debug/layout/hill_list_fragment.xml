@@ -5,4 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/hill_list_fragment">
-</fragment><!-- From: file:/Users/adam/AndroidStudioProjects/hill-list/app/src/main/res/layout/hill_list_fragment.xml -->
+</fragment>
