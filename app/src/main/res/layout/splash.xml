@@ -50,7 +50,7 @@
 			android:paddingBottom="10dip" android:textSize="18dip"
 			android:textColor="@color/white" android:gravity="center" />
 
-		<TextView android:id="@+id/TextView01" android:layout_width="fill_parent"
+		<TextView android:id="@+id/TextView05" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:text="@string/version_number"
 			android:paddingBottom="50dip" android:textSize="18dip"
 			android:textColor="@color/med_grey" android:gravity="center"
