@@ -6,11 +6,11 @@ ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManif
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 	android:versionName
-		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:4:2-27
+		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:4:2-28
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 	android:versionCode
-		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:4:28-52
+		ADDED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml:4:29-53
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/adam/AndroidStudioProjects/hill-list/app/src/main/AndroidManifest.xml
 	xmlns:android
