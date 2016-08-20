@@ -5,8 +5,8 @@ android {
 
     defaultConfig {
         applicationId "uk.colessoft.android.hilllist"
-        minSdkVersion 9
-        targetSdkVersion 11
+        minSdkVersion 11
+        targetSdkVersion 13
 
     }
 
@@ -24,5 +24,5 @@ android {
 }
 
 dependencies {
-    compile files('/Users/adam/AndroidStudioProjects/hill-list/libs/droid-fu-1.0-SNAPSHOT.jar')
+    compile files('/Users/colesadam/android/hill-lists/libs/droid-fu-1.0-SNAPSHOT.jar')
 }

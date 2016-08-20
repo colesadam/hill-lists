@@ -31,14 +31,16 @@ import uk.colessoft.android.hilllist.objects.TinyHill;
 import uk.colessoft.android.hilllist.overlays.BusinessSearchOverlay;
 import uk.colessoft.android.hilllist.overlays.SingleMarkerOverlay;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
+
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +55,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
-public class BusinessSearchMapActivity extends FragmentActivity implements
+public class BusinessSearchMapActivity extends MapActivity implements
 		LoaderManager.LoaderCallbacks<ArrayList> {
 
 	private HillDbAdapter dbAdapter;
@@ -68,11 +70,11 @@ public class BusinessSearchMapActivity extends FragmentActivity implements
 	private String search_string;
 	private ArrayList<TinyHill> hillPoints;
 
-/*	@Override
+	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
-	}*/
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +137,7 @@ public class BusinessSearchMapActivity extends FragmentActivity implements
 		List<Overlay> overlays = mapView.getOverlays();
 		overlays.add(positionOverlay);
 
-		getSupportLoaderManager().restartLoader(0, null,  this);
+		getLoaderManager().restartLoader(0, null,  this);
 	}
 
 
