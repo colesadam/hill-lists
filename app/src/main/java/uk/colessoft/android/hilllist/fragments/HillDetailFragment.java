@@ -1,5 +1,29 @@
 package uk.colessoft.android.hilllist.fragments;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,35 +36,7 @@ import uk.colessoft.android.hilllist.activities.ImageSearchActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSelectedListener;
 import uk.colessoft.android.hilllist.objects.Hill;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class HillDetailFragment extends Fragment {
 	private HillDbAdapter dbAdapter;
@@ -271,7 +267,6 @@ public class HillDetailFragment extends Fragment {
 		View gMapButton = viewer.findViewById(R.id.mapButton);
 		View osMapButton = viewer.findViewById(R.id.osMapButton);
 		View scootButton = viewer.findViewById(R.id.bsSearchButton);
-		View imageButton = viewer.findViewById(R.id.imageSearchButton);
 		
 		
 		gMapButton.setOnClickListener(new View.OnClickListener(){
@@ -294,13 +289,7 @@ public class HillDetailFragment extends Fragment {
 				scootSearch();
 				
 			}});
-		
-		imageButton.setOnClickListener(new View.OnClickListener(){
 
-			public void onClick(View v) {
-				imageSearch();
-				
-			}});
 		
 		
 		

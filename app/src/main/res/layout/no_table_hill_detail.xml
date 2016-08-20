@@ -239,10 +239,6 @@
 				android:layout_height="40dp" android:scaleType="center" android:id="@+id/bsSearchButton"
 				android:text="Scoot Search" android:textSize="12dip" android:background="@drawable/button_text_blue_s"
 				android:layout_gravity="center_vertical" android:layout_width="50dp"></TextView>
-			<TextView android:layout_margin="2dp" android:gravity="center" style="@style/ButtonText"
-				android:layout_height="40dp" android:scaleType="center" android:id="@+id/imageSearchButton"
-				android:text="Images" android:textSize="12dip" android:background="@drawable/button_text_blue_s"
-				android:layout_gravity="center_vertical" android:layout_width="51dp" android:padding="2dp"></TextView>
 
 		</LinearLayout>
 	</RelativeLayout>

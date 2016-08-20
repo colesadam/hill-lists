@@ -1,44 +1,11 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.objects.Business;
-import uk.colessoft.android.hilllist.objects.ScootXMLHandler;
-import uk.colessoft.android.hilllist.objects.Hill;
-import uk.colessoft.android.hilllist.objects.ScootBusinesses;
-import uk.colessoft.android.hilllist.objects.TinyHill;
-import uk.colessoft.android.hilllist.overlays.BusinessSearchOverlay;
-import uk.colessoft.android.hilllist.overlays.SingleMarkerOverlay;
-import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,11 +14,33 @@ import android.widget.Button;
 import android.widget.ToggleButton;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.objects.Business;
+import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.objects.ScootXMLHandler;
+import uk.colessoft.android.hilllist.objects.TinyHill;
+import uk.colessoft.android.hilllist.overlays.BusinessSearchOverlay;
+import uk.colessoft.android.hilllist.overlays.SingleMarkerOverlay;
 
 public class BusinessSearchMapActivity extends FragmentActivity implements
 		LoaderManager.LoaderCallbacks<ArrayList> {
@@ -68,11 +57,11 @@ public class BusinessSearchMapActivity extends FragmentActivity implements
 	private String search_string;
 	private ArrayList<TinyHill> hillPoints;
 
-/*	@Override
+	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
-	}*/
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -186,23 +175,23 @@ public class BusinessSearchMapActivity extends FragmentActivity implements
 		return search_string;
 	}
 
-	public Loader<ArrayList> onCreateLoader(int id, Bundle args) {
+	public android.support.v4.content.Loader<ArrayList> onCreateLoader(int id, Bundle args) {
 		return new ScootSearchTaskLoader(this,hillPoints,search_string, searchHandler,lat1,lon1);
 	}
 
-	public void onLoadFinished(Loader<ArrayList> loader, ArrayList data) {
+	public void onLoadFinished(android.support.v4.content.Loader<ArrayList> loader, ArrayList data) {
 		hillPoints=data;
 		addBusinesses();
 
 	}
 
-	public void onLoaderReset(Loader<ArrayList> loader) {
+	public void onLoaderReset(android.support.v4.content.Loader<ArrayList> loader) {
 		// TODO Auto-generated method stub
 
 	}
 
 	private static class ScootSearchTaskLoader extends
-			AsyncTaskLoader<ArrayList> {
+			android.support.v4.content.AsyncTaskLoader<ArrayList> {
 		String searchString;
 		ArrayList<TinyHill> hillPoints;
 		ScootXMLHandler searchHandler;

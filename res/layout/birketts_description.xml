@@ -1,5 +1,0 @@
-
-    <LinearLayout  android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_height="wrap_content">
-        <TextView android:text="@string/label_birketts" android:id="@+id/grp_label" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-        <TextView android:text="@string/birketts_desc" android:id="@+id/grp_desc" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-    </LinearLayout>
