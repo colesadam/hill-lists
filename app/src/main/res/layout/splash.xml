@@ -3,7 +3,6 @@
 	xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/linearLayout2" android:layout_height="match_parent" android:layout_gravity="center" android:gravity="center">
 
 	<LinearLayout android:id="@+id/LinearLayout01"
-		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:orientation="vertical" android:gravity="center"
 		android:layout_gravity="center" android:background="@drawable/button_text_blue"
 		android:layout_margin="20dp" android:padding="10dp"
