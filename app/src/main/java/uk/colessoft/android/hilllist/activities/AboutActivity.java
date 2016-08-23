@@ -1,6 +1,5 @@
 package uk.colessoft.android.hilllist.activities;
 
-import uk.colessoft.android.hilllist.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +8,8 @@ import android.text.util.Linkify;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import uk.colessoft.android.hilllist.R;
 
 public class AboutActivity extends Activity{
 	

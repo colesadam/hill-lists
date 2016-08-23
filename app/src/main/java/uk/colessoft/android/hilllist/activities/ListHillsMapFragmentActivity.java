@@ -1,43 +1,21 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
-import uk.colessoft.android.hilllist.objects.TinyHill;
 import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay;
 import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.HillTappedListener;
 import uk.colessoft.android.hilllist.overlays.ManyHillsOverlay;
-import uk.colessoft.android.hilllist.overlays.SingleHillOverlay;
-
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.ToggleButton;
-
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 
 public class ListHillsMapFragmentActivity extends FragmentActivity implements
 		DisplayHillListFragment.OnHillSelectedListener, HillTappedListener,

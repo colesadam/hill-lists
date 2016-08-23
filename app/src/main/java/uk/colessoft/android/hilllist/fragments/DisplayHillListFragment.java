@@ -1,13 +1,5 @@
 package uk.colessoft.android.hilllist.fragments;
 
-import java.text.DecimalFormat;
-import java.util.Date;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
-import uk.colessoft.android.hilllist.activities.Main;
-import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -26,7 +18,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.util.Log;
@@ -43,6 +34,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
+import java.util.Date;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
+import uk.colessoft.android.hilllist.activities.Main;
+import uk.colessoft.android.hilllist.activities.PreferencesActivity;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class DisplayHillListFragment extends Fragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {

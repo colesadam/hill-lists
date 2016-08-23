@@ -16,12 +16,6 @@
 package uk.colessoft.android.hilllist.overlays;
 
 
-
-import java.util.List;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.views.BalloonOverlayView;
-
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +28,11 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
+import java.util.List;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.views.BalloonOverlayView;
 
 /**
  * An abstract extension of ItemizedOverlay for displaying an information balloon

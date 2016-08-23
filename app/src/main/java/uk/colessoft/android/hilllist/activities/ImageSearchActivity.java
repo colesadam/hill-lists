@@ -1,5 +1,20 @@
 package uk.colessoft.android.hilllist.activities;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
+import android.util.Log;
+import android.widget.Gallery;
+
+import com.github.droidfu.adapters.WebGalleryAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,23 +28,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import uk.colessoft.android.hilllist.R;
-import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
-import android.util.Log;
-import android.widget.Gallery;
-
-import com.github.droidfu.adapters.WebGalleryAdapter;
 
 public class ImageSearchActivity extends FragmentActivity implements
 		LoaderManager.LoaderCallbacks<ArrayList> {

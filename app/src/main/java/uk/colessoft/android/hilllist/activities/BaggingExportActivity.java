@@ -1,18 +1,7 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.activities.dialogs.FolderPicker;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.objects.TinyHill;
-
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
-
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +9,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activities.dialogs.FolderPicker;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class BaggingExportActivity extends Activity implements OnClickListener,
 		DialogInterface.OnClickListener {

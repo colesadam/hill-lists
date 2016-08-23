@@ -1,24 +1,5 @@
 package uk.colessoft.android.hilllist.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.activities.AdamsSpecialInterface;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSelectedListener;
-import uk.colessoft.android.hilllist.objects.Hill;
-import uk.colessoft.android.hilllist.objects.TinyHill;
-import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay;
-import uk.colessoft.android.hilllist.overlays.ManyHillsOverlay;
-
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
@@ -29,6 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ToggleButton;
+
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activities.AdamsSpecialInterface;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.TinyHill;
+import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay;
+import uk.colessoft.android.hilllist.overlays.ManyHillsOverlay;
 
 public class NearbyHillsMapFragment extends Fragment {
 

@@ -1,24 +1,5 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.objects.Business;
-import uk.colessoft.android.hilllist.objects.ScootXMLHandler;
-import uk.colessoft.android.hilllist.objects.TinyHill;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -27,6 +8,23 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.widget.TextView;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.model.Business;
+import uk.colessoft.android.hilllist.model.ScootXMLHandler;
 
 public class BusinessDetailActivity extends FragmentActivity implements
 		LoaderManager.LoaderCallbacks<Business> {

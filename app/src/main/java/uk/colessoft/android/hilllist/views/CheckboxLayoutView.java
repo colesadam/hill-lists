@@ -1,10 +1,11 @@
 package uk.colessoft.android.hilllist.views;
 
-import uk.colessoft.android.hilllist.R;
 import android.content.Context;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
+
+import uk.colessoft.android.hilllist.R;
 
 public class CheckboxLayoutView extends LinearLayout implements Checkable 
 { 
