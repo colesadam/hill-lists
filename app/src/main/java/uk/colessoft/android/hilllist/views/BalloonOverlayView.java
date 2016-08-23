@@ -15,7 +15,6 @@
 
 package uk.colessoft.android.hilllist.views;
 
-import uk.colessoft.android.hilllist.R;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.maps.OverlayItem;
+
+import uk.colessoft.android.hilllist.R;
 
 /**
  * A view representing a MapView marker information balloon.

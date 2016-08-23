@@ -1,10 +1,5 @@
 package uk.colessoft.android.hilllist.utility;
 
-import java.util.ArrayList;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -13,6 +8,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.SimpleCursorAdapter;
+
+import java.util.ArrayList;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class CheckboxCursorAdapter extends SimpleCursorAdapter {
 

@@ -1,10 +1,5 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,8 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableRow;
 import android.widget.TextView;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class WelshHillsActivity extends Activity {
 

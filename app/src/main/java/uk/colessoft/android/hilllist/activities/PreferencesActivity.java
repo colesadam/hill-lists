@@ -1,19 +1,12 @@
 package uk.colessoft.android.hilllist.activities;
 
-import uk.colessoft.android.hilllist.R;
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+
+import uk.colessoft.android.hilllist.R;
 
 public class PreferencesActivity extends PreferenceActivity{
 	CheckBox metricHeights;CheckBox metricDistances;

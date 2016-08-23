@@ -35,10 +35,10 @@ import javax.xml.parsers.SAXParserFactory;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.objects.Business;
-import uk.colessoft.android.hilllist.objects.Hill;
-import uk.colessoft.android.hilllist.objects.ScootXMLHandler;
-import uk.colessoft.android.hilllist.objects.TinyHill;
+import uk.colessoft.android.hilllist.model.Business;
+import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.ScootXMLHandler;
+import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.overlays.BusinessSearchOverlay;
 import uk.colessoft.android.hilllist.overlays.SingleMarkerOverlay;
 

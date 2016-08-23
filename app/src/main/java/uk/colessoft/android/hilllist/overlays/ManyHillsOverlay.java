@@ -1,11 +1,5 @@
 package uk.colessoft.android.hilllist.overlays;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.activities.HillDetailFragmentActivity;
-import uk.colessoft.android.hilllist.objects.TinyHill;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -23,6 +17,13 @@ import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MapView.LayoutParams;
 import com.google.android.maps.OverlayItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activities.HillDetailFragmentActivity;
+import uk.colessoft.android.hilllist.model.TinyHill;
 
 public class ManyHillsOverlay extends ItemizedOverlay {
 	private Drawable marker;

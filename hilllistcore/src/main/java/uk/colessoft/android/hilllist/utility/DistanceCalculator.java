@@ -1,7 +1,5 @@
 package uk.colessoft.android.hilllist.utility;
 
-import com.google.android.maps.GeoPoint;
-
 public class DistanceCalculator {
 
 	private static double Radius=6371D;

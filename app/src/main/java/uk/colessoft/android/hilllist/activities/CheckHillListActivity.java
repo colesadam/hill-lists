@@ -1,10 +1,5 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.text.DecimalFormat;
-import java.util.Date;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,6 +22,12 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
+import java.util.Date;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class CheckHillListActivity extends Activity {
 	/** Called when the activity is first created. */

@@ -1,12 +1,10 @@
 package uk.colessoft.android.hilllist.activities;
 
-import uk.colessoft.android.hilllist.R;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+
+import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 

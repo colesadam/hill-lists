@@ -1,19 +1,16 @@
 package uk.colessoft.android.hilllist.overlays;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+
+import com.google.android.maps.MapView;
+import com.google.android.maps.OverlayItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.colessoft.android.hilllist.objects.TinyHill;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.widget.LinearLayout;
-
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapView;
-import com.google.android.maps.OverlayItem;
+import uk.colessoft.android.hilllist.model.TinyHill;
 
 public class BalloonManyHillsOverlay extends BalloonItemizedOverlay {
 	private Drawable marker;

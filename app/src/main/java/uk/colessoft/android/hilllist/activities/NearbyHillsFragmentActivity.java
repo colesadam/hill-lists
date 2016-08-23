@@ -1,18 +1,16 @@
 package uk.colessoft.android.hilllist.activities;
 
-import uk.colessoft.android.hilllist.R;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
+
+import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.MyLocationListener;
-import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.OnHillSelectedListener;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.OnLocationFoundListener;
 import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.HillTappedListener;
 

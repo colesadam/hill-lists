@@ -36,7 +36,8 @@ import uk.colessoft.android.hilllist.activities.ImageSearchActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.objects.Hill;
+import uk.colessoft.android.hilllist.model.Hill;
+
 
 public class HillDetailFragment extends Fragment {
 	private HillDbAdapter dbAdapter;

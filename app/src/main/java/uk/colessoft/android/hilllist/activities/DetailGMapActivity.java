@@ -1,25 +1,9 @@
 package uk.colessoft.android.hilllist.activities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
-import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
-import uk.colessoft.android.hilllist.objects.Hill;
-import uk.colessoft.android.hilllist.objects.TinyHill;
-import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay;
-import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.HillTappedListener;
-import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.MapOnHillSelectedListener;
-import uk.colessoft.android.hilllist.overlays.ManyHillsOverlay;
-import uk.colessoft.android.hilllist.overlays.SingleHillOverlay;
-import uk.colessoft.android.hilllist.overlays.SingleMarkerOverlay;
-import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.google.android.maps.GeoPoint;
@@ -36,6 +19,19 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.TinyHill;
+import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay;
+import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.HillTappedListener;
+import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.MapOnHillSelectedListener;
+import uk.colessoft.android.hilllist.overlays.SingleMarkerOverlay;
+import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
 public class DetailGMapActivity extends MapActivity implements MapOnHillSelectedListener,HillTappedListener{
 	static final private int SHOW_NEARBY = Menu.FIRST;

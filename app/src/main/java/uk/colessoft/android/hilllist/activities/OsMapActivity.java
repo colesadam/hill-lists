@@ -1,13 +1,11 @@
 package uk.colessoft.android.hilllist.activities;
 
-import uk.colessoft.android.hilllist.R;
 import android.app.Activity;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebSettings;
+
+import uk.colessoft.android.hilllist.R;
 
 public class OsMapActivity extends Activity {
 	private WebView webView;
