@@ -1,4 +1,4 @@
-package uk.colessoft.android.hilllist.objects;
+package uk.colessoft.android.hilllist.model;
 
 public class TinyHill {
 	public int _id;

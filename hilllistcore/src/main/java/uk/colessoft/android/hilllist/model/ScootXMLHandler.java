@@ -1,11 +1,10 @@
-package uk.colessoft.android.hilllist.objects;
-
-import java.util.ArrayList;
-import java.util.List;
+package uk.colessoft.android.hilllist.model;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
 
 public class ScootXMLHandler extends DefaultHandler {
 	StringBuffer buff = null;
