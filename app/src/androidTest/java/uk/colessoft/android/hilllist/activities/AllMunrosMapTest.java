@@ -21,6 +21,7 @@ import uk.colessoft.android.hilllist.R;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -34,7 +35,7 @@ import static org.hamcrest.Matchers.allOf;
 public class AllMunrosMapTest {
 
     @Rule
-    public ActivityTestRule<SplashScreenActivity> mActivityTestRule = new ActivityTestRule<>(SplashScreenActivity.class);
+    public ActivityTestRule<Main> mActivityTestRule = new ActivityTestRule<>(Main.class);
 
     @Test
     public void allMunrosMapTest() {
@@ -54,16 +55,21 @@ public class AllMunrosMapTest {
                 allOf(withId(android.R.id.title), withText("Show hills on Map"), isDisplayed()));
         textView2.perform(click());
 
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.balloon_item_title), withText("Ben Nevis"),
+        ViewInteraction viewGroup = onView(
+                allOf(withId(R.id.many_map_view),
                         childAtPosition(
-                                allOf(withId(R.id.balloon_inner_layout),
+                                allOf(withId(R.id.many_map_rel),
                                         childAtPosition(
-                                                withId(R.id.balloon_main_layout),
+                                                withId(R.id.hills_map_fragment),
                                                 0)),
                                 0),
                         isDisplayed()));
-        textView3.check(matches(withText("Ben Nevis")));
+        viewGroup.check(matches(isDisplayed()));
+        pressBack();
+
+        pressBack();
+
+        pressBack();
 
     }
 
