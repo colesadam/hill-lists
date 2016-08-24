@@ -5,5 +5,18 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test/java'
+        }
+    }
+}
+
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
