@@ -23,6 +23,6 @@ android:
     # - sys-img-armeabi-v7a-android-22
     #- sys-img-x86-android-22
     
-  script:
-    - ./gradlew build connectedCheck -x connectedAndroidTest -x :app:connectedDebugAndroidTest
+script:
+  - ./gradlew build connectedCheck -x connectedAndroidTest -x :app:connectedDebugAndroidTest
 
