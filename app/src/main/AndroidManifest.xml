@@ -41,6 +41,9 @@
 		<activity android:name=".activities.PreferencesActivity"></activity>
 		<activity android:name=".activities.ImageSearchActivity"></activity>
 		<activity android:name=".activities.OsMapActivity"></activity>
+		<meta-data
+			android:name="com.google.android.maps.v2.API_KEY"
+			android:value="AIzaSyDpHHsUKNj-VYBmQcCykBYf4fhJJxhZWkg" />
 	</application>
 	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="11" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

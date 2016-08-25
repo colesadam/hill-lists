@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 'Google Inc.:Google APIs:22'
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 'Google Inc.:Google APIs:23'
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "uk.colessoft.android.hilllist"
@@ -22,9 +22,10 @@ android {
 
 dependencies {
     compile files('../libs/droid-fu-1.0-SNAPSHOT.jar')
-    compile files('../libs/android-support-v4-r11-googlemaps.jar')
+
     compile project(path: ':hilllistcore')
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
 }
