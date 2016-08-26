@@ -15,8 +15,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.HillTapped
 import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.MapOnHillSelectedListener;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
-public class DetailGMapActivity extends FragmentActivity implements OnMapReadyCallback, MapOnHillSelectedListener, HillTappedListener {
+public class DetailGMapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
     static final private int SHOW_NEARBY = Menu.FIRST;
 
     private HillDbAdapter dbAdapter;
@@ -104,29 +107,38 @@ public class DetailGMapActivity extends FragmentActivity implements OnMapReadyCa
         Cursor hillsCursor = dbAdapter
                 .getAllHillsCursor();
 
-        List<TinyHill> hillPoints = new ArrayList<TinyHill>();
-        Drawable marker = getResources().getDrawable(R.drawable.yellow_hill);
-        Drawable cmarker = getResources().getDrawable(R.drawable.green_hill);
-        marker.setBounds(0, 0, marker.getIntrinsicWidth(),
-                marker.getIntrinsicHeight());
-        cmarker.setBounds(0, 0, cmarker.getIntrinsicWidth(),
-                cmarker.getIntrinsicHeight());
+        BitmapDescriptor marker = BitmapDescriptorFactory
+                .fromResource(R.drawable.yellow_hill);
+        BitmapDescriptor cmarker = BitmapDescriptorFactory
+                .fromResource(R.drawable.green_hill);
 
+        double smallestLat = 90.0;
+        double largestLat = -90.0;
+        double smallestLong = 90.0;
+        double largestLong = -90.0;
         // iterate over cursor and get hill positions
         // Make sure there is at least one row.
         if (hillsCursor.moveToFirst()) {
             // Iterate over each cursor.
             do {
                 Double lat = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(HillDbAdapter.KEY_LATITUDE)) * 1E6;
+                        .getColumnIndex(HillDbAdapter.KEY_LATITUDE));
                 Double lng = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(HillDbAdapter.KEY_LONGITUDE)) * 1E6;
+                        .getColumnIndex(HillDbAdapter.KEY_LONGITUDE));
 
-                double distanceKm = DistanceCalculator.CalculationByDistance(hill.getLatitude(), lat / 1E6, hill.getLongitude(), lng / 1E6);
+
+                double distanceKm = DistanceCalculator.CalculationByDistance(hill.getLatitude(), lat, hill.getLongitude(), lng);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_ID));
                 if (distanceKm < nearRadius && row_id != rowid) {
-
+                    if (lat < smallestLat)
+                        smallestLat = lat;
+                    if (lat > largestLat)
+                        largestLat = lat;
+                    if (lng < smallestLong)
+                        smallestLong = lng;
+                    if (lng > largestLong)
+                        largestLong = lng;
 
                     String hillname = hillsCursor.getString(hillsCursor
                             .getColumnIndex(HillDbAdapter.KEY_HILLNAME));
@@ -142,78 +154,58 @@ public class DetailGMapActivity extends FragmentActivity implements OnMapReadyCa
                         tinyHill.setClimbed(false);
                     }
 
-                    hillPoints.add(tinyHill);
+                    BitmapDescriptor hillDescriptor;
+                    if (tinyHill.isClimbed()) {
+                        hillDescriptor = cmarker;
+                    } else hillDescriptor = marker;
                     LatLng hillPosition = new LatLng(tinyHill.getLatitude(), tinyHill.getLongitude());
-                    map
-                            .addMarker(
-                                    new MarkerOptions()
-                                            .draggable(false)
-                                            .position(hillPosition)
-                                            .title(tinyHill.getHillname()
-                                                    + " m"
-                                            )
-                                            .icon(BitmapDescriptorFactory
-                                                    .fromResource(R.drawable.yellow_hill))
-                                            .anchor(0.5F, 0.5F)
-                            );
+                    map.addMarker(new MarkerOptions()
+                            .draggable(false)
+                            .position(hillPosition)
+                            .title(tinyHill.getHillname()
+
+                            )
+                            .icon(hillDescriptor)
+                            .anchor(0.5F, 0.5F)
+                    ).setTag(tinyHill._id);
                 }
 
             } while (hillsCursor.moveToNext());
+            final LatLngBounds bounds = new LatLngBounds(new LatLng(
+                    smallestLat, smallestLong), new LatLng(largestLat,
+                    largestLong));
+            map.animateCamera(
+                    CameraUpdateFactory
+                            .newLatLngBounds(
+                                    bounds, 50));
         }
         hillsCursor.close();
         dbAdapter.close();
-        //BalloonManyHillsOverlay manyHillsOverlay = new BalloonManyHillsOverlay(marker,
-        //       mapView);
-
-        for (TinyHill gc : hillPoints) {
-//            OverlayItem oi = new OverlayItem(new GeoPoint(gc.getLatitude()
-//                    .intValue(), gc.getLongitude().intValue()),
-//                    gc.getHillname(), String.valueOf(gc._id));
-//            if (gc.isClimbed()) oi.setMarker(cmarker);
-//            else oi.setMarker(marker);
-//            items.add(oi);
-        }
-}
-
-
-    public void mapOnHillSelected(int rowid) {
-
 
     }
 
-    public void hillTapped(int rowid) {
-
-
-        Intent intent = new Intent(DetailGMapActivity.this,
-                HillDetailFragmentActivity.class);
-
-        intent.putExtra("rowid", rowid);
-
-        startActivity(intent);
-
-
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        map.setOnInfoWindowClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         LatLng hillPosition = new LatLng(hill.getLatitude(), hill.getLongitude());
-        map
-                .addMarker(
-                        new MarkerOptions()
-                                .draggable(false)
-                                .position(hillPosition)
-                                .title(hill.getHillname())
-                                .snippet(String.valueOf(hill.getHeightm())
-                                        + " m"
-                                )
-                                .icon(BitmapDescriptorFactory
-                                        .fromResource(R.drawable.purple_hill))
-                                .anchor(0.5F, 0.5F)
-                );
+        Marker marker = map.addMarker(new MarkerOptions()
+                .draggable(false)
+                .position(hillPosition)
+                .title(hill.getHillname())
+                .snippet(String.valueOf(hill.getHeightm())
+                        + " m"
+                )
+                .icon(BitmapDescriptorFactory
+                        .fromResource(R.drawable.purple_hill))
+                .anchor(0.5F, 0.5F)
+        );
+        marker.setTag(hill.get_id());
+        marker.showInfoWindow();
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 6));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));
 
         final ToggleButton mapButton = (ToggleButton) findViewById(R.id.satellite_button);
         mapButton.setChecked(true);
@@ -229,6 +221,18 @@ public class DetailGMapActivity extends FragmentActivity implements OnMapReadyCa
             }
 
         });
+
+    }
+
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(DetailGMapActivity.this,
+                HillDetailFragmentActivity.class);
+
+        intent.putExtra("rowid", (Integer) marker.getTag());
+
+        startActivity(intent);
 
     }
 }
