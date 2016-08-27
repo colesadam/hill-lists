@@ -1,10 +1,8 @@
 package uk.colessoft.android.hilllist.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
 
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
@@ -40,11 +38,11 @@ public class ListHillsMapFragmentActivity extends FragmentActivity implements
 		 * get a reference to mapview.
 		 */
 
-		LayoutInflater inflater = (LayoutInflater) (this
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
-		mapView = (MapView) inflater.inflate(R.layout.mapview, null);
-
-		fView = mapView;
+//		LayoutInflater inflater = (LayoutInflater) (this
+//				.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+//		mapView = (MapView) inflater.inflate(R.layout.mapview, null);
+//
+//		fView = mapView;
 
 	}
 
@@ -63,11 +61,6 @@ public class ListHillsMapFragmentActivity extends FragmentActivity implements
 
 	}
 
-/*	@Override
-	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
 
 	public void mapOnHillSelected(int rowid) {
 		HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
