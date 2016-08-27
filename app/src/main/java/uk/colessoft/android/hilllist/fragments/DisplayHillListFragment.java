@@ -135,6 +135,8 @@ public class DisplayHillListFragment extends Fragment implements
 		public void onHillSelected(int rowid);
 	}
 
+
+
 	private static class UpdateHillsTaskLoader extends AsyncTaskLoader<Cursor> {
 		private Cursor data;
 		private String where = null;

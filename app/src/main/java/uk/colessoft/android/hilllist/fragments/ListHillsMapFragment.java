@@ -32,7 +32,7 @@ import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSel
 import uk.colessoft.android.hilllist.model.TinyHill;
 
 public class ListHillsMapFragment extends SupportMapFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
+        LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener,OnMapReadyCallback {
 
     private HillDbAdapter dbAdapter;
     //	private MapView mapView;
@@ -42,6 +42,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     private double lat;
     private double lng;
     private OnHillSelectedListener hillSelectedListener;
+    private MapOnHillSelectedListener mapOnHillSelectedListener;
     private View viewer;
     private ProgressDialog dialog;
     private String hillType;
@@ -58,6 +59,14 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     private BitmapDescriptor marker;
     private BitmapDescriptor cmarker;
 
+    public interface HillTappedListener {
+        public void hillTapped(int rowid);
+    }
+    public interface MapOnHillSelectedListener {
+        public void mapOnHillSelected(int rowid);
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +81,8 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         dbAdapter = new HillDbAdapter(getActivity());
         try {
             hillSelectedListener = (OnHillSelectedListener) activity;
+            mapOnHillSelectedListener = (MapOnHillSelectedListener) activity;
+
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHillSelectedListener");
@@ -156,7 +167,7 @@ this.getMapAsync(this);
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-
+        (hillSelectedListener).onHillSelected((Integer)marker.getTag());
     }
 
     @Override
@@ -164,7 +175,14 @@ this.getMapAsync(this);
         getLoaderManager().restartLoader(0, null, this);
         map = googleMap;
         map.setOnInfoWindowClickListener(this);
+        map.setOnMarkerClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        ((MapOnHillSelectedListener)getActivity()).mapOnHillSelected((Integer)marker.getTag());
+        return false;
     }
 
 

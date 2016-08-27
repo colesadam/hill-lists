@@ -11,13 +11,14 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
+import uk.colessoft.android.hilllist.fragments.ListHillsMapFragment;
 import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay;
 import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.HillTappedListener;
 import uk.colessoft.android.hilllist.overlays.ManyHillsOverlay;
 
 public class ListHillsMapFragmentActivity extends FragmentActivity implements
 		DisplayHillListFragment.OnHillSelectedListener, HillTappedListener,
-		BalloonManyHillsOverlay.MapOnHillSelectedListener,
+		ListHillsMapFragment.MapOnHillSelectedListener,
 		AdamsSpecialInterface {
 
 	private HillDbAdapter dbAdapter;
