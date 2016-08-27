@@ -16,6 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
@@ -33,14 +37,14 @@ import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay;
 import uk.colessoft.android.hilllist.overlays.ManyHillsOverlay;
 
-public class ListHillsMapFragment extends Fragment implements
-LoaderManager.LoaderCallbacks<Cursor>{
+public class ListHillsMapFragment extends SupportMapFragment implements
+LoaderManager.LoaderCallbacks<Cursor>,GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
 
 	private HillDbAdapter dbAdapter;
-	private MapView mapView;
-	private MapController mapController;
-	private BalloonManyHillsOverlay manyHillsOverlay;
-	private ManyHillsOverlay cmanyHillsOverlay;
+//	private MapView mapView;
+//	private MapController mapController;
+//	private BalloonManyHillsOverlay manyHillsOverlay;
+//	private ManyHillsOverlay cmanyHillsOverlay;
 	private double lat;
 	private double lng;
 	private OnHillSelectedListener hillSelectedListener;
@@ -56,6 +60,8 @@ LoaderManager.LoaderCallbacks<Cursor>{
 	private Drawable cmarker;
 	private ArrayList<OverlayItem> items;
 	private List<Overlay> overlays;
+
+	private GoogleMap map;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,25 +82,25 @@ LoaderManager.LoaderCallbacks<Cursor>{
                     + " must implement OnHillSelectedListener");
         }
     }
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	        Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		viewer =  inflater.inflate(R.layout.many_hills_map, container, false);
-		//return ((ListHillsMapFragmentActivity)getActivity()).fView;
-
-		return viewer;
-		
-
-	}
+//
+//	@Override
+//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//	        Bundle savedInstanceState) {
+//		// TODO Auto-generated method stub
+//		viewer =  inflater.inflate(R.layout.many_hills_map, container, false);
+//		//return ((ListHillsMapFragmentActivity)getActivity()).fView;
+//
+//		return viewer;
+//
+//
+//	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		final MapView mapView=((AdamsSpecialInterface)getActivity()).getMapView();
-		((ViewGroup)viewer).addView(mapView,0);
+		//final MapView mapView=((AdamsSpecialInterface)getActivity()).getMapView();
+		//((ViewGroup)viewer).addView(mapView,0);
 		
 		
 		/*test*/
@@ -113,8 +119,6 @@ LoaderManager.LoaderCallbacks<Cursor>{
 		passedRowId=getActivity().getIntent().getExtras().getInt("selectedHill");
 		getActivity().setTitle(title);
 
-		
-		mapView.setSatellite(true);
 
 		final ToggleButton mapButton = (ToggleButton) ((ViewGroup)viewer).findViewById(R.id.satellite_button);
 		mapButton.setChecked(true);
@@ -122,9 +126,9 @@ LoaderManager.LoaderCallbacks<Cursor>{
 
 			public void onClick(View v) {
 				if (mapButton.isChecked()) {
-					mapView.setSatellite(true);
+					map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 				} else {
-					mapView.setSatellite(false);
+					map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 				}
 
 			}
@@ -155,6 +159,18 @@ LoaderManager.LoaderCallbacks<Cursor>{
 		
 		getLoaderManager().restartLoader(0, null, this);
 		
+	}
+
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+
+	}
+
+	@Override
+	public void onMapReady(GoogleMap googleMap) {
+		map = googleMap;
+		map.setOnInfoWindowClickListener(this);
+		map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 	}
 
 
