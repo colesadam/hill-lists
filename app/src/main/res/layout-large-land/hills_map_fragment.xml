@@ -6,7 +6,7 @@
 		android:layout_width="0dp" android:layout_height="match_parent"
 		android:id="@+id/hill_detail_fragment" android:layout_weight="50">
 	</fragment>
-	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<RelativeLayout
 		android:layout_width="150dp" android:layout_height="match_parent"
 		android:id="@+id/many_map_rel"
 		android:layout_weight="50">
