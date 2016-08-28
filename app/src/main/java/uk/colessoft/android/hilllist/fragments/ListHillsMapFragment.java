@@ -222,7 +222,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                         .getColumnIndex(HillDbAdapter.KEY_LATITUDE));
                 lng = hillsCursor.getDouble(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_LONGITUDE));
-                llb.addLatLang(lat,lng);
+                llb.addLatLong(lat,lng);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_ID));
                 if (passedRowId == 0) passedRowId = row_id;

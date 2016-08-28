@@ -8,7 +8,7 @@ public class LatLangBounds {
 
     private Set<Double[]> latLongs = new HashSet<Double[]>();
 
-    public void addLatLang(Double latitude, Double longitude) {
+    public void addLatLong(Double latitude, Double longitude) {
         latLongs.add(new Double[]{latitude, longitude});
     }
 

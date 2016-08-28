@@ -122,7 +122,7 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_ID));
                 if (distanceKm < nearRadius && row_id != rowid) {
-                    llb.addLatLang(lat,lng);
+                    llb.addLatLong(lat,lng);
 
                     String hillname = hillsCursor.getString(hillsCursor
                             .getColumnIndex(HillDbAdapter.KEY_HILLNAME));
