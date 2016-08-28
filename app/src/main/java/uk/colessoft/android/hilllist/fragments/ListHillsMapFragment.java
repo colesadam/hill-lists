@@ -9,6 +9,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,25 +22,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSelectedListener;
 import uk.colessoft.android.hilllist.model.TinyHill;
+import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
 public class ListHillsMapFragment extends SupportMapFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener,OnMapReadyCallback {
+        LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private HillDbAdapter dbAdapter;
-    //	private MapView mapView;
-//	private MapController mapController;
-//	private BalloonManyHillsOverlay manyHillsOverlay;
-//	private ManyHillsOverlay cmanyHillsOverlay;
+
     private double lat;
     private double lng;
     private OnHillSelectedListener hillSelectedListener;
@@ -52,16 +47,10 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     private int passedRowId;
     private int selectedIndex = 0;
 
-    private ArrayList<OverlayItem> items;
-    private List<Overlay> overlays;
-
     private GoogleMap map;
     private BitmapDescriptor marker;
     private BitmapDescriptor cmarker;
 
-    public interface HillTappedListener {
-        public void hillTapped(int rowid);
-    }
     public interface MapOnHillSelectedListener {
         public void mapOnHillSelected(int rowid);
     }
@@ -105,18 +94,28 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
-        //final MapView mapView=((AdamsSpecialInterface)getActivity()).getMapView();
-        //((ViewGroup)viewer).addView(mapView,0);
 
-		
-		/*test*/
 
-this.getMapAsync(this);
+        final ToggleButton mapButton = (ToggleButton) getActivity().findViewById(R.id.satellite_button);
+        mapButton.setChecked(true);
+        mapButton.setOnClickListener(new Button.OnClickListener() {
+
+            public void onClick(View v) {
+                if (mapButton.isChecked()) {
+                    map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                } else {
+                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                }
+
+            }
+
+        });
+
+        this.getMapAsync(this);
         dbAdapter = new HillDbAdapter(getActivity());
         dbAdapter.open();
 
         String title;
-
 
         hillType = getActivity().getIntent().getExtras().getString("groupId");
         where = getActivity().getIntent().getExtras().getString("moreWhere");
@@ -126,48 +125,17 @@ this.getMapAsync(this);
         passedRowId = getActivity().getIntent().getExtras().getInt("selectedHill");
         getActivity().setTitle(title);
 
-
-//        final ToggleButton mapButton = (ToggleButton) ((ViewGroup) viewer).findViewById(R.id.satellite_button);
-//        mapButton.setChecked(true);
-//        mapButton.setOnClickListener(new Button.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                if (mapButton.isChecked()) {
-//                    map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-//                } else {
-//                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//                }
-//
-//            }
-//
-//        });
-
-//		mapController = mapView.getController();
-//		mapController.setZoom(8);
-//		mapController.setCenter(new GeoPoint(new Double(lat).intValue(),
-//				new Double(lng).intValue()));
-//		mapView.setBuiltInZoomControls(true);
-
         marker = BitmapDescriptorFactory
                 .fromResource(R.drawable.yellow_hill);
         cmarker = BitmapDescriptorFactory
                 .fromResource(R.drawable.green_hill);
-//
-//
-//
-//		// Add the Overlay
-//		manyHillsOverlay = new BalloonManyHillsOverlay(marker, mapView);
-//		items = new ArrayList<OverlayItem>();
-//
-//
-//		overlays = mapView.getOverlays();
 
 
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        (hillSelectedListener).onHillSelected((Integer)marker.getTag());
+        (hillSelectedListener).onHillSelected((Integer) marker.getTag());
     }
 
     @Override
@@ -181,7 +149,7 @@ this.getMapAsync(this);
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        ((MapOnHillSelectedListener)getActivity()).mapOnHillSelected((Integer)marker.getTag());
+        mapOnHillSelectedListener.mapOnHillSelected((Integer) marker.getTag());
         return false;
     }
 
@@ -197,7 +165,7 @@ this.getMapAsync(this);
 
         public UpdateHillsTaskLoader(Context context) {
             super(context);
-            // TODO Auto-generated constructor stub
+
         }
 
         public UpdateHillsTaskLoader(Context context, String hilltype,
@@ -244,10 +212,7 @@ this.getMapAsync(this);
 
     private void update(Cursor hillsCursor) {
 
-        double smallestLat = 90.0;
-        double largestLat = -90.0;
-        double smallestLong = 90.0;
-        double largestLong = -90.0;
+        LatLangBounds llb = new LatLangBounds();
         // iterate over cursor and get hill positions
         // Make sure there is at least one row.
         if (hillsCursor.moveToFirst()) {
@@ -257,15 +222,7 @@ this.getMapAsync(this);
                         .getColumnIndex(HillDbAdapter.KEY_LATITUDE));
                 lng = hillsCursor.getDouble(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_LONGITUDE));
-
-                if (lat < smallestLat)
-                    smallestLat = lat;
-                if (lat > largestLat)
-                    largestLat = lat;
-                if (lng < smallestLong)
-                    smallestLong = lng;
-                if (lng > largestLong)
-                    largestLong = lng;
+                llb.addLatLang(lat,lng);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_ID));
                 if (passedRowId == 0) passedRowId = row_id;
@@ -316,8 +273,8 @@ this.getMapAsync(this);
         }
 
         final LatLngBounds bounds = new LatLngBounds(new LatLng(
-                smallestLat, smallestLong), new LatLng(largestLat,
-                largestLong));
+                llb.getSmallestLat(), llb.getSmallestLong()), new LatLng(llb.getLargestLat(),
+                llb.getLargestLong()));
         map.animateCamera(
                 CameraUpdateFactory
                         .newLatLngBounds(

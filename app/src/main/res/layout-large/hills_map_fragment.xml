@@ -6,12 +6,24 @@
 		android:layout_height="0dp" android:layout_width="match_parent"
 		android:id="@+id/hill_detail_fragment" android:layout_weight="50">
 	</fragment>
-	<fragment
 
-		android:name="uk.colessoft.android.hilllist.fragments.ListHillsMapFragment"
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_height="150dp" android:layout_width="match_parent"
-		android:id="@+id/hills_map_fragment" android:layout_weight="50"
-		>
-	</fragment>
+		android:id="@+id/many_map_rel"
+		android:layout_weight="50">
+
+		<fragment
+			android:id="@+id/hills_map_fragment"
+			android:name="uk.colessoft.android.hilllist.fragments.ListHillsMapFragment"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			/>
+
+		<ToggleButton android:id="@+id/satellite_button"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textOn="@string/satellite_button" android:textOff="@string/satellite_button"
+			android:layout_alignParentRight="true" />
+
+	</RelativeLayout>
 
 </LinearLayout>

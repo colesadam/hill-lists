@@ -2,7 +2,6 @@ package uk.colessoft.android.hilllist.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -22,16 +21,12 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
-import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.HillTappedListener;
-import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.MapOnHillSelectedListener;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
+import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
 public class DetailGMapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
     static final private int SHOW_NEARBY = Menu.FIRST;
@@ -111,11 +106,7 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
                 .fromResource(R.drawable.yellow_hill);
         BitmapDescriptor cmarker = BitmapDescriptorFactory
                 .fromResource(R.drawable.green_hill);
-
-        double smallestLat = 90.0;
-        double largestLat = -90.0;
-        double smallestLong = 90.0;
-        double largestLong = -90.0;
+        LatLangBounds llb = new LatLangBounds();
         // iterate over cursor and get hill positions
         // Make sure there is at least one row.
         if (hillsCursor.moveToFirst()) {
@@ -131,14 +122,7 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_ID));
                 if (distanceKm < nearRadius && row_id != rowid) {
-                    if (lat < smallestLat)
-                        smallestLat = lat;
-                    if (lat > largestLat)
-                        largestLat = lat;
-                    if (lng < smallestLong)
-                        smallestLong = lng;
-                    if (lng > largestLong)
-                        largestLong = lng;
+                    llb.addLatLang(lat,lng);
 
                     String hillname = hillsCursor.getString(hillsCursor
                             .getColumnIndex(HillDbAdapter.KEY_HILLNAME));
@@ -172,8 +156,8 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
 
             } while (hillsCursor.moveToNext());
             final LatLngBounds bounds = new LatLngBounds(new LatLng(
-                    smallestLat, smallestLong), new LatLng(largestLat,
-                    largestLong));
+                    llb.getSmallestLat(), llb.getSmallestLong()), new LatLng(llb.getLargestLat(),
+                    llb.getLargestLong()));
             map.animateCamera(
                     CameraUpdateFactory
                             .newLatLngBounds(
