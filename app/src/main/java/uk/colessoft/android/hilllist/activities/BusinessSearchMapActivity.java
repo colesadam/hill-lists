@@ -57,7 +57,7 @@ public class BusinessSearchMapActivity extends FragmentActivity implements
 	private String search_string;
 	private ArrayList<TinyHill> hillPoints;
 
-	@Override
+	//@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;

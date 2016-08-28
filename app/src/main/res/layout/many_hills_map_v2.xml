@@ -3,11 +3,13 @@
 	android:layout_width="fill_parent"
 	android:id="@+id/many_map_rel"
 	android:layout_height="fill_parent">
-<fragment
-	android:name="uk.colessoft.android.hilllist.fragments.ListHillsMapFragment"
-	android:layout_width="match_parent" android:layout_height="match_parent"
-	android:id="@+id/hills_map_fragment">
-</fragment>
+
+	<fragment
+		android:id="@+id/map"
+		android:name="com.google.android.gms.maps.SupportMapFragment"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		 />
 
 	<ToggleButton android:id="@+id/satellite_button"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -15,4 +17,3 @@
 		android:layout_alignParentRight="true" />
 
 </RelativeLayout>
-
