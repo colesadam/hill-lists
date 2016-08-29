@@ -8,8 +8,22 @@
 		android:layout_width="0dp" android:layout_height="match_parent"
 		android:id="@+id/nearby_hills_fragment" android:layout_weight="50">
 	</fragment>
-	<fragment android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsMapFragment"
-		android:layout_width="150dp" android:layout_height="match_parent"
-		android:id="@+id/nearby_hills_map_fragment" android:layout_weight="50">
-	</fragment>
+	<RelativeLayout
+		android:id="@+id/many_map_rel" android:layout_weight="50"
+		android:layout_width="150dp" android:layout_height="match_parent">
+
+		<fragment android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsMapFragment"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:id="@+id/nearby_hills_map_fragment" >
+		</fragment>
+
+		<ToggleButton
+			android:id="@+id/satellite_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:textOff="@string/satellite_button"
+			android:textOn="@string/satellite_button" />
+	</RelativeLayout>
 </LinearLayout>

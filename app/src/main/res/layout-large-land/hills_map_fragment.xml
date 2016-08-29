@@ -21,7 +21,7 @@
 		<ToggleButton android:id="@+id/satellite_button"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:textOn="@string/satellite_button" android:textOff="@string/satellite_button"
-			android:layout_alignParentRight="true" />
+			android:layout_alignParentLeft="true" />
 
 	</RelativeLayout>
 
