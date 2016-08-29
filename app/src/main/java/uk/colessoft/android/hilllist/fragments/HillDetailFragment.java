@@ -32,7 +32,6 @@ import java.util.HashMap;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.BusinessSearchMapActivity;
 import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
-import uk.colessoft.android.hilllist.activities.ImageSearchActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
@@ -121,14 +120,6 @@ public class HillDetailFragment extends Fragment {
 		intent.putExtra("x", String.valueOf(hill.getXcoord()));
 		intent.putExtra("y", String.valueOf(hill.getYcoord()));
 		startActivity(intent);
-	}
-	
-	protected void imageSearch() {
-		Intent intent=new Intent(getActivity(),ImageSearchActivity.class);
-		intent.putExtra("hillname", hill.getHillname());
-		intent.putExtra("area", hill.getArea());
-		startActivity(intent);
-		
 	}
 
 	private void scootSearch(){

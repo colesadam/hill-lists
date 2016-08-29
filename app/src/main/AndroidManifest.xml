@@ -39,7 +39,6 @@
 		<activity android:label="@string/label_other_GB_hills"
 			android:name=".activities.OtherGBHillsActivity"></activity>
 		<activity android:name=".activities.PreferencesActivity"></activity>
-		<activity android:name=".activities.ImageSearchActivity"></activity>
 		<activity android:name=".activities.OsMapActivity"></activity>
 		<meta-data
 			android:name="com.google.android.maps.v2.API_KEY"
