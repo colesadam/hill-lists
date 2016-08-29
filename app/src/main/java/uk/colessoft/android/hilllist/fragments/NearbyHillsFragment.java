@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -146,12 +145,6 @@ public class NearbyHillsFragment extends Fragment implements
         dist.setVisible(true);
         menu.findItem(R.id.menu_set_range).setVisible(true);
 
-    }
-
-    @Override
-    public void onDestroy() {
-
-        super.onDestroy();
     }
 
     @Override
@@ -364,10 +357,6 @@ public class NearbyHillsFragment extends Fragment implements
         Cursor hillsCursor = dbAdapter.getAllHillsCursor();
 
         nearbyHills = new ArrayList();
-        Drawable marker = getResources().getDrawable(R.drawable.yellow_hill);
-
-        marker.setBounds(0, 0, marker.getIntrinsicWidth(),
-                marker.getIntrinsicHeight());
 
         // iterate over cursor and get hill positions
         // Make sure there is at least one row.
@@ -435,6 +424,7 @@ public class NearbyHillsFragment extends Fragment implements
         public void handleMessage(Message msg) {
             locationProgress.setVisibility(View.GONE);
 
+
         }
     };
     private View locationProgress;
@@ -496,7 +486,7 @@ public class NearbyHillsFragment extends Fragment implements
                 }
 
             };
-             locationFoundListener.showDialog();
+             //locationFoundListener.showDialog();
 
             Thread t = new Thread(showWaitDialog);
             t.start();
@@ -506,7 +496,7 @@ public class NearbyHillsFragment extends Fragment implements
             if (lastLocation != null) {
                 lat1 = lastLocation.getLatitude();
                 lon1 = lastLocation.getLongitude();
-                // locationSet = true;
+                locationSet = true;
 
                 startLoader();
             }
@@ -712,13 +702,7 @@ public class NearbyHillsFragment extends Fragment implements
             Cursor hillsCursor = dbAdapter.getAllHillsCursor();
 
             nearbyHills = new ArrayList();
-            /*
-			 * Drawable marker =
-			 * getResources().getDrawable(R.drawable.yellow_hill);
-			 * 
-			 * marker.setBounds(0, 0, marker.getIntrinsicWidth(),
-			 * marker.getIntrinsicHeight());
-			 */
+
 
             // iterate over cursor and get hill positions
             // Make sure there is at least one row.
@@ -802,11 +786,7 @@ public class NearbyHillsFragment extends Fragment implements
     }
 
     public Loader<ArrayList<Map<String, ?>>> onCreateLoader(int id, Bundle args) {
-		/*
-		 * dialog = new ProgressDialog(getActivity());
-		 * 
-		 * this.dialog.setMessage("Getting Hills..."); this.dialog.show();
-		 */
+
         return new UpdateHillsTaskLoader(getActivity(), orderBy, filterHills,
                 dbAdapter, useMetricDistances, useMetricHeights, lat1, lon1,
                 nearRadius, df2);
