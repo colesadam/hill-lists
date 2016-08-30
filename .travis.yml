@@ -33,5 +33,6 @@ before_script:
   - adb wait-for-device
   - adb shell input keyevent 82 &    
 script:
+  - ulimit -a
   - ./gradlew build connectedAndroidTest --stacktrace
 
