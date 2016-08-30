@@ -12,12 +12,10 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.MyLocationListener;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.OnLocationFoundListener;
-import uk.colessoft.android.hilllist.overlays.BalloonManyHillsOverlay.HillTappedListener;
 
 public class NearbyHillsFragmentActivity extends FragmentActivity
 		implements
 		OnLocationFoundListener,
-		HillTappedListener,
 		uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.OnHillSelectedListener {
 	boolean useMetricHeights;
 	boolean useMetricDistances;

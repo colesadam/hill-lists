@@ -24,8 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.maps.OverlayItem;
-
 import uk.colessoft.android.hilllist.R;
 
 /**
@@ -44,7 +42,7 @@ import uk.colessoft.android.hilllist.R;
  * @author Jeff Gilfelt
  *
  */
-public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
+public class BalloonOverlayView<Item> extends FrameLayout {
 
 	private LinearLayout layout;
 	private TextView title;
@@ -93,16 +91,16 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
 	 * (title and snippet). 
 	 */
 	public void setData(Item item) {
-		
-		layout.setVisibility(VISIBLE);
-		if (item.getTitle() != null) {
-			title.setVisibility(VISIBLE);
-			title.setText(item.getTitle());
-		} else {
-			title.setVisibility(GONE);
-			
-			
-		}
+//
+//		layout.setVisibility(VISIBLE);
+//		if (item.getTitle() != null) {
+//			title.setVisibility(VISIBLE);
+//			title.setText(item.getTitle());
+//		} else {
+//			title.setVisibility(GONE);
+//
+//
+//		}
 		snippet.setVisibility(GONE);/*
 		if (item.getSnippet() != null) {
 			snippet.setVisibility(VISIBLE);

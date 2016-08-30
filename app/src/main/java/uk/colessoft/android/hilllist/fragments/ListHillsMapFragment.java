@@ -77,18 +77,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                     + " must implement OnHillSelectedListener");
         }
     }
-//
-//	@Override
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//	        Bundle savedInstanceState) {
-//		// TODO Auto-generated method stub
-//		viewer =  inflater.inflate(R.layout.many_hills_map, container, false);
-//		//return ((ListHillsMapFragmentActivity)getActivity()).fView;
-//
-//		return viewer;
-//
-//
-//	}
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
