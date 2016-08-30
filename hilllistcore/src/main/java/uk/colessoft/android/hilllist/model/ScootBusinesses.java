@@ -1,16 +1,16 @@
 package uk.colessoft.android.hilllist.model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ScootBusinesses {
 
-	private List<Business> businesses;
+	private ArrayList<Business> businesses;
 
-	public void setBusinesses(List<Business> businesses) {
+	public void setBusinesses(ArrayList<Business> businesses) {
 		this.businesses = businesses;
 	}
 
-	public List<Business> getBusinesses() {
+	public ArrayList<Business> getBusinesses() {
 		return businesses;
 	}
 }

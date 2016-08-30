@@ -392,12 +392,10 @@ public class NearbyHillsFragment extends Fragment implements
 
                     if (useMetricDistances) {
                         hillExtract.put("distance",
-                                new Double(df2.format(distanceKm))
-                                        .doubleValue());
+                                Double.parseDouble(df2.format(distanceKm)));
                     } else {
                         hillExtract.put("distance",
-                                new Double(df2.format(distanceKm / 1.601))
-                                        .doubleValue());
+                                Double.parseDouble(df2.format(distanceKm / 1.601)));
                     }
                     nearbyHills.add(hillExtract);
 
@@ -739,12 +737,10 @@ public class NearbyHillsFragment extends Fragment implements
 
                         if (useMetricDistances) {
                             hillExtract.put("distance",
-                                    new Double(df2.format(distanceKm))
-                                            .doubleValue());
+                                    Double.parseDouble(df2.format(distanceKm)));
                         } else {
                             hillExtract.put("distance",
-                                    new Double(df2.format(distanceKm / 1.601))
-                                            .doubleValue());
+                                    Double.parseDouble(df2.format(distanceKm / 1.601)));
                         }
                         nearbyHills.add(hillExtract);
 

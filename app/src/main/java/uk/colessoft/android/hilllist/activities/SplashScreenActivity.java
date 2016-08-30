@@ -83,7 +83,6 @@ public class SplashScreenActivity extends FragmentActivity {
 										MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 							}
 						});
-				return;
 
 			} else {
 
