@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,11 +33,8 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
     private GoogleMap map;
 
     private Hill hill;
-    private static double nearRadius = 16.09;
     private int rowid;
     private boolean firstRun = true;
-
-    private String title;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,7 +82,7 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         rowid = getIntent().getExtras().getInt("rowid");
-        title = getIntent().getExtras().getString("title");
+        String title = getIntent().getExtras().getString("title");
         setTitle(title);
         dbAdapter = new HillDbAdapter(this);
         dbAdapter.open();
@@ -121,6 +116,7 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
                 double distanceKm = DistanceCalculator.CalculationByDistance(hill.getLatitude(), lat, hill.getLongitude(), lng);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_ID));
+                double nearRadius = 16.09;
                 if (distanceKm < nearRadius && row_id != rowid) {
                     llb.addLatLong(lat,lng);
 
@@ -193,15 +189,11 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
 
         final ToggleButton mapButton = (ToggleButton) findViewById(R.id.satellite_button);
         mapButton.setChecked(true);
-        mapButton.setOnClickListener(new Button.OnClickListener() {
-
-            public void onClick(View v) {
-                if (mapButton.isChecked()) {
-                    map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                } else {
-                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                }
-
+        mapButton.setOnClickListener(v -> {
+            if (mapButton.isChecked()) {
+                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            } else {
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             }
 
         });

@@ -8,7 +8,7 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 public class HillTest {
 
 
-    protected static void grantExternalStoragePermission() {
+    static void grantExternalStoragePermission() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getInstrumentation().getUiAutomation().executeShellCommand(

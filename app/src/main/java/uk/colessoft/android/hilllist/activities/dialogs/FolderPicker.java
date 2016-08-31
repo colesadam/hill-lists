@@ -32,15 +32,15 @@ import uk.colessoft.android.hilllist.R;
 
 public class FolderPicker extends Dialog implements OnItemClickListener, OnClickListener {
 
-	private ListView mFolders;
-	private TextView mCurrentFolder;
+	private final ListView mFolders;
+	private final TextView mCurrentFolder;
 	private Folder mPath;
 	private Folder mFilePath;
-	private File mRootSDCard;
-	private FolderAdapter mAdapter;
-	private OnClickListener mListener;
-	private boolean mAcceptFiles;
-	private View mOkButton;
+	private final File mRootSDCard;
+	private final FolderAdapter mAdapter;
+	private final OnClickListener mListener;
+	private final boolean mAcceptFiles;
+	private final View mOkButton;
 
 	public FolderPicker(Context context, OnClickListener listener, int themeId) {
 		this(context, listener, themeId, false);
@@ -100,14 +100,14 @@ public class FolderPicker extends Dialog implements OnItemClickListener, OnClick
 		}
 		File[] dirs = mPath.listFiles(mDirFilter);
 		Arrays.sort(dirs);
-		for (int i = 0; i < dirs.length; i++) {
-			mAdapter.add(new Folder(dirs[i]));
+		for (File dir : dirs) {
+			mAdapter.add(new Folder(dir));
 		}
 		if (mAcceptFiles) {
 			File[] files = mPath.listFiles(mFileFilter);
 			Arrays.sort(files);
-			for (int i = 0; i < files.length; i++) {
-				mAdapter.add(new Folder(files[i]));
+			for (File file : files) {
+				mAdapter.add(new Folder(file));
 			}
 		}
 		mAdapter.notifyDataSetChanged();
@@ -132,24 +132,16 @@ public class FolderPicker extends Dialog implements OnItemClickListener, OnClick
 		}
 	}
 
-	private FileFilter mDirFilter = new FileFilter() {
-		public boolean accept(File file) {
-			return file.isDirectory();
-		}
-	};
+	private final FileFilter mDirFilter = file -> file.isDirectory();
 
-	private FileFilter mFileFilter = new FileFilter() {
-		public boolean accept(File file) {
-			return file.isFile();
-		}
-	};
+	private final FileFilter mFileFilter = file -> file.isFile();
 	
 	class FolderAdapter extends BaseAdapter {
-		ArrayList<Folder> mFolders = new ArrayList<Folder>();
-		LayoutInflater mInflater = LayoutInflater.from(getContext());
-		private Drawable[] mFolderUpLayers;
-		private Drawable[] mFolderLayers;
-		private Drawable mFileDrawable;
+		final ArrayList<Folder> mFolders = new ArrayList<>();
+		final LayoutInflater mInflater = LayoutInflater.from(getContext());
+		private final Drawable[] mFolderUpLayers;
+		private final Drawable[] mFolderLayers;
+		private final Drawable mFileDrawable;
 		
 		public FolderAdapter() {
 			Resources res = getContext().getResources();
@@ -189,7 +181,7 @@ public class FolderPicker extends Dialog implements OnItemClickListener, OnClick
 			Folder folder = mFolders.get(position);
 			TextView name = (TextView) v.findViewById(R.id.folder_name);
 
-			Drawable drawable = null;
+			Drawable drawable;
 			if (folder.isParent) {
 				name.setText("[..]");
 				drawable = new FolderTransitionDrawable(mFolderUpLayers);

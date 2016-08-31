@@ -1,7 +1,6 @@
 package uk.colessoft.android.hilllist.activities;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -51,32 +50,15 @@ public class NearbyHillsFragmentActivity extends FragmentActivity
 		dialog.setTitle("Please wait...");
 		dialog.setMessage("Acquiring Location ...");
 		// dialog.setCancelable(true);
-		dialog.setButton("Cancel", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				// Use either finish() or return() to either close the activity
-				// or just the dialog
-				finish();
-			}
-		});
+		dialog.setButton("Cancel", (dialog1, which) -> {
+            // Use either finish() or return() to either close the activity
+            // or just the dialog
+            finish();
+        });
 		dialog.show();
 
 	}
 
-	public void hillTapped(int rowid) {
-		/*HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.hill_detail_fragment);
-
-		if (fragment == null || !fragment.isInLayout()) {
-			Intent intent = new Intent(this, HillDetailFragmentActivity.class);
-			intent.putExtra("rowid", rowid);
-			startActivity(intent);
-		} else {
-
-			fragment.updateHill(rowid);
-		}*/
-
-	}
-	
 	public void onHillSelected(int rowid) {
 		HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.hill_detail_fragment);

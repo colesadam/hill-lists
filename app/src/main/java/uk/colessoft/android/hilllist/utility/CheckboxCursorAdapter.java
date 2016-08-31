@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.SimpleCursorAdapter;
@@ -14,11 +13,11 @@ import java.util.ArrayList;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
-public class CheckboxCursorAdapter extends SimpleCursorAdapter {
+class CheckboxCursorAdapter extends SimpleCursorAdapter {
 
-	private Cursor c;
-	private Context context;
-	private ArrayList<String> checkList = new ArrayList<String>();
+	private final Cursor c;
+	private final Context context;
+	private final ArrayList<String> checkList = new ArrayList<>();
 	
 	public ArrayList<String> getCheckList() {
 		return checkList;
@@ -51,20 +50,17 @@ public class CheckboxCursorAdapter extends SimpleCursorAdapter {
 			cBox.setChecked(true);	
 			checkList.add((String) cBox.getTag());
 		}else cBox.setChecked(false);
-		cBox.setOnClickListener(new OnClickListener() {  
-			//@Override
-			public void onClick(View v) {
-				CheckBox cBox = (CheckBox) v.findViewById(R.id.check_hill_climbed);
-				if (cBox.isChecked()) {
-					//cBox.setChecked(false);
-					checkList.add((String) cBox.getTag());
-				} 
-				else if (!cBox.isChecked()) {
-					//cBox.setChecked(true);
-					checkList.remove(cBox.getTag());
-				}
-			}
-		});
+		cBox.setOnClickListener(v1 -> {
+            CheckBox cBox1 = (CheckBox) v1.findViewById(R.id.check_hill_climbed);
+            if (cBox1.isChecked()) {
+                //cBox.setChecked(false);
+                checkList.add((String) cBox1.getTag());
+            }
+            else if (!cBox1.isChecked()) {
+                //cBox.setChecked(true);
+                checkList.remove(cBox1.getTag());
+            }
+        });
 
 		return(v);
 	}

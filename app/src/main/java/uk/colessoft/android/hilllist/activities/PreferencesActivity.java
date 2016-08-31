@@ -9,11 +9,11 @@ import android.widget.CheckBox;
 import uk.colessoft.android.hilllist.R;
 
 public class PreferencesActivity extends PreferenceActivity{
-	CheckBox metricHeights;CheckBox metricDistances;
+	private CheckBox metricHeights;CheckBox metricDistances;
 	public static final String PREF_METRIC_HEIGHTS = "PREF_METRIC_HEIGHTS";
 	public static final String PREF_METRIC_DISTANCES = "PREF_METRIC_DISTANCES";
 	
-	SharedPreferences prefs;
+	private SharedPreferences prefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

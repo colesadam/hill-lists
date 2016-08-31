@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,9 +41,6 @@ import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
 public class BusinessSearchMapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener,LoaderManager.LoaderCallbacks<ArrayList>, OnMapReadyCallback {
 
-    private HillDbAdapter dbAdapter;
-    private int rowid;
-    private String title;
     //private MapView mapView;
     private double lat;
     private double lon;
@@ -70,10 +65,10 @@ public class BusinessSearchMapActivity extends FragmentActivity implements Googl
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        dbAdapter = new HillDbAdapter(this);
+        HillDbAdapter dbAdapter = new HillDbAdapter(this);
         dbAdapter.open();
-        rowid = getIntent().getExtras().getInt("rowid");
-        title = getIntent().getExtras().getString("title");
+        int rowid = getIntent().getExtras().getInt("rowid");
+        String title = getIntent().getExtras().getString("title");
         search_string = getIntent().getExtras().getString("search_string");
         setTitle(title);
         hill = dbAdapter.getHill(rowid);
@@ -81,15 +76,11 @@ public class BusinessSearchMapActivity extends FragmentActivity implements Googl
 
         final ToggleButton mapButton = (ToggleButton) findViewById(R.id.satellite_button);
         mapButton.setChecked(true);
-        mapButton.setOnClickListener(new Button.OnClickListener() {
-
-            public void onClick(View v) {
-                if (mapButton.isChecked()) {
-                    map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                } else {
-                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                }
-
+        mapButton.setOnClickListener(v -> {
+            if (mapButton.isChecked()) {
+                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            } else {
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             }
 
         });
@@ -106,8 +97,8 @@ public class BusinessSearchMapActivity extends FragmentActivity implements Googl
         LatLangBounds llb = new LatLangBounds();
         llb.addLatLong(hill.getLatitude(),hill.getLongitude());
         for (Business business : businesses) {
-            Double lat = new Double(business.getLatitude());
-            Double lng = new Double(business.getLongitude());
+            Double lat = (double) business.getLatitude();
+            Double lng = (double) business.getLongitude();
 
             llb.addLatLong(lat, lng);
 

@@ -12,7 +12,6 @@ import android.view.ViewParent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -87,12 +86,6 @@ public class ScootSearchMapTest extends HillTest{
 
         ViewInteraction relativeLayout2 = onView(
                 allOf(withId(R.id.many_map_rel),
-                        childAtPosition(
-                                allOf(withId(android.R.id.content),
-                                        childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class),
-                                                1)),
-                                0),
                         isDisplayed()));
         relativeLayout2.check(matches(isDisplayed()));
 

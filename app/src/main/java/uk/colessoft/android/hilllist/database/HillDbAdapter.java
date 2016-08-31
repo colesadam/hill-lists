@@ -29,42 +29,42 @@ public class HillDbAdapter {
     private static final int DATABASE_VERSION = 4;
 
     public static final String KEY_ID = "_id";
-    public static final String KEY_XSECTION = "_Section";
+    private static final String KEY_XSECTION = "_Section";
     public static final String KEY_HILLNAME = "Hillname";
-    public static final String KEY_SECTION = "Section";
-    public static final String KEY_REGION = "Region";
-    public static final String KEY_AREA = "Area";
+    private static final String KEY_SECTION = "Section";
+    private static final String KEY_REGION = "Region";
+    private static final String KEY_AREA = "Area";
     public static final String KEY_HEIGHTM = "Metres";
     public static final String KEY_HEIGHTF = "Feet";
-    public static final String KEY_MAP = "Map";
-    public static final String KEY_MAP25 = "Map25";
-    public static final String KEY_GRIDREF = "Gridref";
-    public static final String KEY_COLGRIDREF = "Colgridref";
-    public static final String KEY_COLHEIGHT = "Colheight";
-    public static final String KEY_DROP = "sDrop";
-    public static final String KEY_GRIDREF10 = "Gridref10";
-    public static final String KEY_FEATURE = "Feature";
-    public static final String KEY_OBSERVATIONS = "Observations";
-    public static final String KEY_SURVEY = "Survey";
-    public static final String KEY_CLIMBED = "Climbed";
-    public static final String KEY_CLASSIFICATION = "Classification";
-    public static final String KEY_REVISION = "Revision";
-    public static final String KEY_COMMENTS = "Comments";
-    public static final String KEY_XCOORD = "xcoord";
-    public static final String KEY_YCOORD = "ycoord";
+    private static final String KEY_MAP = "Map";
+    private static final String KEY_MAP25 = "Map25";
+    private static final String KEY_GRIDREF = "Gridref";
+    private static final String KEY_COLGRIDREF = "Colgridref";
+    private static final String KEY_COLHEIGHT = "Colheight";
+    private static final String KEY_DROP = "sDrop";
+    private static final String KEY_GRIDREF10 = "Gridref10";
+    private static final String KEY_FEATURE = "Feature";
+    private static final String KEY_OBSERVATIONS = "Observations";
+    private static final String KEY_SURVEY = "Survey";
+    private static final String KEY_CLIMBED = "Climbed";
+    private static final String KEY_CLASSIFICATION = "Classification";
+    private static final String KEY_REVISION = "Revision";
+    private static final String KEY_COMMENTS = "Comments";
+    private static final String KEY_XCOORD = "xcoord";
+    private static final String KEY_YCOORD = "ycoord";
     public static final String KEY_LATITUDE = "Latitude";
     public static final String KEY_LONGITUDE = "Longitude";
-    public static final String KEY_STREETMAP = "Streetmap";
-    public static final String KEY_GETAMAP = "Getamap";
-    public static final String KEY_HILLBAGGING = "HillBagging";// "\"Hill-bagging\"";
+    private static final String KEY_STREETMAP = "Streetmap";
+    private static final String KEY_GETAMAP = "Getamap";
+    private static final String KEY_HILLBAGGING = "HillBagging";// "\"Hill-bagging\"";
     public static final String KEY_DATECLIMBED = "dateClimbed";
-    public static final String KEY_NOTES = "notes";
+    private static final String KEY_NOTES = "notes";
 
     public static final int NAME_COLUMN = 1;
 
     private SQLiteDatabase db;
     private final Context context;
-    private HillDataBaseHelper dbHelper;
+    private final HillDataBaseHelper dbHelper;
 
 
     public HillDbAdapter(Context _context) {
@@ -365,13 +365,12 @@ public class HillDbAdapter {
 
         String notes = cursor.getString(cursor.getColumnIndex(KEY_NOTES));
 
-        Hill result = new Hill(_id, _section, hillname, section, region, area,
+        return new Hill(_id, _section, hillname, section, region, area,
                 heightm, heightf, map, map25, gridref, colgridref, colheight,
                 drop, gridref10, feature, observations, survey, climbed,
                 classification, new Date(revision), comments, xcoord, ycoord,
                 latitude, longitude, streetmap, getamap, hillBagging,
                 dateClimbed, notes);
-        return result;
     }
 
     public boolean createDatabase() throws IOException {
@@ -380,29 +379,29 @@ public class HillDbAdapter {
 
     private static class HillDataBaseHelper {
         // The Android's default system path of your application database.
-        private static String DB_PATH = Environment
+        private static final String DB_PATH = Environment
                 .getExternalStorageDirectory().getPath()
                 + "/data/uk.colessoft.android.hilllist/databases/";
         private static boolean mExternalStorageAvailable = false;
-        private static String hillCreation = "CREATE TABLE 'Hills' ('_id','_Section','Hillname','Section',"
+        private static final String hillCreation = "CREATE TABLE 'Hills' ('_id','_Section','Hillname','Section',"
                 + "'Region','Area','Metres','Feet','Map','Map25','Gridref','Colgridref','Colheight','sDrop',"
                 + "'Gridref10','Feature','Observations','Survey','Climbed','Classification','Countyname',"
                 + "'Revision','Comments','xcoord','ycoord','Latitude','Longitude','Streetmap','Getamap',"
                 + "'HillBagging','Ma','sMa','xMa','twinMa','xsMa','M','MT','xMT','C','CT','CTM','CTC','xC','xCT',"
                 + "'G','GT','GTM','GTC','GTG','sG','dsG','D','DT','xDT','Mur','sMur','dsMur','Hew','sHew','dsHew','N','xN','W','WO',"
                 + "'BL','Dewey','B','Hu','xHu','twinHu','Bg','T100','COH','COA','COU','CoL');";
-        private static String baggingCreation = "CREATE TABLE 'Bagging' ('_id','dateClimbed','notes');";
-        private static String DB_NAME = DATABASE_NAME;
+        private static final String baggingCreation = "CREATE TABLE 'Bagging' ('_id','dateClimbed','notes');";
+        private static final String DB_NAME = DATABASE_NAME;
         private static ProgressDialog pbarDialog;
         private static InputStream is;
         private static BufferedReader reader;
         private File extPath = Environment.getExternalStorageDirectory();
 
-        private File dbFile = new File(DB_PATH + DB_NAME);
+        private final File dbFile = new File(DB_PATH + DB_NAME);
         private SQLiteDatabase database;
 
         private final Context myContext;
-        private SQLiteDatabase.CursorFactory factory;
+        private final SQLiteDatabase.CursorFactory factory;
 
         /**
          * Constructor Takes and keeps a reference of the passed context in
@@ -421,7 +420,7 @@ public class HillDbAdapter {
          * Creates a empty database on the system and rewrites it with your own
          * database.
          */
-        public boolean createDataBase() throws IOException {
+        public boolean createDataBase() {
 
             boolean dbExist = checkDataBase();
 
@@ -469,16 +468,15 @@ public class HillDbAdapter {
 
             if (Environment.MEDIA_MOUNTED.equals(state)) {
                 // We can read and write the media
-                mExternalStorageAvailable = mExternalStorageWriteable = true;
+                mExternalStorageAvailable = true;
             } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
                 // We can only read the media
                 mExternalStorageAvailable = true;
-                mExternalStorageWriteable = false;
             } else {
                 // Something else is wrong. It may be one of many other states,
                 // but all we need
                 // to know is we can neither read nor write
-                mExternalStorageAvailable = mExternalStorageWriteable = false;
+                mExternalStorageAvailable = false;
             }
 
             if (mExternalStorageAvailable) {
@@ -520,7 +518,7 @@ public class HillDbAdapter {
                 }
             }
 
-            return checkDB != null ? true : false;
+            return checkDB != null;
         }
 
         private void upgradeDatabase() throws IOException {
@@ -606,7 +604,7 @@ public class HillDbAdapter {
 
         private void doTransaction(ProgressDialog pbarDialog,
                                    BufferedReader reader) {
-            String line = null;
+            String line;
             try {
                 database.beginTransaction();
                 while ((line = reader.readLine()) != null) {
@@ -677,7 +675,7 @@ public class HillDbAdapter {
             if (database == null) {
                 opened = open();
             }
-            if (opened == false) {
+            if (!opened) {
                 if (database != null) {
                     database.close();
                 }
@@ -733,51 +731,51 @@ public class HillDbAdapter {
     public static final int londonBoroughTop_COLUMN = 72;
 
     public static final String KEY_marilyn = "ma";
-    public static final String KEY_subMarilyn = "sma";
-    public static final String KEY_deletedMarilyn = "xma";
-    public static final String KEY_marilynTwinTop = "twinma";
-    public static final String KEY_deletedSubMarilyn = "xsma";
+    private static final String KEY_subMarilyn = "sma";
+    private static final String KEY_deletedMarilyn = "xma";
+    private static final String KEY_marilynTwinTop = "twinma";
+    private static final String KEY_deletedSubMarilyn = "xsma";
     public static final String KEY_munro = "m";
     public static final String KEY_munroTop = "mt";
-    public static final String KEY_deletedMunroTop = "xmt";
+    private static final String KEY_deletedMunroTop = "xmt";
     public static final String KEY_corbett = "c";
-    public static final String KEY_corbettTop = "ct";
+    private static final String KEY_corbettTop = "ct";
     public static final String KEY_corbettTopOfMunro = "ctm";
     public static final String KEY_corbettTopOfCorbett = "ctc";
-    public static final String KEY_deletedCorbett = "xc";
-    public static final String KEY_deletedCorbettTop = "xct";
+    private static final String KEY_deletedCorbett = "xc";
+    private static final String KEY_deletedCorbettTop = "xct";
     public static final String KEY_graham = "g";
-    public static final String KEY_grahamTop = "gt";
+    private static final String KEY_grahamTop = "gt";
     public static final String KEY_grahamTopOfMunro = "gtm";
     public static final String KEY_grahamTopOfCorbett = "gtc";
     public static final String KEY_grahamTopOfGraham = "gtg";
-    public static final String KEY_subGraham = "sg";
-    public static final String KEY_doubleSubGraham = "dsg";
+    private static final String KEY_subGraham = "sg";
+    private static final String KEY_doubleSubGraham = "dsg";
     public static final String KEY_donald = "d";
     public static final String KEY_donaldTop = "dt";
-    public static final String KEY_deletedDonaldTop = "xdt";
+    private static final String KEY_deletedDonaldTop = "xdt";
     public static final String KEY_murdo = "mur";
-    public static final String KEY_subMurdo = "smur";
-    public static final String KEY_doubleSubMurdo = "dsmur";
+    private static final String KEY_subMurdo = "smur";
+    private static final String KEY_doubleSubMurdo = "dsmur";
     public static final String KEY_hewitt = "hew";
-    public static final String KEY_subHewitt = "shew";
-    public static final String KEY_doubleSubHewitt = "dshew";
+    private static final String KEY_subHewitt = "shew";
+    private static final String KEY_doubleSubHewitt = "dshew";
     public static final String KEY_nuttall = "n";
-    public static final String KEY_deletedNuttall = "xn";
+    private static final String KEY_deletedNuttall = "xn";
     public static final String KEY_wainwright = "w";
     public static final String KEY_wainwrightOutlyingFell = "wo";
-    public static final String KEY_buxtonAndLewis = "bl";
+    private static final String KEY_buxtonAndLewis = "bl";
     public static final String KEY_dewey = "dewey";
     public static final String KEY_birkett = "b";
-    public static final String KEY_hump = "hu";
-    public static final String KEY_deletedHump = "xhu";
-    public static final String KEY_humpTwinTop = "twinhu";
-    public static final String KEY_bridge = "bg";
+    private static final String KEY_hump = "hu";
+    private static final String KEY_deletedHump = "xhu";
+    private static final String KEY_humpTwinTop = "twinhu";
+    private static final String KEY_bridge = "bg";
     public static final String KEY_trail100 = "t100";
     public static final String KEY_countyTop = "coh";
-    public static final String KEY_deletedCountyTop = "coa";
-    public static final String KEY_currentCountyTop = "cou";
-    public static final String KEY_londonBoroughTop = "col";
+    private static final String KEY_deletedCountyTop = "coa";
+    private static final String KEY_currentCountyTop = "cou";
+    private static final String KEY_londonBoroughTop = "col";
 
 
     public int getClimbedCount(String hilltype, String countryClause,

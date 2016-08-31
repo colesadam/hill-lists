@@ -25,7 +25,7 @@ public class AboutActivity extends Activity{
 		
 		donateButton.setOnClickListener(new View.OnClickListener(){
 
-			private String donateLink="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QRHT3PRRVBTM4";
+			private final String donateLink="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QRHT3PRRVBTM4";
 
 			public void onClick(View v) {
 				Intent intent = new Intent("android.intent.action.VIEW",

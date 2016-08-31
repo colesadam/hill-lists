@@ -8,7 +8,6 @@ import android.webkit.WebView;
 import uk.colessoft.android.hilllist.R;
 
 public class OsMapActivity extends Activity {
-	private WebView webView;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -21,7 +20,7 @@ public class OsMapActivity extends Activity {
 		int width = display.getWidth(); // deprecated
 		int height = display.getHeight() - 100;
 
-		webView = (WebView) findViewById(R.id.osview);
+		WebView webView = (WebView) findViewById(R.id.osview);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setLoadWithOverviewMode(true);
 		webView.getSettings().setUseWideViewPort(true);

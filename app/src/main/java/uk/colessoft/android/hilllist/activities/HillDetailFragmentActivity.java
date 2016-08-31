@@ -23,15 +23,14 @@ public class HillDetailFragmentActivity extends FragmentActivity {
 	private HillDbAdapter dbAdapter;
 
 	private String osLink;
-	private boolean useMetricHeights;
-	static final int DATE_DIALOG_ID = 0;
-	static final int MARK_HILL_CLIMBED_DIALOG = 1;
+	private static final int DATE_DIALOG_ID = 0;
+	private static final int MARK_HILL_CLIMBED_DIALOG = 1;
 
 	private Hill hill;
 	private int mYear;
 	private int mMonth;
 	private int mDay;
-	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+	private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
@@ -44,7 +43,7 @@ public class HillDetailFragmentActivity extends FragmentActivity {
 
 	private TextView dateClimbed;
 
-	private Date realDate = new Date();
+	private final Date realDate = new Date();
 
 	private TextView hillnameView;
 
@@ -61,10 +60,9 @@ public class HillDetailFragmentActivity extends FragmentActivity {
 			mYear = realDate.getYear() + 1900;
 			mMonth = realDate.getMonth();
 			mDay = realDate.getDate();
-			DatePickerDialog d = new DatePickerDialog(this, mDateSetListener,
-					mYear, mMonth, mDay);
 
-			return d;
+			return new DatePickerDialog(this, mDateSetListener,
+					mYear, mMonth, mDay);
 		}
 		case MARK_HILL_CLIMBED_DIALOG: {
 
@@ -157,7 +155,7 @@ public class HillDetailFragmentActivity extends FragmentActivity {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		useMetricHeights = prefs.getBoolean(
+		boolean useMetricHeights = prefs.getBoolean(
 				PreferencesActivity.PREF_METRIC_HEIGHTS, false);
 	}
 }

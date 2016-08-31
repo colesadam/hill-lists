@@ -13,7 +13,8 @@
 		<LinearLayout android:layout_marginBottom="4dp"
 			android:layout_width="match_parent" android:layout_weight="50"
 			android:id="@+id/menu_1" android:layout_height="0dp"
-			android:orientation="horizontal" android:gravity="center|center_vertical">
+			android:orientation="horizontal" android:gravity="center|center_vertical"
+			android:baselineAligned="false">
 			<LinearLayout android:gravity="center"
 				android:layout_marginRight="4dp" android:layout_width="0dip"
 				android:layout_weight="50" android:id="@+id/menu_scotland"
@@ -47,7 +48,8 @@
 		<LinearLayout android:gravity="center_vertical"
 			android:layout_marginBottom="4dp" android:layout_width="match_parent"
 			android:layout_weight="50" android:id="@+id/menu_2"
-			android:layout_height="0dp" android:orientation="horizontal">
+			android:layout_height="0dp" android:orientation="horizontal"
+			android:baselineAligned="false">
 			<LinearLayout android:gravity="center"
 				android:layout_marginRight="4dp" android:layout_width="0dip"
 				android:layout_weight="50" android:id="@+id/menu_england"
@@ -79,7 +81,8 @@
 		<LinearLayout android:gravity="center_vertical"
 			android:layout_marginBottom="4dp" android:layout_width="match_parent"
 			android:layout_weight="50" android:id="@+id/menu_3"
-			android:layout_height="0dp" android:orientation="horizontal">
+			android:layout_height="0dp" android:orientation="horizontal"
+			android:baselineAligned="false">
 			<LinearLayout android:gravity="center"
 				android:layout_marginRight="4dp" android:layout_width="0dp"
 				android:layout_weight="33" android:id="@+id/menu_nearby"
@@ -114,7 +117,8 @@
 		<LinearLayout android:gravity="center_vertical"
 			android:layout_marginBottom="0dp" android:layout_width="match_parent"
 			android:layout_weight="50" android:id="@+id/menu_4"
-			android:layout_height="0dp" android:orientation="horizontal">
+			android:layout_height="0dp" android:orientation="horizontal"
+			android:baselineAligned="false">
 			<LinearLayout android:gravity="center"
 				android:layout_marginRight="4dp" android:layout_width="0dp"
 				android:layout_weight="33" android:id="@+id/menu_backup"

@@ -17,8 +17,8 @@ import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class EnglishHillsActivity extends Activity {
 
-	Dialog descDialog;
-	static final int ID_DESCDIALOG = 1;
+	private Dialog descDialog;
+	private static final int ID_DESCDIALOG = 1;
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -98,47 +98,19 @@ public class EnglishHillsActivity extends Activity {
 		
 		TextView allEnglishHills=(TextView)findViewById(R.id.allenglish);
 		
-		allEnglishHills.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(null, "All English Hills");
-			}
-		});
+		allEnglishHills.setOnClickListener(v -> showHills(null, "All English Hills"));
 
 
-		hewitts.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						showHills(HillDbAdapter.KEY_hewitt, "English Hewitts");
-					}
-				});
+		hewitts.setOnClickListener(v -> showHills(HillDbAdapter.KEY_hewitt, "English Hewitts"));
 
-		nuttalls.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						showHills(HillDbAdapter.KEY_nuttall, "English Nuttalls");
-					}
-				});
-		marilyns.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_marilyn, "English Marilyns");
-			}
-		});
+		nuttalls.setOnClickListener(v -> showHills(HillDbAdapter.KEY_nuttall, "English Nuttalls"));
+		marilyns.setOnClickListener(v -> showHills(HillDbAdapter.KEY_marilyn, "English Marilyns"));
 		
-		wainwrights.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_wainwright, "Wainwrights");
-			}
-		});
+		wainwrights.setOnClickListener(v -> showHills(HillDbAdapter.KEY_wainwright, "Wainwrights"));
 		
-		wainwrightFells.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_wainwrightOutlyingFell, "Wainwright Outlying Fells");
-			}
-		});
+		wainwrightFells.setOnClickListener(v -> showHills(HillDbAdapter.KEY_wainwrightOutlyingFell, "Wainwright Outlying Fells"));
 		
-		birketts.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_birkett, "Birketts");
-			}
-		});
+		birketts.setOnClickListener(v -> showHills(HillDbAdapter.KEY_birkett, "Birketts"));
 
 	}
 

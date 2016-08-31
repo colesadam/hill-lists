@@ -16,9 +16,9 @@ import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class OtherGBHillsActivity extends Activity {
 
-	boolean countryFlag = false;
-	Dialog descDialog;
-	static final int ID_DESCDIALOG = 1;
+	private boolean countryFlag = false;
+	private Dialog descDialog;
+	private static final int ID_DESCDIALOG = 1;
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -94,45 +94,19 @@ public class OtherGBHillsActivity extends Activity {
 		View trail100 = findViewById(R.id.trail_100);
 		View iomni = findViewById(R.id.iomni);
 
-		iomni.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				countryFlag = true;
-				showHills(null, "NI/Isle of Man");
-			}
-		});
+		iomni.setOnClickListener(v -> {
+            countryFlag = true;
+            showHills(null, "NI/Isle of Man");
+        });
 
-		hewitts.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_hewitt, "Hewitts");
-			}
-		});
+		hewitts.setOnClickListener(v -> showHills(HillDbAdapter.KEY_hewitt, "Hewitts"));
 
-		nuttalls.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_nuttall, "Nuttalls");
-			}
-		});
-		marilyns.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_marilyn, "Marilyns");
-			}
-		});
+		nuttalls.setOnClickListener(v -> showHills(HillDbAdapter.KEY_nuttall, "Nuttalls"));
+		marilyns.setOnClickListener(v -> showHills(HillDbAdapter.KEY_marilyn, "Marilyns"));
 
-		countyTops.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_countyTop, "County Tops");
-			}
-		});
-		deweys.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_dewey, "Deweys");
-			}
-		});
-		trail100.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_trail100, "Trail 100");
-			}
-		});
+		countyTops.setOnClickListener(v -> showHills(HillDbAdapter.KEY_countyTop, "County Tops"));
+		deweys.setOnClickListener(v -> showHills(HillDbAdapter.KEY_dewey, "Deweys"));
+		trail100.setOnClickListener(v -> showHills(HillDbAdapter.KEY_trail100, "Trail 100"));
 
 	}
 

@@ -17,8 +17,8 @@ import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class WelshHillsActivity extends Activity {
 
-	Dialog descDialog;
-	static final int ID_DESCDIALOG = 1;
+	private Dialog descDialog;
+	private static final int ID_DESCDIALOG = 1;
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -92,32 +92,16 @@ public class WelshHillsActivity extends Activity {
 
 		
 		((View) allWelsh.getParent())
-		.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(null, "All Welsh Hills");
-			}
-		});
+		.setOnClickListener(v -> showHills(null, "All Welsh Hills"));
 
 
 		((View) hewitts.getParent())
-				.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						showHills(HillDbAdapter.KEY_hewitt, "Welsh Hewitts");
-					}
-				});
+				.setOnClickListener(v -> showHills(HillDbAdapter.KEY_hewitt, "Welsh Hewitts"));
 
 		((View) nuttalls.getParent())
-				.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						showHills(HillDbAdapter.KEY_nuttall, "Welsh Nuttalls");
-					}
-				});
+				.setOnClickListener(v -> showHills(HillDbAdapter.KEY_nuttall, "Welsh Nuttalls"));
 		((View) marilyns.getParent())
-		.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_marilyn, "Welsh Marilyns");
-			}
-		});
+		.setOnClickListener(v -> showHills(HillDbAdapter.KEY_marilyn, "Welsh Marilyns"));
 
 	
 

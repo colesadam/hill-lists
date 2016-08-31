@@ -13,13 +13,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
-import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,11 +37,9 @@ public class CheckHillListActivity extends Activity {
 	private String orderBy;
 	private ListView myListView;
 
-	boolean useMetricHeights;
+	private boolean useMetricHeights;
 
 	private String hilltype;
-	private String hilllistType;
-	private int country;
 	private String countryClause;
 	private final DecimalFormat df3 = new DecimalFormat();
 
@@ -65,10 +61,10 @@ public class CheckHillListActivity extends Activity {
 		registerForContextMenu(myListView);
 
 		hilltype = getIntent().getExtras().getString("hilltype");
-		hilllistType = getIntent().getExtras().getString("hilllistType");
+		String hilllistType = getIntent().getExtras().getString("hilllistType");
 
 		setTitle("Mark Hills as Climbed");
-		country = getIntent().getExtras().getInt("country");
+		int country = getIntent().getExtras().getInt("country");
 		where = getIntent().getExtras().getString("search");
 
 		switch (country) {
@@ -107,7 +103,7 @@ public class CheckHillListActivity extends Activity {
 		 * R.id.name_entry, R.id.number_entry }); pname = ""; orderBy =
 		 * dbAdapter.KEY_HEIGHTM; myListView.setAdapter(cursorAdapter);
 		 */
-		orderBy = "cast(" + dbAdapter.KEY_HEIGHTM + " as float)" + " desc";
+		orderBy = "cast(" + HillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
 		updateList(2);
 
 	}
@@ -165,14 +161,14 @@ public class CheckHillListActivity extends Activity {
 		switch (item.getItemId()) {
 		case (R.id.menu_list_alpha): {
 
-			orderBy = dbAdapter.KEY_HILLNAME;
+			orderBy = HillDbAdapter.KEY_HILLNAME;
 			updateList(2);
 			return true;
 
 		}
 		case (R.id.menu_list_height): {
 
-			orderBy = "cast(" + dbAdapter.KEY_HEIGHTM + " as float)" + " desc";
+			orderBy = "cast(" + HillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
 			updateList(2);
 			return true;
 
@@ -248,53 +244,43 @@ public class CheckHillListActivity extends Activity {
 		cursorAdapter = new SimpleCursorAdapter(this, R.layout.check_hills,
 				result, qstrings, new int[] { R.id.hill_name_checked,
 						R.id.check_hill_climbed });
-		cursorAdapter.setViewBinder(new ViewBinder() {
+		cursorAdapter.setViewBinder((view, cursor, columnIndex) -> {
 
-			public boolean setViewValue(View view, final Cursor cursor,
-					int columnIndex) {
+            String vtext = cursor.getString(columnIndex);
+            switch (view.getId()) {
+            case R.id.hill_name_checked: {
+                TextView ttv = (TextView) view;
+                ttv.setText(vtext);
 
-				View tv = (View) view;
-				String vtext = cursor.getString(columnIndex);
-				switch (tv.getId()) {
-				case R.id.hill_name_checked: {
-					TextView ttv = (TextView) tv;
-					ttv.setText(vtext);
-
-					return true;
-				}
-				case R.id.check_hill_climbed: {
-					CheckBox ctv = (CheckBox) tv;
-					final int id = cursor.getInt(cursor
-							.getColumnIndex(HillDbAdapter.KEY_ID));
-					if (cursor.getString(cursor
-							.getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) != null) {
+                return true;
+            }
+            case R.id.check_hill_climbed: {
+                CheckBox ctv = (CheckBox) view;
+                final int id = cursor.getInt(cursor
+                        .getColumnIndex(HillDbAdapter.KEY_ID));
+                if (cursor.getString(cursor
+                        .getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) != null) {
 
 
-						ctv.setChecked(true);
+                    ctv.setChecked(true);
 
-					} else
-						ctv.setChecked(false);
-					ctv.setOnClickListener(null);
-					ctv.setOnClickListener(new OnClickListener() {
+                } else
+                    ctv.setChecked(false);
+                ctv.setOnClickListener(null);
+                ctv.setOnClickListener(v -> {
+CheckBox xcv = (CheckBox) v;
+if (xcv.isChecked()) {
+dbAdapter.markHillClimbed(id, new Date(), "");
+} else
+dbAdapter.markHillNotClimbed(id);
 
-						public void onClick(View v) {
-							CheckBox xcv = (CheckBox) v;
-							if (xcv.isChecked()) {
-								dbAdapter.markHillClimbed(id, new Date(), "");
-							} else
-								dbAdapter.markHillNotClimbed(id);
+});
 
-						}
-
-					});
-
-					return true;
-				}
-				}
-				return false;
-			}
-
-		});
+                return true;
+            }
+            }
+            return false;
+        });
 		myListView.setAdapter(cursorAdapter);
 
 	}

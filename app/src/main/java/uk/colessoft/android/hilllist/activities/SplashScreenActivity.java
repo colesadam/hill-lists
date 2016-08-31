@@ -75,14 +75,9 @@ public class SplashScreenActivity extends FragmentActivity {
 					Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
 				showMessageOKCancel("You need to allow access to the SD Card to read and write the Database",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								ActivityCompat.requestPermissions(SplashScreenActivity.this,
-										new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-										MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-							}
-						});
+						(dialog, which) -> ActivityCompat.requestPermissions(SplashScreenActivity.this,
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE));
 
 			} else {
 
