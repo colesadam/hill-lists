@@ -7,11 +7,11 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 
 public class ScootXMLHandler extends DefaultHandler {
-	StringBuffer buff = null;
-	ScootBusinesses scootBusinesses = new ScootBusinesses();
-	Business tempBusiness;
-	boolean buffering = false;
-	ArrayList tempAddress = new ArrayList();
+	private StringBuffer buff = null;
+	private ScootBusinesses scootBusinesses = new ScootBusinesses();
+	private Business tempBusiness;
+	private boolean buffering = false;
+	private ArrayList tempAddress = new ArrayList();
 
 	@Override
 	public void startDocument() throws SAXException {
@@ -26,51 +26,65 @@ public class ScootXMLHandler extends DefaultHandler {
 	@Override
 	public void startElement(String namespaceURI, String localName,
 			String qName, Attributes atts) throws SAXException {
-		if (localName.equals("companyname")) {
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("longitude")) {
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("latitude")) {
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("result")) {
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("telephone")) {
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("postcode")) {
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("linkback")) {
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("l1address")) {
+		switch (localName) {
+			case "companyname":
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "longitude":
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "latitude":
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "result":
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "telephone":
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "postcode":
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "linkback":
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "l1address":
 
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("l2address")) {
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "l2address":
 
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("l3address")) {
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "l3address":
 
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("l4address")) {
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "l4address":
 
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("l5address")) {
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "l5address":
 
-			buff = new StringBuffer("");
-			buffering = true;
-		} else if (localName.equals("l6address")) {
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
+			case "l6address":
 
-			buff = new StringBuffer("");
-			buffering = true;
+				buff = new StringBuffer("");
+				buffering = true;
+				break;
 		}
 	}
 
@@ -84,59 +98,73 @@ public class ScootXMLHandler extends DefaultHandler {
 	@Override
 	public void endElement(String namespaceURI, String localName, String qName)
 			throws SAXException {
-		if (localName.equals("result")) {
-			buffering = false;
-			tempBusiness = new Business();
-			tempBusiness.setResultNumber(Integer.parseInt(buff.toString()));
-			if (this.getScootBusinesses().getBusinesses() == null)
-				this.getScootBusinesses().setBusinesses(
-						new ArrayList<Business>());
-			this.scootBusinesses.getBusinesses().add(tempBusiness);
-		} else if (localName.equals("companyname")) {
-			buffering = false;
-			tempBusiness.setCompanyname(buff.toString());
+		switch (localName) {
+			case "result":
+				buffering = false;
+				tempBusiness = new Business();
+				tempBusiness.setResultNumber(Integer.parseInt(buff.toString()));
+				if (this.getScootBusinesses().getBusinesses() == null)
+					this.getScootBusinesses().setBusinesses(
+							new ArrayList<>());
+				this.scootBusinesses.getBusinesses().add(tempBusiness);
+				break;
+			case "companyname":
+				buffering = false;
+				tempBusiness.setCompanyname(buff.toString());
 
-			// Do something with the full text content that we've just parsed
-		} else if (localName.equals("longitude")) {
-			buffering = false;
-			tempBusiness.setLongitude(Float.parseFloat(buff.toString()));
-		} else if (localName.equals("latitude")) {
+				// Do something with the full text content that we've just parsed
+				break;
+			case "longitude":
+				buffering = false;
+				tempBusiness.setLongitude(Float.parseFloat(buff.toString()));
+				break;
+			case "latitude":
 
-			buffering = false;
-			tempBusiness.setLatitude(Float.parseFloat(buff.toString()));
-		} else if (localName.equals("telephone")) {
+				buffering = false;
+				tempBusiness.setLatitude(Float.parseFloat(buff.toString()));
+				break;
+			case "telephone":
 
-			buffering = false;
-			tempBusiness.setTelephone(buff.toString());
-		} else if (localName.equals("postcode")) {
+				buffering = false;
+				tempBusiness.setTelephone(buff.toString());
+				break;
+			case "postcode":
 
-			buffering = false;
-			tempBusiness.setPostCode(buff.toString());
-		} else if (localName.equals("linkback")) {
+				buffering = false;
+				tempBusiness.setPostCode(buff.toString());
+				break;
+			case "linkback":
 
-			buffering = false;
-			tempBusiness.setScootLink(buff.toString());
-		} else if (localName.equals("l1address")) {
-			tempAddress = new ArrayList();
-			buffering = false;
-			tempAddress.add(buff.toString());
+				buffering = false;
+				tempBusiness.setScootLink(buff.toString());
+				break;
+			case "l1address":
+				tempAddress = new ArrayList();
+				buffering = false;
+				tempAddress.add(buff.toString());
 
-		} else if (localName.equals("l2address")) {
-			buffering = false;
-			tempAddress.add(buff.toString());
-		} else if (localName.equals("l3address")) {
-			buffering = false;
-			tempAddress.add(buff.toString());
-		} else if (localName.equals("l4address")) {
-			buffering = false;
-			tempAddress.add(buff.toString());
-		} else if (localName.equals("l5address")) {
-			buffering = false;
-			tempAddress.add(buff.toString());
-		} else if (localName.equals("l6address")) {
-			buffering = false;
-			tempAddress.add(buff.toString());
-			tempBusiness.setAddress(tempAddress);
+				break;
+			case "l2address":
+				buffering = false;
+				tempAddress.add(buff.toString());
+				break;
+			case "l3address":
+				buffering = false;
+				tempAddress.add(buff.toString());
+				break;
+			case "l4address":
+				buffering = false;
+				tempAddress.add(buff.toString());
+				break;
+			case "l5address":
+				buffering = false;
+				tempAddress.add(buff.toString());
+				break;
+			case "l6address":
+				buffering = false;
+				tempAddress.add(buff.toString());
+				tempBusiness.setAddress(tempAddress);
+				break;
 		}
 	}
 

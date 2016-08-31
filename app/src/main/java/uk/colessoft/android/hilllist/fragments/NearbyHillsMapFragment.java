@@ -9,7 +9,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,10 +37,10 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     private Runnable showWaitDialog;
     private String[] rowids;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001;
-    private List<Marker> markers = new ArrayList<>();
+    private final List<Marker> markers = new ArrayList<>();
 
     public interface HillTappedListener {
-        public void hillTapped(int rowid);
+        void hillTapped(int rowid);
     }
 
     @Override
@@ -82,8 +81,8 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
             TinyHill t = new TinyHill();
             t._id = hill.get_id();
             t.setHillname(hill.getHillname());
-            lat = hill.getLatitude();
-            lng = hill.getLongitude();
+            double lat = hill.getLatitude();
+            double lng = hill.getLongitude();
             llb.addLatLong(lat, lng);
             t.setLatitude(lat);
             t.setLongitude(lng);
@@ -114,15 +113,10 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
         final LatLngBounds bounds = new LatLngBounds(new LatLng(
                 llb.getSmallestLat(), llb.getSmallestLong()), new LatLng(llb.getLargestLat(),
                 llb.getLargestLong()));
-        map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                map.animateCamera(
-                        CameraUpdateFactory
-                                .newLatLngBounds(
-                                        bounds, 50));
-            }
-        });
+        map.setOnMapLoadedCallback(() -> map.animateCamera(
+                CameraUpdateFactory
+                        .newLatLngBounds(
+                                bounds, 50)));
 
         dbAdapter.close();
     }
@@ -131,8 +125,6 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     private View viewer;
     private HillDbAdapter dbAdapter;
 
-    private double lat;
-    private double lng;
     private boolean gotHills;
 
     private ProgressDialog dialog;
@@ -156,17 +148,13 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
         this.getMapAsync(this);
 
-        showWaitDialog = new Runnable() {
+        showWaitDialog = () -> {
 
-            public void run() {
-
-                while (!gotHills) {
-
-                }
-
-                dialog.dismiss();
+            while (!gotHills) {
 
             }
+
+            dialog.dismiss();
 
         };
 
@@ -179,15 +167,11 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
         final ToggleButton mapButton = (ToggleButton) getActivity().findViewById(R.id.satellite_button);
         mapButton.setChecked(true);
-        mapButton.setOnClickListener(new Button.OnClickListener() {
-
-            public void onClick(View v) {
-                if (mapButton.isChecked()) {
-                    map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                } else {
-                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                }
-
+        mapButton.setOnClickListener(v -> {
+            if (mapButton.isChecked()) {
+                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            } else {
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             }
 
         });

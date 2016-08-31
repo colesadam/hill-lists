@@ -6,7 +6,8 @@
 	<LinearLayout android:id="@+id/menu_1"
 		android:orientation="horizontal" android:gravity="center_vertical"
 		android:layout_height="0dp"
-		android:layout_weight="50" android:layout_width="600dip" android:layout_marginBottom="20dip">
+		android:layout_weight="50" android:layout_width="600dip" android:layout_marginBottom="20dip"
+		android:baselineAligned="false">
 		<LinearLayout android:orientation="vertical" android:id="@+id/menu_scotland"
 			android:layout_width="0dip" android:layout_height="fill_parent"
 			android:layout_weight="25" android:background="@drawable/button_text"
@@ -76,7 +77,8 @@
 	<LinearLayout android:id="@+id/menu_3"
 		android:orientation="horizontal" android:gravity="center_vertical"
 		android:layout_height="0dp"
-		android:layout_weight="50" android:layout_width="600dip">
+		android:layout_weight="50" android:layout_width="600dip"
+		android:baselineAligned="false">
 		<LinearLayout android:orientation="vertical" android:id="@+id/menu_nearby"
 			android:background="@drawable/button_text" android:layout_weight="33"
 			android:layout_width="0dp" android:layout_height="match_parent"

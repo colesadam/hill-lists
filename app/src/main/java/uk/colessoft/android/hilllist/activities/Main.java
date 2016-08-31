@@ -2,7 +2,6 @@ package uk.colessoft.android.hilllist.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DatabaseUtils;
 import android.net.Uri;
@@ -90,61 +89,38 @@ public class Main extends Activity {
 		}
 
 		View scotland = findViewById(R.id.menu_scotland);
-		View wales = (View) findViewById(R.id.menu_wales);
-		View england = (View) findViewById(R.id.menu_england);
-		View otherGB = (View) findViewById(R.id.menu_gb);
-		View nearbyHills = (View) findViewById(R.id.menu_nearby);
-		View exportBagging = (View) findViewById(R.id.menu_backup);
-		View viewforecasts = (View) findViewById(R.id.menu_forecasts);
+		View wales = findViewById(R.id.menu_wales);
+		View england = findViewById(R.id.menu_england);
+		View otherGB = findViewById(R.id.menu_gb);
+		View nearbyHills = findViewById(R.id.menu_nearby);
+		View exportBagging = findViewById(R.id.menu_backup);
+		View viewforecasts = findViewById(R.id.menu_forecasts);
 		View searchAll = findViewById(R.id.menu_search);
 
-		nearbyHills.setOnClickListener(new View.OnClickListener() {
+		nearbyHills.setOnClickListener(v -> {
+            Intent intent = new Intent(Main.this, NearbyHillsFragmentActivity.class);
+            startActivity(intent);
 
-			public void onClick(View v) {
-				Intent intent = new Intent(Main.this, NearbyHillsFragmentActivity.class);
-				startActivity(intent);
+        });
 
-			}
-		});
+		scotland.setOnClickListener(v -> showHills(SCOTLAND));
 
-		scotland.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(SCOTLAND);
-			}
-		});
+		wales.setOnClickListener(v -> showHills(WALES));
 
-		wales.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(WALES);
-			}
-		});
+		england.setOnClickListener(v -> showHills(ENGLAND));
 
-		england.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(ENGLAND);
-			}
-		});
+		otherGB.setOnClickListener(v -> showHills(OTHER_GB));
 
-		otherGB.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(OTHER_GB);
-			}
-		});
+		exportBagging.setOnClickListener(v -> {
+            Intent intent = new Intent(Main.this,
+                    BaggingExportActivity.class);
+            startActivity(intent);
 
-		exportBagging.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				Intent intent = new Intent(Main.this,
-						BaggingExportActivity.class);
-				startActivity(intent);
-
-			}
-
-		});
+        });
 
 		viewforecasts.setOnClickListener(new View.OnClickListener() {
 
-			private String forecastLink = "http://www.metoffice.gov.uk/public/weather/mountain-forecast/#?tab=mountainHome";
+			private final String forecastLink = "http://www.metoffice.gov.uk/public/weather/mountain-forecast/#?tab=mountainHome";
 
 			public void onClick(View v) {
 				Intent intent = new Intent("android.intent.action.VIEW", Uri
@@ -155,13 +131,7 @@ public class Main extends Activity {
 
 		});
 		
-		searchAll.setOnClickListener(new View.OnClickListener() {
-			
-			public void onClick(View v) {
-				search();
-				
-			}
-		});
+		searchAll.setOnClickListener(v -> search());
 
 	}
 
@@ -209,29 +179,25 @@ public class Main extends Activity {
 
 		alert.setView(searchText);
 
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				String value = searchText.getText().toString();
-				String where = "";
-				if (!"".equals(value)) {
-					where = "hillname like "
-							+ DatabaseUtils.sqlEscapeString("%" + value + "%");
+		alert.setPositiveButton("Ok", (dialog, whichButton) -> {
+            String value = searchText.getText().toString();
+            String where = "";
+            if (!"".equals(value)) {
+                where = "hillname like "
+                        + DatabaseUtils.sqlEscapeString("%" + value + "%");
 
-				} else
-					where = "";
-				intent.putExtra("search", where);
-				intent.putExtra("hilllistType", "Search Results");
+            } else
+                where = "";
+            intent.putExtra("search", where);
+            intent.putExtra("hilllistType", "Search Results");
 
-				startActivity(intent);
+            startActivity(intent);
 
-			}
-		});
+        });
 		alert.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
+				(dialog, whichButton) -> {
 
-					}
-				});
+                });
 
 		AlertDialog search = alert.create();
 		search.show();

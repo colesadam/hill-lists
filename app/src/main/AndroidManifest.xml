@@ -16,7 +16,7 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".activities.DisplayHillListFragmentActivity"></activity>
+		<activity android:name=".activities.DisplayHillListFragmentActivity" />
 		<uses-library android:name="com.google.android.maps" />
 		<activity android:name=".activities.HillDetailFragmentActivity"
 			android:label="Hill Details"></activity>

@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class LatLangBounds {
 
-    private Set<Double[]> latLongs = new HashSet<Double[]>();
+    private final Set<Double[]> latLongs = new HashSet<>();
 
     public void addLatLong(Double latitude, Double longitude) {
         latLongs.add(new Double[]{latitude, longitude});
@@ -14,7 +14,7 @@ public class LatLangBounds {
 
     public Double getSmallestLat() {
 
-        Set<Double> lats = new HashSet<Double>();
+        Set<Double> lats = new HashSet<>();
         for (Double[] latLng : latLongs) {
             lats.add(latLng[0]);
         }
@@ -23,7 +23,7 @@ public class LatLangBounds {
     }
 
     public Double getLargestLat() {
-        Set<Double> lats = new HashSet<Double>();
+        Set<Double> lats = new HashSet<>();
         for (Double[] latLng : latLongs) {
             lats.add(latLng[0]);
         }
@@ -31,7 +31,7 @@ public class LatLangBounds {
     }
 
     public Double getSmallestLong() {
-        Set<Double> longs = new HashSet<Double>();
+        Set<Double> longs = new HashSet<>();
         for (Double[] latLng : latLongs) {
             longs.add(latLng[1]);
         }
@@ -39,7 +39,7 @@ public class LatLangBounds {
     }
 
     public Double getLargestLong() {
-        Set<Double> longs = new HashSet<Double>();
+        Set<Double> longs = new HashSet<>();
         for (Double[] latLng : latLongs) {
             longs.add(latLng[1]);
         }

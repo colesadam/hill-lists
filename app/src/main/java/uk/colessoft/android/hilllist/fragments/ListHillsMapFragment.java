@@ -9,7 +9,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,8 +33,6 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
     private HillDbAdapter dbAdapter;
 
-    private double lat;
-    private double lng;
     private OnHillSelectedListener hillSelectedListener;
     private MapOnHillSelectedListener mapOnHillSelectedListener;
     private View viewer;
@@ -52,7 +49,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     private BitmapDescriptor cmarker;
 
     public interface MapOnHillSelectedListener {
-        public void mapOnHillSelected(int rowid);
+        void mapOnHillSelected(int rowid);
     }
 
 
@@ -87,15 +84,11 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
         final ToggleButton mapButton = (ToggleButton) getActivity().findViewById(R.id.satellite_button);
         mapButton.setChecked(true);
-        mapButton.setOnClickListener(new Button.OnClickListener() {
-
-            public void onClick(View v) {
-                if (mapButton.isChecked()) {
-                    map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                } else {
-                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                }
-
+        mapButton.setOnClickListener(v -> {
+            if (mapButton.isChecked()) {
+                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            } else {
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             }
 
         });
@@ -181,12 +174,6 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         }
 
         @Override
-        protected void onStopLoading() {
-            // TODO Auto-generated method stub
-            super.onStopLoading();
-        }
-
-        @Override
         public Cursor loadInBackground() {
             dbAdapter.open();
 
@@ -207,11 +194,11 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         if (hillsCursor.moveToFirst()) {
             // Iterate over each cursor.
             do {
-                lat = hillsCursor.getDouble(hillsCursor
+                double lat = hillsCursor.getDouble(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_LATITUDE));
-                lng = hillsCursor.getDouble(hillsCursor
+                double lng = hillsCursor.getDouble(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_LONGITUDE));
-                llb.addLatLong(lat,lng);
+                llb.addLatLong(lat, lng);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillDbAdapter.KEY_ID));
                 if (passedRowId == 0) passedRowId = row_id;

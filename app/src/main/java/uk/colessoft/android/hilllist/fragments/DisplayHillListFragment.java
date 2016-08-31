@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -26,10 +25,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -94,33 +90,29 @@ public class DisplayHillListFragment extends Fragment implements
 				} else
 					ctv.setChecked(false);
 				ctv.setOnClickListener(null);
-				ctv.setOnClickListener(new OnClickListener() {
+				ctv.setOnClickListener(v -> {
+                    dbAdapter.open();
+                    CheckBox xcv = (CheckBox) v;
+                    if (xcv.isChecked()) {
+                        ((TextView) ((ViewGroup) ((ViewGroup) xcv
+                                .getParent()).getChildAt(0)).getChildAt(0))
+                                .setTextColor(Color.GREEN);
+                        dbAdapter.markHillClimbed(id, new Date(), "");
+                    } else {
+                        ((TextView) ((ViewGroup) ((ViewGroup) xcv
+                                .getParent()).getChildAt(0)).getChildAt(0))
+                                .setTextColor(Color.WHITE);
+                        dbAdapter.markHillNotClimbed(id);
+                    }
+                    dbAdapter.close();
+                    HillDetailFragment fragment = (HillDetailFragment) getActivity()
+                            .getSupportFragmentManager().findFragmentById(
+                                    R.id.hill_detail_fragment);
 
-					public void onClick(View v) {
-						dbAdapter.open();
-						CheckBox xcv = (CheckBox) v;
-						if (xcv.isChecked()) {
-							((TextView) ((ViewGroup) ((ViewGroup) xcv
-									.getParent()).getChildAt(0)).getChildAt(0))
-									.setTextColor(Color.GREEN);
-							dbAdapter.markHillClimbed(id, new Date(), "");
-						} else {
-							((TextView) ((ViewGroup) ((ViewGroup) xcv
-									.getParent()).getChildAt(0)).getChildAt(0))
-									.setTextColor(Color.WHITE);
-							dbAdapter.markHillNotClimbed(id);
-						}
-						dbAdapter.close();
-						HillDetailFragment fragment = (HillDetailFragment) getActivity()
-								.getSupportFragmentManager().findFragmentById(
-										R.id.hill_detail_fragment);
-
-						if (fragment != null && fragment.isInLayout()) {
-							hillSelectedListener.onHillSelected(id);
-						}
-					}
-
-				});
+                    if (fragment != null && fragment.isInLayout()) {
+                        hillSelectedListener.onHillSelected(id);
+                    }
+                });
 
 				return true;
 			}
@@ -132,7 +124,7 @@ public class DisplayHillListFragment extends Fragment implements
 	}
 
 	public interface OnHillSelectedListener {
-		public void onHillSelected(int rowid);
+		void onHillSelected(int rowid);
 	}
 
 
@@ -184,12 +176,6 @@ public class DisplayHillListFragment extends Fragment implements
 			if (takeContentChanged() || data == null) {
 				forceLoad();
 			}
-		}
-
-		@Override
-		protected void onStopLoading() {
-			// TODO Auto-generated method stub
-			super.onStopLoading();
 		}
 
 	}
@@ -274,12 +260,6 @@ public class DisplayHillListFragment extends Fragment implements
 			}
 		}
 
-		@Override
-		protected void onStopLoading() {
-			// TODO Auto-generated method stub
-			super.onStopLoading();
-		}
-
 	}
 
 	private HillDbAdapter dbAdapter;
@@ -288,19 +268,13 @@ public class DisplayHillListFragment extends Fragment implements
 	private String orderBy;
 
 	private ListView myListView;
-	private int firstRow;
-	boolean useMetricHeights;
+	private boolean useMetricHeights;
 	private String hilltype;
 	private String hilllistType;
-	private int country;
 	private String countryClause;
 	private final DecimalFormat df3 = new DecimalFormat();
 	private int filterHills;
-	private final int ALL_HILLS = 0;
-	private final int CLIMBED_HILLS = 1;
-	private final int UNCLIMBED_HILLS = 2;
 	private OnHillSelectedListener hillSelectedListener;
-	private View viewer;
 
 	private int currentRowId;
 
@@ -322,7 +296,7 @@ public class DisplayHillListFragment extends Fragment implements
 		}
 	};
 
-	final Handler handlerHc = new Handler() {
+	private final Handler handlerHc = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			int total = msg.arg1;
@@ -373,29 +347,21 @@ public class DisplayHillListFragment extends Fragment implements
 		cursorAdapter.setViewBinder(new HillsViewBinder());
 		
 		myListView.setAdapter(cursorAdapter);
-		myListView.setOnItemClickListener(new OnItemClickListener() {
+		myListView.setOnItemClickListener((parent, view, pos, id) -> {
 
-			// @Override
-			public void onItemClick(AdapterView<?> parent, View view, int pos,
-					long id) {
+            // Extract the row id.
+            int rowId = Integer.parseInt(((TextView) (view
+                    .findViewById(R.id.rowid))).getText().toString());
 
-				// Extract the row id.
-				int rowId = Integer.parseInt(((TextView) (((ViewGroup) view)
-						.findViewById(R.id.rowid))).getText().toString());
+            currentRowId = rowId;
 
-				currentRowId = rowId;
+            hillSelectedListener.onHillSelected(rowId);
 
-				hillSelectedListener.onHillSelected(rowId);
-
-			}
-		});
+        });
 		HillDetailFragment fragment = (HillDetailFragment) getActivity()
 				.getSupportFragmentManager().findFragmentById(
 						R.id.hill_detail_fragment);
 
-		if (fragment != null && fragment.isInLayout()) {
-
-		}
 	}
 
 	@Override
@@ -428,8 +394,8 @@ public class DisplayHillListFragment extends Fragment implements
 
 		updateFromPreferences();
 
-		viewer = inflater.inflate(R.layout.list_hills, container, false);
-		myListView = (ListView) (ViewGroup) viewer
+		View viewer = inflater.inflate(R.layout.list_hills, container, false);
+		myListView = (ListView) viewer
 				.findViewById(R.id.myListView);
 		
 
@@ -445,7 +411,7 @@ public class DisplayHillListFragment extends Fragment implements
 			getActivity().setTitle(hilllistType);
 		} else
 			getActivity().setTitle("Results");
-		country = getActivity().getIntent().getExtras().getInt("country");
+		int country = getActivity().getIntent().getExtras().getInt("country");
 		where = getActivity().getIntent().getExtras().getString("search");
 
 		switch (country) {
@@ -511,18 +477,21 @@ public class DisplayHillListFragment extends Fragment implements
 
 		case (R.id.menu_show_climbed): {
 
+			int CLIMBED_HILLS = 1;
 			filterHills = CLIMBED_HILLS;
 			updateList();
 			return true;
 		}
 
 		case (R.id.menu_show_not_climbed): {
+			int UNCLIMBED_HILLS = 2;
 			filterHills = UNCLIMBED_HILLS;
 			updateList();
 			return true;
 		}
 
 		case (R.id.menu_show_all): {
+			int ALL_HILLS = 0;
 			filterHills = ALL_HILLS;
 			updateList();
 			return true;
@@ -552,30 +521,24 @@ public class DisplayHillListFragment extends Fragment implements
 			alert.setView(searchText);
 
 			alert.setPositiveButton("Ok",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							String value = searchText.getText().toString();
+					(dialog12, whichButton) -> {
+                        String value = searchText.getText().toString();
 
-							if (!"".equals(value))
-								where = "hillname like "
-										+ DatabaseUtils.sqlEscapeString("%"
-												+ value + "%");
-							else
-								where = null;
+                        if (!"".equals(value))
+                            where = "hillname like "
+                                    + DatabaseUtils.sqlEscapeString("%"
+                                            + value + "%");
+                        else
+                            where = null;
 
-							updateList();
+                        updateList();
 
-						}
-					});
+                    });
 
 			alert.setNegativeButton("Cancel",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
+					(dialog1, whichButton) -> {
 
-						}
-					});
+                    });
 
 			AlertDialog search = alert.create();
 			search.show();
@@ -610,7 +573,7 @@ public class DisplayHillListFragment extends Fragment implements
 		if (result.getCount() != 0) {
 			
 			result.moveToPosition(0);
-			firstRow = result.getInt(result.getColumnIndexOrThrow("_id"));
+			int firstRow = result.getInt(result.getColumnIndexOrThrow("_id"));
 
 			HillDetailFragment fragment = (HillDetailFragment) getActivity()
 					.getSupportFragmentManager().findFragmentById(

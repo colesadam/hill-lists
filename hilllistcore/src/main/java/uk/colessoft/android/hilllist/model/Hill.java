@@ -3,35 +3,35 @@ package uk.colessoft.android.hilllist.model;
 import java.util.Date;
 
 public class Hill {
-	int _id;
-	private String _section;
-	private String hillname;
-	private String section;
-	private String region;
-	private String area;
-	private float heightm;
-	private float heightf;
-	private String map;
-	private String map25;
-	private String gridref;
-	private String colgridref;
-	private float colheight;
-	private float drop;
-	private String gridref10;
-	private String feature;
-	private String observations;
-	private String survey;
-	private String climbed;
-	private String classification;
-	private Date revision;
-	private String comments;
-	private int xcoord;
-	private int ycoord;
-	private double latitude;
-	private double longitude;
-	private String streetmap;
-	private String getamap;
-	private String hillBagging;
+	private final int _id;
+	private final String _section;
+	private final String hillname;
+	private final String section;
+	private final String region;
+	private final String area;
+	private final float heightm;
+	private final float heightf;
+	private final String map;
+	private final String map25;
+	private final String gridref;
+	private final String colgridref;
+	private final float colheight;
+	private final float drop;
+	private final String gridref10;
+	private final String feature;
+	private final String observations;
+	private final String survey;
+	private final String climbed;
+	private final String classification;
+	private final Date revision;
+	private final String comments;
+	private final int xcoord;
+	private final int ycoord;
+	private final double latitude;
+	private final double longitude;
+	private final String streetmap;
+	private final String getamap;
+	private final String hillBagging;
 	private Date hillClimbed;
 	private String notes;
 
@@ -193,7 +193,7 @@ public class Hill {
 		return hillBagging;
 	}
 
-	public void setHillClimbed(Date hillClimbed) {
+	private void setHillClimbed(Date hillClimbed) {
 		this.hillClimbed = hillClimbed;
 	}
 
@@ -201,7 +201,7 @@ public class Hill {
 		return hillClimbed;
 	}
 
-	public void setNotes(String notes) {
+	private void setNotes(String notes) {
 		this.notes = notes;
 	}
 

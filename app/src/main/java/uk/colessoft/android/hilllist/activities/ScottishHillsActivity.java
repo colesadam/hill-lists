@@ -16,8 +16,8 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class ScottishHillsActivity extends Activity {
-	Dialog descDialog;
-	static final int ID_DESCDIALOG = 1;
+	private Dialog descDialog;
+	private static final int ID_DESCDIALOG = 1;
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -102,77 +102,29 @@ public class ScottishHillsActivity extends Activity {
 		View marilyns = findViewById(R.id.scottish_marilyns);
 		View allScottish = findViewById(R.id.allscottish);
 
-		allScottish.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(null, "All Scottish Hills");
-			}
-		});
-		munros.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_munro, "Munros");
-			}
-		});
+		allScottish.setOnClickListener(v -> showHills(null, "All Scottish Hills"));
+		munros.setOnClickListener(v -> showHills(HillDbAdapter.KEY_munro, "Munros"));
 
-		munro_tops.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_munroTop, "Munro Tops");
-			}
-		});
+		munro_tops.setOnClickListener(v -> showHills(HillDbAdapter.KEY_munroTop, "Munro Tops"));
 
-		murdos.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_murdo, "Murdos");
-			}
-		});
+		murdos.setOnClickListener(v -> showHills(HillDbAdapter.KEY_murdo, "Murdos"));
 
-		corbetts.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_corbett, "Corbetts");
-			}
-		});
+		corbetts.setOnClickListener(v -> showHills(HillDbAdapter.KEY_corbett, "Corbetts"));
 
-		corbett_tops.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+		corbett_tops.setOnClickListener(v -> showHills(HillDbAdapter.KEY_corbettTopOfMunro + "='1' OR "
+                + HillDbAdapter.KEY_corbettTopOfCorbett, "Corbett Tops"));
 
-				showHills(HillDbAdapter.KEY_corbettTopOfMunro + "='1' OR "
-						+ HillDbAdapter.KEY_corbettTopOfCorbett, "Corbett Tops");
-			}
-		});
+		donalds.setOnClickListener(v -> showHills(HillDbAdapter.KEY_donald, "Donalds"));
 
-		donalds.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_donald, "Donalds");
-			}
-		});
+		donald_tops.setOnClickListener(v -> showHills(HillDbAdapter.KEY_donaldTop, "Donald Tops"));
 
-		donald_tops.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+		grahams.setOnClickListener(v -> showHills(HillDbAdapter.KEY_graham, "Grahams"));
 
-				showHills(HillDbAdapter.KEY_donaldTop, "Donald Tops");
-			}
-		});
+		graham_tops.setOnClickListener(v -> showHills(HillDbAdapter.KEY_grahamTopOfMunro + "='1' OR "
+                + HillDbAdapter.KEY_grahamTopOfCorbett + "='1' OR "
+                + HillDbAdapter.KEY_grahamTopOfGraham, "Graham Tops"));
 
-		grahams.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showHills(HillDbAdapter.KEY_graham, "Grahams");
-			}
-		});
-
-		graham_tops.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-
-				showHills(HillDbAdapter.KEY_grahamTopOfMunro + "='1' OR "
-						+ HillDbAdapter.KEY_grahamTopOfCorbett + "='1' OR "
-						+ HillDbAdapter.KEY_grahamTopOfGraham, "Graham Tops");
-			}
-		});
-
-		marilyns.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-
-				showHills(HillDbAdapter.KEY_marilyn, "Scottish Marilyns");
-			}
-		});
+		marilyns.setOnClickListener(v -> showHills(HillDbAdapter.KEY_marilyn, "Scottish Marilyns"));
 
 	}
 

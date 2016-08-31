@@ -68,11 +68,6 @@ public class NearbyHillsMapFragmentActivity extends FragmentActivity implements 
     }
 
 
-    public void mapOnHillSelected(int rowid) {
-        // TODO Auto-generated method stub
-
-    }
-
     @Override
     public void hillTapped(int rowid) {
 

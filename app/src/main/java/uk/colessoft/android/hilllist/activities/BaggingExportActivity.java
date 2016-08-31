@@ -25,9 +25,6 @@ public class BaggingExportActivity extends Activity implements OnClickListener,
 	private FolderPicker mFileDialog;
 	private View mPickFolder;
 	private View mPickFile;
-	private View folderPathView;
-
-	private View filePathView;
 
 	private String filePath;
 
@@ -42,8 +39,8 @@ public class BaggingExportActivity extends Activity implements OnClickListener,
 		mPickFolder = findViewById(R.id.pick_folder);
 		mPickFolder.setOnClickListener(this);
 		mPickFile = findViewById(R.id.pick_file);
-		folderPathView = findViewById(R.id.folder_path);
-		filePathView = findViewById(R.id.file_path);
+		View folderPathView = findViewById(R.id.folder_path);
+		View filePathView = findViewById(R.id.file_path);
 
 		mPickFile.setOnClickListener(this);
 

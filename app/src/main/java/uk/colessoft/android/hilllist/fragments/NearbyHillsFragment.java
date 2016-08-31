@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -30,8 +29,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -42,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import uk.colessoft.android.hilllist.R;
@@ -58,7 +54,7 @@ public class NearbyHillsFragment extends Fragment implements
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001;
 
     public interface OnHillSelectedListener {
-        public void onHillSelected(int rowid);
+        void onHillSelected(int rowid);
     }
 
     @Override
@@ -76,27 +72,23 @@ public class NearbyHillsFragment extends Fragment implements
     private LocationManager lm;
     private MyLocationListener locationListener;
     private ArrayList<Map<String, ?>> nearbyHills;
-    double lat1;
-    double lon1;
+    private double lat1;
+    private double lon1;
     private double nearRadius = 16;
     private final DecimalFormat df2 = new DecimalFormat("#,###,###,##0.0");
     private final DecimalFormat df1 = new DecimalFormat("#,###,###,##0");
     private final DecimalFormat df3 = new DecimalFormat();
-    MenuItem dist;
+    private MenuItem dist;
     private boolean useMetricHeights;
     private boolean useMetricDistances;
     private String orderBy = "distance";
     private ProgressDialog dialog;
     private final int ALL_HILLS = 0;
-    private final int CLIMBED_HILLS = 1;
-    private final int UNCLIMBED_HILLS = 2;
     private int filterHills = ALL_HILLS;
     private boolean searched = false;
     private boolean locationSet = false;
     private ArrayList<Map<String, ?>> backedUpHills;
-    public OnHillSelectedListener hillSelectedListener;
-    private OnLocationFoundListener locationFoundListener;
-    private SimpleAdapter nearbyHillsAdapter;
+    private OnHillSelectedListener hillSelectedListener;
 
     @Override
     public void onAttach(Activity activity) {
@@ -109,7 +101,7 @@ public class NearbyHillsFragment extends Fragment implements
                     + " must implement OnHillSelectedListener");
         }
         try {
-            locationFoundListener = (OnLocationFoundListener) activity;
+            OnLocationFoundListener locationFoundListener = (OnLocationFoundListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement LocationFoundListener");
@@ -210,11 +202,13 @@ public class NearbyHillsFragment extends Fragment implements
 
             case (R.id.menu_show_climbed): {
 
+                int CLIMBED_HILLS = 1;
                 filterHills = CLIMBED_HILLS;
                 return true;
             }
 
             case (R.id.menu_show_not_climbed): {
+                int UNCLIMBED_HILLS = 2;
                 filterHills = UNCLIMBED_HILLS;
                 return true;
             }
@@ -226,7 +220,7 @@ public class NearbyHillsFragment extends Fragment implements
 
             case (R.id.menu_list_alpha): {
 
-                orderBy = dbAdapter.KEY_HILLNAME;
+                orderBy = HillDbAdapter.KEY_HILLNAME;
                 if (nearbyHills != null && !nearbyHills.isEmpty()) {
                     Collections.sort(nearbyHills, new HillHashMapAlphaComparator());
                     updateList();
@@ -236,7 +230,7 @@ public class NearbyHillsFragment extends Fragment implements
             }
             case (R.id.menu_list_height): {
 
-                orderBy = dbAdapter.KEY_HEIGHTM;
+                orderBy = HillDbAdapter.KEY_HEIGHTM;
                 if (nearbyHills != null && !nearbyHills.isEmpty()) {
                     Collections
                             .sort(nearbyHills, new HillHashMapHeightComparator());
@@ -265,7 +259,7 @@ public class NearbyHillsFragment extends Fragment implements
                 if (nearbyHills != null) {
                     rowIds = new String[nearbyHills.size()];
                     for (Map hs : nearbyHills) {
-                        String srow = ((Integer) (hs.get("rowid"))).toString();
+                        String srow = hs.get("rowid").toString();
                         rowIds[sindex] = srow;
                         sindex++;
                     }
@@ -295,40 +289,34 @@ public class NearbyHillsFragment extends Fragment implements
                 alert.setView(searchText);
 
                 alert.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int whichButton) {
-                                String value = searchText.getText().toString()
-                                        .toLowerCase();
-                                // go back to original list if we've already
-                                // whittled down through search.
-                                if (searched) {
-                                    nearbyHills = backedUpHills;
-                                    searched = false;
-                                } else {
-                                    backedUpHills = (ArrayList<Map<String, ?>>) nearbyHills
-                                            .clone();
-                                    searched = true;
-                                }
-                                ArrayList<Map<String, ?>> newList = new ArrayList();
-                                for (Map hs : nearbyHills) {
-                                    String hillname = (String) (hs.get("hillname"));
-                                    if (hillname.toLowerCase().contains(value)) {
-                                        newList.add(hs);
-                                    }
-                                }
-                                nearbyHills = newList;
-                                updateList();
-
+                        (dialog12, whichButton) -> {
+                            String value = searchText.getText().toString()
+                                    .toLowerCase();
+                            // go back to original list if we've already
+                            // whittled down through search.
+                            if (searched) {
+                                nearbyHills = backedUpHills;
+                                searched = false;
+                            } else {
+                                backedUpHills = (ArrayList<Map<String, ?>>) nearbyHills
+                                        .clone();
+                                searched = true;
                             }
+                            ArrayList<Map<String, ?>> newList = new ArrayList();
+                            for (Map hs : nearbyHills) {
+                                String hillname = (String) (hs.get("hillname"));
+                                if (hillname.toLowerCase().contains(value)) {
+                                    newList.add(hs);
+                                }
+                            }
+                            nearbyHills = newList;
+                            updateList();
+
                         });
 
                 alert.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int whichButton) {
+                        (dialog1, whichButton) -> {
 
-                            }
                         });
 
                 AlertDialog search = alert.create();
@@ -345,7 +333,7 @@ public class NearbyHillsFragment extends Fragment implements
                              Bundle savedInstanceState) {
 
         viewer = inflater.inflate(R.layout.list_hills, container, false);
-        hillListView = (ListView) (ViewGroup) viewer
+        hillListView = (ListView) viewer
                 .findViewById(R.id.myListView);
 
         return viewer;
@@ -402,21 +390,25 @@ public class NearbyHillsFragment extends Fragment implements
                 }
 
             } while (hillsCursor.moveToNext());
-            if (orderBy.equals(HillDbAdapter.KEY_HEIGHTM)) {
-                Collections
-                        .sort(nearbyHills, new HillHashMapHeightComparator());
-            } else if (orderBy.equals(HillDbAdapter.KEY_HILLNAME)) {
-                Collections.sort(nearbyHills, new HillHashMapAlphaComparator());
-            } else if (orderBy.equals("distance")) {
-                Collections.sort(nearbyHills,
-                        new HillHashMapDistanceComparator());
+            switch (orderBy) {
+                case HillDbAdapter.KEY_HEIGHTM:
+                    Collections
+                            .sort(nearbyHills, new HillHashMapHeightComparator());
+                    break;
+                case HillDbAdapter.KEY_HILLNAME:
+                    Collections.sort(nearbyHills, new HillHashMapAlphaComparator());
+                    break;
+                case "distance":
+                    Collections.sort(nearbyHills,
+                            new HillHashMapDistanceComparator());
+                    break;
             }
         }
 //		dbAdapter.close();
 
     }
 
-    final Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -467,21 +459,17 @@ public class NearbyHillsFragment extends Fragment implements
                         locationListener);
             }
 
-            Runnable showWaitDialog = new Runnable() {
+            Runnable showWaitDialog = () -> {
 
-                public void run() {
-
-                    while (!locationSet) {
-                        // Wait for first GPS Fix (do nothing until loc != null)
-                    }
-
-                    Message m1;
-                    m1 = handler.obtainMessage();
-                    m1.arg1 = 0;
-
-                    handler.sendMessage(m1);
-
+                while (!locationSet) {
+                    // Wait for first GPS Fix (do nothing until loc != null)
                 }
+
+                Message m1;
+                m1 = handler.obtainMessage();
+                m1.arg1 = 0;
+
+                handler.sendMessage(m1);
 
             };
              //locationFoundListener.showDialog();
@@ -504,8 +492,8 @@ public class NearbyHillsFragment extends Fragment implements
     }
 
     private void updateList() {
-        nearbyHillsAdapter = new SimpleAdapter(getActivity(),
-                (List<? extends Map<String, ?>>) nearbyHills,
+        SimpleAdapter nearbyHillsAdapter = new SimpleAdapter(getActivity(),
+                nearbyHills,
                 R.layout.nearby_hill_item, new String[]{"hillname",
                 "distance", "height",}, new int[]{
                 R.id.hillname_entry, R.id.distance_entry,
@@ -535,18 +523,13 @@ public class NearbyHillsFragment extends Fragment implements
 
         };
         hillListView.setAdapter(nearbyHillsAdapter);
-        hillListView.setOnItemClickListener(new OnItemClickListener() {
+        hillListView.setOnItemClickListener((parent, view, pos, id) -> {
+            HashMap entry = (HashMap) nearbyHills.get(pos);
+            int rowId = (Integer) entry.get("rowid");
 
-            // @Override
-            public void onItemClick(AdapterView<?> parent, View view, int pos,
-                                    long id) {
-                HashMap entry = (HashMap) nearbyHills.get(pos);
-                int rowId = (Integer) entry.get("rowid");
+            hillSelectedListener.onHillSelected(rowId);
 
-                hillSelectedListener.onHillSelected(rowId);
-
-                // finish();
-            }
+            // finish();
         });
 
         Fragment fragment2 = getActivity().getSupportFragmentManager()
@@ -565,12 +548,12 @@ public class NearbyHillsFragment extends Fragment implements
     }
 
     public interface OnLocationFoundListener {
-        public void locationFound();
+        void locationFound();
 
-        public void showDialog();
+        void showDialog();
     }
 
-    public void startLoader() {
+    private void startLoader() {
         getLoaderManager().restartLoader(0, null, this);
     }
 
@@ -747,15 +730,19 @@ public class NearbyHillsFragment extends Fragment implements
                     }
 
                 } while (hillsCursor.moveToNext());
-                if (orderBy.equals(HillDbAdapter.KEY_HEIGHTM)) {
-                    Collections.sort(nearbyHills,
-                            new HillHashMapHeightComparator());
-                } else if (orderBy.equals(HillDbAdapter.KEY_HILLNAME)) {
-                    Collections.sort(nearbyHills,
-                            new HillHashMapAlphaComparator());
-                } else if (orderBy.equals("distance")) {
-                    Collections.sort(nearbyHills,
-                            new HillHashMapDistanceComparator());
+                switch (orderBy) {
+                    case HillDbAdapter.KEY_HEIGHTM:
+                        Collections.sort(nearbyHills,
+                                new HillHashMapHeightComparator());
+                        break;
+                    case HillDbAdapter.KEY_HILLNAME:
+                        Collections.sort(nearbyHills,
+                                new HillHashMapAlphaComparator());
+                        break;
+                    case "distance":
+                        Collections.sort(nearbyHills,
+                                new HillHashMapDistanceComparator());
+                        break;
                 }
             }
 //			dbAdapter.close();
@@ -771,12 +758,6 @@ public class NearbyHillsFragment extends Fragment implements
             if (takeContentChanged() || nearbyHills == null) {
                 forceLoad();
             }
-        }
-
-        @Override
-        protected void onStopLoading() {
-            // TODO Auto-generated method stub
-            super.onStopLoading();
         }
 
     }
