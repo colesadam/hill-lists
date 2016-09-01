@@ -14,13 +14,13 @@ import java.util.Date;
 import java.util.HashMap;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.model.Hill;
 
 public class HillDetailFragmentActivity extends FragmentActivity {
 
-	private HillDbAdapter dbAdapter;
+	private OldHillDbAdapter dbAdapter;
 
 	private String osLink;
 	private static final int DATE_DIALOG_ID = 0;

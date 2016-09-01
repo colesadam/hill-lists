@@ -38,7 +38,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 
 public class DisplayHillListFragment extends Fragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
@@ -58,7 +58,7 @@ public class DisplayHillListFragment extends Fragment implements
 			case R.id.name_entry: {
 				tv.setTextColor(Color.WHITE);
 				if (cursor.getString(cursor
-						.getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) != null) {
+						.getColumnIndex(OldHillDbAdapter.KEY_DATECLIMBED)) != null) {
 
 					tv.setTextColor(Color.GREEN);
 
@@ -81,9 +81,9 @@ public class DisplayHillListFragment extends Fragment implements
 			case R.id.check_hill_climbed: {
 				CheckBox ctv = (CheckBox) tv;
 				final int id = cursor.getInt(cursor
-						.getColumnIndex(HillDbAdapter.KEY_ID));
+						.getColumnIndex(OldHillDbAdapter.KEY_ID));
 				if (cursor.getString(cursor
-						.getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) != null) {
+						.getColumnIndex(OldHillDbAdapter.KEY_DATECLIMBED)) != null) {
 
 					ctv.setChecked(true);
 
@@ -136,7 +136,7 @@ public class DisplayHillListFragment extends Fragment implements
 		private String hilltype;
 		private String countryClause;
 		private int filterHills;
-		private HillDbAdapter dbAdapter;
+		private OldHillDbAdapter dbAdapter;
 
 		public UpdateHillsTaskLoader(Context context) {
 			super(context);
@@ -145,7 +145,7 @@ public class DisplayHillListFragment extends Fragment implements
 
 		public UpdateHillsTaskLoader(Context context, String hilltype,
 				String countryClause, String where, String orderBy,
-				int filterHills, HillDbAdapter dbAdapter) {
+				int filterHills, OldHillDbAdapter dbAdapter) {
 			super(context);
 			this.where = where;
 			this.orderBy = orderBy;
@@ -187,7 +187,7 @@ public class DisplayHillListFragment extends Fragment implements
 		private String hilltype;
 		private String countryClause;
 		private int filterHills;
-		private HillDbAdapter dbAdapter;
+		private OldHillDbAdapter dbAdapter;
 		private int allMarked;
 		private Handler handler;
 
@@ -197,9 +197,9 @@ public class DisplayHillListFragment extends Fragment implements
 		}
 
 		public HillsClimbedTaskLoader(Context context, String hilltype,
-				String countryClause, String where, String orderBy,
-				int filterHills, HillDbAdapter dbAdapter, int allMarked,
-				Handler handler) {
+									  String countryClause, String where, String orderBy,
+									  int filterHills, OldHillDbAdapter dbAdapter, int allMarked,
+									  Handler handler) {
 			super(context);
 			this.where = where;
 			this.orderBy = orderBy;
@@ -228,11 +228,11 @@ public class DisplayHillListFragment extends Fragment implements
 			result.moveToFirst();
 			do {
 				int row_id = result.getInt(result
-						.getColumnIndex(HillDbAdapter.KEY_ID));
+						.getColumnIndex(OldHillDbAdapter.KEY_ID));
 				if (allMarked == 1) {
 
 					if (result.getString(result
-							.getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) == null) {
+							.getColumnIndex(OldHillDbAdapter.KEY_DATECLIMBED)) == null) {
 						Log.d(this.toString(), "debug: marking hill " + row_id);
 						dbAdapter.markHillClimbed(row_id, new Date(), "");
 					}
@@ -262,7 +262,7 @@ public class DisplayHillListFragment extends Fragment implements
 
 	}
 
-	private HillDbAdapter dbAdapter;
+	private OldHillDbAdapter dbAdapter;
 
 	private String where = null;
 	private String orderBy;
@@ -367,7 +367,7 @@ public class DisplayHillListFragment extends Fragment implements
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		dbAdapter = new HillDbAdapter(getActivity());
+		dbAdapter = new OldHillDbAdapter(getActivity());
 		try {
 			hillSelectedListener = (OnHillSelectedListener) activity;
 		} catch (ClassCastException e) {
@@ -438,7 +438,7 @@ public class DisplayHillListFragment extends Fragment implements
 
 		}
 
-		orderBy = "cast(" + HillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
+		orderBy = "cast(" + OldHillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
 
 		return viewer;
 	}
@@ -461,14 +461,14 @@ public class DisplayHillListFragment extends Fragment implements
 		}
 		case (R.id.menu_list_alpha): {
 
-			orderBy = HillDbAdapter.KEY_HILLNAME;
+			orderBy = OldHillDbAdapter.KEY_HILLNAME;
 			updateList();
 			return true;
 
 		}
 		case (R.id.menu_list_height): {
 
-			orderBy = "cast(" + HillDbAdapter.KEY_HEIGHTM + " as float)"
+			orderBy = "cast(" + OldHillDbAdapter.KEY_HEIGHTM + " as float)"
 					+ " desc";
 			updateList();
 			return true;

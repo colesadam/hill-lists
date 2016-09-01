@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.dialogs.FolderPicker;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 
 public class BaggingExportActivity extends Activity implements OnClickListener,
 		DialogInterface.OnClickListener {
@@ -47,7 +47,7 @@ public class BaggingExportActivity extends Activity implements OnClickListener,
 	}
 
 	private void generateCsvFile(String sFileName) {
-		HillDbAdapter dbAdapter = new HillDbAdapter(this);
+		OldHillDbAdapter dbAdapter = new OldHillDbAdapter(this);
 		dbAdapter.open();
 		Cursor baggedCursor = dbAdapter.getBaggedHillList();
 		startManagingCursor(baggedCursor);
@@ -125,7 +125,7 @@ public class BaggingExportActivity extends Activity implements OnClickListener,
 	}
 
 	private void importCsvFile() {
-		HillDbAdapter dbAdapter = new HillDbAdapter(this);
+		OldHillDbAdapter dbAdapter = new OldHillDbAdapter(this);
 		dbAdapter.open();
 		dbAdapter.importBagging(filePath);
 

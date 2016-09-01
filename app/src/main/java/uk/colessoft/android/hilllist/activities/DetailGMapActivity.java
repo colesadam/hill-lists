@@ -20,7 +20,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
@@ -29,7 +29,7 @@ import uk.colessoft.android.hilllist.utility.LatLangBounds;
 public class DetailGMapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
     static final private int SHOW_NEARBY = Menu.FIRST;
 
-    private HillDbAdapter dbAdapter;
+    private OldHillDbAdapter dbAdapter;
     private GoogleMap map;
 
     private Hill hill;
@@ -84,7 +84,7 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
         rowid = getIntent().getExtras().getInt("rowid");
         String title = getIntent().getExtras().getString("title");
         setTitle(title);
-        dbAdapter = new HillDbAdapter(this);
+        dbAdapter = new OldHillDbAdapter(this);
         dbAdapter.open();
         hill = dbAdapter.getHill(rowid);
         dbAdapter.close();
@@ -108,27 +108,27 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
             // Iterate over each cursor.
             do {
                 Double lat = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(HillDbAdapter.KEY_LATITUDE));
+                        .getColumnIndex(OldHillDbAdapter.KEY_LATITUDE));
                 Double lng = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(HillDbAdapter.KEY_LONGITUDE));
+                        .getColumnIndex(OldHillDbAdapter.KEY_LONGITUDE));
 
 
                 double distanceKm = DistanceCalculator.CalculationByDistance(hill.getLatitude(), lat, hill.getLongitude(), lng);
                 int row_id = hillsCursor.getInt(hillsCursor
-                        .getColumnIndex(HillDbAdapter.KEY_ID));
+                        .getColumnIndex(OldHillDbAdapter.KEY_ID));
                 double nearRadius = 16.09;
                 if (distanceKm < nearRadius && row_id != rowid) {
                     llb.addLatLong(lat,lng);
 
                     String hillname = hillsCursor.getString(hillsCursor
-                            .getColumnIndex(HillDbAdapter.KEY_HILLNAME));
+                            .getColumnIndex(OldHillDbAdapter.KEY_HILLNAME));
                     TinyHill tinyHill = new TinyHill();
                     tinyHill._id = row_id;
                     tinyHill.setHillname(hillname);
                     tinyHill.setLatitude(lat);
                     tinyHill.setLongitude(lng);
                     if (hillsCursor.getString(hillsCursor
-                            .getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) != null) {
+                            .getColumnIndex(OldHillDbAdapter.KEY_DATECLIMBED)) != null) {
                         tinyHill.setClimbed(true);
                     } else {
                         tinyHill.setClimbed(false);

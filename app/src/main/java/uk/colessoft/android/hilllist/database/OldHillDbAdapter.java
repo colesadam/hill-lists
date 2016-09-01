@@ -22,7 +22,7 @@ import java.util.Date;
 import uk.colessoft.android.hilllist.model.Hill;
 
 
-public class HillDbAdapter {
+public class OldHillDbAdapter implements DbHelper {
     private static final String DATABASE_NAME = "hill-list.db";
     private static final String HILLS_TABLE = "hills";
     private static final String BAGGING_TABLE = "Bagging";
@@ -67,7 +67,7 @@ public class HillDbAdapter {
     private final HillDataBaseHelper dbHelper;
 
 
-    public HillDbAdapter(Context _context) {
+    public OldHillDbAdapter(Context _context) {
         this.context = _context;
         dbHelper = new HillDataBaseHelper(context, DATABASE_NAME, null,
                 DATABASE_VERSION);
@@ -90,6 +90,7 @@ public class HillDbAdapter {
 
     }
 
+    @Override
     public void markHillClimbed(int hillNumber, Date dateClimbed, String notes) {
         // set the format to sql date time
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -114,11 +115,13 @@ public class HillDbAdapter {
 
     }
 
+    @Override
     public void markHillNotClimbed(int hillNumber) {
         db.delete("Bagging", "_id='" + hillNumber + "'", null);
 
     }
 
+    @Override
     public Cursor getAllHillsCursor() {
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
                         + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
@@ -133,6 +136,7 @@ public class HillDbAdapter {
                 null, null, null, null, null);
     }
 
+    @Override
     public Cursor getBaggedHillList() {
         return db.query(HILLS_TABLE + " INNER JOIN " + BAGGING_TABLE + " ON ("
                         + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE + "._id)",
@@ -205,6 +209,7 @@ public class HillDbAdapter {
 
     }
 
+    @Override
     public Cursor getHillsbyPartialName(String where, String orderBy) {
 
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
@@ -221,6 +226,7 @@ public class HillDbAdapter {
 
     }
 
+    @Override
     public Cursor getHillGroup(String groupId, String countryClause,
                                String moreWhere, String orderBy, int filter) {
         /*
@@ -287,6 +293,7 @@ public class HillDbAdapter {
     }
 
 
+    @Override
     public Cursor setCursorHill(long _rowIndex) throws SQLException {
         Cursor result = db.query(true, HILLS_TABLE, new String[]{KEY_ID,
                         KEY_HILLNAME}, KEY_ID + "=" + _rowIndex, null, null, null,
@@ -297,6 +304,7 @@ public class HillDbAdapter {
         return result;
     }
 
+    @Override
     public Hill getHill(long _rowIndex) throws SQLException {
         Cursor cursor = db.query(true, HILLS_TABLE + " LEFT OUTER JOIN "
                 + BAGGING_TABLE + " ON (" + HILLS_TABLE + "._id" + "="
@@ -778,6 +786,7 @@ public class HillDbAdapter {
     private static final String KEY_londonBoroughTop = "col";
 
 
+    @Override
     public int getClimbedCount(String hilltype, String countryClause,
                                String moreWhere) {
         String where;

@@ -32,12 +32,12 @@ import uk.colessoft.android.hilllist.activities.BusinessSearchMapActivity;
 import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 import uk.colessoft.android.hilllist.model.Hill;
 
 
 public class HillDetailFragment extends Fragment {
-	private HillDbAdapter dbAdapter;
+	private OldHillDbAdapter dbAdapter;
 
 	private boolean useMetricHeights;
 	static final int DATE_DIALOG_ID = 0;
@@ -190,7 +190,7 @@ public class HillDetailFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		dbAdapter = new HillDbAdapter(getActivity());
+		dbAdapter = new OldHillDbAdapter(getActivity());
 
 	}
 
@@ -198,7 +198,7 @@ public class HillDetailFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		dbAdapter = new HillDbAdapter(getActivity());
+		dbAdapter = new OldHillDbAdapter(getActivity());
 	}
 
 	@Override

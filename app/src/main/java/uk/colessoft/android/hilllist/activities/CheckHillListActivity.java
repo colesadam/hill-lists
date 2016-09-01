@@ -25,14 +25,14 @@ import java.text.DecimalFormat;
 import java.util.Date;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 
 public class CheckHillListActivity extends Activity {
 	/** Called when the activity is first created. */
 
 	private final int ALL_CLIMBED = 1;
 	private final int NONE_CLIMBED = 0;
-	private HillDbAdapter dbAdapter;
+	private OldHillDbAdapter dbAdapter;
 	private String where = null;
 	private String orderBy;
 	private ListView myListView;
@@ -91,7 +91,7 @@ public class CheckHillListActivity extends Activity {
 
 		}
 
-		dbAdapter = new HillDbAdapter(this);
+		dbAdapter = new OldHillDbAdapter(this);
 
 		dbAdapter.open();
 		/*
@@ -103,7 +103,7 @@ public class CheckHillListActivity extends Activity {
 		 * R.id.name_entry, R.id.number_entry }); pname = ""; orderBy =
 		 * dbAdapter.KEY_HEIGHTM; myListView.setAdapter(cursorAdapter);
 		 */
-		orderBy = "cast(" + HillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
+		orderBy = "cast(" + OldHillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
 		updateList(2);
 
 	}
@@ -161,14 +161,14 @@ public class CheckHillListActivity extends Activity {
 		switch (item.getItemId()) {
 		case (R.id.menu_list_alpha): {
 
-			orderBy = HillDbAdapter.KEY_HILLNAME;
+			orderBy = OldHillDbAdapter.KEY_HILLNAME;
 			updateList(2);
 			return true;
 
 		}
 		case (R.id.menu_list_height): {
 
-			orderBy = "cast(" + HillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
+			orderBy = "cast(" + OldHillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
 			updateList(2);
 			return true;
 
@@ -208,7 +208,7 @@ public class CheckHillListActivity extends Activity {
 				do {
 
 					int row_id = result.getInt(result
-							.getColumnIndex(HillDbAdapter.KEY_ID));
+							.getColumnIndex(OldHillDbAdapter.KEY_ID));
 					dbAdapter.markHillClimbed(row_id, new Date(), "");
 
 				} while (result.moveToNext());
@@ -223,7 +223,7 @@ public class CheckHillListActivity extends Activity {
 				do {
 
 					int row_id = result.getInt(result
-							.getColumnIndex(HillDbAdapter.KEY_ID));
+							.getColumnIndex(OldHillDbAdapter.KEY_ID));
 					dbAdapter.markHillNotClimbed(row_id);
 
 				} while (result.moveToNext());
@@ -257,9 +257,9 @@ public class CheckHillListActivity extends Activity {
             case R.id.check_hill_climbed: {
                 CheckBox ctv = (CheckBox) view;
                 final int id = cursor.getInt(cursor
-                        .getColumnIndex(HillDbAdapter.KEY_ID));
+                        .getColumnIndex(OldHillDbAdapter.KEY_ID));
                 if (cursor.getString(cursor
-                        .getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) != null) {
+                        .getColumnIndex(OldHillDbAdapter.KEY_DATECLIMBED)) != null) {
 
 
                     ctv.setChecked(true);

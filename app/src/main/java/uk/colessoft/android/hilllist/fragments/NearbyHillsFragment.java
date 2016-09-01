@@ -45,7 +45,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.NearbyHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
 public class NearbyHillsFragment extends Fragment implements
@@ -62,11 +62,11 @@ public class NearbyHillsFragment extends Fragment implements
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        dbAdapter = new HillDbAdapter(getActivity());
+        dbAdapter = new OldHillDbAdapter(getActivity());
     }
 
     private int firstRow;
-    private HillDbAdapter dbAdapter;
+    private OldHillDbAdapter dbAdapter;
     private View viewer;
     private ListView hillListView;
     private LocationManager lm;
@@ -220,7 +220,7 @@ public class NearbyHillsFragment extends Fragment implements
 
             case (R.id.menu_list_alpha): {
 
-                orderBy = HillDbAdapter.KEY_HILLNAME;
+                orderBy = OldHillDbAdapter.KEY_HILLNAME;
                 if (nearbyHills != null && !nearbyHills.isEmpty()) {
                     Collections.sort(nearbyHills, new HillHashMapAlphaComparator());
                     updateList();
@@ -230,7 +230,7 @@ public class NearbyHillsFragment extends Fragment implements
             }
             case (R.id.menu_list_height): {
 
-                orderBy = HillDbAdapter.KEY_HEIGHTM;
+                orderBy = OldHillDbAdapter.KEY_HEIGHTM;
                 if (nearbyHills != null && !nearbyHills.isEmpty()) {
                     Collections
                             .sort(nearbyHills, new HillHashMapHeightComparator());
@@ -352,25 +352,25 @@ public class NearbyHillsFragment extends Fragment implements
             // Iterate over each cursor.
             do {
                 Double lat = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(HillDbAdapter.KEY_LATITUDE)) * 1E6;
+                        .getColumnIndex(OldHillDbAdapter.KEY_LATITUDE)) * 1E6;
                 Double lng = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(HillDbAdapter.KEY_LONGITUDE)) * 1E6;
+                        .getColumnIndex(OldHillDbAdapter.KEY_LONGITUDE)) * 1E6;
 
                 double distanceKm = DistanceCalculator.CalculationByDistance(
                         lat1, lat / 1E6, lon1, lng / 1E6);
                 int row_id = hillsCursor.getInt(hillsCursor
-                        .getColumnIndex(HillDbAdapter.KEY_ID));
+                        .getColumnIndex(OldHillDbAdapter.KEY_ID));
                 if (distanceKm < nearRadius) {
 
                     String hillname = hillsCursor.getString(hillsCursor
-                            .getColumnIndex(HillDbAdapter.KEY_HILLNAME));
+                            .getColumnIndex(OldHillDbAdapter.KEY_HILLNAME));
                     float height;
                     if (useMetricHeights) {
                         height = hillsCursor.getFloat(hillsCursor
-                                .getColumnIndex(HillDbAdapter.KEY_HEIGHTM));
+                                .getColumnIndex(OldHillDbAdapter.KEY_HEIGHTM));
                     } else {
                         height = hillsCursor.getFloat(hillsCursor
-                                .getColumnIndex(HillDbAdapter.KEY_HEIGHTF));
+                                .getColumnIndex(OldHillDbAdapter.KEY_HEIGHTF));
 
                     }
                     HashMap<String, Object> hillExtract = new HashMap();
@@ -391,11 +391,11 @@ public class NearbyHillsFragment extends Fragment implements
 
             } while (hillsCursor.moveToNext());
             switch (orderBy) {
-                case HillDbAdapter.KEY_HEIGHTM:
+                case OldHillDbAdapter.KEY_HEIGHTM:
                     Collections
                             .sort(nearbyHills, new HillHashMapHeightComparator());
                     break;
-                case HillDbAdapter.KEY_HILLNAME:
+                case OldHillDbAdapter.KEY_HILLNAME:
                     Collections.sort(nearbyHills, new HillHashMapAlphaComparator());
                     break;
                 case "distance":
@@ -423,7 +423,7 @@ public class NearbyHillsFragment extends Fragment implements
     public void onResume() {
 
         super.onResume();
-        //dbAdapter = new HillDbAdapter(getActivity());
+        //dbAdapter = new OldHillDbAdapter(getActivity());
         if (!dbAdapter.isOpen())
             dbAdapter.open();
 
@@ -645,7 +645,7 @@ public class NearbyHillsFragment extends Fragment implements
         private String hilltype;
         private String countryClause;
         private int filterHills;
-        private HillDbAdapter dbAdapter;
+        private OldHillDbAdapter dbAdapter;
         private double lat1;
         private double lon1;
         private double nearRadius;
@@ -659,7 +659,7 @@ public class NearbyHillsFragment extends Fragment implements
         }
 
         public UpdateHillsTaskLoader(Context context, String orderBy,
-                                     int filterHills, HillDbAdapter dbAdapter,
+                                     int filterHills, OldHillDbAdapter dbAdapter,
                                      boolean useMetricDistances, boolean useMetricHeights,
                                      double lat1, double lon1, double nearRadius, DecimalFormat df2) {
             super(context);
@@ -691,26 +691,26 @@ public class NearbyHillsFragment extends Fragment implements
                 // Iterate over each cursor.
                 do {
                     Double lat = hillsCursor.getDouble(hillsCursor
-                            .getColumnIndex(HillDbAdapter.KEY_LATITUDE)) * 1E6;
+                            .getColumnIndex(OldHillDbAdapter.KEY_LATITUDE)) * 1E6;
                     Double lng = hillsCursor.getDouble(hillsCursor
-                            .getColumnIndex(HillDbAdapter.KEY_LONGITUDE)) * 1E6;
+                            .getColumnIndex(OldHillDbAdapter.KEY_LONGITUDE)) * 1E6;
 
                     double distanceKm = DistanceCalculator
                             .CalculationByDistance(lat1, lat / 1E6, lon1,
                                     lng / 1E6);
                     int row_id = hillsCursor.getInt(hillsCursor
-                            .getColumnIndex(HillDbAdapter.KEY_ID));
+                            .getColumnIndex(OldHillDbAdapter.KEY_ID));
                     if (distanceKm < nearRadius) {
 
                         String hillname = hillsCursor.getString(hillsCursor
-                                .getColumnIndex(HillDbAdapter.KEY_HILLNAME));
+                                .getColumnIndex(OldHillDbAdapter.KEY_HILLNAME));
                         float height;
                         if (useMetricHeights) {
                             height = hillsCursor.getFloat(hillsCursor
-                                    .getColumnIndex(HillDbAdapter.KEY_HEIGHTM));
+                                    .getColumnIndex(OldHillDbAdapter.KEY_HEIGHTM));
                         } else {
                             height = hillsCursor.getFloat(hillsCursor
-                                    .getColumnIndex(HillDbAdapter.KEY_HEIGHTF));
+                                    .getColumnIndex(OldHillDbAdapter.KEY_HEIGHTF));
 
                         }
                         HashMap hillExtract = new HashMap();
@@ -731,11 +731,11 @@ public class NearbyHillsFragment extends Fragment implements
 
                 } while (hillsCursor.moveToNext());
                 switch (orderBy) {
-                    case HillDbAdapter.KEY_HEIGHTM:
+                    case OldHillDbAdapter.KEY_HEIGHTM:
                         Collections.sort(nearbyHills,
                                 new HillHashMapHeightComparator());
                         break;
-                    case HillDbAdapter.KEY_HILLNAME:
+                    case OldHillDbAdapter.KEY_HILLNAME:
                         Collections.sort(nearbyHills,
                                 new HillHashMapAlphaComparator());
                         break;

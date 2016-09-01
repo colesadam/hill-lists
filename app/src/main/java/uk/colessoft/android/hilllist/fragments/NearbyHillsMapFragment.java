@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
@@ -123,7 +123,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
     private GoogleMap map;
     private View viewer;
-    private HillDbAdapter dbAdapter;
+    private OldHillDbAdapter dbAdapter;
 
     private boolean gotHills;
 
@@ -135,7 +135,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        dbAdapter = new HillDbAdapter(getActivity());
+        dbAdapter = new OldHillDbAdapter(getActivity());
 
 
     }
@@ -176,7 +176,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
         });
 
-        dbAdapter = new HillDbAdapter(getActivity());
+        dbAdapter = new OldHillDbAdapter(getActivity());
 
 
         String title;

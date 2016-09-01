@@ -16,7 +16,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
 
 public class Main extends Activity {
 
@@ -63,7 +63,7 @@ public class Main extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 
-		HillDbAdapter dbAdapter = new HillDbAdapter(this);
+		OldHillDbAdapter dbAdapter = new OldHillDbAdapter(this);
 		setTitle(getTitle() + " - Choose an Option");
 		boolean successful;
 		
