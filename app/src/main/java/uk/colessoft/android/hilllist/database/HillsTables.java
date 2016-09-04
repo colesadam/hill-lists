@@ -25,7 +25,7 @@ public class HillsTables {
 	public static final String KEY_ID = "_id";
 	public static final String KEY_HILLNAME = "Hillname";
 	public static final String KEY_SECTION = "Section";
-	public static final String KEY_REGION = "Region";
+	public static final String KEY_SECTIONNAME = "sectionName";
 	public static final String KEY_AREA = "Area";
 	public static final String KEY_CLASSIFICATION = "Classification";
 	public static final String KEY_MAP = "Map";
@@ -53,6 +53,11 @@ public class HillsTables {
 	public static final String KEY_LATITUDE = "Latitude";
 	public static final String KEY_LONGITUDE = "Longitude";
 	public static final String KEY_XSECTION = "_Section";
+	public static final String KEY_PARENTSMC = "ParentSMC";
+	public static final String KEY_PARENTNAMESMC = "ParentNameSMC";
+	public static final String KEY_ISLAND = "Island";
+	public static final String KEY_TOPOSECTION = "TopoSection";
+	public static final String KEY_GRIDREFXY = "GridRefXY";
 	public static final String KEY_marilyn = "ma";
 	public static final String KEY_marilynTwinTop = "twinma";
 	public static final String KEY_hump = "hu";
@@ -63,14 +68,8 @@ public class HillsTables {
 	public static final String KEY_furth = "f";
 	public static final String KEY_corbett = "c";
 	public static final String KEY_corbettTop = "ct";
-	public static final String KEY_corbettTopOfMunro = "ctm";
-	public static final String KEY_corbettTopOfCorbett = "ctc";
 	public static final String KEY_graham = "g";
 	public static final String KEY_grahamTop = "gt";
-	public static final String KEY_grahamTopOfMunro = "gtm";
-	public static final String KEY_grahamTopOfCorbett = "gtc";
-	public static final String KEY_grahamTopOfGraham = "gtg";
-	public static final String KEY_grahamTopOfHump = "gth";
 	public static final String KEY_donald = "d";
 	public static final String KEY_donaldTop = "dt";
 	public static final String KEY_hewitt = "hew";
@@ -113,69 +112,68 @@ public class HillsTables {
 	public static final String KEY_TYPES_ID = "type_id";
 
 	public static final int NAME_COLUMN = 1;
-	public static final int marilyn_COLUMN = 32;
-	public static final int marilynTwinTop_COLUMN = 33;
-	public static final int hump_COLUMN = 34;
-	public static final int humpTwinTop_COLUMN = 35;
-	public static final int munro_COLUMN = 36;
-	public static final int munroTop_COLUMN = 37;
-	public static final int murdo_COLUMN = 38;
-	public static final int furth_COLUMN = 39;
-	public static final int corbett_COLUMN = 40;
-	public static final int corbettTop_COLUMN = 41;
-	public static final int corbettTopOfMunro_COLUMN = 42;
-	public static final int corbettTopOfCorbett_COLUMN = 43;
-	public static final int graham_COLUMN = 44;
-	public static final int grahamTop_COLUMN = 45;
-	public static final int grahamTopOfMunro_COLUMN = 46;
-	public static final int grahamTopOfCorbett_COLUMN = 47;
-	public static final int grahamTopOfGraham_COLUMN = 48;
-	public static final int grahamTopOfHump_COLUMN = 49;
-	public static final int donald_COLUMN = 50;
-	public static final int donaldTop_COLUMN = 51;
-	public static final int hewitt_COLUMN = 52;
-	public static final int nuttall_COLUMN = 53;
+	public static final int marilyn_COLUMN = 41;
+	public static final int marilynTwinTop_COLUMN = 42;
+	public static final int hump_COLUMN = 43;
+	public static final int humpTwinTop_COLUMN = 44;
+	public static final int munro_COLUMN = 48;
+	public static final int munroTop_COLUMN = 49;
+	public static final int murdo_COLUMN = 55;
+	public static final int furth_COLUMN = 50;
+	public static final int corbett_COLUMN = 51;
+	public static final int corbettTop_COLUMN = 56;
+	public static final int graham_COLUMN = 52;
+	public static final int grahamTop_COLUMN = 57;
+	public static final int donald_COLUMN = 53;
+	public static final int donaldTop_COLUMN = 54;
+	public static final int hewitt_COLUMN = 58;
+	public static final int nuttall_COLUMN = 59;
 	
-	public static final int dillon_COLUMN=54;
-	public static final int arderin_COLUMN=55;
-	public static final int vandeleurLynam_COLUMN=56;
+	public static final int dillon_COLUMN=99;
+	public static final int arderin_COLUMN=101;
+	public static final int vandeleurLynam_COLUMN=100;
 	
-	public static final int sim_COLUMN = 57;
-	public static final int dewey_COLUMN = 58;
-	public static final int donaldDewey_COLUMN = 59;
-public static final int highland5_COLUMN = 60;
+	public static final int sim_COLUMN = 47;
+	public static final int dewey_COLUMN = 60;
+	public static final int donaldDewey_COLUMN = 61;
+public static final int highland5_COLUMN = 62;
 
 public static final int myrddynDeweyCOLUMN=61;
 
 
 
 	public static final int h490_COLUMN = 62;
-	public static final int wainwright_COLUMN = 63;
-	public static final int wainwrightOutlyingFell_COLUMN = 64;
-	public static final int birkett_COLUMN = 65;
-	public static final int countyTopHistoric_COLUMN = 66;
-	public static final int countyTopCurrent_COLUMN = 67;
-	public static final int countyTopCurrentTwin_COLUMN = 68;
-	public static final int countyTopAdministrative_COLUMN = 69;
-	public static final int countyTopLondonBorough_COLUMN = 70;
-	public static final int countyTopLondonBoroughTwin_COLUMN = 71;
-	public static final int subMarilyn_COLUMN = 72;
-	public static final int subHump_COLUMN = 73;
-	public static final int subMurdo_COLUMN = 74;
-	public static final int subCorbett_COLUMN = 75;
-	public static final int subGrahamTop_COLUMN = 76;
-	public static final int subHewitt_COLUMN = 77;
-	public static final int subDewey_COLUMN = 78;
-	public static final int subDonaldDewey_COLUMN = 79;
+	public static final int wainwright_COLUMN = 69;
+	public static final int wainwrightOutlyingFell_COLUMN = 70;
+	public static final int birkett_COLUMN = 71;
+	public static final int countyTopHistoric_COLUMN = 72;
+	public static final int countyTopHistoricTwin_COLUMN=73;
+	public static final int countyTopCurrent_COLUMN = 74;
+	public static final int countyTopCurrentTwin_COLUMN = 75;
+	public static final int countyTopAdministrative_COLUMN = 76;
+	public static final int countyTopLondonBorough_COLUMN = 78;
+	public static final int countyTopLondonBoroughTwin_COLUMN = 79;
+
+
+	public static final int countyTopAdministrativeTwin_COLUMN=77;
+	public static final int subMarilyn_COLUMN = 81;
+	public static final int subHump_COLUMN = 82;
+	public static final int subSim_COLUMN = 83;
+	public static final int subDewey_COLUMN = 84;
+	public static final int subDonaldDewey_COLUMN = 85;
+	public static final int subHighland5_COLUMN = 86;
+	public static final int subMyrddynDewey_COLUMN=87;
+	public static final int subh490_COLUMN = 88;
+
+
+
+
+
+	
+
 	
 	
-	
-	public static final int subHighland5_COLUMN = 80;
-	
-	public static final int subMyrddynDewey_COLUMN=81;
-	
-	
-	public static final int subh490_COLUMN = 82;
+
 	public static final int deletedMunroTop_COLUMN = 83;
 	public static final int deletedCorbett_COLUMN = 84;
 	public static final int deletedNuttall_COLUMN = 85;
@@ -190,6 +188,20 @@ public static final int myrddynDeweyCOLUMN=61;
 
 	// private static final Map<Integer, String> hillTypesArray;
 	private static final SparseArray<TempHillClassification> hillTypesArray;
+	private static final int tump_COLUMN=45;
+
+	private static final int tumpTwinTop_COLUMN=46;
+
+	private static final int tump4_COLUMN= 63;
+	private static final int tump3_COLUMN= 64;
+	private static final int tump2_COLUMN= 65;
+	private static final int tump1_COLUMN= 66;
+	private static final int tump1Twin_COLUMN= 67;
+	private static final int tump0_COLUMN= 68;
+
+
+	private static final int significantIsland_COLUMN=80;
+
 	static {
 		hillTypesArray = new SparseArray<TempHillClassification>();
 
@@ -198,22 +210,22 @@ public static final int myrddynDeweyCOLUMN=61;
 		hillTypesArray.append(marilynTwinTop_COLUMN,new TempHillClassification(  "Marilyn Twin Top",0,""));
 		hillTypesArray.append(hump_COLUMN,new TempHillClassification(  "HuMP",2,"British and Irish Hills of any height with a drop of at least 100 metres or more on all sides."));
 		hillTypesArray.append(humpTwinTop_COLUMN,new TempHillClassification(  "HuMP Twin Top",0,""));
+		hillTypesArray.append(tump_COLUMN,new TempHillClassification(  "Tump",0,""));
+		hillTypesArray.append(tumpTwinTop_COLUMN,new TempHillClassification(  "Tump Twin Top",0,""));
+		hillTypesArray.append(tump4_COLUMN,new TempHillClassification(  "400-499m Tump",0,""));
+		hillTypesArray.append(tump3_COLUMN,new TempHillClassification(  "300-399m Tump",0,""));
+		hillTypesArray.append(tump2_COLUMN,new TempHillClassification(  "200-299m Tump",0,""));
+		hillTypesArray.append(tump1_COLUMN,new TempHillClassification(  "100-199m Tump",0,""));
+		hillTypesArray.append(tump1Twin_COLUMN,new TempHillClassification(  "100-199m Tump Twin Top",0,""));
+		hillTypesArray.append(tump0_COLUMN,new TempHillClassification(  "0-99m Tump",0,""));
 		
 		hillTypesArray.append(munroTop_COLUMN,new TempHillClassification(  "Munro Top",0,""));
 		hillTypesArray.append(murdo_COLUMN,new TempHillClassification(  "Murdo",16,"Scottish hills at least 3000 feet in height with a drop of at least 30 metres on all sides."));
 		hillTypesArray.append(furth_COLUMN,new TempHillClassification(  "Furth",15,"Summits equivalent to the Munros and Tops in England, Wales and Ireland."));
 		hillTypesArray.append(corbett_COLUMN,new TempHillClassification(  "Corbett",18,"Scottish hills between 2500 and 2999 feet high with a drop of at least 500 feet (152.4m) on all sides."));
 		hillTypesArray.append(corbettTop_COLUMN,new TempHillClassification(  "Corbett Top",0,""));
-		hillTypesArray.append(corbettTopOfMunro_COLUMN,new TempHillClassification(  "Corbett Top of Munro",0,""));
-		hillTypesArray.append(corbettTopOfCorbett_COLUMN,new TempHillClassification( 
-				"Corbett Top of Corbett",0,""));
 		hillTypesArray.append(graham_COLUMN,new TempHillClassification(  "Graham",17,"Scottish hills between 2000 and 2499 feet high with a drop of at least 150 metres on all sides."));
 		hillTypesArray.append(grahamTop_COLUMN,new TempHillClassification(  "Graham Top",0,""));
-		hillTypesArray.append(grahamTopOfMunro_COLUMN,new TempHillClassification(  "Graham Top of Munro",0,""));
-		hillTypesArray.append(grahamTopOfCorbett_COLUMN,new TempHillClassification( 
-				"Graham Top of Corbett",0,""));
-		hillTypesArray.append(grahamTopOfGraham_COLUMN,new TempHillClassification(  "Graham Top of Graham",0,""));
-		hillTypesArray.append(grahamTopOfHump_COLUMN,new TempHillClassification(  "Graham Top of HuMP",0,""));
 		hillTypesArray.append(donald_COLUMN,new TempHillClassification(  "Donald",14,"Hills in the Scottish Lowlands at least 2000 feet high."));
 		hillTypesArray.append(donaldTop_COLUMN,new TempHillClassification(  "Donald Top",0,""));
 		hillTypesArray.append(hewitt_COLUMN,new TempHillClassification(  "Hewitt",13,"Hills in England, Wales and Ireland at least 2000 feet high with a drop of at least 30 metres on all sides."));
@@ -233,25 +245,28 @@ public static final int myrddynDeweyCOLUMN=61;
 		hillTypesArray.append(birkett_COLUMN,new TempHillClassification(  "Birkett",5,"Lake District hills over 1,000ft listed in Bill Birkett''s Complete Lakeland Fells."));
 		hillTypesArray
 				.append(countyTopHistoric_COLUMN,new TempHillClassification(  "County Top - Historic",0,""));
+		hillTypesArray
+				.append(countyTopHistoricTwin_COLUMN,new TempHillClassification(  "County Top Twin - Historic",0,""));
 		hillTypesArray.append(countyTopCurrent_COLUMN,new TempHillClassification( 
 				"County Top - Current County and Unitary Authority",0,""));
 		hillTypesArray.append(countyTopCurrentTwin_COLUMN,new TempHillClassification(  "Current County Twin Top",0,""));
 		hillTypesArray.append(countyTopAdministrative_COLUMN,new TempHillClassification( 
 				"County Top - Administrative",0,""));
+		hillTypesArray.append(countyTopAdministrativeTwin_COLUMN,new TempHillClassification(
+				"County Top Twin - Administrative",0,""));
 		hillTypesArray.append(countyTopLondonBorough_COLUMN,new TempHillClassification( 
 				"County Top - London Borough",0,""));
 		hillTypesArray.append(countyTopLondonBoroughTwin_COLUMN,new TempHillClassification(  "London Borough Twin Top",0,""));
+		hillTypesArray.append(significantIsland_COLUMN,new TempHillClassification(  "Significant Island of Britain",0,""));
 		hillTypesArray.append(subMarilyn_COLUMN,new TempHillClassification(  "Sub Marilyn",0,""));
 		hillTypesArray.append(subHump_COLUMN,new TempHillClassification(  "Sub HuMP",0,""));
-		hillTypesArray.append(subMurdo_COLUMN,new TempHillClassification(  "Sub Murdo",0,""));
-		hillTypesArray.append(subCorbett_COLUMN,new TempHillClassification(  "Sub Corbett",0,""));
-		hillTypesArray.append(subGrahamTop_COLUMN,new TempHillClassification(  "Sub Graham Top",0,""));
-		hillTypesArray.append(subHewitt_COLUMN,new TempHillClassification(  "Sub Hewitt",0,""));
+		hillTypesArray.append(subSim_COLUMN,new TempHillClassification(  "Sub Sim",0,""));
+
 		hillTypesArray.append(subDewey_COLUMN,new TempHillClassification(  "Sub Dewey",0,""));
 		hillTypesArray.append(subDonaldDewey_COLUMN,new TempHillClassification(  "Sub Donald Dewey",0,""));
 		hillTypesArray.append(subHighland5_COLUMN,new TempHillClassification(  "Sub Highland Five",0,""));
 		hillTypesArray.append(subMyrddynDewey_COLUMN,new TempHillClassification(  "Sub Myrddyn Dewey",0,""));
-		hillTypesArray.append(subh490_COLUMN,new TempHillClassification(  "Sub Hills 490-499m",0,""));
+		hillTypesArray.append(subh490_COLUMN,new TempHillClassification(  "Sub Tump 490-499m",0,""));
 		hillTypesArray.append(deletedMunroTop_COLUMN,new TempHillClassification(  "Deleted Munro Top",0,""));
 		hillTypesArray.append(deletedCorbett_COLUMN,new TempHillClassification(  "Deleted Corbett",0,""));
 		hillTypesArray.append(deletedNuttall_COLUMN,new TempHillClassification(  "Deleted Nuttall",0,""));
@@ -266,20 +281,23 @@ public static final int myrddynDeweyCOLUMN=61;
 
 	}
 
+
 	// Database creation SQL statement
 	private static final String HILLS_CREATE = "CREATE TABLE '" + HILLS_TABLE
 			+ "' ('" + KEY_ID + "' integer primary key,'" + KEY_HILLNAME
-			+ "','" + KEY_SECTION + "','" + KEY_REGION + "','" + KEY_AREA
+			+ "','" + KEY_PARENTSMC + "','" + KEY_PARENTNAMESMC
+			+ "','" + KEY_SECTION + "','" + KEY_SECTIONNAME + "','" + KEY_AREA
+			+ "','" + KEY_ISLAND + "','" + KEY_TOPOSECTION + "','" + KEY_COUNTY
 			+ "','" + KEY_CLASSIFICATION + "','" + KEY_MAP + "','" + KEY_MAP25
 			+ "','" + KEY_HEIGHTM + "','" + KEY_HEIGHTF + "','" + KEY_GRIDREF
 			+ "','" + KEY_GRIDREF10 + "','" + KEY_DROP + "','" + KEY_COLGRIDREF
 			+ "','" + KEY_COLHEIGHT + "','" + KEY_FEATURE + "','"
 			+ KEY_OBSERVATIONS + "','" + KEY_SURVEY + "','" + KEY_CLIMBED
-			+ "','" + KEY_COUNTRY + "','" + KEY_COUNTY + "','" + KEY_REVISION
+			+ "','" + KEY_COUNTRY + "','" + KEY_REVISION
 			+ "','" + KEY_COMMENTS + "','" + KEY_STREETMAP + "','"
 			+ KEY_GEOGRAPH + "','" + KEY_HILLBAGGING + "','" + KEY_XCOORD
 			+ "','" + KEY_YCOORD + "','" + KEY_LATITUDE + "','" + KEY_LONGITUDE
-			+ "','" + KEY_XSECTION + "');";
+			+ "','" + KEY_GRIDREFXY + "','" + KEY_XSECTION + "');";
 
 	
 
@@ -303,9 +321,10 @@ public static final int myrddynDeweyCOLUMN=61;
 		database.execSQL(TYPESLINK_CREATE);
 
 		// populate static hills data
-
+		long startTime = System.currentTimeMillis();
 		InputStream is;
 		try {
+
 			is = context.getAssets().open(HILLS_CSV);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(is));
@@ -329,7 +348,7 @@ public static final int myrddynDeweyCOLUMN=61;
 				// StringTokenizer st = new StringTokenizer(line, ",");
 				// read lines up to marilyn column - the first type column
 				for (String entry : lineArray) {
-					if (col < marilyn_COLUMN) {
+					if (col < marilyn_COLUMN-4) {
 
 						insertHillsBuffer.append("'" + entry.replace("'", "''")
 								+ "',");
@@ -349,7 +368,8 @@ public static final int myrddynDeweyCOLUMN=61;
 			database.setTransactionSuccessful();
 			database.endTransaction();
 			Log.d(HillsTables.class.getName(),
-					"#################Finished inserting base hill information");
+					"#################Finished inserting base hill information after "
+							+(System.currentTimeMillis()-startTime)/1000);
 		} catch (IOException e) {
 			Log.e(HillsTables.class.getName(),
 					"Failed to populate hills database table", e);
@@ -365,7 +385,8 @@ public static final int myrddynDeweyCOLUMN=61;
 		database.setTransactionSuccessful();
 		database.endTransaction();
 		Log.d(HillsTables.class.getName(),
-				"#################Finished inserting hill type information");
+				"#################Finished inserting hill type information after "
+						+(System.currentTimeMillis()-startTime)/1000);
 
 		// Populate link table for hill types
 
@@ -416,7 +437,8 @@ public static final int myrddynDeweyCOLUMN=61;
 			database.setTransactionSuccessful();
 			database.endTransaction();
 			Log.d(HillsTables.class.getName(),
-					"#################Finished inserting hill links information");
+					"#################Finished inserting hill links information after "
+							+(System.currentTimeMillis()-startTime)/1000);
 		} catch (IOException e) {
 			Log.e(HillsTables.class.getName(),
 					"Failed to populate link database table", e);

@@ -111,8 +111,7 @@ public class ScottishHillsActivity extends Activity {
 
 		corbetts.setOnClickListener(v -> showHills(String.valueOf(HillsTables.corbett_COLUMN), "Corbetts"));
 
-		corbett_tops.setOnClickListener(v -> showHills(HillsTables.corbettTopOfMunro_COLUMN + ","
-                + HillsTables.corbettTopOfCorbett_COLUMN, "Corbett Tops"));
+		corbett_tops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.corbettTop_COLUMN), "Corbett Tops"));
 
 		donalds.setOnClickListener(v -> showHills(String.valueOf(HillsTables.donald_COLUMN), "Donalds"));
 
@@ -120,9 +119,7 @@ public class ScottishHillsActivity extends Activity {
 
 		grahams.setOnClickListener(v -> showHills(String.valueOf(HillsTables.graham_COLUMN), "Grahams"));
 
-		graham_tops.setOnClickListener(v -> showHills(HillsTables.grahamTopOfMunro_COLUMN + ","
-                + HillsTables.grahamTopOfCorbett_COLUMN + ","
-                + HillsTables.grahamTopOfGraham_COLUMN, "Graham Tops"));
+		graham_tops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.grahamTop_COLUMN), "Graham Tops"));
 
 		marilyns.setOnClickListener(v -> showHills(String.valueOf(HillsTables.marilyn_COLUMN), "Scottish Marilyns"));
 

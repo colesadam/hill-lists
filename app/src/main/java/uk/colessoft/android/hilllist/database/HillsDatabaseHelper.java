@@ -48,7 +48,7 @@ import static uk.colessoft.android.hilllist.database.HillsTables.KEY_LONGITUDE;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_MAP;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_MAP25;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_OBSERVATIONS;
-import static uk.colessoft.android.hilllist.database.HillsTables.KEY_REGION;
+import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SECTIONNAME;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_REVISION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SECTION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_STREETMAP;
@@ -157,7 +157,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
                         + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
                         + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID,
-                        KEY_XSECTION, KEY_HILLNAME, KEY_SECTION, KEY_REGION, KEY_AREA,
+                        KEY_XSECTION, KEY_HILLNAME, KEY_SECTION, KEY_SECTIONNAME, KEY_AREA,
                         KEY_HEIGHTM, KEY_HEIGHTF, KEY_MAP, KEY_MAP25, KEY_GRIDREF,
                         KEY_COLGRIDREF, KEY_COLHEIGHT, KEY_DROP, KEY_GRIDREF10,
                         KEY_FEATURE, KEY_OBSERVATIONS, KEY_SURVEY, KEY_CLIMBED,
@@ -325,7 +325,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         String section = cursor.getString(cursor
                 .getColumnIndex(KEY_SECTION));
         String region = cursor.getString(cursor
-                .getColumnIndex(KEY_REGION));
+                .getColumnIndex(KEY_SECTIONNAME));
         String area = cursor.getString(cursor
                 .getColumnIndex(KEY_AREA));
         float heightm = cursor.getFloat(cursor

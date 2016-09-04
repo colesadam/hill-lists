@@ -576,7 +576,7 @@ public class DisplayHillListFragment extends Fragment implements
 		if (result.getCount() != 0) {
 			
 			result.moveToPosition(0);
-			int firstRow = result.getInt(result.getColumnIndexOrThrow("_id"));
+			int firstRow = result.getInt(result.getColumnIndexOrThrow("hill_id"));
 
 			HillDetailFragment fragment = (HillDetailFragment) getActivity()
 					.getSupportFragmentManager().findFragmentById(
