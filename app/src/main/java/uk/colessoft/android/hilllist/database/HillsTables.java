@@ -15,7 +15,7 @@ public class HillsTables {
 
 	public static final String KEY_TITLE = "title";
 
-	private static final String HILLS_CSV = "DoBIH_v13_1.csv";
+	private static final String HILLS_CSV = "DoBIH_v15.2.csv";
 
 	public static final String HILLS_TABLE = "hills";
 	public static final String HILLTYPES_TABLE = "hilltypes";
