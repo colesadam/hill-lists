@@ -1,6 +1,5 @@
 package uk.colessoft.android.hilllist.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -10,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +32,13 @@ import uk.colessoft.android.hilllist.activities.BusinessSearchMapActivity;
 import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
+import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.model.Hill;
 
 
 public class HillDetailFragment extends Fragment {
-	private OldHillDbAdapter dbAdapter;
+	private DbHelper dbAdapter;
 
 	private boolean useMetricHeights;
 	static final int DATE_DIALOG_ID = 0;
@@ -172,10 +173,10 @@ public class HillDetailFragment extends Fragment {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            dbAdapter.open();
+
             dbAdapter.markHillClimbed(hill.get_id(), d, notes.getText()
                     .toString());
-            dbAdapter.close();
+
             Toast climbed;
             climbed = Toast.makeText(getActivity().getApplication(),
                     "Saved", Toast.LENGTH_SHORT);
@@ -187,18 +188,11 @@ public class HillDetailFragment extends Fragment {
 
 	}
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		dbAdapter = new OldHillDbAdapter(getActivity());
-
-	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
-		dbAdapter = new OldHillDbAdapter(getActivity());
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
 	}
 
 	@Override
@@ -258,7 +252,6 @@ public class HillDetailFragment extends Fragment {
 				.findViewById(R.id.hill_classifications);
 		classificationLayout.removeAllViews();
 
-		dbAdapter.open();
 		hill = dbAdapter.getHill(rowid);
 		dateClimbed = (TextView) viewer
 				.findViewById(R.id.detail_date_climbed);
@@ -296,7 +289,7 @@ public class HillDetailFragment extends Fragment {
 
 		summitFeature.setText(hill.getFeature());
 
-		String[] sClassifications = hill.getClassification().split(",");
+		String[] sClassifications = hill.getClassification().replace("\"","").split(",");
 		TextView classificationTextView = null;
 		for (String classification : sClassifications) {
 			String fullClassification = classesMap.get(classification);
@@ -326,7 +319,7 @@ public class HillDetailFragment extends Fragment {
 			ctv.setChecked(false);
 		ctv.setOnClickListener(null);
 		ctv.setOnClickListener(v -> {
-            dbAdapter.open();
+
             CheckBox xcv = (CheckBox) v;
             if (xcv.isChecked()) {
                 Context mContext = getActivity().getApplicationContext();
@@ -341,7 +334,7 @@ public class HillDetailFragment extends Fragment {
                         .findViewById(R.id.dialog_climbed_notes);
                 Button ok = (Button) dialog.findViewById(R.id.Button_ok);
                 Button cancel = (Button) dialog.findViewById(R.id.Button_cancel);
-                dbAdapter.open();
+
                 dbAdapter.markHillClimbed(hill.get_id(), new Date(), "");
                 Toast climbed;
                 climbed = Toast.makeText(getActivity().getApplication(),
@@ -360,16 +353,10 @@ public class HillDetailFragment extends Fragment {
                 climbed.show();
                 noBagSenor(hill);
             }
-            dbAdapter.close();
 
         });
 
-		
-		
-		
-		
-		
-		dbAdapter.close();
+
 	}
 
 	private void updateDisplay() {

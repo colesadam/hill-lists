@@ -23,7 +23,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
+import uk.colessoft.android.hilllist.database.BaggingTable;
+import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
+import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSelectedListener;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
@@ -31,7 +34,7 @@ import uk.colessoft.android.hilllist.utility.LatLangBounds;
 public class ListHillsMapFragment extends SupportMapFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
-    private OldHillDbAdapter dbAdapter;
+    private DbHelper dbAdapter;
 
     private OnHillSelectedListener hillSelectedListener;
     private MapOnHillSelectedListener mapOnHillSelectedListener;
@@ -64,7 +67,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        dbAdapter = new OldHillDbAdapter(getActivity());
+        dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
         try {
             hillSelectedListener = (OnHillSelectedListener) activity;
             mapOnHillSelectedListener = (MapOnHillSelectedListener) activity;
@@ -94,8 +97,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         });
 
         this.getMapAsync(this);
-        dbAdapter = new OldHillDbAdapter(getActivity());
-        dbAdapter.open();
+        dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
 
         String title;
 
@@ -117,6 +119,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        System.out.println("hill selected is "+marker.getTag());
         (hillSelectedListener).onHillSelected((Integer) marker.getTag());
     }
 
@@ -143,7 +146,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         private String hilltype;
         private String countryClause;
         private int filterHills;
-        private OldHillDbAdapter dbAdapter;
+        private DbHelper dbAdapter;
 
         public UpdateHillsTaskLoader(Context context) {
             super(context);
@@ -152,7 +155,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
         public UpdateHillsTaskLoader(Context context, String hilltype,
                                      String countryClause, String where, String orderBy,
-                                     int filterHills, OldHillDbAdapter dbAdapter) {
+                                     int filterHills, DbHelper dbAdapter) {
             super(context);
             this.where = where;
             this.orderBy = orderBy;
@@ -175,7 +178,6 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
         @Override
         public Cursor loadInBackground() {
-            dbAdapter.open();
 
             Cursor result = dbAdapter.getHillGroup(hilltype, countryClause,
                     where, orderBy, filterHills);
@@ -195,18 +197,19 @@ public class ListHillsMapFragment extends SupportMapFragment implements
             // Iterate over each cursor.
             do {
                 double lat = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(OldHillDbAdapter.KEY_LATITUDE));
+                        .getColumnIndex(HillsTables.KEY_LATITUDE));
                 double lng = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(OldHillDbAdapter.KEY_LONGITUDE));
+                        .getColumnIndex(HillsTables.KEY_LONGITUDE));
                 llb.addLatLong(lat, lng);
                 int row_id = hillsCursor.getInt(hillsCursor
-                        .getColumnIndex(OldHillDbAdapter.KEY_ID));
+                        .getColumnIndex(HillsTables.KEY_HILL_ID));
                 if (passedRowId == 0) passedRowId = row_id;
                 String hillname = hillsCursor.getString(hillsCursor
-                        .getColumnIndex(OldHillDbAdapter.KEY_HILLNAME));
+                        .getColumnIndex(HillsTables.KEY_HILLNAME));
 
                 TinyHill tinyHill = new TinyHill();
                 tinyHill._id = row_id;
+                System.out.println(row_id);
 
 //				if(passedRowId==row_id){
 //					selectedIndex=hillPoints.size();
@@ -216,7 +219,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                 tinyHill.setLatitude(lat);
                 tinyHill.setLongitude(lng);
                 if (hillsCursor.getString(hillsCursor
-                        .getColumnIndex(OldHillDbAdapter.KEY_DATECLIMBED)) != null) {
+                        .getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
                     tinyHill.setClimbed(true);
                 } else {
                     tinyHill.setClimbed(false);
@@ -255,8 +258,6 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                 CameraUpdateFactory
                         .newLatLngBounds(
                                 bounds, 50));
-        dbAdapter.close();
-
 
     }
 

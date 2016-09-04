@@ -210,23 +210,6 @@ public class OldHillDbAdapter implements DbHelper {
     }
 
     @Override
-    public Cursor getHillsbyPartialName(String where, String orderBy) {
-
-        return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
-                        + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
-                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID,
-                        KEY_XSECTION, KEY_HILLNAME, KEY_SECTION, KEY_REGION, KEY_AREA,
-                        KEY_HEIGHTM, KEY_HEIGHTF, KEY_MAP, KEY_MAP25, KEY_GRIDREF,
-                        KEY_COLGRIDREF, KEY_COLHEIGHT, KEY_DROP, KEY_GRIDREF10,
-                        KEY_FEATURE, KEY_OBSERVATIONS, KEY_SURVEY, KEY_CLIMBED,
-                        KEY_CLASSIFICATION, KEY_REVISION, KEY_COMMENTS, KEY_XCOORD,
-                        KEY_YCOORD, KEY_LATITUDE, KEY_LONGITUDE, KEY_STREETMAP,
-                        KEY_GETAMAP, KEY_HILLBAGGING, KEY_DATECLIMBED, KEY_NOTES},
-                where, null, null, null, orderBy);
-
-    }
-
-    @Override
     public Cursor getHillGroup(String groupId, String countryClause,
                                String moreWhere, String orderBy, int filter) {
         /*
@@ -293,16 +276,6 @@ public class OldHillDbAdapter implements DbHelper {
     }
 
 
-    @Override
-    public Cursor setCursorHill(long _rowIndex) throws SQLException {
-        Cursor result = db.query(true, HILLS_TABLE, new String[]{KEY_ID,
-                        KEY_HILLNAME}, KEY_ID + "=" + _rowIndex, null, null, null,
-                null, null);
-        if ((result.getCount() == 0) || !result.moveToFirst()) {
-            throw new SQLException("No hills found for row: " + _rowIndex);
-        }
-        return result;
-    }
 
     @Override
     public Hill getHill(long _rowIndex) throws SQLException {
@@ -785,41 +758,5 @@ public class OldHillDbAdapter implements DbHelper {
     private static final String KEY_currentCountyTop = "cou";
     private static final String KEY_londonBoroughTop = "col";
 
-
-    @Override
-    public int getClimbedCount(String hilltype, String countryClause,
-                               String moreWhere) {
-        String where;
-
-        where = KEY_DATECLIMBED + " NOT NULL";
-
-        if (hilltype != null) {
-            if (!"".equals(where))
-                where = where + " AND ";
-            where = where + "(" + hilltype + "='1')";
-        }
-        if (countryClause != null && !"".equals(where)) {
-            if (!"".equals(where))
-                where = where + " AND ";
-            if (countryClause != null) where = where + countryClause;
-        } else if (countryClause != null) {
-            if (!"".equals(where))
-                where = where + " AND ";
-            where = where + countryClause;
-        }
-        if (moreWhere != null && !"".equals(moreWhere) && !"".equals(where)) {
-            where = where + " AND " + moreWhere;
-        } else if (moreWhere != null && !"".equals(moreWhere)) {
-            where = where + moreWhere;
-        }
-
-
-        Cursor result = db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
-                        + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
-                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID}, where,
-                null, null, null, null);
-
-        return result.getCount();
-    }
 
 }

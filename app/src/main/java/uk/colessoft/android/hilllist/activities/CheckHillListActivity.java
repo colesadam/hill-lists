@@ -25,14 +25,17 @@ import java.text.DecimalFormat;
 import java.util.Date;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
+import uk.colessoft.android.hilllist.database.BaggingTable;
+import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
+import uk.colessoft.android.hilllist.database.HillsTables;
 
 public class CheckHillListActivity extends Activity {
 	/** Called when the activity is first created. */
 
 	private final int ALL_CLIMBED = 1;
 	private final int NONE_CLIMBED = 0;
-	private OldHillDbAdapter dbAdapter;
+	private DbHelper dbAdapter;
 	private String where = null;
 	private String orderBy;
 	private ListView myListView;
@@ -84,16 +87,16 @@ public class CheckHillListActivity extends Activity {
 
 		}
 		case Main.OTHER_GB: {
-			countryClause = "_Section='29' OR cast(_Section as float)>42.9";
+			countryClause = "_Section='29' OR (cast(_Section as float) between 43 and 43.2)";
 			break;
 
 		}
 
 		}
 
-		dbAdapter = new OldHillDbAdapter(this);
+		dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
 
-		dbAdapter.open();
+
 		/*
 		 * final Cursor result = dbAdapter.getHillGroup( hilltype, null,
 		 * dbAdapter.KEY_HEIGHTM); startManagingCursor(result);
@@ -103,7 +106,7 @@ public class CheckHillListActivity extends Activity {
 		 * R.id.name_entry, R.id.number_entry }); pname = ""; orderBy =
 		 * dbAdapter.KEY_HEIGHTM; myListView.setAdapter(cursorAdapter);
 		 */
-		orderBy = "cast(" + OldHillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
+		orderBy = "cast(" + HillsTables.KEY_HEIGHTM + " as float)" + " desc";
 		updateList(2);
 
 	}
@@ -161,14 +164,14 @@ public class CheckHillListActivity extends Activity {
 		switch (item.getItemId()) {
 		case (R.id.menu_list_alpha): {
 
-			orderBy = OldHillDbAdapter.KEY_HILLNAME;
+			orderBy = HillsTables.KEY_HILLNAME;
 			updateList(2);
 			return true;
 
 		}
 		case (R.id.menu_list_height): {
 
-			orderBy = "cast(" + OldHillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
+			orderBy = "cast(" + HillsTables.KEY_HEIGHTM + " as float)" + " desc";
 			updateList(2);
 			return true;
 
@@ -208,7 +211,7 @@ public class CheckHillListActivity extends Activity {
 				do {
 
 					int row_id = result.getInt(result
-							.getColumnIndex(OldHillDbAdapter.KEY_ID));
+							.getColumnIndex(HillsTables.KEY_ID));
 					dbAdapter.markHillClimbed(row_id, new Date(), "");
 
 				} while (result.moveToNext());
@@ -223,7 +226,7 @@ public class CheckHillListActivity extends Activity {
 				do {
 
 					int row_id = result.getInt(result
-							.getColumnIndex(OldHillDbAdapter.KEY_ID));
+							.getColumnIndex(HillsTables.KEY_ID));
 					dbAdapter.markHillNotClimbed(row_id);
 
 				} while (result.moveToNext());
@@ -257,9 +260,9 @@ public class CheckHillListActivity extends Activity {
             case R.id.check_hill_climbed: {
                 CheckBox ctv = (CheckBox) view;
                 final int id = cursor.getInt(cursor
-                        .getColumnIndex(OldHillDbAdapter.KEY_ID));
+                        .getColumnIndex(HillsTables.KEY_ID));
                 if (cursor.getString(cursor
-                        .getColumnIndex(OldHillDbAdapter.KEY_DATECLIMBED)) != null) {
+                        .getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
 
 
                     ctv.setChecked(true);

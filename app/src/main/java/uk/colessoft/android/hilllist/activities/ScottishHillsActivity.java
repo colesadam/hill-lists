@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.OldHillDbAdapter;
+import uk.colessoft.android.hilllist.database.HillsTables;
 
 public class ScottishHillsActivity extends Activity {
 	private Dialog descDialog;
@@ -103,28 +103,28 @@ public class ScottishHillsActivity extends Activity {
 		View allScottish = findViewById(R.id.allscottish);
 
 		allScottish.setOnClickListener(v -> showHills(null, "All Scottish Hills"));
-		munros.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_munro, "Munros"));
+		munros.setOnClickListener(v -> showHills(String.valueOf(HillsTables.munro_COLUMN), "Munros"));
 
-		munro_tops.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_munroTop, "Munro Tops"));
+		munro_tops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.munroTop_COLUMN), "Munro Tops"));
 
-		murdos.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_murdo, "Murdos"));
+		murdos.setOnClickListener(v -> showHills(String.valueOf(HillsTables.murdo_COLUMN), "Murdos"));
 
-		corbetts.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_corbett, "Corbetts"));
+		corbetts.setOnClickListener(v -> showHills(String.valueOf(HillsTables.corbett_COLUMN), "Corbetts"));
 
-		corbett_tops.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_corbettTopOfMunro + "='1' OR "
-                + OldHillDbAdapter.KEY_corbettTopOfCorbett, "Corbett Tops"));
+		corbett_tops.setOnClickListener(v -> showHills(HillsTables.corbettTopOfMunro_COLUMN + ","
+                + HillsTables.corbettTopOfCorbett_COLUMN, "Corbett Tops"));
 
-		donalds.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_donald, "Donalds"));
+		donalds.setOnClickListener(v -> showHills(String.valueOf(HillsTables.donald_COLUMN), "Donalds"));
 
-		donald_tops.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_donaldTop, "Donald Tops"));
+		donald_tops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.donaldTop_COLUMN), "Donald Tops"));
 
-		grahams.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_graham, "Grahams"));
+		grahams.setOnClickListener(v -> showHills(String.valueOf(HillsTables.graham_COLUMN), "Grahams"));
 
-		graham_tops.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_grahamTopOfMunro + "='1' OR "
-                + OldHillDbAdapter.KEY_grahamTopOfCorbett + "='1' OR "
-                + OldHillDbAdapter.KEY_grahamTopOfGraham, "Graham Tops"));
+		graham_tops.setOnClickListener(v -> showHills(HillsTables.grahamTopOfMunro_COLUMN + ","
+                + HillsTables.grahamTopOfCorbett_COLUMN + ","
+                + HillsTables.grahamTopOfGraham_COLUMN, "Graham Tops"));
 
-		marilyns.setOnClickListener(v -> showHills(OldHillDbAdapter.KEY_marilyn, "Scottish Marilyns"));
+		marilyns.setOnClickListener(v -> showHills(String.valueOf(HillsTables.marilyn_COLUMN), "Scottish Marilyns"));
 
 	}
 

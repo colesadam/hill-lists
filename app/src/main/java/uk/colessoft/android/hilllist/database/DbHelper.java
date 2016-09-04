@@ -16,15 +16,11 @@ public interface DbHelper {
 
     Cursor getBaggedHillList();
 
-    Cursor getHillsbyPartialName(String where, String orderBy);
-
     Cursor getHillGroup(String groupId, String countryClause,
                         String moreWhere, String orderBy, int filter);
 
-    Cursor setCursorHill(long _rowIndex) throws SQLException;
-
     Hill getHill(long _rowIndex) throws SQLException;
 
-    int getClimbedCount(String hilltype, String countryClause,
-                        String moreWhere);
+
+    void importBagging(final String filePath);
 }
