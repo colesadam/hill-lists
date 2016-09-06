@@ -316,7 +316,7 @@ public static final int myrddynDeweyCOLUMN=61;
 		// create tables
 
 		database.execSQL("PRAGMA foreign_keys=ON;");
-		database.execSQL(HILLS_CREATE);
+		//database.execSQL(HILLS_CREATE);
 		database.execSQL(HILLTYPES_CREATE);
 		database.execSQL(TYPESLINK_CREATE);
 
@@ -336,7 +336,22 @@ public static final int myrddynDeweyCOLUMN=61;
 			int col = 1;
 
 			// read and ignore title row
-			reader.readLine();
+			String headerRow = reader.readLine();
+			String hillsTableStarter = "CREATE TABLE '" + HILLS_TABLE
+					+ "' ('" + KEY_ID + "' integer primary key,";
+			String [] headerArray = headerRow.split(",");
+			StringBuilder createHillsTableBuilder = new StringBuilder();
+			for(String header:headerArray){
+				if(!"Number".equals(header)){
+					createHillsTableBuilder.append("'"+header+ "',");
+				}
+			}
+			String c = createHillsTableBuilder.toString();
+			String createHillsTable = hillsTableStarter+c.substring(0,c.length()-1)+")";
+
+			System.out.println(createHillsTable);
+			database.execSQL(createHillsTable);
+
 			StringBuffer insertHillsBuffer;
 			// read each line of text file
 			while ((line = reader.readLine()) != null) {
@@ -348,17 +363,17 @@ public static final int myrddynDeweyCOLUMN=61;
 				// StringTokenizer st = new StringTokenizer(line, ",");
 				// read lines up to marilyn column - the first type column
 				for (String entry : lineArray) {
-					if (col < marilyn_COLUMN-4) {
+
 
 						insertHillsBuffer.append("'" + entry.replace("'", "''")
 								+ "',");
 
-					}
-					col++;
+
+
 
 				}
 				insertHillsBuffer.deleteCharAt(insertHillsBuffer.length() - 1);
-				col = 1;
+
 				insertHillsBuffer.append(")");
 				String statement = insertHillsBuffer.toString();
 				// Log.d(HillsTables.class.getName(),statement);
@@ -376,73 +391,73 @@ public static final int myrddynDeweyCOLUMN=61;
 		}
 
 		// Populate static hill types data
-		database.beginTransaction();
-		for (int i = 0; i < hillTypesArray.size(); i++) {
-			database.execSQL("INSERT INTO " + HILLTYPES_TABLE + " VALUES ("
-					+ hillTypesArray.keyAt(i) + ",'"
-					+ hillTypesArray.valueAt(i).name + "',"+hillTypesArray.valueAt(i).importance+",'"+hillTypesArray.valueAt(i).description+"')");
-		}
-		database.setTransactionSuccessful();
-		database.endTransaction();
-		Log.d(HillsTables.class.getName(),
-				"#################Finished inserting hill type information after "
-						+(System.currentTimeMillis()-startTime)/1000);
-
-		// Populate link table for hill types
-
-		try {
-			is = context.getAssets().open(HILLS_CSV);
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(is));
-
-			// read main hill data into hills table
-			database.beginTransaction();
-			String line = null;
-
-			int col = 32;
-
-			// read and ignore title row
-			reader.readLine();
-			// read each line of text file
-			String hillId = "";
-			StringTokenizer st;
-			while ((line = reader.readLine()) != null) {
-
-				String[] lineArray = line
-						.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-				// read lines up to marilyn column - the first type column
-				StringBuffer insertHillTypesLinkBuffer;
-				hillId = lineArray[0];
-				for (int i = col-1; i < lineArray.length; i++) {
-					insertHillTypesLinkBuffer = new StringBuffer();
-					insertHillTypesLinkBuffer.append("INSERT INTO "
-							+ TYPES_LINK_TABLE + " VALUES (null,");
-					// get next token check to see if it applies
-					String nextToken = lineArray[i];
-
-					// The csv column has 1 if the classification applies, 0
-					// if
-					// not.
-					if ("1".equals(nextToken)) {
-						// we know that col should reference the correct
-						// value
-						// in the types table
-						insertHillTypesLinkBuffer
-								.append(hillId + "," + (i+1) + ")");
-						database.execSQL(insertHillTypesLinkBuffer.toString());
-
-					}
-				}
-			}
-			database.setTransactionSuccessful();
-			database.endTransaction();
-			Log.d(HillsTables.class.getName(),
-					"#################Finished inserting hill links information after "
-							+(System.currentTimeMillis()-startTime)/1000);
-		} catch (IOException e) {
-			Log.e(HillsTables.class.getName(),
-					"Failed to populate link database table", e);
-		}
+//		database.beginTransaction();
+//		for (int i = 0; i < hillTypesArray.size(); i++) {
+//			database.execSQL("INSERT INTO " + HILLTYPES_TABLE + " VALUES ("
+//					+ hillTypesArray.keyAt(i) + ",'"
+//					+ hillTypesArray.valueAt(i).name + "',"+hillTypesArray.valueAt(i).importance+",'"+hillTypesArray.valueAt(i).description+"')");
+//		}
+//		database.setTransactionSuccessful();
+//		database.endTransaction();
+//		Log.d(HillsTables.class.getName(),
+//				"#################Finished inserting hill type information after "
+//						+(System.currentTimeMillis()-startTime)/1000);
+//
+//		// Populate link table for hill types
+//
+//		try {
+//			is = context.getAssets().open(HILLS_CSV);
+//			BufferedReader reader = new BufferedReader(
+//					new InputStreamReader(is));
+//
+//			// read main hill data into hills table
+//			database.beginTransaction();
+//			String line = null;
+//
+//			int col = 32;
+//
+//			// read and ignore title row
+//			reader.readLine();
+//			// read each line of text file
+//			String hillId = "";
+//			StringTokenizer st;
+//			while ((line = reader.readLine()) != null) {
+//
+//				String[] lineArray = line
+//						.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+//				// read lines up to marilyn column - the first type column
+//				StringBuffer insertHillTypesLinkBuffer;
+//				hillId = lineArray[0];
+//				for (int i = col-1; i < lineArray.length; i++) {
+//					insertHillTypesLinkBuffer = new StringBuffer();
+//					insertHillTypesLinkBuffer.append("INSERT INTO "
+//							+ TYPES_LINK_TABLE + " VALUES (null,");
+//					// get next token check to see if it applies
+//					String nextToken = lineArray[i];
+//
+//					// The csv column has 1 if the classification applies, 0
+//					// if
+//					// not.
+//					if ("1".equals(nextToken)) {
+//						// we know that col should reference the correct
+//						// value
+//						// in the types table
+//						insertHillTypesLinkBuffer
+//								.append(hillId + "," + (i+1) + ")");
+//						database.execSQL(insertHillTypesLinkBuffer.toString());
+//
+//					}
+//				}
+//			}
+//			database.setTransactionSuccessful();
+//			database.endTransaction();
+//			Log.d(HillsTables.class.getName(),
+//					"#################Finished inserting hill links information after "
+//							+(System.currentTimeMillis()-startTime)/1000);
+//		} catch (IOException e) {
+//			Log.e(HillsTables.class.getName(),
+//					"Failed to populate link database table", e);
+//		}
 
 	}
 
