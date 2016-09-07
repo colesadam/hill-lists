@@ -116,7 +116,7 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
 
                 double distanceKm = DistanceCalculator.CalculationByDistance(hill.getLatitude(), lat, hill.getLongitude(), lng);
                 int row_id = hillsCursor.getInt(hillsCursor
-                        .getColumnIndex(HillsTables.KEY_ID));
+                        .getColumnIndex(HillsTables.KEY_HILL_ID));
                 double nearRadius = 16.09;
                 if (distanceKm < nearRadius && row_id != rowid) {
                     llb.addLatLong(lat, lng);

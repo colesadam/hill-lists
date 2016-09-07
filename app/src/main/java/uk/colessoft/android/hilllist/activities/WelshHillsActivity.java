@@ -96,12 +96,12 @@ public class WelshHillsActivity extends Activity {
 
 
 		((View) hewitts.getParent())
-				.setOnClickListener(v -> showHills(String.valueOf(HillsTables.hewitt_COLUMN), "Welsh Hewitts"));
+				.setOnClickListener(v -> showHills("Hew", "Welsh Hewitts"));
 
 		((View) nuttalls.getParent())
-				.setOnClickListener(v -> showHills(String.valueOf(HillsTables.nuttall_COLUMN), "Welsh Nuttalls"));
+				.setOnClickListener(v -> showHills("N", "Welsh Nuttalls"));
 		((View) marilyns.getParent())
-		.setOnClickListener(v -> showHills(String.valueOf(HillsTables.marilyn_COLUMN), "Welsh Marilyns"));
+		.setOnClickListener(v -> showHills("Ma", "Welsh Marilyns"));
 
 	
 

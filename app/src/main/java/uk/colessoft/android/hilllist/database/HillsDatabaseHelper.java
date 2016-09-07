@@ -53,6 +53,7 @@ import static uk.colessoft.android.hilllist.database.HillsTables.KEY_REVISION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SECTION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_STREETMAP;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SURVEY;
+import static uk.colessoft.android.hilllist.database.HillsTables.KEY_TITLE;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XCOORD;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XSECTION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_YCOORD;
@@ -69,10 +70,11 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     private final String baggingKeyId = baggingTable + "." + KEY_ID;
     private Context context;
     public static final String DATABASE_NAME = "hill-list.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     private String hillTypes = HillsTables.HILLTYPES_TABLE;
     private String typesLinkKeyHillId = typesLink + "." + HillsTables.KEY_HILL_ID;
     private String hillTypesKeyId = hillTypes + "." + KEY_ID;
+    private String hillTypesTitle = hillTypes + "." + KEY_TITLE;
 
     private static HillsDatabaseHelper sInstance;
 
@@ -156,14 +158,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
                         + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
-                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID,
-                        KEY_XSECTION, KEY_HILLNAME, KEY_SECTION, KEY_SECTIONNAME, KEY_AREA,
-                        KEY_HEIGHTM, KEY_HEIGHTF, KEY_MAP, KEY_MAP25, KEY_GRIDREF,
-                        KEY_COLGRIDREF, KEY_COLHEIGHT, KEY_DROP, KEY_GRIDREF10,
-                        KEY_FEATURE, KEY_OBSERVATIONS, KEY_SURVEY, KEY_CLIMBED,
-                        KEY_CLASSIFICATION, KEY_REVISION, KEY_COMMENTS, KEY_XCOORD,
-                        KEY_YCOORD, KEY_LATITUDE, KEY_LONGITUDE, KEY_STREETMAP,
-                        KEY_HILLBAGGING, KEY_DATECLIMBED, KEY_NOTES},
+                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID+" as hill_id","*"},
                 null, null, null, null, null);
     }
 
@@ -201,7 +196,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
                 where = where + " AND ";
             String groupSelector = "";
             for (String group : groups) {
-                groupSelector += hillTypesKeyId + " = " + group + " OR ";
+                groupSelector += hillTypesTitle + " = '" + group + "' OR ";
             }
             groupSelector = groupSelector.trim().substring(0, groupSelector.length() - 3);
             where = where + "(" + groupSelector + ")";
@@ -246,7 +241,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         // Adding the ID to the original query
         queryBuilder.appendWhere(hillsKeyId + "=" + _rowIndex);
 
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         String selection = null;
         String[] selectionArgs = null;
         String sortOrder = null;
@@ -255,7 +250,9 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
                 selectionArgs, null, null, sortOrder);
 
         if (cursor.moveToFirst()) {
-            return getHill(cursor);
+            Hill hill = getHill(cursor);
+            cursor.close();
+            return hill;
         }
         return null;
     }

@@ -40,9 +40,10 @@ public class HillsDatabaseHelperTest {
 
     @Test
     public void getMunros(){
-        Cursor cursor = helper.getHillGroup("36","cast(_Section as float) between 1 and 28.9","","cast(Metres as float) desc",0);
+        Cursor cursor = helper.getHillGroup("M","cast(_Section as float) between 1 and 28.9","","cast(Metres as float) desc",0);
         cursor.moveToFirst();
-        assertTrue(cursor.getString(cursor.getColumnIndex("Hillname")).equals("Ben Nevis"));
+        assertTrue(cursor.getString(cursor.getColumnIndex("Name")).equals("Ben Nevis"));
+        cursor.close();
     }
 
     @After

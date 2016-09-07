@@ -99,14 +99,14 @@ public class OtherGBHillsActivity extends Activity {
             showHills(null, "NI/Isle of Man");
         });
 
-		hewitts.setOnClickListener(v -> showHills(String.valueOf(HillsTables.hewitt_COLUMN), "Hewitts"));
+		hewitts.setOnClickListener(v -> showHills("Hew", "Hewitts"));
 
-		nuttalls.setOnClickListener(v -> showHills(String.valueOf(HillsTables.nuttall_COLUMN), "Nuttalls"));
-		marilyns.setOnClickListener(v -> showHills(String.valueOf(HillsTables.marilyn_COLUMN), "Marilyns"));
+		nuttalls.setOnClickListener(v -> showHills("N", "Nuttalls"));
+		marilyns.setOnClickListener(v -> showHills("Ma", "Marilyns"));
 
-		countyTops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.countyTopCurrent_COLUMN), "County Tops"));
-		deweys.setOnClickListener(v -> showHills(String.valueOf(HillsTables.dewey_COLUMN), "Deweys"));
-		trail100.setOnClickListener(v -> showHills(String.valueOf(HillsTables.trail100_COLUMN), "Trail 100"));
+		countyTops.setOnClickListener(v -> showHills("CoU", "County Tops"));
+		deweys.setOnClickListener(v -> showHills("5", "Deweys"));
+		trail100.setOnClickListener(v -> showHills("T100", "Trail 100"));
 
 	}
 

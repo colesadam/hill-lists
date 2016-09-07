@@ -16,6 +16,8 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
+import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
+
 public class Main extends Activity {
 
 	public static final int SCOTLAND = 1;
@@ -162,7 +164,7 @@ public class Main extends Activity {
             String value = searchText.getText().toString();
             String where = "";
             if (!"".equals(value)) {
-                where = "hillname like "
+                where = KEY_HILLNAME+" like "
                         + DatabaseUtils.sqlEscapeString("%" + value + "%");
 
             } else

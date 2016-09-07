@@ -251,7 +251,7 @@ public class HillDetailFragment extends Fragment {
 		ViewGroup classificationLayout = (LinearLayout) viewer
 				.findViewById(R.id.hill_classifications);
 		classificationLayout.removeAllViews();
-
+		System.out.println(rowid);
 		hill = dbAdapter.getHill(rowid);
 		dateClimbed = (TextView) viewer
 				.findViewById(R.id.detail_date_climbed);
@@ -293,14 +293,16 @@ public class HillDetailFragment extends Fragment {
 		TextView classificationTextView = null;
 		for (String classification : sClassifications) {
 			String fullClassification = classesMap.get(classification);
-			classificationTextView = new TextView(getActivity());
-			// classificationTextView.setBackgroundResource(R.color.white);
-			classificationTextView.setText(fullClassification);
-			classificationTextView.setPadding(5, 5, 5, 5);
-			classificationTextView.setTextColor(getResources().getColor(
-					R.color.pale_blue));
+			if (fullClassification != null) {
+				classificationTextView = new TextView(getActivity());
+				// classificationTextView.setBackgroundResource(R.color.white);
+				classificationTextView.setText(fullClassification);
+				classificationTextView.setPadding(5, 5, 5, 5);
+				classificationTextView.setTextColor(getResources().getColor(
+                        R.color.pale_blue));
 
-			classificationLayout.addView(classificationTextView);
+				classificationLayout.addView(classificationTextView);
+			}
 		}
 		if (classificationTextView != null) {
 

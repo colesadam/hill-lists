@@ -335,12 +335,12 @@ public class DisplayHillListFragment extends Fragment implements
 		super.onActivityCreated(savedInstanceState);
 		String[] qstrings;
 		if (useMetricHeights) {
-			qstrings = new String[] { "Hillname", "Metres", "dateClimbed",
+			qstrings = new String[] { "Name", "Metres", "dateClimbed",
 					"hill_id" };
 		}
 
 		else {
-			qstrings = new String[] { "Hillname", "Feet", "dateClimbed", "hill_id" };
+			qstrings = new String[] { "Name", "Feet", "dateClimbed", "hill_id" };
 		}
 		cursorAdapter = new SimpleCursorAdapter(getActivity(),
 				R.layout.simple_hill_item, null, qstrings, new int[] {

@@ -103,25 +103,25 @@ public class ScottishHillsActivity extends Activity {
 		View allScottish = findViewById(R.id.allscottish);
 
 		allScottish.setOnClickListener(v -> showHills(null, "All Scottish Hills"));
-		munros.setOnClickListener(v -> showHills(String.valueOf(HillsTables.munro_COLUMN), "Munros"));
+		munros.setOnClickListener(v -> showHills("M", "Munros"));
 
-		munro_tops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.munroTop_COLUMN), "Munro Tops"));
+		munro_tops.setOnClickListener(v -> showHills("MT", "Munro Tops"));
 
-		murdos.setOnClickListener(v -> showHills(String.valueOf(HillsTables.murdo_COLUMN), "Murdos"));
+		murdos.setOnClickListener(v -> showHills("Mur", "Murdos"));
 
-		corbetts.setOnClickListener(v -> showHills(String.valueOf(HillsTables.corbett_COLUMN), "Corbetts"));
+		corbetts.setOnClickListener(v -> showHills("C", "Corbetts"));
 
-		corbett_tops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.corbettTop_COLUMN), "Corbett Tops"));
+		corbett_tops.setOnClickListener(v -> showHills("CT", "Corbett Tops"));
 
-		donalds.setOnClickListener(v -> showHills(String.valueOf(HillsTables.donald_COLUMN), "Donalds"));
+		donalds.setOnClickListener(v -> showHills("D", "Donalds"));
 
-		donald_tops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.donaldTop_COLUMN), "Donald Tops"));
+		donald_tops.setOnClickListener(v -> showHills("DT", "Donald Tops"));
 
-		grahams.setOnClickListener(v -> showHills(String.valueOf(HillsTables.graham_COLUMN), "Grahams"));
+		grahams.setOnClickListener(v -> showHills("G", "Grahams"));
 
-		graham_tops.setOnClickListener(v -> showHills(String.valueOf(HillsTables.grahamTop_COLUMN), "Graham Tops"));
+		graham_tops.setOnClickListener(v -> showHills("GT", "Graham Tops"));
 
-		marilyns.setOnClickListener(v -> showHills(String.valueOf(HillsTables.marilyn_COLUMN), "Scottish Marilyns"));
+		marilyns.setOnClickListener(v -> showHills("Ma", "Scottish Marilyns"));
 
 	}
 

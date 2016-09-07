@@ -360,7 +360,8 @@ public class NearbyHillsFragment extends Fragment implements
                 double distanceKm = DistanceCalculator.CalculationByDistance(
                         lat1, lat / 1E6, lon1, lng / 1E6);
                 int row_id = hillsCursor.getInt(hillsCursor
-                        .getColumnIndex(HillsTables.KEY_ID));
+                        .getColumnIndex(HillsTables.KEY_HILL_ID));
+                System.out.println("############"+row_id);
                 if (distanceKm < nearRadius) {
 
                     String hillname = hillsCursor.getString(hillsCursor
@@ -695,7 +696,7 @@ public class NearbyHillsFragment extends Fragment implements
                             .CalculationByDistance(lat1, lat / 1E6, lon1,
                                     lng / 1E6);
                     int row_id = hillsCursor.getInt(hillsCursor
-                            .getColumnIndex(HillsTables.KEY_ID));
+                            .getColumnIndex(HillsTables.KEY_HILL_ID));
                     if (distanceKm < nearRadius) {
 
                         String hillname = hillsCursor.getString(hillsCursor

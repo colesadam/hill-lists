@@ -101,16 +101,16 @@ public class EnglishHillsActivity extends Activity {
 		allEnglishHills.setOnClickListener(v -> showHills(null, "All English Hills"));
 
 
-		hewitts.setOnClickListener(v -> showHills(String.valueOf(HillsTables.hewitt_COLUMN), "English Hewitts"));
+		hewitts.setOnClickListener(v -> showHills("Hew", "English Hewitts"));
 
-		nuttalls.setOnClickListener(v -> showHills(String.valueOf(HillsTables.nuttall_COLUMN), "English Nuttalls"));
-		marilyns.setOnClickListener(v -> showHills(String.valueOf(HillsTables.marilyn_COLUMN), "English Marilyns"));
+		nuttalls.setOnClickListener(v -> showHills("N", "English Nuttalls"));
+		marilyns.setOnClickListener(v -> showHills("Ma", "English Marilyns"));
 		
-		wainwrights.setOnClickListener(v -> showHills(String.valueOf(HillsTables.wainwright_COLUMN), "Wainwrights"));
+		wainwrights.setOnClickListener(v -> showHills("W", "Wainwrights"));
 		
-		wainwrightFells.setOnClickListener(v -> showHills(String.valueOf(HillsTables.wainwrightOutlyingFell_COLUMN), "Wainwright Outlying Fells"));
+		wainwrightFells.setOnClickListener(v -> showHills("WO", "Wainwright Outlying Fells"));
 		
-		birketts.setOnClickListener(v -> showHills(String.valueOf(HillsTables.birkett_COLUMN), "Birketts"));
+		birketts.setOnClickListener(v -> showHills("B", "Birketts"));
 
 	}
 
