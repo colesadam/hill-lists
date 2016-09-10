@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillsTables;
 
 public class OtherGBHillsActivity extends Activity {
 
@@ -91,7 +90,6 @@ public class OtherGBHillsActivity extends Activity {
 		View marilyns = findViewById(R.id.marilyns);
 		View countyTops = findViewById(R.id.county_tops);
 		View deweys = findViewById(R.id.deweys);
-		View trail100 = findViewById(R.id.trail_100);
 		View iomni = findViewById(R.id.iomni);
 
 		iomni.setOnClickListener(v -> {
@@ -106,7 +104,7 @@ public class OtherGBHillsActivity extends Activity {
 
 		countyTops.setOnClickListener(v -> showHills("CoU", "County Tops"));
 		deweys.setOnClickListener(v -> showHills("5", "Deweys"));
-		trail100.setOnClickListener(v -> showHills("T100", "Trail 100"));
+
 
 	}
 

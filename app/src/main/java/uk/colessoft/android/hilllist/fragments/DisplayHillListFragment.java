@@ -43,6 +43,8 @@ import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.database.HillsTables;
 
+import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
+
 public class DisplayHillListFragment extends Fragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 	
@@ -464,7 +466,7 @@ public class DisplayHillListFragment extends Fragment implements
 		}
 		case (R.id.menu_list_alpha): {
 
-			orderBy = HillsTables.KEY_HILLNAME;
+			orderBy = KEY_HILLNAME;
 			updateList();
 			return true;
 
@@ -528,7 +530,7 @@ public class DisplayHillListFragment extends Fragment implements
                         String value = searchText.getText().toString();
 
                         if (!"".equals(value))
-                            where = "hillname like "
+                            where = KEY_HILLNAME+" like "
                                     + DatabaseUtils.sqlEscapeString("%"
                                             + value + "%");
                         else

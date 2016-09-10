@@ -13,11 +13,13 @@ import android.text.util.Linkify;
 import android.widget.TextView;
 
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
 public class SplashScreenActivity extends FragmentActivity {
 
 	private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0x00001;
 	private Thread splashThread;
+	private Thread dbThread;
 
 
 
@@ -30,11 +32,14 @@ public class SplashScreenActivity extends FragmentActivity {
 		TextView link=(TextView) findViewById(R.id.TextView03);
 		Linkify.addLinks(link, Linkify.ALL);
 
+
+
 		splashThread = new Thread() {
 
 			@Override
 			public void run() {
-
+				HillsDatabaseHelper dbAdapter = HillsDatabaseHelper.getInstance(SplashScreenActivity.this);
+				dbAdapter.touch();
 				try {
 
 					int waited = 0;
@@ -90,6 +95,7 @@ public class SplashScreenActivity extends FragmentActivity {
 			}
 		}else {
 			splashThread.start();
+
 		}
 
 
@@ -105,6 +111,7 @@ public class SplashScreenActivity extends FragmentActivity {
 						&& grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
 					splashThread.start();
+
 
 				} else {
 					finish();

@@ -48,9 +48,9 @@ import static uk.colessoft.android.hilllist.database.HillsTables.KEY_LONGITUDE;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_MAP;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_MAP25;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_OBSERVATIONS;
-import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SECTIONNAME;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_REVISION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SECTION;
+import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SECTIONNAME;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_STREETMAP;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SURVEY;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_TITLE;
@@ -107,10 +107,12 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         return sInstance;
     }
 
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         HillsTables.onCreate(db, context);
-        BaggingTable.onCreate(db);
+        BaggingTable.onCreate(db,context);
 
 
     }
@@ -176,13 +178,12 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     @Override
     public Cursor getHillGroup(String groupId, String countryClause, String moreWhere, String orderBy, int filter) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(hills + " join "
-                + typesLink + " on " + hillsKeyId + "=" + typesLinkKeyHillId + " join "
-                + hillTypes + " on " + typesLinkKeyId + "=" + hillTypesKeyId + " left join "
-                + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
+
 
         String where;
-        String groupBy = null;
+        String includeTypes = " join "
+                + typesLink + " on " + hillsKeyId + "=" + typesLinkKeyHillId + " join "
+                + hillTypes + " on " + typesLinkKeyId + "=" + hillTypesKeyId;
 
         if (filter == 1)
             where = KEY_DATECLIMBED + " NOT NULL";
@@ -201,8 +202,12 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
             groupSelector = groupSelector.trim().substring(0, groupSelector.length() - 3);
             where = where + "(" + groupSelector + ")";
         } else {
-            groupBy = hillsKeyId;
+            includeTypes = "";
         }
+
+        queryBuilder.setTables(hills + includeTypes + " left join "
+                + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
+
         //exclude ROI for now
         if (countryClause == null) {
             countryClause = "cast(_Section as float) <45";
@@ -226,8 +231,8 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         String[] selectionArgs = new String[]{};
 
 
-        Cursor cursor = queryBuilder.query(db, null, selection,
-                selectionArgs, groupBy, null, orderBy);
+        Cursor cursor = queryBuilder.query(db, new String[]{HILLS_TABLE + "." + KEY_ID+" as hill_id","*"}, selection,
+                selectionArgs, null, null, orderBy);
 
         return cursor;
     }
@@ -374,6 +379,8 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         Date dateClimbed = null;
 
         try {
+            System.out.println("date climbed = "+cursor.getString(cursor
+                    .getColumnIndex(KEY_DATECLIMBED)));
             dateClimbed = iso8601Format.parse(cursor.getString(cursor
                     .getColumnIndex(KEY_DATECLIMBED)));
         } catch (java.text.ParseException e) {
@@ -396,4 +403,6 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         return result;
 
     }
+
+
 }
