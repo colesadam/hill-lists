@@ -137,6 +137,11 @@ public class OldHillDbAdapter implements DbHelper {
     }
 
     @Override
+    public Cursor getHillsForNearby() {
+        return null;
+    }
+
+    @Override
     public Cursor getBaggedHillList() {
         return db.query(HILLS_TABLE + " INNER JOIN " + BAGGING_TABLE + " ON ("
                         + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE + "._id)",

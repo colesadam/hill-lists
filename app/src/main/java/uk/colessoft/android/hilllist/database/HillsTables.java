@@ -1,12 +1,11 @@
 package uk.colessoft.android.hilllist.database;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -18,11 +17,9 @@ import static android.content.ContentValues.TAG;
 
 public class HillsTables {
 
-
-    public static final String KEY_TITLE = "title";
-
     private static final String HILLS_CSV = "DoBIH_v15.3.csv";
 
+    public static final String KEY_TITLE = "title";
     public static final String HILLS_TABLE = "hills";
     public static final String HILLTYPES_TABLE = "hilltypes";
     public static final String TYPES_LINK_TABLE = "typeslink";
@@ -55,8 +52,6 @@ public class HillsTables {
     public static final String KEY_LATITUDE = "Latitude";
     public static final String KEY_LONGITUDE = "Longitude";
     public static final String KEY_XSECTION = "_Section";
-
-
     public static final String KEY_HILL_ID = "hill_id";
     public static final String KEY_TYPES_ID = "type_id";
 
@@ -69,47 +64,33 @@ public class HillsTables {
             + " integer primary key autoincrement," + KEY_HILL_ID
             + " references " + HILLS_TABLE + "(" + KEY_ID + ")," + KEY_TYPES_ID
             + " references " + HILLTYPES_TABLE + "(" + KEY_ID + "))";
+    private static Handler handler;
 
-    private static ProgressDialog progressDialog;
 
-    public static void onCreate(SQLiteDatabase database, Context context) {
-
+    public static void onCreate(SQLiteDatabase database, Context context, Handler handler) {
 
         createSimpleTables(database);
-
+        HillsTables.handler = handler;
         long startTime = System.currentTimeMillis();
 
-        int orientation = ((Activity) (context)).getRequestedOrientation();
-        ((Activity) (context)).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-        ((Activity) context).runOnUiThread(new Runnable() {
 
-            @Override
-            public void run() {
-                progressDialog = new ProgressDialog(context);
-                progressDialog.setTitle("Updating Database");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.setMax(20600);
-                progressDialog.setCancelable(false);
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
-            }
-        });
 
-        populateHillsTable(database, context, startTime);
-        progressDialog.cancel();
+        createAndPopulateHillsTable(database, context, startTime);
+
         populateHillTypes(database, startTime);
 
-        ((Activity) (context)).setRequestedOrientation(orientation);
+
 
     }
 
     private static void populateHillTypes(SQLiteDatabase database, long startTime) {
-        // Populate static hill types data
-        database.beginTransaction();
+
         Cursor c = database.query(HILLS_TABLE, null, null, null, null, null, null, null);
         SQLiteStatement insertHillType = database.compileStatement("INSERT or IGNORE into " + HILLTYPES_TABLE + " VALUES(?,?)");
         SQLiteStatement insertHillTypeLink = database.compileStatement("INSERT into " + TYPES_LINK_TABLE + " (" + KEY_HILL_ID + "," + KEY_TYPES_ID + ") values (?,?)");
 
+        // Populate static hill types data
+        database.beginTransaction();
         if (c.moveToFirst()) {
             do {
                 String[] classifications = c.getString(c.getColumnIndex(KEY_CLASSIFICATION)).replace("\"", "").split(",");
@@ -122,74 +103,52 @@ public class HillsTables {
                     insertHillTypeLink.bindLong(2, c.getColumnIndex(classification));
                     insertHillTypeLink.executeInsert();
                 }
-
             } while (c.moveToNext());
         }
         database.setTransactionSuccessful();
         database.endTransaction();
         c.close();
-        Log.d(HillsTables.class.getName(),
-                "#################Finished inserting hill types information after "
+        Log.d(TAG, "populateHillTypes: Finished inserting hill types information after "
                         + (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    private static void populateHillsTable(SQLiteDatabase database, Context context, long startTime) {
+    private static void createAndPopulateHillsTable(SQLiteDatabase database, Context context, long startTime) {
         InputStream is;
-        Log.d(TAG, "populateHillsTable: starting");
+        Log.d(TAG, "createAndPopulateHillsTable: starting");
         try {
 
             is = context.getAssets().open(HILLS_CSV);
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
 
-            // read main hill data into hills table
-            database.beginTransaction();
-            String line = null;
-
-            String headerRow = reader.readLine();
-            String hillsTableStarter = "CREATE TABLE '" + HILLS_TABLE
-                    + "' ('" + KEY_ID + "' integer primary key,";
-            String[] headerArray = headerRow.split(",");
-            StringBuilder createHillsTableBuilder = new StringBuilder();
-            for (String header : headerArray) {
-                if (!"Number".equals(header)) {
-                    createHillsTableBuilder.append("'").append(header).append("',");
-                }
-            }
-            String c = createHillsTableBuilder.toString();
-            String createHillsTable = hillsTableStarter + c.substring(0, c.length() - 1) + ")";
-
-            database.execSQL(createHillsTable);
+            createHillsTable(database, reader);
 
             StringBuffer insertHillsBuffer;
-            // read each line of text file
-            while ((line = reader.readLine()) != null) {
-                ((Activity) context).runOnUiThread(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        progressDialog.incrementProgressBy(1);
-                    }
-                });
+
+            // read main hill data into hills table
+            database.beginTransaction();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if(handler != null) {
+                    handler.dispatchMessage(Message.obtain(handler, 0, 0, 1, 1));
+                }
 
                 insertHillsBuffer = new StringBuffer();
                 insertHillsBuffer.append("INSERT INTO " + HILLS_TABLE
                         + " VALUES (");
                 String[] lineArray = line
                         .split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-                // StringTokenizer st = new StringTokenizer(line, ",");
-                // read lines up to marilyn column - the first type column
+
                 for (String entry : lineArray) {
                     insertHillsBuffer.append("'").append(entry.replace("'", "''")).append("',");
-
                 }
                 insertHillsBuffer.deleteCharAt(insertHillsBuffer.length() - 1);
 
                 insertHillsBuffer.append(")");
-                String statement = insertHillsBuffer.toString();
-                database.execSQL(statement);
-
+                database.execSQL(insertHillsBuffer.toString());
             }
+
             database.setTransactionSuccessful();
             database.endTransaction();
             Log.d(TAG,
@@ -201,6 +160,21 @@ public class HillsTables {
         }
     }
 
+    private static void createHillsTable(SQLiteDatabase database, BufferedReader reader) throws IOException {
+        String headerRow = reader.readLine();
+        String hillsTableStarter = "CREATE TABLE '" + HILLS_TABLE
+                + "' ('" + KEY_ID + "' integer primary key,";
+        String[] headerArray = headerRow.split(",");
+        StringBuilder createHillsTableBuilder = new StringBuilder();
+        for (String header : headerArray) {
+            if (!"Number".equals(header)) {
+                createHillsTableBuilder.append("'").append(header).append("',");
+            }
+        }
+        String c = createHillsTableBuilder.toString();
+        database.execSQL(hillsTableStarter + c.substring(0, c.length() - 1) + ")");
+    }
+
     private static void createSimpleTables(SQLiteDatabase database) {
         database.execSQL("PRAGMA foreign_keys=ON;");
         database.execSQL(HILLTYPES_CREATE);
@@ -208,15 +182,14 @@ public class HillsTables {
     }
 
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
-                                 int newVersion, Context context) {
+                                 int newVersion, Context context, Handler handler) {
         Log.w(HillsTables.class.getName(), "Upgrading database from version "
                 + oldVersion + " to " + newVersion
                 + ", which will destroy all old hills data");
         database.execSQL("DROP TABLE IF EXISTS " + HILLS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + HILLTYPES_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + TYPES_LINK_TABLE);
-        onCreate(database, context);
+        onCreate(database, context, handler);
     }
-
 
 }

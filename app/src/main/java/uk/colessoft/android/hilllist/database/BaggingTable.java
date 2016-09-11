@@ -35,7 +35,8 @@ public class BaggingTable {
 
                     insertB.executeInsert();
                 }while(oldBagging.moveToNext());
-                db.setTransactionSuccessful();
+
+				db.setTransactionSuccessful();
                 db.endTransaction();
             }
 			oldHillDbAdapter.close();

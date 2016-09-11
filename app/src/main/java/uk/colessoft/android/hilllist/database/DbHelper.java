@@ -14,6 +14,8 @@ public interface DbHelper {
 
     Cursor getAllHillsCursor();
 
+    Cursor getHillsForNearby();
+
     Cursor getBaggedHillList();
 
     Cursor getHillGroup(String groupId, String countryClause,

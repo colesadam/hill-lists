@@ -2,10 +2,14 @@ package uk.colessoft.android.hilllist.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -19,8 +23,8 @@ public class SplashScreenActivity extends FragmentActivity {
 
 	private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0x00001;
 	private Thread splashThread;
-	private Thread dbThread;
-
+	private Handler handler;
+	private ProgressDialog progressDialog;
 
 
 	@Override
@@ -32,6 +36,25 @@ public class SplashScreenActivity extends FragmentActivity {
 		TextView link=(TextView) findViewById(R.id.TextView03);
 		Linkify.addLinks(link, Linkify.ALL);
 
+		handler = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				if(msg.arg1 == 0)
+					progressDialog.incrementProgressBy(1);
+				else {
+					SplashScreenActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+					progressDialog.cancel();
+				}
+			}
+		};
+
+		progressDialog = new ProgressDialog(SplashScreenActivity.this);
+		progressDialog.setTitle("Updating Database");
+		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		progressDialog.setMax(20600);
+		progressDialog.setCancelable(false);
+		progressDialog.setCanceledOnTouchOutside(false);
+		progressDialog.show();
 
 
 		splashThread = new Thread() {
@@ -39,7 +62,13 @@ public class SplashScreenActivity extends FragmentActivity {
 			@Override
 			public void run() {
 				HillsDatabaseHelper dbAdapter = HillsDatabaseHelper.getInstance(SplashScreenActivity.this);
-				dbAdapter.touch();
+
+				SplashScreenActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
+
+				dbAdapter.touch(handler);
+				handler.sendMessage(Message.obtain(handler, 0, 1, 1, 1));
+
 				try {
 
 					int waited = 0;

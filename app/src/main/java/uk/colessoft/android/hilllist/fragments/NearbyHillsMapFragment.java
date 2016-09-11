@@ -64,12 +64,12 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
         map.setOnMarkerClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
-        dialog = ProgressDialog.show(getActivity(), "Please wait...",
+        //dialog = ProgressDialog.show(getActivity(), "Please wait...",
 
-                "Getting Hill Positions ...", true);
-        Thread timer = new Thread(showWaitDialog);
+        //        "Getting Hill Positions ...", true);
+        //Thread timer = new Thread(showWaitDialog);
 
-        timer.start();
+        //timer.start();
 
         Log.d(getActivity().getClass().getName(), "[NearbyHillsMapFragment][rowids.length: " + rowids.length + "]");
         LatLangBounds llb = new LatLangBounds();

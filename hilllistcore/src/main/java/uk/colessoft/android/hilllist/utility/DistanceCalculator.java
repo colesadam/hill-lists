@@ -10,7 +10,7 @@ public class DistanceCalculator {
 		Radius = R;
 	}
 
-	public static double CalculationByDistance(double lat1,double lat2,double lon1,double lon2) {
+	public static double calculationByDistance(double lat1, double lat2, double lon1, double lon2) {
 
 		double dLat = Math.toRadians(lat2 - lat1);
 		double dLon = Math.toRadians(lon2 - lon1);
@@ -20,5 +20,9 @@ public class DistanceCalculator {
 				* Math.sin(dLon / 2);
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		return Radius * c;
+	}
+
+	public static double calculationByDistanceSimple(double lat1,double lat2,double lon1,double lon2){
+		return Math.sqrt((lat2 - lat1) * (lat2 - lat1) + (lon2 - lon1) * (lon2 - lon1)) * Radius;
 	}
 }

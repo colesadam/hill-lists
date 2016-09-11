@@ -5,13 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQuery;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -24,6 +24,7 @@ import java.util.Date;
 
 import uk.colessoft.android.hilllist.model.Hill;
 
+import static android.content.ContentValues.TAG;
 import static uk.colessoft.android.hilllist.database.BaggingTable.BAGGING_TABLE;
 import static uk.colessoft.android.hilllist.database.BaggingTable.KEY_DATECLIMBED;
 import static uk.colessoft.android.hilllist.database.BaggingTable.KEY_NOTES;
@@ -70,12 +71,13 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     private final String baggingKeyId = baggingTable + "." + KEY_ID;
     private Context context;
     public static final String DATABASE_NAME = "hill-list.db";
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 1;
     private String hillTypes = HillsTables.HILLTYPES_TABLE;
     private String typesLinkKeyHillId = typesLink + "." + HillsTables.KEY_HILL_ID;
     private String hillTypesKeyId = hillTypes + "." + KEY_ID;
     private String hillTypesTitle = hillTypes + "." + KEY_TITLE;
 
+    private Handler handler;
     private static HillsDatabaseHelper sInstance;
 
     public HillsDatabaseHelper(Context context) {
@@ -88,39 +90,32 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
                                 int version) {
         super(context, name, factory, version);
         this.context = context;
+
     }
 
     public static synchronized HillsDatabaseHelper getInstance(Context context) {
 
         if (sInstance == null) {
-            sInstance = new HillsDatabaseHelper(context, DATABASE_NAME
-                    , new SQLiteDatabase.CursorFactory() {
-                @Override
-                public Cursor newCursor(SQLiteDatabase sqLiteDatabase, SQLiteCursorDriver sqLiteCursorDriver, String s, SQLiteQuery sqLiteQuery) {
+            sInstance = new HillsDatabaseHelper(context.getApplicationContext(), DATABASE_NAME
+                    , (sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery) -> {
 
-                    Log.d("SQL", sqLiteQuery.toString());
+                Log.d("SQL", sqLiteQuery.toString());
 
-                    return new SQLiteCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
-                }
+                return new SQLiteCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
             }, DATABASE_VERSION);
         }
         return sInstance;
     }
 
-
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-        HillsTables.onCreate(db, context);
-        BaggingTable.onCreate(db,context);
-
-
+        HillsTables.onCreate(db, context, handler);
+        BaggingTable.onCreate(db, context);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        HillsTables.onUpgrade(db, oldVersion, newVersion, context);
-
+        HillsTables.onUpgrade(db, oldVersion, newVersion, context, handler);
     }
 
     @Override
@@ -136,15 +131,17 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
                 new String[]{KEY_ID},
                 KEY_ID + "='" + String.valueOf(hillNumber) + "'", null, null,
                 null, null, null);
+
         db.beginTransaction();
         if (existing.getCount() == 0) {
-            long r = db.insert(BAGGING_TABLE, null, climbedValues);
+            db.insert(BAGGING_TABLE, null, climbedValues);
         } else {
-            long rowId = db.update(BAGGING_TABLE, climbedValues, "_id='"
+            db.update(BAGGING_TABLE, climbedValues, "_id='"
                     + String.valueOf(hillNumber) + "'", null);
         }
         db.setTransactionSuccessful();
         db.endTransaction();
+        existing.close();
 
     }
 
@@ -152,16 +149,25 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     public void markHillNotClimbed(int hillNumber) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(BAGGING_TABLE, "_id='" + hillNumber + "'", null);
-
     }
 
     @Override
     public Cursor getAllHillsCursor() {
+        Log.d(TAG, "getAllHillsCursor: ######## getting all hills");
         SQLiteDatabase db = getReadableDatabase();
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
                         + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
-                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID+" as hill_id","*"},
+                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", "*"},
                 null, null, null, null, null);
+    }
+
+    @Override
+    public Cursor getHillsForNearby() {
+        Log.d(TAG, "getHillsForNearby: ######## getting all hills");
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(HILLS_TABLE, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME},
+                null, null, null, null, null);
+
     }
 
     @Override
@@ -174,13 +180,11 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
                 null);
     }
 
-
     @Override
-    public Cursor getHillGroup(String groupId, String countryClause, String moreWhere, String orderBy, int filter) {
+    public Cursor getHillGroup(String groupId, String countryClause, String moreFilters, String orderBy, int filter) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-
-        String where;
+        String where = "";
         String includeTypes = " join "
                 + typesLink + " on " + hillsKeyId + "=" + typesLinkKeyHillId + " join "
                 + hillTypes + " on " + typesLinkKeyId + "=" + hillTypesKeyId;
@@ -189,18 +193,15 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
             where = KEY_DATECLIMBED + " NOT NULL";
         else if (filter == 2)
             where = KEY_DATECLIMBED + " IS NULL";
-        else
-            where = "";
+
         if (groupId != null) {
             String[] groups = groupId.split(",");
-            if (!"".equals(where))
-                where = where + " AND ";
             String groupSelector = "";
             for (String group : groups) {
                 groupSelector += hillTypesTitle + " = '" + group + "' OR ";
             }
             groupSelector = groupSelector.trim().substring(0, groupSelector.length() - 3);
-            where = where + "(" + groupSelector + ")";
+            where = addToWhere("(" + groupSelector + ")", where);
         } else {
             includeTypes = "";
         }
@@ -212,34 +213,31 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         if (countryClause == null) {
             countryClause = "cast(_Section as float) <45";
         }
-        if (countryClause != null && !"".equals(where)) {
-            if (!"".equals(where))
-                where = where + " AND ";
-            if (countryClause != null) where = where + countryClause;
-        } else if (countryClause != null) {
-            if (!"".equals(where))
-                where = where + " AND ";
-            where = where + countryClause;
-        }
-        if (moreWhere != null && !"".equals(moreWhere) && !"".equals(where)) {
-            where = where + " AND " + moreWhere;
-        } else if (moreWhere != null && !"".equals(moreWhere)) {
-            where = where + moreWhere;
-        }
+
+        where = addToWhere(countryClause, where);
+        where = addToWhere(moreFilters, where);
+
         SQLiteDatabase db = getReadableDatabase();
-        String selection = where;
-        String[] selectionArgs = new String[]{};
 
-
-        Cursor cursor = queryBuilder.query(db, new String[]{HILLS_TABLE + "." + KEY_ID+" as hill_id","*"}, selection,
-                selectionArgs, null, null, orderBy);
-
-        return cursor;
+        return queryBuilder.query(db, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", "*"}, where,
+                new String[]{}, null, null, orderBy);
     }
 
+    @NonNull
+    private String addToWhere(String filter, String where) {
+        if (!"".equals(where) && filter != null && !"".equals(filter))
+            where = where + " AND ";
+        where = where + nonNull(filter);
+        return where;
+    }
+
+    private String nonNull(String filter) {
+        return filter == null ? "" : filter;
+    }
 
     @Override
     public Hill getHill(long _rowIndex) throws SQLException {
+
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(hills + " left join "
                 + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
@@ -258,15 +256,17 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
             Hill hill = getHill(cursor);
             cursor.close();
             return hill;
+        } else {
+            cursor.close();
+            return null;
         }
-        return null;
-    }
 
+    }
 
     @Override
     public void importBagging(String filePath) {
-        SQLiteDatabase db = getWritableDatabase();
 
+        SQLiteDatabase db = getWritableDatabase();
 
         FileInputStream is = null;
         try {
@@ -277,43 +277,30 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
 
-            // db.beginTransaction();
             String line;
+            ContentValues values;
             while ((line = reader.readLine()) != null) {
-                // line=line.replace(",", "','");
-                // line = "'" + line + "'";
-                String[] lineSplit = line.split(",");
-                String newLine = "";
 
-                newLine = newLine + "\"" + lineSplit[0].substring(1, lineSplit[0].length() - 1) + "\"";
-                newLine = newLine + ",";
-                newLine = newLine + "\"" + lineSplit[1].substring(1, lineSplit[1].length() - 1) + "\"";
-                newLine = newLine + ",";
-                newLine = newLine + "\"" + lineSplit[2].substring(1, lineSplit[2].length() - 1) + "\"";
+                String[] lineSplit = line.split("',");
 
+                values = new ContentValues();
+                values.put("_id", lineSplit[0].substring(1, lineSplit[0].length()));
+                values.put("dateClimbed", lineSplit[1].substring(1, lineSplit[1].length()));
+                values.put("notes", lineSplit[2].substring(1, lineSplit[2].length() - 1));
 
-                db.execSQL("INSERT INTO Bagging VALUES (" + newLine + ");");
+                db.insert(BAGGING_TABLE, null, values);
             }
-
-            // db.setTransactionSuccessful();
-            // db.endTransaction();
-
         } catch (IOException e) {
-
             Log.e(this.toString(), "error: " + e.toString());
-
         } catch (SQLiteException se) {
             se.printStackTrace();
         } finally {
             try {
                 is.close();
-                // database.close();
             } catch (IOException e) {
                 Log.e(this.toString(), "error: " + e.toString());
             }
         }
-
-
     }
 
     private Hill getHill(Cursor cursor) throws SQLException {
@@ -379,15 +366,12 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         Date dateClimbed = null;
 
         try {
-            System.out.println("date climbed = "+cursor.getString(cursor
-                    .getColumnIndex(KEY_DATECLIMBED)));
             dateClimbed = iso8601Format.parse(cursor.getString(cursor
                     .getColumnIndex(KEY_DATECLIMBED)));
         } catch (java.text.ParseException e) {
-            // TODO Auto-generated catch block
-            Log.e(this.toString(), e.toString());
+            Log.e(TAG, "getHill: parse exception", e);
         } catch (NullPointerException npe) {
-            // ignore
+            Log.d(TAG, "getHill: no date climbed");
         }
 
         String notes = cursor.getString(cursor
@@ -404,5 +388,9 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
 
     }
 
+    public void touch(Handler handler) {
+        this.handler = handler;
+        getReadableDatabase();
+    }
 
 }

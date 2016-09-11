@@ -269,10 +269,12 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                 countryClause, where, orderBy, 0, dbAdapter);
     }
 
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (this.dialog.isShowing()) {
             this.dialog.dismiss();
         }
+
         update(data);
 
     }

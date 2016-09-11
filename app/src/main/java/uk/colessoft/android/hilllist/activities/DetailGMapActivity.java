@@ -114,7 +114,7 @@ public class DetailGMapActivity extends FragmentActivity implements GoogleMap.On
                         .getColumnIndex(HillsTables.KEY_LONGITUDE));
 
 
-                double distanceKm = DistanceCalculator.CalculationByDistance(hill.getLatitude(), lat, hill.getLongitude(), lng);
+                double distanceKm = DistanceCalculator.calculationByDistance(hill.getLatitude(), lat, hill.getLongitude(), lng);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillsTables.KEY_HILL_ID));
                 double nearRadius = 16.09;

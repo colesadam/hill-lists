@@ -23,6 +23,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,10 +51,14 @@ import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
+import static android.content.ContentValues.TAG;
+
 public class NearbyHillsFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Map<String, ?>>> {
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001;
+    private SimpleAdapter nearbyHillsAdapter;
+
 
     public interface OnHillSelectedListener {
         void onHillSelected(int rowid);
@@ -343,13 +348,15 @@ public class NearbyHillsFragment extends Fragment implements
 
     private void getNearHills() {
 
-        Cursor hillsCursor = dbAdapter.getAllHillsCursor();
+        Cursor hillsCursor = dbAdapter.getHillsForNearby();
 
         nearbyHills = new ArrayList();
 
+        Log.d(TAG, "getNearHills: got hills");
         // iterate over cursor and get hill positions
         // Make sure there is at least one row.
         if (hillsCursor.moveToFirst()) {
+            Log.d(TAG, "getNearHills: something returned");
             // Iterate over each cursor.
             do {
                 Double lat = hillsCursor.getDouble(hillsCursor
@@ -357,11 +364,11 @@ public class NearbyHillsFragment extends Fragment implements
                 Double lng = hillsCursor.getDouble(hillsCursor
                         .getColumnIndex(HillsTables.KEY_LONGITUDE)) * 1E6;
 
-                double distanceKm = DistanceCalculator.CalculationByDistance(
+                double distanceKm = DistanceCalculator.calculationByDistance(
                         lat1, lat / 1E6, lon1, lng / 1E6);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillsTables.KEY_HILL_ID));
-                System.out.println("############"+row_id);
+                Log.d(TAG, "############"+row_id);
                 if (distanceKm < nearRadius) {
 
                     String hillname = hillsCursor.getString(hillsCursor
@@ -406,7 +413,7 @@ public class NearbyHillsFragment extends Fragment implements
                     break;
             }
         }
-		hillsCursor.close();
+
 
     }
 
@@ -488,10 +495,11 @@ public class NearbyHillsFragment extends Fragment implements
         }
 
 
+
     }
 
     private void updateList() {
-        SimpleAdapter nearbyHillsAdapter = new SimpleAdapter(getActivity(),
+        nearbyHillsAdapter = new SimpleAdapter(getActivity(),
                 nearbyHills,
                 R.layout.nearby_hill_item, new String[]{"hillname",
                 "distance", "height",}, new int[]{
@@ -677,7 +685,7 @@ public class NearbyHillsFragment extends Fragment implements
 
         @Override
         public ArrayList<Map<String, ?>> loadInBackground() {
-            Cursor hillsCursor = dbAdapter.getAllHillsCursor();
+            Cursor hillsCursor = dbAdapter.getHillsForNearby();
 
             nearbyHills = new ArrayList();
 
@@ -685,18 +693,21 @@ public class NearbyHillsFragment extends Fragment implements
             // iterate over cursor and get hill positions
             // Make sure there is at least one row.
             if (hillsCursor.moveToFirst()) {
+                Log.d(TAG, "loadInBackground: something returned");
                 // Iterate over each cursor.
                 do {
+
                     Double lat = hillsCursor.getDouble(hillsCursor
                             .getColumnIndex(HillsTables.KEY_LATITUDE)) * 1E6;
                     Double lng = hillsCursor.getDouble(hillsCursor
                             .getColumnIndex(HillsTables.KEY_LONGITUDE)) * 1E6;
 
                     double distanceKm = DistanceCalculator
-                            .CalculationByDistance(lat1, lat / 1E6, lon1,
+                            .calculationByDistance(lat1, lat / 1E6, lon1,
                                     lng / 1E6);
                     int row_id = hillsCursor.getInt(hillsCursor
                             .getColumnIndex(HillsTables.KEY_HILL_ID));
+                    Log.d(TAG, "############"+row_id);
                     if (distanceKm < nearRadius) {
 
                         String hillname = hillsCursor.getString(hillsCursor
@@ -742,7 +753,7 @@ public class NearbyHillsFragment extends Fragment implements
                         break;
                 }
             }
-			hillsCursor.close();
+
             return nearbyHills;
         }
 
