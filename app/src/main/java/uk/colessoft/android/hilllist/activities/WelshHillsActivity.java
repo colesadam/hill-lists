@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.HillsTables;
 
 public class WelshHillsActivity extends Activity {
 
@@ -96,12 +96,12 @@ public class WelshHillsActivity extends Activity {
 
 
 		((View) hewitts.getParent())
-				.setOnClickListener(v -> showHills(HillDbAdapter.KEY_hewitt, "Welsh Hewitts"));
+				.setOnClickListener(v -> showHills("Hew", "Welsh Hewitts"));
 
 		((View) nuttalls.getParent())
-				.setOnClickListener(v -> showHills(HillDbAdapter.KEY_nuttall, "Welsh Nuttalls"));
+				.setOnClickListener(v -> showHills("N", "Welsh Nuttalls"));
 		((View) marilyns.getParent())
-		.setOnClickListener(v -> showHills(HillDbAdapter.KEY_marilyn, "Welsh Marilyns"));
+		.setOnClickListener(v -> showHills("Ma", "Welsh Marilyns"));
 
 	
 

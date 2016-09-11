@@ -1,7 +1,6 @@
 package uk.colessoft.android.hilllist.fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -26,7 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
@@ -63,15 +63,13 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
         map.setOnInfoWindowClickListener(this);
         map.setOnMarkerClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        if (!dbAdapter.isOpen())
-            dbAdapter.open();
 
-        dialog = ProgressDialog.show(getActivity(), "Please wait...",
+        //dialog = ProgressDialog.show(getActivity(), "Please wait...",
 
-                "Getting Hill Positions ...", true);
-        Thread timer = new Thread(showWaitDialog);
+        //        "Getting Hill Positions ...", true);
+        //Thread timer = new Thread(showWaitDialog);
 
-        timer.start();
+        //timer.start();
 
         Log.d(getActivity().getClass().getName(), "[NearbyHillsMapFragment][rowids.length: " + rowids.length + "]");
         LatLangBounds llb = new LatLangBounds();
@@ -118,12 +116,12 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
                         .newLatLngBounds(
                                 bounds, 50)));
 
-        dbAdapter.close();
+
     }
 
     private GoogleMap map;
     private View viewer;
-    private HillDbAdapter dbAdapter;
+    private DbHelper dbAdapter;
 
     private boolean gotHills;
 
@@ -132,13 +130,6 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     private BitmapDescriptor marker;
     private BitmapDescriptor cmarker;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        dbAdapter = new HillDbAdapter(getActivity());
-
-
-    }
 
 
     @Override
@@ -176,7 +167,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
         });
 
-        dbAdapter = new HillDbAdapter(getActivity());
+
 
 
         String title;
@@ -187,6 +178,12 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
         getActivity().setTitle(title);
 
 
+    }
+
+    @Override
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
     }
 
     public void moveMarker(int rowid) {

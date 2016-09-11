@@ -11,12 +11,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.io.IOException;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
+
+import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
 public class Main extends Activity {
 
@@ -63,30 +63,11 @@ public class Main extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 
-		HillDbAdapter dbAdapter = new HillDbAdapter(this);
+		DbHelper dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
 		setTitle(getTitle() + " - Choose an Option");
 		boolean successful;
 		
-		try {
 
-			successful = dbAdapter.createDatabase();
-
-		} catch (IOException ioe) {
-
-			ioe.printStackTrace();
-			throw new Error("Unable to create database", ioe);
-
-		}
-		if (!successful) {
-			CharSequence text = "No External Storage Available for Database - Please insert an SD Card and restart.";
-			int duration = Toast.LENGTH_LONG;
-
-			Toast toast = Toast.makeText(getApplicationContext(), text,
-					duration);
-			toast.show();
-
-			//
-		}
 
 		View scotland = findViewById(R.id.menu_scotland);
 		View wales = findViewById(R.id.menu_wales);
@@ -183,7 +164,7 @@ public class Main extends Activity {
             String value = searchText.getText().toString();
             String where = "";
             if (!"".equals(value)) {
-                where = "hillname like "
+                where = KEY_HILLNAME+" like "
                         + DatabaseUtils.sqlEscapeString("%" + value + "%");
 
             } else

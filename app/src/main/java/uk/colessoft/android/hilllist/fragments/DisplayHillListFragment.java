@@ -38,7 +38,12 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.BaggingTable;
+import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
+import uk.colessoft.android.hilllist.database.HillsTables;
+
+import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
 public class DisplayHillListFragment extends Fragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
@@ -58,7 +63,7 @@ public class DisplayHillListFragment extends Fragment implements
 			case R.id.name_entry: {
 				tv.setTextColor(Color.WHITE);
 				if (cursor.getString(cursor
-						.getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) != null) {
+						.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
 
 					tv.setTextColor(Color.GREEN);
 
@@ -75,15 +80,15 @@ public class DisplayHillListFragment extends Fragment implements
 				} else
 					vtext = convText(tv, vtext) + "ft";
 				tv.setText(vtext);
-				dbAdapter.close();
+				//dbAdapter.close();
 				return true;
 			}
 			case R.id.check_hill_climbed: {
 				CheckBox ctv = (CheckBox) tv;
 				final int id = cursor.getInt(cursor
-						.getColumnIndex(HillDbAdapter.KEY_ID));
+						.getColumnIndex(HillsTables.KEY_HILL_ID));
 				if (cursor.getString(cursor
-						.getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) != null) {
+						.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
 
 					ctv.setChecked(true);
 
@@ -91,7 +96,7 @@ public class DisplayHillListFragment extends Fragment implements
 					ctv.setChecked(false);
 				ctv.setOnClickListener(null);
 				ctv.setOnClickListener(v -> {
-                    dbAdapter.open();
+                   // dbAdapter.open();
                     CheckBox xcv = (CheckBox) v;
                     if (xcv.isChecked()) {
                         ((TextView) ((ViewGroup) ((ViewGroup) xcv
@@ -104,7 +109,7 @@ public class DisplayHillListFragment extends Fragment implements
                                 .setTextColor(Color.WHITE);
                         dbAdapter.markHillNotClimbed(id);
                     }
-                    dbAdapter.close();
+                    //dbAdapter.close();
                     HillDetailFragment fragment = (HillDetailFragment) getActivity()
                             .getSupportFragmentManager().findFragmentById(
                                     R.id.hill_detail_fragment);
@@ -136,7 +141,7 @@ public class DisplayHillListFragment extends Fragment implements
 		private String hilltype;
 		private String countryClause;
 		private int filterHills;
-		private HillDbAdapter dbAdapter;
+		private DbHelper dbAdapter;
 
 		public UpdateHillsTaskLoader(Context context) {
 			super(context);
@@ -145,7 +150,7 @@ public class DisplayHillListFragment extends Fragment implements
 
 		public UpdateHillsTaskLoader(Context context, String hilltype,
 				String countryClause, String where, String orderBy,
-				int filterHills, HillDbAdapter dbAdapter) {
+				int filterHills, DbHelper dbAdapter) {
 			super(context);
 			this.where = where;
 			this.orderBy = orderBy;
@@ -158,7 +163,7 @@ public class DisplayHillListFragment extends Fragment implements
 
 		@Override
 		public Cursor loadInBackground() {
-			dbAdapter.open();
+			//dbAdapter.open();
 
 			Cursor result = dbAdapter.getHillGroup(hilltype, countryClause,
 					where, orderBy, filterHills);
@@ -187,7 +192,7 @@ public class DisplayHillListFragment extends Fragment implements
 		private String hilltype;
 		private String countryClause;
 		private int filterHills;
-		private HillDbAdapter dbAdapter;
+		private DbHelper dbAdapter;
 		private int allMarked;
 		private Handler handler;
 
@@ -197,9 +202,9 @@ public class DisplayHillListFragment extends Fragment implements
 		}
 
 		public HillsClimbedTaskLoader(Context context, String hilltype,
-				String countryClause, String where, String orderBy,
-				int filterHills, HillDbAdapter dbAdapter, int allMarked,
-				Handler handler) {
+									  String countryClause, String where, String orderBy,
+									  int filterHills, DbHelper dbAdapter, int allMarked,
+									  Handler handler) {
 			super(context);
 			this.where = where;
 			this.orderBy = orderBy;
@@ -213,7 +218,7 @@ public class DisplayHillListFragment extends Fragment implements
 
 		@Override
 		public Cursor loadInBackground() {
-			dbAdapter.open();
+			//dbAdapter.open();
 
 			Cursor result = dbAdapter.getHillGroup(hilltype, countryClause,
 					where, orderBy, filterHills);
@@ -228,11 +233,11 @@ public class DisplayHillListFragment extends Fragment implements
 			result.moveToFirst();
 			do {
 				int row_id = result.getInt(result
-						.getColumnIndex(HillDbAdapter.KEY_ID));
+						.getColumnIndex(HillsTables.KEY_HILL_ID));
 				if (allMarked == 1) {
 
 					if (result.getString(result
-							.getColumnIndex(HillDbAdapter.KEY_DATECLIMBED)) == null) {
+							.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) == null) {
 						Log.d(this.toString(), "debug: marking hill " + row_id);
 						dbAdapter.markHillClimbed(row_id, new Date(), "");
 					}
@@ -262,7 +267,7 @@ public class DisplayHillListFragment extends Fragment implements
 
 	}
 
-	private HillDbAdapter dbAdapter;
+	private DbHelper dbAdapter;
 
 	private String where = null;
 	private String orderBy;
@@ -332,12 +337,12 @@ public class DisplayHillListFragment extends Fragment implements
 		super.onActivityCreated(savedInstanceState);
 		String[] qstrings;
 		if (useMetricHeights) {
-			qstrings = new String[] { "Hillname", "Metres", "dateClimbed",
-					"_id" };
+			qstrings = new String[] { "Name", "Metres", "dateClimbed",
+					"hill_id" };
 		}
 
 		else {
-			qstrings = new String[] { "Hillname", "Feet", "dateClimbed", "_id" };
+			qstrings = new String[] { "Name", "Feet", "dateClimbed", "hill_id" };
 		}
 		cursorAdapter = new SimpleCursorAdapter(getActivity(),
 				R.layout.simple_hill_item, null, qstrings, new int[] {
@@ -367,7 +372,7 @@ public class DisplayHillListFragment extends Fragment implements
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		dbAdapter = new HillDbAdapter(getActivity());
+		dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
 		try {
 			hillSelectedListener = (OnHillSelectedListener) activity;
 		} catch (ClassCastException e) {
@@ -431,14 +436,14 @@ public class DisplayHillListFragment extends Fragment implements
 
 		}
 		case Main.OTHER_GB: {
-			countryClause = "_Section='29' OR cast(_Section as float)>42.9";
+			countryClause = "_Section='29' OR (cast(_Section as float) between 43 and 45)";
 			break;
 
 		}
 
 		}
 
-		orderBy = "cast(" + HillDbAdapter.KEY_HEIGHTM + " as float)" + " desc";
+		orderBy = "cast(" + HillsTables.KEY_HEIGHTM + " as float)" + " desc";
 
 		return viewer;
 	}
@@ -461,14 +466,14 @@ public class DisplayHillListFragment extends Fragment implements
 		}
 		case (R.id.menu_list_alpha): {
 
-			orderBy = HillDbAdapter.KEY_HILLNAME;
+			orderBy = KEY_HILLNAME;
 			updateList();
 			return true;
 
 		}
 		case (R.id.menu_list_height): {
 
-			orderBy = "cast(" + HillDbAdapter.KEY_HEIGHTM + " as float)"
+			orderBy = "cast(" + HillsTables.KEY_HEIGHTM + " as float)"
 					+ " desc";
 			updateList();
 			return true;
@@ -525,7 +530,7 @@ public class DisplayHillListFragment extends Fragment implements
                         String value = searchText.getText().toString();
 
                         if (!"".equals(value))
-                            where = "hillname like "
+                            where = KEY_HILLNAME+" like "
                                     + DatabaseUtils.sqlEscapeString("%"
                                             + value + "%");
                         else
@@ -573,7 +578,7 @@ public class DisplayHillListFragment extends Fragment implements
 		if (result.getCount() != 0) {
 			
 			result.moveToPosition(0);
-			int firstRow = result.getInt(result.getColumnIndexOrThrow("_id"));
+			int firstRow = result.getInt(result.getColumnIndexOrThrow("hill_id"));
 
 			HillDetailFragment fragment = (HillDetailFragment) getActivity()
 					.getSupportFragmentManager().findFragmentById(

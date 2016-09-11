@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.HillsTables;
 
 public class EnglishHillsActivity extends Activity {
 
@@ -101,16 +101,16 @@ public class EnglishHillsActivity extends Activity {
 		allEnglishHills.setOnClickListener(v -> showHills(null, "All English Hills"));
 
 
-		hewitts.setOnClickListener(v -> showHills(HillDbAdapter.KEY_hewitt, "English Hewitts"));
+		hewitts.setOnClickListener(v -> showHills("Hew", "English Hewitts"));
 
-		nuttalls.setOnClickListener(v -> showHills(HillDbAdapter.KEY_nuttall, "English Nuttalls"));
-		marilyns.setOnClickListener(v -> showHills(HillDbAdapter.KEY_marilyn, "English Marilyns"));
+		nuttalls.setOnClickListener(v -> showHills("N", "English Nuttalls"));
+		marilyns.setOnClickListener(v -> showHills("Ma", "English Marilyns"));
 		
-		wainwrights.setOnClickListener(v -> showHills(HillDbAdapter.KEY_wainwright, "Wainwrights"));
+		wainwrights.setOnClickListener(v -> showHills("W", "Wainwrights"));
 		
-		wainwrightFells.setOnClickListener(v -> showHills(HillDbAdapter.KEY_wainwrightOutlyingFell, "Wainwright Outlying Fells"));
+		wainwrightFells.setOnClickListener(v -> showHills("WO", "Wainwright Outlying Fells"));
 		
-		birketts.setOnClickListener(v -> showHills(HillDbAdapter.KEY_birkett, "Birketts"));
+		birketts.setOnClickListener(v -> showHills("B", "Birketts"));
 
 	}
 

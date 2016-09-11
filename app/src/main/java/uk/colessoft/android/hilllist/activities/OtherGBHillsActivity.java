@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
 
 public class OtherGBHillsActivity extends Activity {
 
@@ -91,7 +90,6 @@ public class OtherGBHillsActivity extends Activity {
 		View marilyns = findViewById(R.id.marilyns);
 		View countyTops = findViewById(R.id.county_tops);
 		View deweys = findViewById(R.id.deweys);
-		View trail100 = findViewById(R.id.trail_100);
 		View iomni = findViewById(R.id.iomni);
 
 		iomni.setOnClickListener(v -> {
@@ -99,14 +97,14 @@ public class OtherGBHillsActivity extends Activity {
             showHills(null, "NI/Isle of Man");
         });
 
-		hewitts.setOnClickListener(v -> showHills(HillDbAdapter.KEY_hewitt, "Hewitts"));
+		hewitts.setOnClickListener(v -> showHills("Hew", "Hewitts"));
 
-		nuttalls.setOnClickListener(v -> showHills(HillDbAdapter.KEY_nuttall, "Nuttalls"));
-		marilyns.setOnClickListener(v -> showHills(HillDbAdapter.KEY_marilyn, "Marilyns"));
+		nuttalls.setOnClickListener(v -> showHills("N", "Nuttalls"));
+		marilyns.setOnClickListener(v -> showHills("Ma", "Marilyns"));
 
-		countyTops.setOnClickListener(v -> showHills(HillDbAdapter.KEY_countyTop, "County Tops"));
-		deweys.setOnClickListener(v -> showHills(HillDbAdapter.KEY_dewey, "Deweys"));
-		trail100.setOnClickListener(v -> showHills(HillDbAdapter.KEY_trail100, "Trail 100"));
+		countyTops.setOnClickListener(v -> showHills("CoU", "County Tops"));
+		deweys.setOnClickListener(v -> showHills("5", "Deweys"));
+
 
 	}
 

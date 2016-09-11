@@ -33,7 +33,8 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillDbAdapter;
+import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.model.Business;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.ScootXMLHandler;
@@ -65,8 +66,7 @@ public class BusinessSearchMapActivity extends FragmentActivity implements Googl
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        HillDbAdapter dbAdapter = new HillDbAdapter(this);
-        dbAdapter.open();
+        DbHelper dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
         int rowid = getIntent().getExtras().getInt("rowid");
         String title = getIntent().getExtras().getString("title");
         search_string = getIntent().getExtras().getString("search_string");
