@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import uk.colessoft.android.hilllist.R;
@@ -12,7 +12,7 @@ import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.MyLocationListener;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.OnLocationFoundListener;
 
-public class NearbyHillsFragmentActivity extends FragmentActivity
+public class NearbyHillsFragmentActivity extends AppCompatActivity
 		implements
 		OnLocationFoundListener,
 		uk.colessoft.android.hilllist.fragments.NearbyHillsFragment.OnHillSelectedListener {

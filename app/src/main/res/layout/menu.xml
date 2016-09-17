@@ -11,7 +11,7 @@
 		android:layout_marginBottom="4dp" android:layout_height="0dp" android:layout_weight="50" android:layout_width="match_parent"
 		android:baselineAligned="false">
 		<LinearLayout android:orientation="vertical" android:id="@+id/menu_scotland"
-			android:layout_width="0dip" android:layout_height="fill_parent"
+			android:layout_width="0sp" android:layout_height="fill_parent"
 			android:layout_weight="50" android:background="@drawable/button_text"
 			android:layout_gravity="center_vertical" android:layout_marginRight="4dp" android:gravity="center">
 			<ImageView android:padding="4dp" android:layout_height="wrap_content"
@@ -19,13 +19,13 @@
 				android:layout_gravity="center_vertical|center_horizontal"></ImageView>
 			<TextView   style="@style/ButtonText" android:id="@+id/scottish_hills"
 				android:text="@string/label_scottish_hills" android:padding="4dp"
-				android:layout_margin="2dip" android:layout_height="wrap_content"
+				android:layout_margin="2sp" android:layout_height="wrap_content"
 				android:layout_width="wrap_content" android:layout_gravity="center_vertical|center_horizontal" />
 
 		</LinearLayout>
 
 		<LinearLayout android:orientation="vertical" android:id="@+id/menu_wales"
-			android:layout_height="fill_parent" android:layout_width="0dip"
+			android:layout_height="fill_parent" android:layout_width="0sp"
 			android:layout_weight="50" android:background="@drawable/button_text" android:gravity="center">
 			<ImageView android:padding="4dp" android:layout_gravity="center_horizontal"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
 			<TextView   style="@style/ButtonText" android:layout_gravity="center_horizontal"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:id="@+id/welsh_hills" android:text="@string/label_welsh_hills"
-				android:padding="4dp" android:layout_margin="2dip" />
+				android:padding="4dp" android:layout_margin="2sp" />
 
 		</LinearLayout>
 	</LinearLayout>
@@ -45,7 +45,7 @@
 
 		<LinearLayout android:orientation="vertical"
 			android:background="@drawable/button_text" android:id="@+id/menu_england"
-			android:layout_width="0dip" android:layout_weight="50"
+			android:layout_width="0sp" android:layout_weight="50"
 			android:layout_height="fill_parent" android:layout_marginRight="4dp" android:gravity="center">
 			<ImageView android:padding="4dp" android:layout_gravity="center_horizontal"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
 			<TextView   style="@style/ButtonText" android:layout_gravity="center_horizontal"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:id="@+id/english_hills" android:text="@string/label_english_hills"
-				android:padding="4dp" android:layout_margin="2dip" />
+				android:padding="4dp" android:layout_margin="2sp" />
 
 
 
@@ -61,7 +61,7 @@
 
 		<LinearLayout android:orientation="vertical"
 			android:background="@drawable/button_text" android:id="@+id/menu_gb"
-			android:layout_width="0dip" android:layout_weight="50"
+			android:layout_width="0sp" android:layout_weight="50"
 			android:layout_height="fill_parent" android:gravity="center">
 			<ImageView android:padding="4dp" android:layout_gravity="center_horizontal"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
 			<TextView   style="@style/ButtonText" android:layout_gravity="center_horizontal"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:id="@+id/other_GB_hills" android:text="@string/label_other_GB_hills"
-				android:padding="4dp" android:layout_margin="2dip" android:gravity="center_horizontal" />
+				android:padding="4dp" android:layout_margin="2sp" android:gravity="center_horizontal" />
 
 
 
@@ -90,7 +90,7 @@
 			<TextView   style="@style/ButtonText" android:layout_height="wrap_content"
 				android:layout_width="wrap_content" android:id="@+id/nearby_hills"
 				android:text="@string/label_nearby_hills" android:padding="4dp"
-				android:layout_margin="2dip" android:layout_gravity="center_vertical|center_horizontal"
+				android:layout_margin="2sp" android:layout_gravity="center_vertical|center_horizontal"
 				android:gravity="center_horizontal" />
 
 
@@ -106,7 +106,7 @@
 			<TextView   style="@style/ButtonText" android:layout_height="wrap_content"
 				android:layout_width="wrap_content" android:id="@+id/view_forecasts"
 				android:text="@string/viewforecasts" android:padding="4dp"
-				android:layout_margin="2dip" android:layout_gravity="center_horizontal"
+				android:layout_margin="2sp" android:layout_gravity="center_horizontal"
 				android:gravity="center_horizontal" />
 
 		</LinearLayout>
@@ -127,7 +127,7 @@
 			<TextView   style="@style/ButtonText" android:layout_height="wrap_content"
 				android:layout_width="wrap_content" android:id="@+id/export_bagging"
 				android:text="@string/backuprestore" android:padding="4dp"
-				android:layout_margin="2dip" android:layout_gravity="center_vertical|center_horizontal"
+				android:layout_margin="2sp" android:layout_gravity="center_vertical|center_horizontal"
 				android:gravity="center_horizontal" />
 
 		</LinearLayout>
@@ -143,7 +143,7 @@
 			<TextView   style="@style/ButtonText" android:layout_height="wrap_content"
 	android:layout_width="wrap_content" android:id="@+id/main_search"
 	android:text="@string/search" android:padding="4dp"
-	android:layout_margin="2dip" android:layout_gravity="center_vertical|center_horizontal"
+	android:layout_margin="2sp" android:layout_gravity="center_vertical|center_horizontal"
 	android:gravity="center_horizontal" />
 
 		</LinearLayout>

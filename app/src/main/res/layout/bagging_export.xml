@@ -9,13 +9,13 @@
 		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
 		android:gravity="center" android:id="@+id/folder_path" />
 	<Button android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_marginBottom="16dip"
+		android:layout_height="wrap_content" android:layout_marginBottom="16sp"
 		android:id="@+id/pick_folder" android:text="Backup Bagged Hills to SD card" />
 	<TextView   android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
 		android:gravity="center" android:id="@+id/file_path" />
 	<Button android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_marginBottom="16dip"
+		android:layout_height="wrap_content" android:layout_marginBottom="16sp"
 		android:id="@+id/pick_file" android:text="Restore Bagged Hills from File" />
 
 </LinearLayout>

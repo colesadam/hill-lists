@@ -5,7 +5,7 @@
 
 	<LinearLayout
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:paddingTop="10dip" android:paddingRight="10dip"
+		android:paddingTop="10sp" android:paddingRight="10sp"
 		android:gravity="right" android:textColor="@color/pale_blue">
 		<ToggleButton android:id="@+id/satellite_button"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"

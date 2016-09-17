@@ -11,40 +11,40 @@
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:layout_marginTop="10dip"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="10sp"
             android:stretchColumns="1">
 
-            <TableRow android:layout_margin="1dip">
+            <TableRow android:layout_margin="1sp">
 
                 <TextView
-                    android:layout_margin="1dip"
-                    android:padding="5dip"
+                    android:layout_margin="1sp"
+                    android:padding="5sp"
                     android:text="@string/label_name" />
 
                 <TextView
                     android:id="@+id/bdetail_name"
-                    android:layout_margin="1dip"
-                    android:width="200dip"
+                    android:layout_margin="1sp"
+                    android:width="200sp"
                     android:gravity="right"
-                    android:padding="5dip"
+                    android:padding="5sp"
                     android:textColor="@color/pale_blue" />
             </TableRow>
 
-            <TableRow android:layout_margin="1dip">
+            <TableRow android:layout_margin="1sp">
 
                 <TextView
-                    android:layout_margin="1dip"
-                    android:padding="5dip"
+                    android:layout_margin="1sp"
+                    android:padding="5sp"
                     android:text="Tel. No." />
 
                 <TextView
                     android:id="@+id/bdetail_telephone"
-                    android:layout_margin="1dip"
+                    android:layout_margin="1sp"
                     android:autoLink="phone"
                     android:gravity="right"
-                    android:padding="5dip"
+                    android:padding="5sp"
                     android:textColor="@color/pale_blue" />
             </TableRow>
 
@@ -53,39 +53,39 @@
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:layout_marginTop="10dip"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="10sp"
             android:stretchColumns="1">
 
-            <TableRow android:layout_margin="1dip">
+            <TableRow android:layout_margin="1sp">
 
                 <TextView
-                    android:layout_margin="1dip"
-                    android:padding="5dip"
+                    android:layout_margin="1sp"
+                    android:padding="5sp"
                     android:text="Address" />
 
                 <TextView
                     android:id="@+id/bdetail_address"
-                    android:layout_margin="1dip"
-                    android:width="200dip"
+                    android:layout_margin="1sp"
+                    android:width="200sp"
                     android:gravity="right"
-                    android:padding="5dip"
+                    android:padding="5sp"
                     android:textColor="@color/pale_blue" />
             </TableRow>
 
-            <TableRow android:layout_margin="1dip">
+            <TableRow android:layout_margin="1sp">
 
                 <TextView
-                    android:layout_margin="1dip"
-                    android:padding="5dip"
+                    android:layout_margin="1sp"
+                    android:padding="5sp"
                     android:text="Postcode" />
 
                 <TextView
                     android:id="@+id/bdetail_postcode"
-                    android:layout_margin="1dip"
+                    android:layout_margin="1sp"
                     android:gravity="right"
-                    android:padding="5dip"
+                    android:padding="5sp"
                     android:textColor="@color/pale_blue" />
             </TableRow>
 
@@ -100,10 +100,10 @@
                 android:id="@+id/scootLink"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dip"
+                android:layout_margin="1sp"
                 android:autoLink="all"
                 android:gravity="right"
-                android:padding="5dip"
+                android:padding="5sp"
                 android:textColor="@color/pale_blue" />
         </LinearLayout>
 

@@ -42,6 +42,7 @@ import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.database.HillsTables;
+import uk.colessoft.android.hilllist.utility.Util;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
@@ -61,11 +62,12 @@ public class DisplayHillListFragment extends Fragment implements
 			String vtext = cursor.getString(columnIndex);
 			switch (tv.getId()) {
 			case R.id.name_entry: {
-				tv.setTextColor(Color.WHITE);
+				tv.setTextColor(Util.getThemeAccentColor(getActivity(),R.attr.colorPrimaryDark));
 				if (cursor.getString(cursor
 						.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
 
 					tv.setTextColor(Color.GREEN);
+
 
 				}
 				tv.setText(vtext);
@@ -106,7 +108,7 @@ public class DisplayHillListFragment extends Fragment implements
                     } else {
                         ((TextView) ((ViewGroup) ((ViewGroup) xcv
                                 .getParent()).getChildAt(0)).getChildAt(0))
-                                .setTextColor(Color.WHITE);
+                                .setTextColor(Util.getThemeAccentColor(getActivity(),R.attr.colorPrimaryDark));
                         dbAdapter.markHillNotClimbed(id);
                     }
                     //dbAdapter.close();

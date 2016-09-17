@@ -3,6 +3,7 @@ package uk.colessoft.android.hilllist.utility;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.TypedValue;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,5 +18,11 @@ public class Util {
         properties.load(inputStream);
         return properties.getProperty(key);
 
+    }
+
+    public static int getThemeAccentColor (final Context context, int colour) {
+        final TypedValue value = new TypedValue ();
+        context.getTheme ().resolveAttribute (colour, value, true);
+        return value.data;
     }
 }

@@ -5,8 +5,8 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<TextView   android:id="@+id/mapBubble" android:textColor="@color/white"
-		android:textSize="12dip" android:layout_width="wrap_content"
+		android:textSize="12sp" android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:padding="5dip" ></TextView>
+		android:padding="5sp" ></TextView>
 
 </LinearLayout>

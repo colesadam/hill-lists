@@ -2,10 +2,10 @@ package uk.colessoft.android.hilllist.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -26,7 +26,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.model.Business;
 import uk.colessoft.android.hilllist.model.ScootXMLHandler;
 
-public class BusinessDetailActivity extends FragmentActivity implements
+public class BusinessDetailActivity extends AppCompatActivity implements
 		LoaderManager.LoaderCallbacks<Business> {
 
 	private ScootXMLHandler searchHandler;

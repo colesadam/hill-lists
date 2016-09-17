@@ -104,6 +104,9 @@
     <string name="bhdescription">The British Hills application relies on the fantastic efforts of Graham Jackson, Chris Crocker, John Barnard, George Gradwell, Simon Edwardes, Mark Jackson and Jim Bloomer. Please visit http://hills-database.co.uk to read about how the database is constructed and donate to keep the updates coming. The data is licensed under Creative Commons 3.0</string>
     <string name="droidfuattrib">Parts of this application are based on the Droid-Fu library, used under the Apache License, Version 2.0</string>
     <string name="donatetext">The British Hills application is free. However the creation and maintenance of the application amount to many hours of work. I intend to keep British Hills both free and without advertising. However, if you like the app and wish to contribute towards it\'s maintenance, please consider making a small donation by clicking on the PayPal button below.</string>
+    <string name="google_map">Google Map</string>
+    <string name="ordnance_survey_map">Ordnance Survey Map</string>
+    <string name="scoot_search">Scoot Search</string>
 
 
 </resources>

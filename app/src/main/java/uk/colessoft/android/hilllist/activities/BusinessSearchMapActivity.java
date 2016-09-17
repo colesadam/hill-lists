@@ -4,8 +4,8 @@ package uk.colessoft.android.hilllist.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ToggleButton;
 
@@ -40,7 +40,7 @@ import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.ScootXMLHandler;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
-public class BusinessSearchMapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener,LoaderManager.LoaderCallbacks<ArrayList>, OnMapReadyCallback {
+public class BusinessSearchMapActivity extends AppCompatActivity implements GoogleMap.OnInfoWindowClickListener,LoaderManager.LoaderCallbacks<ArrayList>, OnMapReadyCallback {
 
     //private MapView mapView;
     private double lat;

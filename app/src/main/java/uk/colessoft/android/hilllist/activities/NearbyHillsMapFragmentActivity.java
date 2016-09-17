@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 
@@ -14,7 +14,7 @@ import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsMapFragment;
 
 
-public class NearbyHillsMapFragmentActivity extends FragmentActivity implements NearbyHillsFragment.OnLocationFoundListener, NearbyHillsFragment.OnHillSelectedListener, NearbyHillsMapFragment.HillTappedListener {
+public class NearbyHillsMapFragmentActivity extends AppCompatActivity implements NearbyHillsFragment.OnLocationFoundListener, NearbyHillsFragment.OnHillSelectedListener, NearbyHillsMapFragment.HillTappedListener {
     boolean useMetricHeights;
     boolean useMetricDistances;
 

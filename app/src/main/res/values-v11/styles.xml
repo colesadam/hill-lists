@@ -3,9 +3,9 @@
 
 
 
-	<style name="MyTheme" parent="android:Theme.Holo">
+	<style name="MyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="android:windowNoTitle">false</item>
-		<item name="android:textViewStyle">@style/TextView</item>
+
 
 
 	</style>

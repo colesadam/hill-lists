@@ -10,8 +10,8 @@
 		android:layout_height="0dp"
 		android:layout_weight="1"
 	    android:orientation="vertical"
-		android:paddingLeft="8dip"
-		android:paddingRight="8dip"
+		android:paddingLeft="8sp"
+		android:paddingRight="8sp"
 	>
 	    <TextView  
 	  		android:id="@+id/current_folder"
@@ -21,7 +21,7 @@
 			android:textColor="#eee"
 			android:ellipsize="marquee"
 			android:singleLine="true"
-			android:padding="3dip"
+			android:padding="3sp"
 			android:background="#33fefefe"
 		/>
 	    <ListView

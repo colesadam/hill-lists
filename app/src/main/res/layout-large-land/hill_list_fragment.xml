@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:background="?attr/colorControlHighlight">
 <fragment
     
     android:name="uk.colessoft.android.hilllist.fragments.DisplayHillListFragment"
@@ -12,7 +14,10 @@
     android:layout_height="match_parent"
     android:id="@+id/hill_list_fragment"
     android:layout_weight="50"
-    android:paddingRight="10dip">
+    android:paddingRight="10sp"
+    android:layout_margin="7sp"
+    android:layout_marginRight="4sp"
+    tools:layout="@layout/list_hills">
 </fragment>
 <fragment
     
@@ -20,6 +25,9 @@
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:id="@+id/hill_detail_fragment"
-    android:layout_weight="50">
+    android:layout_weight="50"
+    android:layout_margin="7sp"
+    android:layout_marginLeft="4sp"
+    tools:layout="@layout/no_table_hill_detail">
 </fragment>
 </LinearLayout>

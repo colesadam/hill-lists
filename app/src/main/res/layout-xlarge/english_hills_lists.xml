@@ -10,19 +10,19 @@
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_hewitts" android:id="@+id/english_hewitts"
-			android:padding="5dip" android:layout_margin="10dip"
+			android:padding="5sp" android:layout_margin="10sp"
 			android:layout_height="match_parent" />
 
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_nuttalls" android:id="@+id/english_nuttalls"
-			android:padding="5dip" android:layout_margin="10dip"
+			android:padding="5sp" android:layout_margin="10sp"
 			android:layout_height="match_parent" />
 
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_marilyns" android:id="@+id/english_marilyns"
-			android:padding="5dip" android:layout_margin="10dip"
+			android:padding="5sp" android:layout_margin="10sp"
 			android:layout_height="match_parent" />
 
 	</LinearLayout>
@@ -34,14 +34,14 @@
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_wainwrights" android:id="@+id/wainwrights"
-			android:padding="5dip" android:layout_margin="10dip"
+			android:padding="5sp" android:layout_margin="10sp"
 			android:layout_height="match_parent" />
 
 
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_wainwright_fells" android:id="@+id/wainrights_outlying_fells"
-			android:padding="5dip" android:layout_margin="10dip"
+			android:padding="5sp" android:layout_margin="10sp"
 			android:layout_height="match_parent" />
 
 	</LinearLayout>
@@ -52,12 +52,12 @@
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_birketts" android:id="@+id/birketts"
-			android:padding="5dip" android:layout_margin="10dip"
+			android:padding="5sp" android:layout_margin="10sp"
 			android:layout_height="match_parent" />
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_allEnglish" android:id="@+id/allenglish"
-			android:padding="5dip" android:layout_margin="10dip"
+			android:padding="5sp" android:layout_margin="10sp"
 			android:layout_height="match_parent" />
 
 	</LinearLayout>

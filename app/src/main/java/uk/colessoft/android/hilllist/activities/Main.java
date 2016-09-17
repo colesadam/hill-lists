@@ -1,11 +1,11 @@
 package uk.colessoft.android.hilllist.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +18,7 @@ import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
-public class Main extends Activity {
+public class Main extends AppCompatActivity {
 
 	public static final int SCOTLAND = 1;
 	public static final int WALES = 2;
@@ -64,7 +64,7 @@ public class Main extends Activity {
 		setContentView(R.layout.menu);
 
 		DbHelper dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
-		setTitle(getTitle() + " - Choose an Option");
+		//setTitle(getTitle() + " - Choose an Option");
 		boolean successful;
 		
 

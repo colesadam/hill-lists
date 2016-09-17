@@ -5,7 +5,7 @@
 	android:layout_height="match_parent" >
 <LinearLayout
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_margin="10dip"
+	android:layout_margin="10sp"
 	android:layout_height="match_parent" android:layout_gravity="center|center_vertical">
 
 	<LinearLayout android:orientation="horizontal"
@@ -14,17 +14,17 @@
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_hewitts" android:id="@+id/hewitts"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+			android:padding="5sp" android:layout_margin="1sp" android:layout_height="match_parent"/>
 
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_nuttalls" android:id="@+id/nuttalls"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+			android:padding="5sp" android:layout_margin="1sp" android:layout_height="match_parent"/>
 
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_marilyns" android:id="@+id/marilyns"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+			android:padding="5sp" android:layout_margin="1sp" android:layout_height="match_parent"/>
 
 	</LinearLayout>
 
@@ -33,12 +33,12 @@
 		android:layout_weight="26">
 		<TextView   style="@style/ButtonText" android:layout_width="0dp" android:layout_weight="50"
 			android:text="@string/label_county_tops" android:id="@+id/county_tops"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent" android:background="@drawable/button_text_blue"/>
+			android:padding="5sp" android:layout_margin="1sp" android:layout_height="match_parent" android:background="@drawable/button_text_blue"/>
 
 
 		<TextView   style="@style/ButtonText" android:layout_width="0dp" android:layout_weight="50"
 			android:text="@string/label_deweys" android:id="@+id/deweys"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent" android:background="@drawable/button_text_blue"/>
+			android:padding="5sp" android:layout_margin="1sp" android:layout_height="match_parent" android:background="@drawable/button_text_blue"/>
 
 
 	</LinearLayout>
@@ -49,7 +49,7 @@
 		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
 			android:text="@string/label_iomni" android:id="@+id/iomni"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+			android:padding="5sp" android:layout_margin="1sp" android:layout_height="match_parent"/>
 
 	</LinearLayout>
 

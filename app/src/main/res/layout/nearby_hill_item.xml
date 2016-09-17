@@ -4,7 +4,7 @@
 	android:stretchColumns="1">
 	<TableRow >
 	
-		<TextView   android:id="@+id/hillname_entry" android:width="200dip" android:textColor="@color/white"
+		<TextView   android:id="@+id/hillname_entry" android:width="200sp" android:textColor="@color/white"
 
 			android:layout_gravity="left" />
 
@@ -14,7 +14,7 @@
 
 	</TableRow>
 	<TableRow >
-		<TextView   android:textSize="12dip" android:id="@+id/distance_entry" android:width="200dip"
+		<TextView   android:textSize="12sp" android:id="@+id/distance_entry" android:width="200sp"
 			 android:layout_gravity="left" 
 			android:layout_width="fill_parent" android:textColor="@color/mid_green" />
 			<TextView  ></TextView>

@@ -11,15 +11,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
 import android.widget.TextView;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
-public class SplashScreenActivity extends FragmentActivity {
+public class SplashScreenActivity extends AppCompatActivity {
 
 	private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0x00001;
 	private Thread splashThread;
