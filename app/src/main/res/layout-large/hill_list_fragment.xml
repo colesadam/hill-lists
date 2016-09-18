@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/colorControlHighlight">
 <fragment
     
     android:name="uk.colessoft.android.hilllist.fragments.DisplayHillListFragment"
     android:layout_height="0dp"
     android:layout_width="match_parent"
     android:id="@+id/hill_list_fragment"
-    android:layout_weight="50"
-    android:paddingRight="10sp">
+    android:layout_weight="40"
+    android:paddingRight="10sp"
+    tools:layout="@layout/list_hills"
+    android:layout_margin="7sp"
+    android:layout_marginBottom="3sp">
 </fragment>
 <fragment
     
@@ -20,7 +24,9 @@
     android:layout_height="0dp"
     android:layout_width="match_parent"
     android:id="@+id/hill_detail_fragment"
-    android:layout_weight="50"
-    tools:layout="@layout/no_table_hill_detail">
+    android:layout_weight="60"
+    tools:layout="@layout/no_table_hill_detail"
+    android:layout_margin="7sp"
+    android:layout_marginTop="3sp">
 </fragment>
 </LinearLayout>

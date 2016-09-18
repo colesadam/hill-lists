@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -42,7 +42,6 @@ import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.database.HillsTables;
-import uk.colessoft.android.hilllist.utility.Util;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
@@ -62,13 +61,10 @@ public class DisplayHillListFragment extends Fragment implements
 			String vtext = cursor.getString(columnIndex);
 			switch (tv.getId()) {
 			case R.id.name_entry: {
-				tv.setTextColor(Util.getThemeAccentColor(getActivity(),R.attr.colorPrimaryDark));
+				((RelativeLayout)tv.getParent().getParent()).setBackgroundColor(getResources().getColor(R.color.white));
 				if (cursor.getString(cursor
 						.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
-
-					tv.setTextColor(Color.GREEN);
-
-
+					((RelativeLayout)tv.getParent().getParent()).setBackgroundColor(getResources().getColor(R.color.paler_light_green));
 				}
 				tv.setText(vtext);
 				
@@ -101,14 +97,10 @@ public class DisplayHillListFragment extends Fragment implements
                    // dbAdapter.open();
                     CheckBox xcv = (CheckBox) v;
                     if (xcv.isChecked()) {
-                        ((TextView) ((ViewGroup) ((ViewGroup) xcv
-                                .getParent()).getChildAt(0)).getChildAt(0))
-                                .setTextColor(Color.GREEN);
+                        ((RelativeLayout)xcv.getParent()).setBackgroundColor(getResources().getColor(R.color.paler_light_green));
                         dbAdapter.markHillClimbed(id, new Date(), "");
                     } else {
-                        ((TextView) ((ViewGroup) ((ViewGroup) xcv
-                                .getParent()).getChildAt(0)).getChildAt(0))
-                                .setTextColor(Util.getThemeAccentColor(getActivity(),R.attr.colorPrimaryDark));
+						((RelativeLayout)xcv.getParent()).setBackgroundColor(getResources().getColor(R.color.white));
                         dbAdapter.markHillNotClimbed(id);
                     }
                     //dbAdapter.close();

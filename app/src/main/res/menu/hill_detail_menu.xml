@@ -5,7 +5,6 @@
         android:checkable="true"
         android:title="Climbed"
         app:actionViewClass="android.widget.CheckBox"
-        android:buttonTint="@color/white"
         app:showAsAction="always|withText" />
 
     <item

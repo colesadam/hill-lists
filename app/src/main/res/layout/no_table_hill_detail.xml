@@ -5,7 +5,7 @@
 
     <LinearLayout
 
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         android:background="@color/hill_detail_background"
@@ -13,38 +13,40 @@
         android:orientation="vertical">
 
         <ScrollView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="99">
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="5sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10sp"
                     android:layout_marginRight="2sp"
-                    android:stretchColumns="1">
+                    android:stretchColumns="1"
+                    android:elevation="24dp">
 
                     <TextView
                         android:id="@+id/detail_hill_name"
                         style="@style/hill_detail_title"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Hillname" />
 
                     <View
                         android:id="@+id/divider1"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@id/detail_hill_name"
                         android:layout_marginLeft="2sp"
-                        android:background="@drawable/black_white_gradient" />
+                        android:background="@color/primary_light"
+                        android:layout_marginBottom="5sp" />
 
                     <TextView
                         style="@style/hill_detail_label"
@@ -64,9 +66,9 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
+                    android:layout_marginLeft="10sp"
                     android:layout_marginRight="2sp"
                     android:layout_marginTop="5sp"
                     android:stretchColumns="2"
@@ -101,7 +103,7 @@
                         <EditText
                             android:id="@+id/detail_hill_notes"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_margin="1sp"
                             android:layout_weight="90"
                             android:padding="5sp"
@@ -110,7 +112,7 @@
                         <Button
                             android:id="@+id/save_notes"
                             android:layout_width="30dp"
-                            android:layout_height="fill_parent"
+                            android:layout_height="match_parent"
                             android:layout_weight="10"
                             android:gravity="center"
                             android:text="@string/save_selections" />
@@ -120,11 +122,10 @@
 
 
                 <RelativeLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
+                    android:layout_marginLeft="10sp"
                     android:layout_marginRight="2sp"
-                    android:layout_marginTop="5sp"
                     android:stretchColumns="2">
 
                     <TextView
@@ -198,19 +199,19 @@
                         android:padding="5sp" />
 
                     <View
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/detail_os25k"
                         android:layout_marginLeft="2sp"
-                        android:background="@drawable/black_white_gradient" />
+                        android:background="@color/primary_light" />
 
 
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
+                    android:layout_marginLeft="10sp"
                     android:layout_marginRight="2sp"
                     android:layout_marginTop="2sp">
 
@@ -226,17 +227,17 @@
                         android:padding="5sp" />
 
                     <View
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/detail_hill_summit_feature"
                         android:layout_marginLeft="2sp"
-                        android:background="@drawable/black_white_gradient" />
+                        android:background="@color/primary_light" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
+                    android:layout_marginLeft="10sp"
                     android:layout_marginRight="2sp"
                     android:layout_marginTop="2sp"
                     android:stretchColumns="2">
@@ -251,7 +252,7 @@
 
                     <LinearLayout
                         android:id="@+id/hill_classifications"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/label_classification"
                         android:layout_margin="2sp"
@@ -260,17 +261,17 @@
                     </LinearLayout>
 
                     <View
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/hill_classifications"
                         android:layout_marginLeft="2sp"
-                        android:background="@drawable/black_white_gradient" />
+                        android:background="@color/primary_light" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
+                    android:layout_marginLeft="10sp"
                     android:layout_marginRight="2sp"
                     android:layout_marginTop="2sp">
 

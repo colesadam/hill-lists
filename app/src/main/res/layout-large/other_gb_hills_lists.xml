@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
+	android:orientation="vertical" android:layout_width="match_parent"
 	android:layout_gravity="center_vertical" android:layout_height="match_parent" android:layout_margin="20dp" android:layout_marginLeft="50dp">
 
 	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_width="match_parent" android:layout_height="0dp"
 		android:layout_weight="26">
 		<TextView style="@style/ButtonText" android:background="@drawable/button_text"
 			android:layout_width="0dp" android:layout_weight="33"
@@ -28,7 +28,7 @@
 	</LinearLayout>
 
 	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_width="match_parent" android:layout_height="0dp"
 		android:layout_weight="26">
 		<TextView style="@style/ButtonText" android:layout_width="0dp" android:layout_weight="50"
 			android:text="@string/label_county_tops" android:id="@+id/county_tops"
@@ -45,7 +45,7 @@
 
 	</LinearLayout>
 	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_width="match_parent" android:layout_height="0dp"
 		android:layout_weight="20">
 
 		<TextView style="@style/ButtonText" android:background="@drawable/button_text"

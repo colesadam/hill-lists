@@ -3,10 +3,10 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 <LinearLayout
-	android:orientation="vertical" android:layout_width="fill_parent"
+	android:orientation="vertical" android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 	<LinearLayout android:visibility="gone" android:id="@+id/location_progress" 
-		android:orientation="horizontal" android:layout_width="fill_parent"
+		android:orientation="horizontal" android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:layout_gravity="center_vertical"
 		android:gravity="center_vertical" android:background="@color/v_dark_grey"
 		android:padding="5dp">

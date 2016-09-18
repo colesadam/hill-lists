@@ -1,5 +1,5 @@
 
-    <LinearLayout android:id="@+id/murdos_desc_l" android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/murdos_desc_l" android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_height="wrap_content">
         <TextView android:text="@string/label_murdos"  android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
         <TextView android:text="@string/murdos_desc"  android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
     </LinearLayout>

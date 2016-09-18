@@ -9,13 +9,13 @@
     </style>
 
     <style name="hill_detail_label" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ffffff</item>
     </style>
 
     <style name="hill_detail_title" parent="@android:style/TextAppearance.Large">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/primary_material_light</item>
         <item name="android:layout_marginBottom">5sp</item>
@@ -24,7 +24,7 @@
 
     <style name="hill_detail_text" parent="@android:style/TextAppearance.Small">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_margin">1sp</item>
         <item name="android:padding">5sp</item>
         <item name="android:textColor">@color/pale_blue</item>
@@ -32,15 +32,32 @@
     </style>
 
     <style name="hill_row_title" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="hill_row_height" parent="@android:style/TextAppearance.Small">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="cardview_title" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@color/cardview_label_background</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="menu_grid_imageview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">120sp</item>
+        <item name="android:layout_gravity">center_vertical|center</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitXY</item>
     </style>
 
 

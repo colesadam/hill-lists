@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:layout_width="match_parent" android:layout_height="wrap_content"
 	android:stretchColumns="1">
 	<TableRow >
 	
@@ -16,7 +16,7 @@
 	<TableRow >
 		<TextView   android:textSize="12sp" android:id="@+id/distance_entry" android:width="200sp"
 			 android:layout_gravity="left" 
-			android:layout_width="fill_parent" android:textColor="@color/mid_green" />
+			android:layout_width="match_parent" android:textColor="@color/mid_green" />
 			<TextView  ></TextView>
 	</TableRow>
 </TableLayout>

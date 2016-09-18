@@ -6,5 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/hill_list_fragment"
-    tools:layout="@layout/simple_hill_item">
+    tools:layout="@layout/simple_hill_item"
+    android:layout_margin="7sp">
 </fragment>

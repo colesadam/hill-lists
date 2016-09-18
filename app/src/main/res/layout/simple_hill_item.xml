@@ -3,7 +3,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5sp"
     android:paddingBottom="0sp">
@@ -15,7 +15,8 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/check_hill_climbed"
         android:orientation="vertical"
-        android:padding="2dp">
+        android:padding="2dp"
+        android:layout_marginLeft="7sp">
 
         <TextView
             android:id="@+id/name_entry"

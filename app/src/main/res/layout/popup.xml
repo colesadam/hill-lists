@@ -1,7 +1,7 @@
 
 
 <LinearLayout android:id="@+id/mapBubbleWrap"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:layout_width="match_parent" android:layout_height="match_parent"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<TextView   android:id="@+id/mapBubble" android:textColor="@color/white"

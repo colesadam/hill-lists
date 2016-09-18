@@ -37,7 +37,6 @@ import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.model.Hill;
-import uk.colessoft.android.hilllist.utility.Util;
 
 
 public class HillDetailFragment extends Fragment {
@@ -132,7 +131,7 @@ public class HillDetailFragment extends Fragment {
         // ((View) saveNotes.getParent().getParent()).setVisibility(View.GONE);
         hillnameView = (TextView) viewer
                 .findViewById(R.id.detail_hill_name);
-        hillnameView.setTextColor(Util.getThemeAccentColor(getActivity(), R.attr.colorPrimaryDark));
+        hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
     }
 
     private void bagFeature(final Hill hill) {
