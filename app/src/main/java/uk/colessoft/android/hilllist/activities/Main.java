@@ -101,7 +101,7 @@ public class Main extends AppCompatActivity {
 
 		viewforecasts.setOnClickListener(new View.OnClickListener() {
 
-			private final String forecastLink = "http://www.metoffice.gov.uk/public/weather2/mountain-forecast/#?tab=mountainHome";
+			private final String forecastLink = "http://www.metoffice.gov.uk/public/weather/mountain-forecast/#?tab=mountainHome";
 
 			public void onClick(View v) {
 				Intent intent = new Intent("android.intent.action.VIEW", Uri

@@ -54,8 +54,15 @@
 
     <style name="menu_grid_imageview">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">120sp</item>
-        <item name="android:layout_gravity">center_vertical|center</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_vertical|top</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+    <style name="menu_grid_imageview_land">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_vertical|top</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="android:scaleType">fitXY</item>
     </style>

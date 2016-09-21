@@ -1,87 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:grid="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="5sp"
-
-    grid:columnCount="2"
-    grid:orientation="horizontal"
-    grid:rowCount="4">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
         android:id="@+id/menu_scotland"
-
-        android:layout_margin="5sp"
-        grid:layout_column="0"
-        grid:layout_columnWeight="1"
-        grid:layout_gravity="center"
-        grid:layout_row="0"
-        grid:layout_rowWeight="1">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/scotland_image"
             style="@style/menu_grid_imageview"
+            android:layout_gravity="top|center_vertical"
             android:src="@drawable/scotland3d"></ImageView>
 
         <TextView
             android:id="@+id/scottish_hills"
             style="@style/cardview_title"
             android:text="@string/label_scottish_hills" />
-
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/menu_wales"
-        android:layout_margin="5sp"
-        grid:layout_columnWeight="1"
-        grid:layout_gravity="center"
-        grid:layout_row="0"
-        grid:layout_rowWeight="1"
-        grid:paddingStart="5sp">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/wales_image"
             style="@style/menu_grid_imageview"
+            android:layout_gravity="top|center_vertical"
             android:src="@drawable/wales3d"></ImageView>
 
         <TextView
             android:id="@+id/welsh_hills"
             style="@style/cardview_title"
             android:text="@string/label_welsh_hills" />
-
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/menu_england"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
 
-        android:layout_margin="5sp"
-        grid:layout_columnWeight="1"
-        grid:layout_gravity="center"
-        grid:layout_rowWeight="1">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/guideline4">
 
         <ImageView
+            android:id="@+id/england_image"
+
             style="@style/menu_grid_imageview"
+
             android:src="@drawable/england3d"></ImageView>
 
         <TextView
             android:id="@+id/english_hills"
             style="@style/cardview_title"
             android:text="@string/label_english_hills" />
-
-
     </android.support.v7.widget.CardView>
-
 
     <android.support.v7.widget.CardView
         android:id="@+id/menu_gb"
-        android:layout_margin="5sp"
-        android:background="@drawable/button_text"
-        grid:layout_columnWeight="1"
-        grid:layout_gravity="center"
-        grid:layout_rowWeight="1">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4">
 
         <ImageView
+            android:id="@+id/gb_image"
+
             style="@style/menu_grid_imageview"
             android:src="@drawable/uk3d"></ImageView>
 
@@ -89,6 +111,37 @@
             android:id="@+id/other_GB_hills"
             style="@style/cardview_title"
             android:text="@string/label_other_GB_hills" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/menu_forecasts"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_text"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_horizontal"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintLeft_toRightOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/centre_horizontal"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal">
+
+        <ImageView
+            android:id="@+id/forecasts_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/weather2"></ImageView>
+
+        <TextView
+            android:id="@+id/view_forecasts"
+            style="@style/cardview_title"
+            android:text="@string/viewforecasts" />
 
 
     </android.support.v7.widget.CardView>
@@ -96,15 +149,24 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/menu_nearby"
-        android:layout_margin="5sp"
+
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_text"
-        grid:layout_columnWeight="1"
-        grid:layout_gravity="center"
-        grid:layout_rowWeight="1">
+        app:layout_constraintBottom_toTopOf="@+id/bottom_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal">
 
         <ImageView
-            android:src="@drawable/signpost"
-            style="@style/menu_grid_imageview"></ImageView>
+            android:id="@+id/nearby_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/signpost"></ImageView>
 
         <TextView
             android:id="@+id/nearby_hills"
@@ -115,58 +177,58 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/menu_forecasts"
-        android:layout_margin="5sp"
-        android:background="@drawable/button_text"
-        grid:layout_columnWeight="1"
-        grid:layout_gravity="center"
-        grid:layout_rowWeight="1">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:src="@drawable/weather2"
-            style="@style/menu_grid_imageview"></ImageView>
-
-        <TextView
-            android:id="@+id/view_forecasts"
-            style="@style/cardview_title"
-            android:text="@string/viewforecasts" />
-
-    </android.support.v7.widget.CardView>
-
-
-    <android.support.v7.widget.CardView
         android:id="@+id/menu_backup"
-        android:layout_margin="5sp"
+
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_text"
-        grid:layout_columnWeight="1"
-        grid:layout_gravity="center"
-        grid:layout_rowWeight="1">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bottom_horizontal">
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/export_image"
             style="@style/menu_grid_imageview"
-            android:src="@drawable/backup"></ImageView>
+            android:src="@drawable/backup"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"></ImageView>
 
         <TextView
             android:id="@+id/export_bagging"
             style="@style/cardview_title"
-            android:text="@string/backuprestore" />
+            android:text="@string/backuprestore"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
 
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/menu_search"
 
-        android:layout_margin="5sp"
-        grid:layout_columnWeight="1"
-        grid:layout_gravity="center"
-        grid:layout_rowWeight="1">
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_horizontal">
 
         <ImageView
             android:id="@+id/main_search_button"
-            android:src="@drawable/magnifying_glass"
-            style="@style/menu_grid_imageview"></ImageView>
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/magnifying_glass"></ImageView>
 
         <TextView
             android:id="@+id/main_search"
@@ -175,6 +237,40 @@
 
     </android.support.v7.widget.CardView>
 
+    <android.support.constraint.Guideline
+        android:id="@+id/centre_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50"
+        tools:layout_editor_absoluteX="206dp"
+        tools:layout_editor_absoluteY="0dp" />
 
-</android.support.v7.widget.GridLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/centre_horizontal"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="306dp" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="153dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottom_horizontal"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="458dp" />
+
+</android.support.constraint.ConstraintLayout>
