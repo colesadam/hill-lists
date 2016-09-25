@@ -1,9 +1,28 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuShowDue"
+        android:checkable="true"
+        android:title="Climbed"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always|withText" />
 
+    <item
+        android:id="@+id/menu_show_map"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/google_map"
+        app:showAsAction="always" />
 
-	<item android:id="@+id/mark_hill_climbed" android:title="@string/mark_hill_climbed"
-		android:icon="@android:drawable/ic_menu_agenda" />
-	<item android:id="@+id/mark_hill_not_climbed" android:title="@string/mark_hill_not_climbed"
-		android:icon="@android:drawable/ic_menu_close_clear_cancel" />
+    <item
+        android:id="@+id/os_map"
+        android:icon="@drawable/ic_action_os"
+        android:title="@string/ordnance_survey_map"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/scoot"
+        android:icon="@drawable/ic_action_scoot"
+        android:title="@string/scoot_search"
+        app:showAsAction="always" />
+
 
 </menu>

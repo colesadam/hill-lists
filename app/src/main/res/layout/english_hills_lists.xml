@@ -1,68 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_gravity="center_vertical"
-	android:layout_height="match_parent" >
-<LinearLayout
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_margin="10dip"
-	android:layout_height="match_parent" android:layout_gravity="center|center_vertical">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="0dp"
-		android:layout_weight="26">
+    <android.support.v7.widget.CardView
+        android:id="@+id/english_hewitts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/one_quarter_horizontal">
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_hewitts" android:id="@+id/english_hewitts"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/hewitts_image"
+            style="@style/menu_grid_imageview"
+            android:layout_gravity="top|center_vertical"
+            android:scaleType="centerCrop"
+            android:src="@drawable/scafell_pike"></ImageView>
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_nuttalls" android:id="@+id/english_nuttalls"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+        <TextView
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_marilyns" android:id="@+id/english_marilyns"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+            style="@style/cardview_title"
+            android:text="Hewitts" />
+    </android.support.v7.widget.CardView>
 
-	</LinearLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/english_nuttalls"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
 
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="0dp"
-		android:layout_weight="26">
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/one_quarter_horizontal">
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_wainwrights" android:id="@+id/wainwrights"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/nuttalls_image"
+            style="@style/menu_grid_imageview"
+            android:layout_gravity="top|center_vertical"
+            android:src="@drawable/hedghope_hill"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="Nuttalls" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/english_marilyns"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_text"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4">
+
+        <ImageView
+            android:id="@+id/marilyns_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/high_stile"></ImageView>
 
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_wainwright_fells" android:id="@+id/wainrights_outlying_fells"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
+        <TextView
 
-	</LinearLayout>
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="0dp"
-		android:layout_weight="26">
-
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33" android:text="@string/label_birketts" android:id="@+id/birketts"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
-					<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33" android:text="@string/label_allEnglish" android:id="@+id/allenglish"
-			android:padding="5dip" android:layout_margin="1dip" android:layout_height="match_parent"/>
-
-	</LinearLayout>
+            style="@style/cardview_title"
+            android:text="@string/label_marilyns" />
 
 
+    </android.support.v7.widget.CardView>
 
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/wainwrights"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_text"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/guideline4">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/wainrights_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/blencathra"></ImageView>
 
-</LinearLayout>
+        <TextView
 
+            style="@style/cardview_title"
+            android:text="@string/label_wainwrights" />
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/wainrights_outlying_fells"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/three_quarter_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal">
+
+        <ImageView
+
+            android:id="@+id/wainright_outlying_fells_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/walna_scar"></ImageView>
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_wainwright_fells" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/birketts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/three_quarter_horizontal"
+        app:layout_constraintLeft_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal">
+
+        <ImageView
+
+            android:id="@+id/birketts_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/dollywaggon_pike"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_birketts" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/allenglish"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/three_quarter_horizontal"
+        app:layout_constraintLeft_toLeftOf="@+id/right_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal">
+
+        <ImageView
+
+            android:id="@+id/english_hills_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/england_map"></ImageView>
+
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_allEnglish" />
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/centre_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        tools:layout_editor_absoluteX="206dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33"
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/right_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/centre_horizontal"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.61"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="302dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="151dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/three_quarter_horizontal"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="452dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/one_quarter_horizontal"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="452dp" />
+
+</android.support.constraint.ConstraintLayout>

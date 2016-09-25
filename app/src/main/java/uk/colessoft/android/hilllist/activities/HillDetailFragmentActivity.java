@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -17,7 +17,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.model.Hill;
 
-public class HillDetailFragmentActivity extends FragmentActivity {
+public class HillDetailFragmentActivity extends AppCompatActivity {
 
 	private String osLink;
 	private static final int DATE_DIALOG_ID = 0;

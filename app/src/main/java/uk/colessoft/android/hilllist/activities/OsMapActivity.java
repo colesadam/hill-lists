@@ -1,13 +1,13 @@
 package uk.colessoft.android.hilllist.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.webkit.WebView;
 
 import uk.colessoft.android.hilllist.R;
 
-public class OsMapActivity extends Activity {
+public class OsMapActivity extends AppCompatActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

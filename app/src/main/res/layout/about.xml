@@ -1,61 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-
-	android:layout_height="match_parent" android:layout_margin="4dip"
-	android:gravity="center">
-	<ScrollView
-		android:layout_height="0dp" android:layout_width="fill_parent"
-		android:layout_weight="99">
-<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <TextView
-        android:id="@+id/abt1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/bhdescription"
-        android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/droidfuattrib"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="16dp" />
+    android:layout_margin="4sp"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <TextView android:id="@+id/textView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dp" android:text="@string/donatetext" android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="16dp"/>
-
-
-
-
-
-    
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical" >
+        android:layout_height="0dp"
+        android:layout_weight="99">
 
+        <LinearLayout
+            android:id="@+id/aboutLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/donateButton"
+            <TextView
+                android:id="@+id/abt1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="paypal"
-                android:src="@drawable/donate" />
-
-    </LinearLayout>
-
+                android:padding="5dp"
+                android:text="@string/bhdescription"
+                android:textSize="16sp" />
 
 
-</LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/donatetext"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="16sp" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <ImageButton
+                    android:id="@+id/donateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="paypal"
+                    android:src="@drawable/donate" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/attributions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+
+                    android:text="@string/hill_images_are_used_under_licence_as_listed_below"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

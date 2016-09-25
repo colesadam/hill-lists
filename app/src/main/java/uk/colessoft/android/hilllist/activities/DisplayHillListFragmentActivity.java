@@ -2,13 +2,13 @@ package uk.colessoft.android.hilllist.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 
-public class DisplayHillListFragmentActivity extends FragmentActivity implements
+public class DisplayHillListFragmentActivity extends AppCompatActivity implements
 		DisplayHillListFragment.OnHillSelectedListener {
 	/** Called when the activity is first created. */
 

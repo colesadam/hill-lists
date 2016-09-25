@@ -1,9 +1,10 @@
 package uk.colessoft.android.hilllist.activities;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,10 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
-import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillsTables;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class ScottishHillsActivity extends Activity {
+import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.utility.ResourceUtils;
+
+import static uk.colessoft.android.hilllist.R.id.map;
+
+public class ScottishHillsActivity extends AppCompatActivity {
 	private Dialog descDialog;
 	private static final int ID_DESCDIALOG = 1;
 
@@ -76,6 +85,7 @@ public class ScottishHillsActivity extends Activity {
 		case (R.id.menu_descriptions): {
 
 			showDialog(ID_DESCDIALOG);
+
 
 			return true;
 

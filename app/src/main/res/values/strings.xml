@@ -57,9 +57,9 @@
     <string name="label_iomni"><b>NI/Isle of Man</b></string>
     <string name="label_other_GB_hills"><b>Other GB Hills</b></string>
     <string name="label_nearby_hills"><b>Nearby Hills</b></string>
-    <string name="label_allEnglish"><b>All English Hills (may be slow)</b></string>
-    <string name="label_allScottish"><b>All Scottish Hills (may be slow)</b></string>
-    <string name="label_allWelsh"><b>All Welsh Hills (may be slow)</b></string>
+    <string name="label_allEnglish"><b>All English Hills</b></string>
+    <string name="label_allScottish"><b>All Scottish Hills</b></string>
+    <string name="label_allWelsh"><b>All Welsh Hills</b></string>
     <string name="label_colHeight"><b>Col Height(m)</b></string>
     <string name="label_colGridRef"><b>Col Grid Reference</b></string>
     <string name="label_drop"><b>Drop(m)</b></string>
@@ -86,7 +86,7 @@
     <string name="refresh_location">Updating Location</string>
     <string name="used_with_kind_permission_">Licensed under Creative Commons 3.0</string>
     <string name="biber_website">http://hills-database.co.uk/</string>
-    <string name="version_number">version 2.3.0</string>
+    <string name="version_number">version 2.4.0</string>
     <string name="hill_groups_label">Hill Groups</string>
     <string name="munros_desc">A Munro is a Scottish mountain over 3000 ft in height, distinct and separate from its surrounding mountains. Munro\'s Tables were originally compiled in 1891 by Sir Hugh Munro, but are now revised and maintained by the Scottish Mountaineering Club.</string>
     <string name="murdos_desc">A Murdo is a Scottish mountain over 3000 ft in height, with a drop of at least 30 metres (98 feet) on all sides.  All Murdos except Beinn a\'Chroin (W top) are also Munros or Munro Tops.  All Munros are Murdos, but not all Munro Tops are Murdos.</string>
@@ -104,6 +104,10 @@
     <string name="bhdescription">The British Hills application relies on the fantastic efforts of Graham Jackson, Chris Crocker, John Barnard, George Gradwell, Simon Edwardes, Mark Jackson and Jim Bloomer. Please visit http://hills-database.co.uk to read about how the database is constructed and donate to keep the updates coming. The data is licensed under Creative Commons 3.0</string>
     <string name="droidfuattrib">Parts of this application are based on the Droid-Fu library, used under the Apache License, Version 2.0</string>
     <string name="donatetext">The British Hills application is free. However the creation and maintenance of the application amount to many hours of work. I intend to keep British Hills both free and without advertising. However, if you like the app and wish to contribute towards it\'s maintenance, please consider making a small donation by clicking on the PayPal button below.</string>
+    <string name="google_map">Google Map</string>
+    <string name="ordnance_survey_map">Ordnance Survey Map</string>
+    <string name="scoot_search">Scoot Search</string>
+    <string name="hill_images_are_used_under_licence_as_listed_below">Hill images are used under licence as listed below</string>
 
 
 </resources>

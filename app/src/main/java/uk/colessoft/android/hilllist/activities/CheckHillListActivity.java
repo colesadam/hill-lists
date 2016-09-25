@@ -1,12 +1,12 @@
 package uk.colessoft.android.hilllist.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -30,7 +30,7 @@ import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.database.HillsTables;
 
-public class CheckHillListActivity extends Activity {
+public class CheckHillListActivity extends AppCompatActivity {
     /**
      * Called when the activity is first created.
      */

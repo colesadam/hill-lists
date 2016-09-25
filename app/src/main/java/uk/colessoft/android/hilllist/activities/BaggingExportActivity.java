@@ -1,10 +1,10 @@
 package uk.colessoft.android.hilllist.activities;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -19,7 +19,7 @@ import uk.colessoft.android.hilllist.activities.dialogs.FolderPicker;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
-public class BaggingExportActivity extends Activity implements OnClickListener,
+public class BaggingExportActivity extends AppCompatActivity implements OnClickListener,
 		DialogInterface.OnClickListener {
 
 	private FolderPicker mFolderDialog;

@@ -1,9 +1,9 @@
 package uk.colessoft.android.hilllist.activities;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,9 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.HillsTables;
 
-public class EnglishHillsActivity extends Activity {
+public class EnglishHillsActivity extends AppCompatActivity {
 
 	private Dialog descDialog;
 	private static final int ID_DESCDIALOG = 1;
@@ -96,7 +95,7 @@ public class EnglishHillsActivity extends Activity {
 		View wainwrightFells=findViewById(R.id.wainrights_outlying_fells);
 		View birketts=findViewById(R.id.birketts);
 		
-		TextView allEnglishHills=(TextView)findViewById(R.id.allenglish);
+		View allEnglishHills=findViewById(R.id.allenglish);
 		
 		allEnglishHills.setOnClickListener(v -> showHills(null, "All English Hills"));
 
