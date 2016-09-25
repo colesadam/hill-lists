@@ -81,10 +81,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
-
-
         final ToggleButton mapButton = (ToggleButton) getActivity().findViewById(R.id.satellite_button);
         mapButton.setChecked(true);
         mapButton.setOnClickListener(v -> {

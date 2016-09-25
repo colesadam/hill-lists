@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
-	<item app:showAsAction="ifRoom" android:id="@+id/menu_descriptions" android:icon="@drawable/ic_menu_descriptions"
+	<item app:showAsAction="ifRoom" android:id="@+id/menu_descriptions" android:icon="@drawable/ic_action_ic_help_circle_outline_white_48dp"
 		android:title="@string/hill_groups_label" />
 
 

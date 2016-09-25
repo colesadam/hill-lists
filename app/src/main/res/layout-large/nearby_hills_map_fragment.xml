@@ -3,14 +3,23 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent" android:layout_height="match_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	android:background="?attr/colorControlHighlight">
 	<fragment android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsFragment"
 		android:layout_height="0dp" android:layout_width="match_parent"
-		android:id="@+id/nearby_hills_fragment" android:layout_weight="50">
+		android:id="@+id/nearby_hills_fragment" android:layout_weight="50"
+		android:layout_marginBottom="4dp"
+		android:layout_marginLeft="8dp"
+		android:layout_marginRight="8dp"
+		android:layout_marginTop="8dp">
 	</fragment>
 	<RelativeLayout
 		android:id="@+id/many_map_rel" android:layout_weight="50"
-		android:layout_height="150dp" android:layout_width="match_parent">
+		android:layout_height="150dp" android:layout_width="match_parent"
+		android:layout_marginBottom="8dp"
+		android:layout_marginLeft="8dp"
+		android:layout_marginRight="8dp"
+		android:layout_marginTop="4dp">
 
 		<fragment android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsMapFragment"
 			android:layout_width="match_parent"

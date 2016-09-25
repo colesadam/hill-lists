@@ -2,9 +2,7 @@
 <resources>
     <color name="pale_blue">#d4e9f4</color>
     <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
     <color name="med_grey">#cccccc</color>
-    <color name="dark_blue">#7485B3</color>
     <color name="mid_green">#488A59</color>
     <color name="splash_green">#4c7657</color>
     <color name="light_green">#8cff6f</color>

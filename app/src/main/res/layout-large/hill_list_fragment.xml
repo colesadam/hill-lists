@@ -15,8 +15,10 @@
     android:layout_weight="40"
     android:paddingRight="10sp"
     tools:layout="@layout/list_hills"
-    android:layout_margin="7sp"
-    android:layout_marginBottom="3sp">
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp">
 </fragment>
 <fragment
     
@@ -26,7 +28,9 @@
     android:id="@+id/hill_detail_fragment"
     android:layout_weight="60"
     tools:layout="@layout/no_table_hill_detail"
-    android:layout_margin="7sp"
-    android:layout_marginTop="3sp">
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
 </fragment>
 </LinearLayout>

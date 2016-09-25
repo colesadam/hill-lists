@@ -2,10 +2,15 @@
 <LinearLayout android:layout_width="match_parent"
 	xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/linearLayout2" android:layout_height="match_parent" android:layout_gravity="center" android:gravity="center">
 
+	<android.support.v7.widget.CardView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@color/splash_green">
 	<LinearLayout android:id="@+id/LinearLayout01"
 		android:orientation="vertical" android:gravity="center"
-		android:layout_gravity="center" android:background="@color/splash_green"
+		android:layout_gravity="center"
 		android:layout_margin="20dp" android:padding="10dp"
+		android:background="@color/splash_green"
 		android:layout_width="wrap_content" android:layout_height="wrap_content">
 		<TextView android:id="@+id/TextView01" android:layout_width="match_parent"
 			android:layout_height="wrap_content" android:text="British Hills"
@@ -57,4 +62,5 @@
 
 
 	</LinearLayout>
+	</android.support.v7.widget.CardView>
 </LinearLayout>

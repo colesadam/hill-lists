@@ -4,13 +4,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent" android:layout_height="match_parent"
 	android:orientation="horizontal"
-	android:baselineAligned="false">
+	android:baselineAligned="false"
+	android:background="?attr/colorControlHighlight">
 	<fragment android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsFragment"
 		android:layout_width="0dp" android:layout_height="match_parent"
-		android:id="@+id/nearby_hills_fragment" android:layout_weight="50">
+		android:id="@+id/nearby_hills_fragment" android:layout_weight="50"
+		android:layout_marginBottom="8dp"
+		android:layout_marginLeft="8dp"
+		android:layout_marginRight="4dp"
+		android:layout_marginTop="8dp">
 	</fragment>
 	<fragment android:name="uk.colessoft.android.hilllist.fragments.HillDetailFragment"
 		android:layout_width="0dp" android:layout_height="match_parent"
-		android:id="@+id/hill_detail_fragment" android:layout_weight="50">
+		android:id="@+id/hill_detail_fragment" android:layout_weight="50"
+		android:layout_marginBottom="8dp"
+		android:layout_marginLeft="4dp"
+		android:layout_marginRight="8dp"
+		android:layout_marginTop="8dp">
 	</fragment>
 </LinearLayout>
