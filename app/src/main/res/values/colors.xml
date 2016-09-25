@@ -6,6 +6,7 @@
     <color name="med_grey">#cccccc</color>
     <color name="dark_blue">#7485B3</color>
     <color name="mid_green">#488A59</color>
+    <color name="splash_green">#4c7657</color>
     <color name="light_green">#8cff6f</color>
     <color name="paler_light_green">#aaf177</color>
     <color name="h_blue">#0077ff</color>
@@ -17,5 +18,5 @@
     <color name="accent_material_light">#6a9a34</color>
     <color name="hill_detail_background">#767676</color>
     <color name="hill_detail_actions">#838282</color>
-    <color name="cardview_label_background">#90878787</color>
+    <color name="cardview_label_background">#875e5e5e</color>
 </resources>

@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_scotland"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -32,7 +30,7 @@
             android:text="@string/label_scottish_hills" />
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_wales"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -58,7 +56,7 @@
             android:text="@string/label_welsh_hills" />
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_england"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -86,7 +84,7 @@
             android:text="@string/label_english_hills" />
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_gb"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -113,7 +111,7 @@
             android:text="@string/label_other_GB_hills" />
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_forecasts"
 
         android:layout_width="0dp"
@@ -121,9 +119,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="16dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_text"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_horizontal"
         app:layout_constraintBottom_toTopOf="@+id/bottom_horizontal"
         app:layout_constraintHorizontal_bias="0.47"
@@ -147,7 +143,7 @@
     </android.support.v7.widget.CardView>
 
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_nearby"
 
 
@@ -157,7 +153,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_text"
         app:layout_constraintBottom_toTopOf="@+id/bottom_horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
@@ -176,7 +171,7 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_backup"
 
 
@@ -188,7 +183,6 @@
         android:layout_marginRight="16dp"
 
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
         app:layout_constraintRight_toRightOf="parent"
@@ -210,7 +204,7 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_search"
 
 

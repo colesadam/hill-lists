@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/munros"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:layout_gravity="top|center_vertical"
+            android:src="@drawable/stob_ban"
+            android:scaleType="centerCrop"
+            android:id="@+id/munros_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_munros" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/murdos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="@+id/left_vertical_line"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:layout_gravity="top|center_vertical"
+            android:src="@drawable/ben_alder"
+            android:id="@+id/murdos_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_murdos" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:id="@+id/scottish_marilyns"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+
+            android:src="@drawable/meall_garbh"
+            android:id="@+id/marilyns_image"></ImageView>
+
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_marilyns" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/corbetts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintLeft_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/beinn_dearg_mor"
+            android:id="@+id/corbetts_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_corbetts" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/grahams"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/button_text"
+        app:layout_constraintBottom_toTopOf="@+id/sixty_horizontal"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintLeft_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line"
+        android:layout_marginEnd="8dp">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/beinn_shiantaidh"
+            android:id="@+id/grahams_image"></ImageView>
+
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_grahams" />
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/donalds"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/button_text"
+        app:layout_constraintBottom_toTopOf="@+id/sixty_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/broad_law"
+            android:id="@+id/donalds_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_donalds" />
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/donald_tops"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+
+        android:layout_marginLeft="8dp"
+
+        android:layout_marginTop="4dp"
+        android:background="@drawable/button_text"
+        app:layout_constraintLeft_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/sixty_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/nickies_knowe"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:id="@+id/donald_tops_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_donald_tops" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/munro_tops"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintRight_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sixty_horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/cairn_lochan"
+            android:id="@+id/munro_tops_image"></ImageView>
+
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_munro_tops" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/graham_tops"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/right_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/third_horizontal"
+        android:layout_marginBottom="4dp">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/achioch"
+            android:id="@+id/graham_tops_image"></ImageView>
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_graham_tops" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/corbett_tops"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@+id/right_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/third_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/twothird_horizontal"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/knights_peak"
+            android:id="@+id/corbett_tops_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_corbett_tops" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/allscottish"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/right_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@+id/twothird_horizontal"
+        android:layout_marginEnd="16dp">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/highland_relief"
+            android:id="@+id/scottish_hills_image"></ImageView>
+
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_allScottish" />
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/centre_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4"
+        tools:layout_editor_absoluteX="224dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/right_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75"
+        tools:layout_editor_absoluteX="420dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/centre_horizontal"
+        android:layout_width="560dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="144dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="72dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/sixty_horizontal"
+        android:layout_width="560dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="215dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="560dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.33"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="95dp"
+        android:id="@+id/third_horizontal" />
+    <android.support.constraint.Guideline
+        android:layout_width="560dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="189dp"
+        android:id="@+id/twothird_horizontal" />
+
+</android.support.constraint.ConstraintLayout>

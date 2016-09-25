@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="wrap_content"
-	android:stretchColumns="1">
-	<TableRow >
-	
-		<TextView   android:id="@+id/hillname_entry" android:width="200sp" android:textColor="@color/white"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-			android:layout_gravity="left" />
 
-		<TextView   android:id="@+id/height_entry" android:textColor="@color/white"
+    <TextView
+        android:id="@+id/hillname_entry"
+        style="@style/hill_row_title"
+        android:layout_width="0dp"
+        android:text="Cairn Toul"
 
-			android:layout_gravity="right" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"></TextView>
 
-	</TableRow>
-	<TableRow >
-		<TextView   android:textSize="12sp" android:id="@+id/distance_entry" android:width="200sp"
-			 android:layout_gravity="left" 
-			android:layout_width="match_parent" android:textColor="@color/mid_green" />
-			<TextView  ></TextView>
-	</TableRow>
-</TableLayout>
+    <TextView
+        android:id="@+id/height_entry"
+        android:layout_height="0dp"
+        android:text="1504ft"
+        android:textSize="14sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="8dp"></TextView>
+
+
+    <TextView
+        android:id="@+id/distance_entry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="2.1m"
+        android:textColor="@color/mid_green"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hillname_entry"
+        android:layout_marginLeft="8dp"></TextView>
+
+
+</android.support.constraint.ConstraintLayout>

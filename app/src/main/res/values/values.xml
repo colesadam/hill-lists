@@ -2,4 +2,5 @@
 <resources>
     <color name="primary_material_dark">#90a973</color>
     <color name="primary_dark_material_dark">#444d3a</color>
+    <dimen name="about_padding">5dp</dimen>
 </resources>

@@ -95,7 +95,7 @@ public class EnglishHillsActivity extends AppCompatActivity {
 		View wainwrightFells=findViewById(R.id.wainrights_outlying_fells);
 		View birketts=findViewById(R.id.birketts);
 		
-		TextView allEnglishHills=(TextView)findViewById(R.id.allenglish);
+		View allEnglishHills=findViewById(R.id.allenglish);
 		
 		allEnglishHills.setOnClickListener(v -> showHills(null, "All English Hills"));
 

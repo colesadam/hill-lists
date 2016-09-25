@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/nearby_hills_fragment">
+    android:id="@+id/nearby_hills_fragment"
+    tools:layout="@layout/nearby_hill_item">
 </fragment>

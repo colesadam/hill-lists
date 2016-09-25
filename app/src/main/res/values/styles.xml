@@ -3,7 +3,8 @@
 
 
     <style name="MyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowNoTitle">true</item>
+
 
 
     </style>
@@ -57,7 +58,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">center_vertical|top</item>
         <item name="android:adjustViewBounds">true</item>
-        <item name="android:scaleType">fitXY</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
     <style name="menu_grid_imageview_land">
         <item name="android:layout_width">match_parent</item>

@@ -1,113 +1,399 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="match_parent"
-	android:layout_gravity="center" 
-	android:layout_height="match_parent" android:gravity="center">
-<LinearLayout
-	android:orientation="vertical" android:layout_width="match_parent"
-	android:layout_height="match_parent" android:layout_margin="4sp" android:gravity="center" android:layout_gravity="center|center_vertical">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/munros"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:layout_gravity="top|center_vertical"
+            android:src="@drawable/stob_ban"
+            android:scaleType="centerCrop"
+            android:id="@+id/munros_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_munros" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/murdos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:layout_gravity="top|center_vertical"
+            android:src="@drawable/ben_alder"
+            android:id="@+id/murdos_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_murdos" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:id="@+id/scottish_marilyns"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+
+            android:src="@drawable/meall_garbh"
+            android:id="@+id/marilyns_image"></ImageView>
 
 
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="23">
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_marilyns" />
+    </android.support.v7.widget.CardView>
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_munros" android:id="@+id/munros"
-			android:padding="5sp" android:layout_margin="1sp"
-			android:layout_height="match_parent" />
+    <android.support.v7.widget.CardView
+        android:id="@+id/corbetts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_munro_tops" android:id="@+id/munro_tops"
-			android:padding="5sp" android:layout_margin="1sp"
-			android:layout_height="match_parent" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_murdos" android:id="@+id/murdos"
-			android:padding="5sp" android:layout_margin="1sp"
-			android:layout_height="match_parent" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
 
-	</LinearLayout>
+        <ImageView
 
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/beinn_dearg_mor"
+            android:id="@+id/corbetts_image"></ImageView>
 
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="match_parent" android:layout_height="0dp"
-		android:layout_weight="20">
+        <TextView
 
-		<TextView   style="@style/ButtonText" android:layout_width="0dp"
-			android:layout_weight="50" android:text="@string/label_corbetts"
-			android:id="@+id/corbetts" android:padding="5sp"
-			android:layout_margin="1sp" android:layout_height="match_parent"
-			android:background="@drawable/button_text_blue" />
+            style="@style/cardview_title"
+            android:text="@string/label_corbetts" />
+    </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/grahams"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_text"
+        app:layout_constraintBottom_toBottomOf="@+id/sixty_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/sixty_horizontal"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintLeft_toRightOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/centre_horizontal"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
 
-
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
-			android:layout_width="0dp" android:layout_weight="50"
-			android:text="@string/label_corbett_tops" android:id="@+id/corbett_tops"
-			android:padding="5sp" android:layout_height="match_parent"
-			android:layout_margin="1sp" />
-
-	</LinearLayout>
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="match_parent" android:layout_height="0dp"
-		android:layout_weight="20">
-
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_donalds" android:id="@+id/donalds"
-			android:layout_margin="1sp" android:padding="5sp"
-			android:layout_height="match_parent" />
-
-
-
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:layout_margin="1sp" android:text="@string/label_donald_tops"
-			android:id="@+id/donald_tops" android:padding="5sp"
-			android:layout_height="match_parent" />
-
-	</LinearLayout>
-
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="match_parent" android:layout_weight="20"
-		android:layout_height="0dp">
-
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_grahams" android:id="@+id/grahams"
-			android:layout_margin="1sp" android:padding="5sp"
-			android:layout_height="match_parent" />
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/beinn_shiantaidh"
+            android:id="@+id/grahams_image"></ImageView>
 
 
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text_blue"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:layout_margin="1sp" android:text="@string/label_graham_tops"
-			android:id="@+id/graham_tops" android:padding="5sp"
-			android:layout_height="match_parent" />
+        <TextView
 
-	</LinearLayout>
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="match_parent" android:layout_height="0dp"
-		android:layout_weight="20">
-
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:text="@string/label_marilyns" android:id="@+id/scottish_marilyns"
-			android:layout_margin="1sp" android:padding="5sp"
-			android:layout_height="match_parent" />
-
-		<TextView   style="@style/ButtonText" android:background="@drawable/button_text"
-			android:layout_width="0dp" android:layout_weight="33"
-			android:layout_margin="1sp" android:text="@string/label_allScottish"
-			android:id="@+id/allscottish" android:padding="5sp"
-			android:layout_height="match_parent" android:textSize="17dp"/>
-
-	</LinearLayout>
+            style="@style/cardview_title"
+            android:text="@string/label_grahams" />
 
 
-</LinearLayout>
+    </android.support.v7.widget.CardView>
 
-</LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/donalds"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_text"
+        app:layout_constraintBottom_toTopOf="@+id/sixty_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/broad_law"
+            android:id="@+id/donalds_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_donalds" />
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/donald_tops"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_text"
+        app:layout_constraintBottom_toBottomOf="@+id/eighty_horizontal"
+        app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sixty_horizontal">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/nickies_knowe"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:id="@+id/donald_tops_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_donald_tops" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/munro_tops"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/eighty_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/centre_vertical_line"
+        app:layout_constraintTop_toBottomOf="@+id/sixty_horizontal">
+
+        <ImageView
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/cairn_lochan"
+            android:id="@+id/munro_tops_image"></ImageView>
+
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_munro_tops" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/graham_tops"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintTop_toBottomOf="@+id/eighty_horizontal"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/achioch"
+            android:id="@+id/graham_tops_image"></ImageView>
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_graham_tops" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/corbett_tops"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/left_vertical_line"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line"
+        app:layout_constraintTop_toBottomOf="@+id/eighty_horizontal"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/knights_peak"
+            android:id="@+id/corbett_tops_image"></ImageView>
+
+        <TextView
+
+            style="@style/cardview_title"
+            android:text="@string/label_corbett_tops" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/allscottish"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/right_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eighty_horizontal">
+
+        <ImageView
+
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/highland_relief"
+            android:id="@+id/scottish_hills_image"></ImageView>
+
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_allScottish" />
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/centre_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50"
+        tools:layout_editor_absoluteX="206dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33"
+        tools:layout_editor_absoluteX="206dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/right_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66"
+        tools:layout_editor_absoluteX="206dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/centre_horizontal"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.40"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="306dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="153dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/sixty_horizontal"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="458dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/eighty_horizontal"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="458dp" />
+
+</android.support.constraint.ConstraintLayout>
