@@ -24,5 +24,11 @@
         android:title="@string/scoot_search"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/images"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/images_button"
+        app:showAsAction="always" />
+
 
 </menu>

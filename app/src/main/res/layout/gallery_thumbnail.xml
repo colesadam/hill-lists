@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/photo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Photo Title"
+        style="@style/image_title"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        />
+
+    <uk.colessoft.android.hilllist.views.SquareLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+>
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/achioch"
+            android:adjustViewBounds="true" />
+
+    </uk.colessoft.android.hilllist.views.SquareLayout>
+        <TextView
+            android:id="@+id/photo_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Photo Author"
+            style="@style/image_title"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
