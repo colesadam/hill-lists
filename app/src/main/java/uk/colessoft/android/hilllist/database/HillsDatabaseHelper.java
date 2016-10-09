@@ -157,7 +157,8 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
                         + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
-                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", "*"},
+                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
+        KEY_NOTES, KEY_DATECLIMBED},
                 null, null, null, null, null);
     }
 
@@ -219,7 +220,8 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
 
         SQLiteDatabase db = getReadableDatabase();
 
-        return queryBuilder.query(db, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", "*"}, where,
+        return queryBuilder.query(db, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", HILLS_TABLE + "." + KEY_ID, KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
+                        KEY_NOTES, KEY_DATECLIMBED}, where,
                 new String[]{}, null, null, orderBy);
     }
 
@@ -236,21 +238,18 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public Hill getHill(long _rowIndex) throws SQLException {
+    public Hill getHill(long _rowIndex){
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(hills + " left join "
                 + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
-        // Adding the ID to the original query
+
         queryBuilder.appendWhere(hillsKeyId + "=" + _rowIndex);
 
         SQLiteDatabase db = getWritableDatabase();
-        String selection = null;
-        String[] selectionArgs = null;
-        String sortOrder = null;
 
-        Cursor cursor = queryBuilder.query(db, null, selection,
-                selectionArgs, null, null, sortOrder);
+        Cursor cursor = queryBuilder.query(db, null, null,
+                null, null, null, null);
 
         if (cursor.moveToFirst()) {
             Hill hill = getHill(cursor);
