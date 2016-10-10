@@ -29,7 +29,7 @@
                     android:width="200sp"
                     android:gravity="right"
                     android:padding="5sp"
-                    android:textColor="@color/pale_blue" />
+                    android:textColor="@color/splash_green" />
             </TableRow>
 
             <TableRow android:layout_margin="1sp">
@@ -45,7 +45,7 @@
                     android:autoLink="phone"
                     android:gravity="right"
                     android:padding="5sp"
-                    android:textColor="@color/pale_blue" />
+                    android:textColor="?attr/colorAccent" />
             </TableRow>
 
         </TableLayout>
@@ -71,7 +71,7 @@
                     android:width="200sp"
                     android:gravity="right"
                     android:padding="5sp"
-                    android:textColor="@color/pale_blue" />
+                    android:textColor="?attr/colorAccent" />
             </TableRow>
 
             <TableRow android:layout_margin="1sp">
@@ -86,7 +86,7 @@
                     android:layout_margin="1sp"
                     android:gravity="right"
                     android:padding="5sp"
-                    android:textColor="@color/pale_blue" />
+                    android:textColor="?attr/colorAccent" />
             </TableRow>
 
         </TableLayout>
@@ -104,7 +104,7 @@
                 android:autoLink="all"
                 android:gravity="right"
                 android:padding="5sp"
-                android:textColor="@color/pale_blue" />
+                android:textColor="?attr/colorAccent" />
         </LinearLayout>
 
 

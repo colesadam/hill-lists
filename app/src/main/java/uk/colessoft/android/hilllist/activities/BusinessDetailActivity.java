@@ -6,6 +6,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -74,7 +75,8 @@ public class BusinessDetailActivity extends AppCompatActivity implements
 		name.setText(business.getCompanyname());
 		telephone.setText(business.getTelephone());
 		postcode.setText(business.getPostCode());
-		scootLink.setText(business.getScootLink());
+		scootLink.setText("http://www.scoot.co.uk"+business.getScootLink());
+		Linkify.addLinks(scootLink,Linkify.WEB_URLS);
 		String tempString = "";
 		for (String al : business.getAddress()) {
 			if (!"".equals(al))

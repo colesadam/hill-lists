@@ -260,6 +260,7 @@ public class HillDetailFragment extends Fragment {
                     }
                     case R.id.scoot: {
                         scootSearch();
+                        return true;
                     }
                     case R.id.images: {
                         Intent intent = new Intent(getActivity(), HillImagesActivity.class);
