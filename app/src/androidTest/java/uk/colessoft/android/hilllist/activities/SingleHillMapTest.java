@@ -44,51 +44,7 @@ public class SingleHillMapTest extends HillTest {
 
     };
 
-    @Test
-    @FlakyTest(tolerance=3)
-    public void singleHillMapTest() {
-        ViewInteraction linearLayout = onView(
-                allOf(withId(R.id.menu_scotland),
-                        withParent(withId(R.id.menu_1)),
-                        isDisplayed()));
-        linearLayout.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.munros), withText("Munros"), isDisplayed()));
-        textView.perform(click());
-
-        ViewInteraction relativeLayout = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.myListView),
-                                withParent(withId(R.id.hill_list_fragment))),
-                        0),
-                        isDisplayed()));
-        relativeLayout.perform(click());
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.mapButton), withText("Google Map"),
-                        withParent(allOf(withId(R.id.linearLayout2),
-                                withParent(withId(R.id.relLayout1)))),
-                        isDisplayed()));
-        textView2.perform(click());
-
-        ViewInteraction relativeLayout2 = onView(
-                allOf(withId(R.id.many_map_rel),
-                        isDisplayed()));
-        relativeLayout2.check(matches(isDisplayed()));
-
-        ViewInteraction toggleButton = onView(
-                allOf(withId(R.id.satellite_button),
-                        childAtPosition(
-                                allOf(withId(R.id.many_map_rel),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        toggleButton.check(matches(isDisplayed()));
-
-    }
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
