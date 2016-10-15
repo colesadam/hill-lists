@@ -16,7 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.components.DatabaseComponent;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -26,11 +30,16 @@ public class SplashScreenActivity extends AppCompatActivity {
 	private Handler handler;
 	private ProgressDialog progressDialog;
 
+	@Inject
+	HillsDatabaseHelper dbAdapter;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+
+		((BHApplication) getApplication()).getDbComponent().inject(this);
 
 		setContentView(R.layout.splash);
 		TextView link=(TextView) findViewById(R.id.TextView03);
@@ -61,7 +70,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 			@Override
 			public void run() {
-				HillsDatabaseHelper dbAdapter = HillsDatabaseHelper.getInstance(SplashScreenActivity.this);
+
 
 				SplashScreenActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 

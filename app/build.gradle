@@ -33,6 +33,7 @@ android {
     }
 }
 
+
 dependencies {
     compile project(path: ':hilllistcore')
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -48,5 +49,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.android.gms:play-services-maps:9.4.0'
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.5.0'
+    compile 'com.google.dagger:dagger:2.7'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'javax.inject:javax.inject:1'
     
 }

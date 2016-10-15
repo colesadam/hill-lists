@@ -139,7 +139,7 @@
         android:id="@+id/deweys"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
@@ -169,8 +169,7 @@
         android:id="@+id/iomni"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="8dp"
@@ -196,6 +195,37 @@
 
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/t100"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/left_vertical_line"
+        app:layout_constraintRight_toRightOf="@+id/right_vertical_line"
+        app:layout_constraintTop_toTopOf="@+id/three_quarter_horizontal">
+
+        <ImageView
+
+            android:id="@+id/t100_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/bidean_nam_bian"></ImageView>
+
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_trail100" />
+
+    </android.support.v7.widget.CardView>
+
 
     <android.support.constraint.Guideline
         android:id="@+id/centre_vertical_line"
@@ -207,11 +237,25 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <android.support.constraint.Guideline
+        android:id="@+id/left_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/right_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <android.support.constraint.Guideline
         android:id="@+id/centre_horizontal"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.61"
+        app:layout_constraintGuide_percent="0.5"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="302dp" />
 
@@ -220,7 +264,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.38"
+        app:layout_constraintGuide_percent="0.25"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="151dp" />
 
@@ -229,7 +273,7 @@
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.84"
+        app:layout_constraintGuide_percent="0.75"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="452dp" />
 
@@ -238,7 +282,7 @@
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15"
+        app:layout_constraintGuide_percent="0.0"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="452dp" />
 

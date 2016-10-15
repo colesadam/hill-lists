@@ -21,6 +21,8 @@ public interface DbHelper {
     Cursor getHillGroup(String groupId, String countryClause,
                         String moreWhere, String orderBy, int filter);
 
+    Cursor getT100(String moreWhere, String orderBy, int filter);
+
     Hill getHill(long _rowIndex) throws SQLException;
 
 

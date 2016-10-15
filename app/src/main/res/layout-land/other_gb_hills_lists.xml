@@ -54,8 +54,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
 
         app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/one_quarter_horizontal">
+        app:layout_constraintTop_toTopOf="@+id/one_quarter_horizontal"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line">
 
         <ImageView
             android:id="@+id/nuttalls_image"
@@ -87,8 +87,8 @@
         app:layout_constraintBottom_toTopOf="@+id/centre_horizontal"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4">
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line">
 
         <ImageView
             android:id="@+id/marilyns_image"
@@ -182,8 +182,8 @@
         android:foreground="?attr/selectableItemBackground"
         app:layout_constraintBottom_toTopOf="@+id/three_quarter_horizontal"
         app:layout_constraintLeft_toLeftOf="@+id/centre_vertical_line"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/centre_horizontal">
+        app:layout_constraintTop_toTopOf="@+id/centre_horizontal"
+        app:layout_constraintRight_toLeftOf="@+id/right_vertical_line">
 
         <ImageView
 
@@ -198,24 +198,61 @@
 
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/t100"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintTop_toTopOf="@+id/top_horizontal_line"
+        app:layout_constraintLeft_toLeftOf="@+id/right_vertical_line"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_horizontal_line">
+
+        <ImageView
+
+            android:id="@+id/t100_image"
+            style="@style/menu_grid_imageview"
+            android:src="@drawable/bidean_nam_bian"></ImageView>
+
+
+        <TextView
+            style="@style/cardview_title"
+            android:text="@string/label_trail100" />
+
+    </android.support.v7.widget.CardView>
+
 
     <android.support.constraint.Guideline
         android:id="@+id/centre_vertical_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"
-        tools:layout_editor_absoluteX="326dp"
+        app:layout_constraintGuide_percent="0.33"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="0dp" />
+    <android.support.constraint.Guideline
+        android:id="@+id/right_vertical_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66"
+        tools:layout_editor_absoluteX="370dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/centre_horizontal"
-        android:layout_width="651dp"
+        android:layout_width="560dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.66"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="207dp" />
+        tools:layout_editor_absoluteY="189dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
@@ -224,24 +261,42 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.33"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="129dp" />
+        tools:layout_editor_absoluteY="95dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/three_quarter_horizontal"
-        android:layout_width="651dp"
+        android:layout_width="560dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="1.0"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="339dp" />
+        tools:layout_editor_absoluteY="287dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/one_quarter_horizontal"
-        android:layout_width="651dp"
+        android:layout_width="560dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.0"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/top_horizontal_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.33"
+        tools:layout_editor_absoluteY="95dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottom_horizontal_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66"
+        tools:layout_editor_absoluteY="189dp"
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>

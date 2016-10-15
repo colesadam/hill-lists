@@ -91,6 +91,7 @@ public class OtherGBHillsActivity extends AppCompatActivity {
 		View countyTops = findViewById(R.id.county_tops);
 		View deweys = findViewById(R.id.deweys);
 		View iomni = findViewById(R.id.iomni);
+		View t100 = findViewById(R.id.t100);
 
 		iomni.setOnClickListener(v -> {
             countryFlag = true;
@@ -104,6 +105,7 @@ public class OtherGBHillsActivity extends AppCompatActivity {
 
 		countyTops.setOnClickListener(v -> showHills("CoU", "County Tops"));
 		deweys.setOnClickListener(v -> showHills("5", "Deweys"));
+		t100.setOnClickListener(v -> showHills("T100","Trail 100"));
 
 
 	}
@@ -119,5 +121,6 @@ public class OtherGBHillsActivity extends AppCompatActivity {
 
 		startActivity(intent);
 	}
+
 
 }
