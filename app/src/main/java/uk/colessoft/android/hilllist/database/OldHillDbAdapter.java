@@ -280,6 +280,10 @@ public class OldHillDbAdapter implements DbHelper {
                 null, null, null, orderBy);
     }
 
+    @Override
+    public Cursor getT100(String moreWhere, String orderBy, int filter) {
+        return null;
+    }
 
 
     @Override

@@ -183,6 +183,8 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
 
     @Override
     public Cursor getHillGroup(String groupId, String countryClause, String moreFilters, String orderBy, int filter) {
+
+        if("T100".equals(groupId)) return getT100(moreFilters,orderBy,filter);
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         String where = "";
@@ -224,6 +226,31 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
                         KEY_NOTES, KEY_DATECLIMBED}, where,
                 new String[]{}, null, null, orderBy);
     }
+
+    @Override
+    public Cursor getT100( String moreFilters, String orderBy, int filter) {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+
+        String where = "T100='1'";
+
+        if (filter == 1)
+            where = KEY_DATECLIMBED + " NOT NULL";
+        else if (filter == 2)
+            where = KEY_DATECLIMBED + " IS NULL";
+
+
+        queryBuilder.setTables(hills + " left join "
+                + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
+
+        where = addToWhere(moreFilters, where);
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        return queryBuilder.query(db, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", HILLS_TABLE + "." + KEY_ID, KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
+                        KEY_NOTES, KEY_DATECLIMBED}, where,
+                new String[]{}, null, null, orderBy);
+    }
+
 
     @NonNull
     private String addToWhere(String filter, String where) {

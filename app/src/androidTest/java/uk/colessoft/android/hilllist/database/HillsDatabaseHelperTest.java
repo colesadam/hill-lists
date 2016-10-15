@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -104,6 +106,14 @@ public class HillsDatabaseHelperTest {
         Cursor cursor = helper.getHillGroup("M", "cast(_Section as float) between 1 and 28.9", "", "cast(Metres as float) desc", 0);
         cursor.moveToFirst();
         assertTrue(cursor.getString(cursor.getColumnIndex("Name")).equals("Ben Nevis"));
+        cursor.close();
+    }
+
+    @Test
+    public void getT100() throws Exception {
+        Cursor cursor = helper.getT100("","",0);
+        cursor.moveToFirst();
+        assertTrue(cursor.getCount()==100);
         cursor.close();
     }
 
