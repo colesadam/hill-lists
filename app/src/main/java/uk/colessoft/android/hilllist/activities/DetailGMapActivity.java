@@ -19,6 +19,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.DbHelper;
@@ -32,7 +35,8 @@ import uk.colessoft.android.hilllist.utility.LatLangBounds;
 public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
     static final private int SHOW_NEARBY = Menu.FIRST;
 
-    private DbHelper dbAdapter;
+    @Inject
+    DbHelper dbAdapter;
     private GoogleMap map;
 
     private Hill hill;
@@ -87,8 +91,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         rowid = getIntent().getExtras().getInt("rowid");
         String title = getIntent().getExtras().getString("title");
         setTitle(title);
-        dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
-
+        ((BHApplication) getApplication()).getDbComponent().inject(this);
         hill = dbAdapter.getHill(rowid);
 
 

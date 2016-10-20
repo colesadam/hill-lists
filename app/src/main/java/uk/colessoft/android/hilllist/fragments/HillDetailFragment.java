@@ -29,9 +29,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.BusinessSearchMapActivity;
 import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
+import uk.colessoft.android.hilllist.activities.DisplayHillListFragmentActivity;
 import uk.colessoft.android.hilllist.activities.HillImagesActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
@@ -41,7 +45,8 @@ import uk.colessoft.android.hilllist.model.Hill;
 
 
 public class HillDetailFragment extends Fragment {
-    private DbHelper dbAdapter;
+    @Inject
+    DbHelper dbAdapter;
 
     private boolean useMetricHeights;
     static final int DATE_DIALOG_ID = 0;
@@ -194,7 +199,7 @@ public class HillDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
+        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
     }
 
     @Override

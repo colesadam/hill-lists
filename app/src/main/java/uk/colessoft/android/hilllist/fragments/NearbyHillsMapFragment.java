@@ -24,6 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
@@ -121,7 +124,9 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
     private GoogleMap map;
     private View viewer;
-    private DbHelper dbAdapter;
+
+    @Inject
+    DbHelper dbAdapter;
 
     private boolean gotHills;
 
@@ -183,7 +188,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
+        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
     }
 
     public void moveMarker(int rowid) {

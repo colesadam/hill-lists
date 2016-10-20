@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.dialogs.FolderPicker;
 import uk.colessoft.android.hilllist.database.DbHelper;
@@ -27,6 +30,9 @@ public class BaggingExportActivity extends AppCompatActivity implements OnClickL
 	private View mPickFolder;
 	private View mPickFile;
 
+	@Inject
+	DbHelper dbAdapter;
+
 	private String filePath;
 
 	private static String folderPath = Environment
@@ -36,6 +42,7 @@ public class BaggingExportActivity extends AppCompatActivity implements OnClickL
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		((BHApplication) getApplication()).getDbComponent().inject(this);
 		setContentView(R.layout.bagging_export);
 		mPickFolder = findViewById(R.id.pick_folder);
 		mPickFolder.setOnClickListener(this);
@@ -48,7 +55,6 @@ public class BaggingExportActivity extends AppCompatActivity implements OnClickL
 	}
 
 	private void generateCsvFile(String sFileName) {
-		DbHelper dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
 
 		Cursor baggedCursor = dbAdapter.getBaggedHillList();
 		startManagingCursor(baggedCursor);
@@ -125,7 +131,7 @@ public class BaggingExportActivity extends AppCompatActivity implements OnClickL
 	}
 
 	private void importCsvFile() {
-		DbHelper dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
+
 		dbAdapter.importBagging(filePath);
 
 	}

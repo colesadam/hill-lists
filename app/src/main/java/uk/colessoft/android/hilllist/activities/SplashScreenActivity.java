@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.components.DatabaseComponent;
+import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 	private ProgressDialog progressDialog;
 
 	@Inject
-	HillsDatabaseHelper dbAdapter;
+	DbHelper dbAdapter;
 
 
 	@Override

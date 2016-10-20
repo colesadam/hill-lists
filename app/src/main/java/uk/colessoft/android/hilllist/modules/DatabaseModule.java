@@ -15,7 +15,7 @@ public class DatabaseModule {
 
     @Provides
     @Singleton
-    HillsDatabaseHelper provideDbHelper(Application application) {
+    DbHelper provideDbHelper(Application application) {
         return HillsDatabaseHelper.getInstance(application);
 
     }

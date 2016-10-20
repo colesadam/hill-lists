@@ -42,6 +42,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.NearbyHillsMapFragmentActivity;
@@ -69,11 +72,14 @@ public class NearbyHillsFragment extends Fragment implements
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
+        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
     }
 
     private int firstRow;
-    private DbHelper dbAdapter;
+
+    @Inject
+    DbHelper dbAdapter;
+
     private View viewer;
     private ListView hillListView;
     private LocationManager lm;

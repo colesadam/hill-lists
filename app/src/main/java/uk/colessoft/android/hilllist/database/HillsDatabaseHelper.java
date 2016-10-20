@@ -414,6 +414,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
 
     }
 
+    @Override
     public void touch(Handler handler) {
         this.handler = handler;
         getReadableDatabase();

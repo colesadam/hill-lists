@@ -22,6 +22,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.DbHelper;
@@ -34,7 +37,8 @@ import uk.colessoft.android.hilllist.utility.LatLangBounds;
 public class ListHillsMapFragment extends SupportMapFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
-    private DbHelper dbAdapter;
+    @Inject
+    DbHelper dbAdapter;
 
     private OnHillSelectedListener hillSelectedListener;
     private MapOnHillSelectedListener mapOnHillSelectedListener;
@@ -59,6 +63,8 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
+
         setHasOptionsMenu(true);
 
 
@@ -67,7 +73,6 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
         try {
             hillSelectedListener = (OnHillSelectedListener) activity;
             mapOnHillSelectedListener = (MapOnHillSelectedListener) activity;
@@ -94,7 +99,6 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         });
 
         this.getMapAsync(this);
-        dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
 
         String title;
 

@@ -2,6 +2,7 @@ package uk.colessoft.android.hilllist.database;
 
 import android.database.Cursor;
 import android.database.SQLException;
+import android.os.Handler;
 
 import java.util.Date;
 
@@ -27,4 +28,6 @@ public interface DbHelper {
 
 
     void importBagging(final String filePath);
+
+    void touch(Handler handler);
 }

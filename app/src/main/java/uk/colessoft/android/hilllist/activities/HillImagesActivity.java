@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
@@ -21,7 +24,8 @@ import uk.colessoft.android.hilllist.model.Hill;
 
 public class HillImagesActivity extends AppCompatActivity implements HillImagesFragment.OnFragmentInteractionListener {
 
-    private DbHelper dbHelper;
+    @Inject
+    DbHelper dbHelper;
     private HillImagesFragment imagesFragment;
     private String IMAGES_FRAGMENT = "1";
     private String IMAGE_FRAGMENT = "2";
@@ -43,7 +47,7 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
         getSupportActionBar().setTitle(savedInstanceState.getCharSequence("title"));
         hillId = savedInstanceState.getLong("hillId");
 
-        dbHelper = HillsDatabaseHelper.getInstance(this);
+        ((BHApplication) getApplication()).getDbComponent().inject(this);
         imagesFragment = (HillImagesFragment) getSupportFragmentManager().findFragmentByTag(IMAGES_FRAGMENT);
         if (findViewById(R.id.hill_image_fragment) != null) {
             GetHillAsyncTask task = new GetHillAsyncTask();
@@ -75,8 +79,7 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
 
         }
 
-        dbHelper = HillsDatabaseHelper.getInstance(this);
-
+        ((BHApplication) getApplication()).getDbComponent().inject(this);
         GetHillAsyncTask getHillAsyncTask = new GetHillAsyncTask();
         hillId = getIntent().getExtras().getLong("hillId");
 
@@ -107,7 +110,7 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
             getSupportFragmentManager().popBackStack();
 
             GetHillAsyncTask getHillAsyncTask = new GetHillAsyncTask();
-            dbHelper = HillsDatabaseHelper.getInstance(this);
+            ((BHApplication)getApplication()).getDbComponent().inject(this);
             imagesFragment = (HillImagesFragment) getSupportFragmentManager().findFragmentByTag(IMAGES_FRAGMENT);
             getHillAsyncTask.execute(hillId);
 

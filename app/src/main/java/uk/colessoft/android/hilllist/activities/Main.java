@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
@@ -24,6 +27,9 @@ public class Main extends AppCompatActivity {
 	public static final int WALES = 2;
 	public static final int ENGLAND = 3;
 	public static final int OTHER_GB = 4;
+
+	@Inject
+	DbHelper dbHelper;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,8 +69,7 @@ public class Main extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 
-		DbHelper dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
-		//setTitle(getTitle() + " - Choose an Option");
+		((BHApplication) getApplication()).getDbComponent().inject(this);		//setTitle(getTitle() + " - Choose an Option");
 		boolean successful;
 		
 

@@ -24,6 +24,9 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.Date;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.DbHelper;
@@ -38,7 +41,10 @@ public class CheckHillListActivity extends AppCompatActivity {
     private final int ALL_CLIMBED = 1;
     private final int ALL_HILLS = 0;
     private final int ALL_NOT_CLIMBED = 2;
-    private DbHelper dbAdapter;
+
+    @Inject
+    DbHelper dbAdapter;
+
     private String where = null;
     private String orderBy;
     private ListView myListView;
@@ -96,7 +102,7 @@ public class CheckHillListActivity extends AppCompatActivity {
 
         }
 
-        dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
+        ((BHApplication) getApplication()).getDbComponent().inject(this);
 
         orderBy = "cast(" + HillsTables.KEY_HEIGHTM + " as float)" + " desc";
         updateList(2);

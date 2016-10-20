@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -211,6 +212,11 @@ public class OldHillDbAdapter implements DbHelper {
 
         };
         thread.start();
+
+    }
+
+    @Override
+    public void touch(Handler handler) {
 
     }
 

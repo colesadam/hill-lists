@@ -28,10 +28,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
@@ -50,6 +52,9 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
     private ScootXMLHandler searchHandler;
     private String search_string;
 
+    @Inject
+    DbHelper dbAdapter;
+
     private GoogleMap map;
     private Hill hill;
     private static ArrayList<Business> businesses = new ArrayList<>();
@@ -66,7 +71,7 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        DbHelper dbAdapter = HillsDatabaseHelper.getInstance(getApplicationContext());
+        ((BHApplication) getApplication()).getDbComponent().inject(this);
         int rowid = getIntent().getExtras().getInt("rowid");
         String title = getIntent().getExtras().getString("title");
         search_string = getIntent().getExtras().getString("search_string");

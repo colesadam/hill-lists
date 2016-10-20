@@ -34,7 +34,11 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.Date;
 
+import javax.inject.Inject;
+
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activities.DisplayHillListFragmentActivity;
 import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
@@ -261,7 +265,8 @@ public class DisplayHillListFragment extends Fragment implements
 
 	}
 
-	private DbHelper dbAdapter;
+	@Inject
+	DbHelper dbAdapter;
 
 	private String where = null;
 	private String orderBy;
@@ -366,7 +371,6 @@ public class DisplayHillListFragment extends Fragment implements
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		dbAdapter = HillsDatabaseHelper.getInstance(getActivity().getApplicationContext());
 		try {
 			hillSelectedListener = (OnHillSelectedListener) activity;
 		} catch (ClassCastException e) {
@@ -378,6 +382,8 @@ public class DisplayHillListFragment extends Fragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
+
 		setHasOptionsMenu(true);
 
 	}
