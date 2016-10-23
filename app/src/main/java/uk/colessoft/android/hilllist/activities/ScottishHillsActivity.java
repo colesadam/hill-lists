@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,16 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.utility.ResourceUtils;
-
-import static uk.colessoft.android.hilllist.R.id.map;
 
 public class ScottishHillsActivity extends AppCompatActivity {
 	private Dialog descDialog;

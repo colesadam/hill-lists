@@ -35,12 +35,10 @@ import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.BusinessSearchMapActivity;
 import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
-import uk.colessoft.android.hilllist.activities.DisplayHillListFragmentActivity;
 import uk.colessoft.android.hilllist.activities.HillImagesActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.DbHelper;
-import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.model.Hill;
 
 

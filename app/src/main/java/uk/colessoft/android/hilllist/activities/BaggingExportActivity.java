@@ -20,7 +20,6 @@ import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.dialogs.FolderPicker;
 import uk.colessoft.android.hilllist.database.DbHelper;
-import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
 public class BaggingExportActivity extends AppCompatActivity implements OnClickListener,
 		DialogInterface.OnClickListener {

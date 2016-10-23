@@ -38,13 +38,11 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.activities.DisplayHillListFragmentActivity;
 import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.DbHelper;
-import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 import uk.colessoft.android.hilllist.database.HillsTables;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;

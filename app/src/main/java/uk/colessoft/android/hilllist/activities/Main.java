@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
-import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
