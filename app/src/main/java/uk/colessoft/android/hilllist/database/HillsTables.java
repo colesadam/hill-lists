@@ -67,7 +67,7 @@ public class HillsTables {
     private static Handler handler;
 
 
-    public static void onCreate(SQLiteDatabase database, Context context, Handler handler) {
+    public static void onCreate(SQLiteDatabase database, Context context, Handler handler, int rows) {
 
         createSimpleTables(database);
         HillsTables.handler = handler;
@@ -75,7 +75,7 @@ public class HillsTables {
 
 
 
-        createAndPopulateHillsTable(database, context, startTime);
+        createAndPopulateHillsTable(database, context, startTime, rows);
 
         populateHillTypes(database, startTime);
 
@@ -112,7 +112,7 @@ public class HillsTables {
                         + (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    private static void createAndPopulateHillsTable(SQLiteDatabase database, Context context, long startTime) {
+    private static void createAndPopulateHillsTable(SQLiteDatabase database, Context context, long startTime, int rows) {
         InputStream is;
         Log.d(TAG, "createAndPopulateHillsTable: starting");
         try {
@@ -129,7 +129,9 @@ public class HillsTables {
             // read main hill data into hills table
             database.beginTransaction();
             String line;
-            while ((line = reader.readLine()) != null) {
+            int count = 0;
+            while ((line = reader.readLine()) != null && count <= rows) {
+                count++;
                 if(handler != null) {
                     handler.dispatchMessage(Message.obtain(handler, 0, 0, 1, 1));
                 }
@@ -182,14 +184,14 @@ public class HillsTables {
     }
 
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
-                                 int newVersion, Context context, Handler handler) {
+                                 int newVersion, Context context, Handler handler, int rows) {
         Log.w(HillsTables.class.getName(), "Upgrading database from version "
                 + oldVersion + " to " + newVersion
                 + ", which will destroy all old hills data");
         database.execSQL("DROP TABLE IF EXISTS " + HILLS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + HILLTYPES_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + TYPES_LINK_TABLE);
-        onCreate(database, context, handler);
+        onCreate(database, context, handler, rows);
     }
 
 }

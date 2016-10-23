@@ -30,4 +30,6 @@ public interface DbHelper {
     void importBagging(final String filePath);
 
     void touch(Handler handler);
+
+    void close();
 }

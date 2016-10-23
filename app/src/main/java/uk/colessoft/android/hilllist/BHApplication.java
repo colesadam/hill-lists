@@ -2,6 +2,7 @@ package uk.colessoft.android.hilllist;
 
 
 import android.app.Application;
+
 import uk.colessoft.android.hilllist.components.DaggerDatabaseComponent;
 import uk.colessoft.android.hilllist.components.DatabaseComponent;
 import uk.colessoft.android.hilllist.modules.AppModule;
@@ -20,5 +21,10 @@ public class BHApplication extends Application {
 
     public DatabaseComponent getDbComponent() {
         return dbComponent;
+    }
+
+    // Needed to replace the component with a test specific one
+    public void setComponent(DatabaseComponent databaseComponent) {
+        dbComponent = databaseComponent;
     }
 }

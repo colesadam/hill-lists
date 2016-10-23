@@ -69,7 +69,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
 
     private final String baggingTable = BAGGING_TABLE;
     private final String baggingKeyId = baggingTable + "." + KEY_ID;
-    private Context context;
+    protected Context context;
     public static final String DATABASE_NAME = "hill-list.db";
     private static final int DATABASE_VERSION = 1;
     private String hillTypes = HillsTables.HILLTYPES_TABLE;
@@ -78,7 +78,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     private String hillTypesTitle = hillTypes + "." + KEY_TITLE;
 
     private Handler handler;
-    private static HillsDatabaseHelper sInstance;
+    protected static HillsDatabaseHelper sInstance;
 
     public HillsDatabaseHelper(Context context) {
 
@@ -86,7 +86,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         this.context = context;
     }
 
-    private HillsDatabaseHelper(Context context, String name, CursorFactory factory,
+    protected HillsDatabaseHelper(Context context, String name, CursorFactory factory,
                                 int version) {
         super(context, name, factory, version);
         this.context = context;
@@ -109,13 +109,13 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        HillsTables.onCreate(db, context, handler);
+        HillsTables.onCreate(db, context, handler, 9999999);
         BaggingTable.onCreate(db, context);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        HillsTables.onUpgrade(db, oldVersion, newVersion, context, handler);
+        HillsTables.onUpgrade(db, oldVersion, newVersion, context, handler, 99999999);
     }
 
     @Override
