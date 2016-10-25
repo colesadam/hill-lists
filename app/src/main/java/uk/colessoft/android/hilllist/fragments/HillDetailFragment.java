@@ -24,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hannesdorfmann.mosby.mvp.MvpFragment;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,22 +40,103 @@ import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
 import uk.colessoft.android.hilllist.activities.HillImagesActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
+import uk.colessoft.android.hilllist.components.DaggerHillDetailComponent;
+import uk.colessoft.android.hilllist.components.HillDetailComponent;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.presenter.HillDetailPresenter;
+import uk.colessoft.android.hilllist.presenter.HillDetailPresenter_Factory;
+import uk.colessoft.android.hilllist.views.HillDetailView;
 
 
-public class HillDetailFragment extends Fragment {
+public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPresenter> implements HillDetailView{
+
+    static final int DATE_DIALOG_ID = 0;
+    static final int MARK_HILL_CLIMBED_DIALOG = 1;
+    private static final HashMap<String, String> classesMap = new HashMap<String, String>() {
+        {
+            put("M", "Munro");
+            put("MT", "Munro Top");
+            put("Ma", "Marilyn");
+            put("twinMa", "Marilyn twin-top");
+            put("sMa", "Sub-Marilyn");
+            put("Mur", "Murdo");
+            put("sMur", "Sub-Murdo");
+            put("ssMur", "double Sub-Murdo");
+            put("C", "Corbett");
+            put("CT", "Corbett Tops (all)");
+            put("CTM", "Corbett Top of Munro");
+            put("CTC", "Corbett Top of Corbett");
+            put("G", "Graham");
+            put("GT", "Graham Tops (all)");
+            put("GTM", "Graham Top of Munro");
+            put("GTC", "Graham Top of Corbett");
+            put("GTG", "Graham Top of Graham");
+            put("sG", "Sub-Graham");
+            put("ssG", "double Sub-Graham");
+            put("D", "Donald");
+            put("DT", "Donald Top");
+            put("N", "Nuttall");
+            put("Hew", "Hewitt");
+            put("sHew", "Sub-Hewitt");
+            put("ssHew", "double Sub-Hewitt");
+            put("W", "Wainwright");
+            put("WO", "Wainwright Outlying Fell");
+            put("Dewey", "Dewey");
+            put("B", "Birkett");
+            put("Hu", "HuMP");
+            put("twinHu", "HuMP twin-top");
+            put("CoH", "Historic County Top");
+            put("CoU", "Current County/UA Top");
+            put("CoA", "Administrative County Top");
+            put("CoL", "London Borough Top");
+            put("twinCoU", "Twin Current County/UA Top");
+            put("twinCoA", "Twin Administrative County Top");
+            put("twinCoL", "Twin London Borough Top");
+            put("xMT", "Deleted Munro Top");
+            put("xMa", "Deleted Marilyn");
+            put("xsMa", "Deleted Sub-Marilyn");
+            put("xC", "Deleted Corbett");
+            put("xCT", "Deleted Corbett Top");
+            put("xDT", "Deleted Donald Top");
+            put("xN", "Deleted Nuttall");
+            put("x5", "Deleted Dewey");
+            put("xHu", "Deleted HuMP");
+            put("xCoH", "Deleted County Top");
+            put("BL", "Buxton & Lewis");
+            put("Bg", "Bridge");
+            put("T100", "Trail 100");
+
+        }
+    };
     @Inject
     DbHelper dbAdapter;
 
     private boolean useMetricHeights;
-    static final int DATE_DIALOG_ID = 0;
-    static final int MARK_HILL_CLIMBED_DIALOG = 1;
-
     private Hill hill;
     private int mYear;
     private int mMonth;
     private int mDay;
+    private int thisId;
+
+    private TextView dateClimbed;
+    private TextView hillnameView;
+    private CheckBox ctv;
+    private TextView hillheight;
+    private TextView hillLatitude;
+    private TextView hillLongitude;
+    private TextView osgridref;
+    private TextView hillsection;
+    private TextView os50k;
+    private TextView os25k;
+    private TextView summitFeature;
+    private TextView colHeight;
+    private TextView colGridRef;
+    private TextView drop;
+    private ViewGroup classificationLayout;
+
+    HillDetailComponent hillDetailComponent;
+
     private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -65,16 +148,6 @@ public class HillDetailFragment extends Fragment {
         }
     };
 
-    private TextView dateClimbed;
-
-    private TextView hillnameView;
-
-    private View viewer;
-
-    private int thisId;
-    private CheckBox ctv;
-
-
     private void showMapSingle() {
         Intent intent = new Intent(getActivity(), DetailGMapActivity.class);
         intent.putExtra("rowid", thisId);
@@ -84,8 +157,6 @@ public class HillDetailFragment extends Fragment {
     }
 
     private void showOSMap() {
-//		Intent intent = new Intent("android.intent.action.VIEW",
-//				Uri.parse(osLink));
 
         Intent intent = new Intent(getActivity(), OsMapActivity.class);
         intent.putExtra("x", String.valueOf(hill.getXcoord()));
@@ -127,22 +198,15 @@ public class HillDetailFragment extends Fragment {
         search.show();
     }
 
-
     private void noBagSenor(final Hill hill) {
 
 
         ((View) dateClimbed.getParent()).setVisibility(View.GONE);
-        // ((View) saveNotes.getParent().getParent()).setVisibility(View.GONE);
-        hillnameView = (TextView) viewer
-                .findViewById(R.id.detail_hill_name);
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
     }
 
     private void bagFeature(final Hill hill) {
 
-
-        hillnameView = (TextView) viewer
-                .findViewById(R.id.detail_hill_name);
         hillnameView.setTextColor(getResources().getColor(R.color.light_green));
         dateClimbed = (TextView) getActivity().findViewById(
                 R.id.detail_date_climbed);
@@ -193,6 +257,10 @@ public class HillDetailFragment extends Fragment {
 
     }
 
+    @Override
+    public HillDetailPresenter createPresenter() {
+        return ((BHApplication)getActivity().getApplication()).getHillDetailComponent().presenter();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -204,8 +272,38 @@ public class HillDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         updateFromPreferences();
-        viewer = inflater.inflate(R.layout.no_table_hill_detail, container,
+        View viewer = inflater.inflate(R.layout.no_table_hill_detail, container,
                 false);
+
+        hillnameView = (TextView) viewer
+                .findViewById(R.id.detail_hill_name);
+        hillheight = (TextView) viewer
+                .findViewById(R.id.detail_hill_height);
+
+        hillLatitude = (TextView) viewer
+                .findViewById(R.id.detail_hill_latitude);
+        hillLongitude = (TextView) viewer
+                .findViewById(R.id.detail_hill_longitude);
+        osgridref = (TextView) viewer
+                .findViewById(R.id.detail_hill_osgrid);
+        hillsection = (TextView) viewer
+                .findViewById(R.id.detail_hill_section);
+
+        os50k = (TextView) viewer.findViewById(R.id.detail_os50k);
+        os25k = (TextView) viewer.findViewById(R.id.detail_os25k);
+
+        summitFeature = (TextView) viewer
+                .findViewById(R.id.detail_hill_summit_feature);
+        colHeight = (TextView) viewer
+                .findViewById(R.id.detail_colheight);
+        colGridRef = (TextView) viewer
+                .findViewById(R.id.detail_colgridref);
+        drop = (TextView) viewer.findViewById(R.id.detail_drop);
+        classificationLayout = (LinearLayout) viewer
+                .findViewById(R.id.hill_classifications);
+        dateClimbed = (TextView) viewer
+                .findViewById(R.id.detail_date_climbed);
+        classificationLayout.removeAllViews();
 
         Toolbar toolbar = (Toolbar) viewer.findViewById(R.id.hill_detail_toolbar);
         toolbar.inflateMenu(R.menu.hill_detail_menu);
@@ -222,16 +320,8 @@ public class HillDetailFragment extends Fragment {
                 dialog.setContentView(R.layout.hill_climbed_dialog);
                 dialog.setTitle("Mark Hill As Climbed");
 
-                DatePicker datePicker = (DatePicker) dialog
-                        .findViewById(R.id.dialog_climbed_date_picker);
-                EditText notes = (EditText) dialog
-                        .findViewById(R.id.dialog_climbed_notes);
-                Button ok = (Button) dialog.findViewById(R.id.Button_ok);
-                Button cancel = (Button) dialog.findViewById(R.id.Button_cancel);
-
                 dbAdapter.markHillClimbed(hill.get_id(), new Date(), "");
-                Toast climbed;
-                climbed = Toast.makeText(getActivity().getApplication(),
+                Toast climbed = Toast.makeText(getActivity().getApplication(),
                         "Marked as Climbed", Toast.LENGTH_SHORT);
                 climbed.show();
                 hill = dbAdapter.getHill(hill.get_id());
@@ -267,7 +357,7 @@ public class HillDetailFragment extends Fragment {
                     }
                     case R.id.images: {
                         Intent intent = new Intent(getActivity(), HillImagesActivity.class);
-                        intent.putExtra("hillId",Long.valueOf(thisId));
+                        intent.putExtra("hillId", Long.valueOf(thisId));
                         startActivity(intent);
 
                     }
@@ -279,52 +369,22 @@ public class HillDetailFragment extends Fragment {
         return viewer;
     }
 
-
-    public void updateHill(int rowid) {
-
+    public void updateHill(int rowid){
         thisId = rowid;
-        hillnameView = (TextView) viewer
-                .findViewById(R.id.detail_hill_name);
-        TextView hillheight = (TextView) viewer
-                .findViewById(R.id.detail_hill_height);
+        presenter.getHill(rowid);
+    }
 
-        TextView hillLatitude = (TextView) viewer
-                .findViewById(R.id.detail_hill_latitude);
-        TextView hillLongitude = (TextView) viewer
-                .findViewById(R.id.detail_hill_longitude);
-        TextView osgridref = (TextView) viewer
-                .findViewById(R.id.detail_hill_osgrid);
-        TextView hillsection = (TextView) viewer
-                .findViewById(R.id.detail_hill_section);
+    @Override
+    public void updateHill(Hill hill) {
 
-        TextView os50k = (TextView) viewer.findViewById(R.id.detail_os50k);
 
-        TextView os25k = (TextView) viewer.findViewById(R.id.detail_os25k);
-
-        TextView summitFeature = (TextView) viewer
-                .findViewById(R.id.detail_hill_summit_feature);
-        TextView colHeight = (TextView) viewer
-                .findViewById(R.id.detail_colheight);
-        TextView colGridRef = (TextView) viewer
-                .findViewById(R.id.detail_colgridref);
-        TextView drop = (TextView) viewer.findViewById(R.id.detail_drop);
-        ViewGroup classificationLayout = (LinearLayout) viewer
-                .findViewById(R.id.hill_classifications);
-        classificationLayout.removeAllViews();
-        System.out.println(rowid);
-        hill = dbAdapter.getHill(rowid);
-        dateClimbed = (TextView) viewer
-                .findViewById(R.id.detail_date_climbed);
         ((View) dateClimbed.getParent()).setVisibility(View.GONE);
 
-        TextView saveNotes = (TextView) getActivity().findViewById(R.id.save_notes);
-        // ((View) saveNotes.getParent().getParent()).setVisibility(View.GONE);
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
         if (hill.getHillClimbed() != null) {
 
             bagFeature(hill);
         }
-        String osLink = hill.getHillBagging();
 
         hillnameView.setText(hill.getHillname());
         if (useMetricHeights) {
@@ -384,63 +444,6 @@ public class HillDetailFragment extends Fragment {
         dateClimbed.setText(new StringBuilder().append(mDay).append("/")
                 .append(mMonth + 1).append("/").append(mYear));
     }
-
-    private static final HashMap<String, String> classesMap = new HashMap<String, String>() {
-        {
-            put("M", "Munro");
-            put("MT", "Munro Top");
-            put("Ma", "Marilyn");
-            put("twinMa", "Marilyn twin-top");
-            put("sMa", "Sub-Marilyn");
-            put("Mur", "Murdo");
-            put("sMur", "Sub-Murdo");
-            put("ssMur", "double Sub-Murdo");
-            put("C", "Corbett");
-            put("CT", "Corbett Tops (all)");
-            put("CTM", "Corbett Top of Munro");
-            put("CTC", "Corbett Top of Corbett");
-            put("G", "Graham");
-            put("GT", "Graham Tops (all)");
-            put("GTM", "Graham Top of Munro");
-            put("GTC", "Graham Top of Corbett");
-            put("GTG", "Graham Top of Graham");
-            put("sG", "Sub-Graham");
-            put("ssG", "double Sub-Graham");
-            put("D", "Donald");
-            put("DT", "Donald Top");
-            put("N", "Nuttall");
-            put("Hew", "Hewitt");
-            put("sHew", "Sub-Hewitt");
-            put("ssHew", "double Sub-Hewitt");
-            put("W", "Wainwright");
-            put("WO", "Wainwright Outlying Fell");
-            put("Dewey", "Dewey");
-            put("B", "Birkett");
-            put("Hu", "HuMP");
-            put("twinHu", "HuMP twin-top");
-            put("CoH", "Historic County Top");
-            put("CoU", "Current County/UA Top");
-            put("CoA", "Administrative County Top");
-            put("CoL", "London Borough Top");
-            put("twinCoU", "Twin Current County/UA Top");
-            put("twinCoA", "Twin Administrative County Top");
-            put("twinCoL", "Twin London Borough Top");
-            put("xMT", "Deleted Munro Top");
-            put("xMa", "Deleted Marilyn");
-            put("xsMa", "Deleted Sub-Marilyn");
-            put("xC", "Deleted Corbett");
-            put("xCT", "Deleted Corbett Top");
-            put("xDT", "Deleted Donald Top");
-            put("xN", "Deleted Nuttall");
-            put("x5", "Deleted Dewey");
-            put("xHu", "Deleted HuMP");
-            put("xCoH", "Deleted County Top");
-            put("BL", "Buxton & Lewis");
-            put("Bg", "Bridge");
-            put("T100", "Trail 100");
-
-        }
-    };
 
     private void updateFromPreferences() {
         Context context = getActivity().getApplicationContext();
