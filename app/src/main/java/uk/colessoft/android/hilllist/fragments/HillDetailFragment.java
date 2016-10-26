@@ -324,7 +324,7 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
                 Toast climbed = Toast.makeText(getActivity().getApplication(),
                         "Marked as Climbed", Toast.LENGTH_SHORT);
                 climbed.show();
-                hill = dbAdapter.getHill(hill.get_id());
+                //hill = dbAdapter.getHill(hill.get_id());
 
                 bagFeature(hill);
             } else {
@@ -377,7 +377,7 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
     @Override
     public void updateHill(Hill hill) {
 
-
+        this.hill = hill;
         ((View) dateClimbed.getParent()).setVisibility(View.GONE);
 
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);

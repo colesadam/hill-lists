@@ -33,6 +33,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import rx.android.schedulers.AndroidSchedulers;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
@@ -57,6 +58,7 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
     private GoogleMap map;
     private Hill hill;
     private static ArrayList<Business> businesses = new ArrayList<>();
+    private int rowid;
 
 
     @Override
@@ -71,12 +73,10 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
         mapFragment.getMapAsync(this);
 
         ((BHApplication) getApplication()).getDbComponent().inject(this);
-        int rowid = getIntent().getExtras().getInt("rowid");
+        rowid = getIntent().getExtras().getInt("rowid");
         String title = getIntent().getExtras().getString("title");
         search_string = getIntent().getExtras().getString("search_string");
         setTitle(title);
-        hill = dbAdapter.getHill(rowid);
-
 
         final ToggleButton mapButton = (ToggleButton) findViewById(R.id.satellite_button);
         mapButton.setChecked(true);
@@ -88,15 +88,10 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
             }
 
         });
-        lat = hill.getLatitude();
-        lon = hill.getLongitude();
-
 
     }
 
-
     private void addBusinesses() {
-
 
         LatLangBounds llb = new LatLangBounds();
         llb.addLatLong(hill.getLatitude(),hill.getLongitude());
@@ -124,14 +119,6 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
                                 bounds, 50));
     }
 
-    public void setSearch_string(String search_string) {
-        this.search_string = search_string;
-    }
-
-    public String getSearch_string() {
-        return search_string;
-    }
-
     public android.support.v4.content.Loader<ArrayList> onCreateLoader(int id, Bundle args) {
         return new ScootSearchTaskLoader(this, businesses, search_string, searchHandler, lat, lon);
     }
@@ -150,27 +137,34 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        LatLng hillPosition = new LatLng(lat, lon);
-        map = googleMap;
-        map.setOnInfoWindowClickListener(this);
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        dbAdapter.getHill(rowid).observeOn(AndroidSchedulers.mainThread()).subscribe(hill -> {
+            this.hill = hill;
+            lat = hill.getLatitude();
+            lon = hill.getLongitude();
+            LatLng hillPosition = new LatLng(lat, lon);
+            map = googleMap;
+            map.setOnInfoWindowClickListener(this);
+            map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
-        Marker marker = map.addMarker(new MarkerOptions()
-                .draggable(false)
-                .position(hillPosition)
-                .title(hill.getHillname())
-                .snippet(String.valueOf(hill.getHeightm())
-                        + " m"
-                )
-                .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.purple_hill))
-                .anchor(0.5F, 0.5F)
-        );
-        marker.setTag(hill.get_id());
-        marker.showInfoWindow();
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .draggable(false)
+                    .position(hillPosition)
+                    .title(hill.getHillname())
+                    .snippet(String.valueOf(hill.getHeightm())
+                            + " m"
+                    )
+                    .icon(BitmapDescriptorFactory
+                            .fromResource(R.drawable.purple_hill))
+                    .anchor(0.5F, 0.5F)
+            );
+            marker.setTag(hill.get_id());
+            marker.showInfoWindow();
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));
-        getSupportLoaderManager().restartLoader(0, null, this);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));
+            getSupportLoaderManager().restartLoader(0, null, this);
+        });
+
+
 
     }
 

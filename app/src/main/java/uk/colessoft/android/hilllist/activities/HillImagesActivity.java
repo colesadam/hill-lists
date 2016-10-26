@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
@@ -22,9 +23,7 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
     private HillImagesFragment imagesFragment;
     private String IMAGES_FRAGMENT = "1";
     private String IMAGE_FRAGMENT = "2";
-    private Hill retrievedHill;
     private long hillId;
-    private HillDetailFragment detailFragment;
     private HillImageFragment hillImageFragment;
 
     @Override
@@ -43,10 +42,16 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
         ((BHApplication) getApplication()).getDbComponent().inject(this);
         imagesFragment = (HillImagesFragment) getSupportFragmentManager().findFragmentByTag(IMAGES_FRAGMENT);
         if (findViewById(R.id.hill_image_fragment) != null) {
-            GetHillAsyncTask task = new GetHillAsyncTask();
-            task.execute(hillId);
+            updateImages();
         }
 
+    }
+
+    private void updateImages() {
+        dbHelper.getHill(hillId).observeOn(AndroidSchedulers.mainThread()).subscribe(hill -> {
+            getSupportActionBar().setTitle("Images of " + hill.getHillname());
+            imagesFragment.getImages(hill);
+        });
     }
 
     @Override
@@ -73,10 +78,8 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
         }
 
         ((BHApplication) getApplication()).getDbComponent().inject(this);
-        GetHillAsyncTask getHillAsyncTask = new GetHillAsyncTask();
         hillId = getIntent().getExtras().getLong("hillId");
-
-        getHillAsyncTask.execute(hillId);
+        updateImages();
 
     }
 
@@ -102,28 +105,12 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
 
-            GetHillAsyncTask getHillAsyncTask = new GetHillAsyncTask();
             ((BHApplication)getApplication()).getDbComponent().inject(this);
             imagesFragment = (HillImagesFragment) getSupportFragmentManager().findFragmentByTag(IMAGES_FRAGMENT);
-            getHillAsyncTask.execute(hillId);
+            updateImages();
 
         } else {
             super.onBackPressed();
-        }
-    }
-
-    private class GetHillAsyncTask extends AsyncTask<Long, Void, Hill> {
-        @Override
-        protected void onPostExecute(Hill hill) {
-            getSupportActionBar().setTitle("Images of " + hill.getHillname());
-            imagesFragment.getImages(hill);
-        }
-
-        @Override
-        protected Hill doInBackground(Long... params) {
-            System.out.println("Called with hill id:" + params[0]);
-            return dbHelper.getHill(params[0]);
-
         }
     }
 

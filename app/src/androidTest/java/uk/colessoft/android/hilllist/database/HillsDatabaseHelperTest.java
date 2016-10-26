@@ -17,6 +17,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.observers.TestSubscriber;
 import uk.colessoft.android.hilllist.TestComponentRule;
 import uk.colessoft.android.hilllist.model.Hill;
 
@@ -51,16 +53,21 @@ public class HillsDatabaseHelperTest {
 
     @Test
     public void markHillClimbed() throws Exception {
-
         helper.markHillClimbed(1, new Date(), "some notes");
-        assertEquals("some notes", component.getDbHelper().getHill(1).getNotes());
+        TestSubscriber<Hill> testSubscriber = new TestSubscriber<>();
+        helper.getHill(1).subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        assertEquals("some notes", testSubscriber.getOnNextEvents().get(0).getNotes());
     }
 
     @Test
     public void markHillNotClimbed() throws Exception {
         helper.markHillClimbed(1, new Date(), "some notes");
         helper.markHillNotClimbed(1);
-        assertNull(helper.getHill(1).getNotes());
+        TestSubscriber<Hill> testSubscriber = new TestSubscriber<>();
+        helper.getHill(1).subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        assertNull(testSubscriber.getOnNextEvents().get(0).getNotes());
     }
 
     @Test
@@ -107,8 +114,10 @@ public class HillsDatabaseHelperTest {
 
     @Test
     public void getHill() throws Exception {
-        Hill hill = helper.getHill(1);
-        assertThat(hill.getHillname(), is("Ben Chonzie"));
+        TestSubscriber<Hill> testSubscriber = new TestSubscriber<>();
+        helper.getHill(1).subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        assertThat(testSubscriber.getOnNextEvents().get(0).getHillname(), is("Ben Chonzie"));
     }
 
     @Test

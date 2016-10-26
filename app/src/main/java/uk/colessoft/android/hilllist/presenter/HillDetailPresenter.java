@@ -7,6 +7,8 @@ import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.views.HillDetailView;
@@ -18,9 +20,9 @@ public class HillDetailPresenter extends MvpBasePresenter<HillDetailView> {
     private DbHelper dbHelper;
 
     @Inject
-    public HillDetailPresenter(DbHelper dbHelper){
+    public HillDetailPresenter(DbHelper dbHelper) {
         super();
-        this.dbHelper=dbHelper;
+        this.dbHelper = dbHelper;
     }
 
     @Override
@@ -34,10 +36,11 @@ public class HillDetailPresenter extends MvpBasePresenter<HillDetailView> {
     }
 
     public void getHill(int rowid) {
-        Log.d(TAG,"presenter hit");
-        Hill hill = dbHelper.getHill(rowid);
-        if(isViewAttached()){
-            getView().updateHill(hill);
-        }
+        dbHelper.getHill(rowid).observeOn(AndroidSchedulers.mainThread()).subscribe(hill -> {
+            if (isViewAttached()) {
+                getView().updateHill(hill);
+            }
+        });
+
     }
 }

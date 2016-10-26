@@ -21,10 +21,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.Callable;
 
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 import uk.colessoft.android.hilllist.model.Hill;
 
 import static android.content.ContentValues.TAG;
+import static rx.schedulers.Schedulers.io;
 import static uk.colessoft.android.hilllist.database.BaggingTable.BAGGING_TABLE;
 import static uk.colessoft.android.hilllist.database.BaggingTable.KEY_DATECLIMBED;
 import static uk.colessoft.android.hilllist.database.BaggingTable.KEY_NOTES;
@@ -87,7 +93,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     protected HillsDatabaseHelper(Context context, String name, CursorFactory factory,
-                                int version) {
+                                  int version) {
         super(context, name, factory, version);
         this.context = context;
 
@@ -107,10 +113,24 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         return sInstance;
     }
 
+    private static <T> Observable<T> makeObservable(final Callable<T> func) {
+        return Observable.create(
+                new Observable.OnSubscribe<T>() {
+                    @Override
+                    public void call(Subscriber<? super T> subscriber) {
+                        try {
+                            subscriber.onNext(func.call());
+                        } catch (Exception ex) {
+                            Log.e(TAG, "Error reading from the database", ex);
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         HillsTables.onCreate(db, context, handler, 9999999);
-        BaggingTable.onCreate(db, context);
+        BaggingTable.onCreate(db);
     }
 
     @Override
@@ -158,7 +178,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
                         + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
                         + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
-        KEY_NOTES, KEY_DATECLIMBED},
+                        KEY_NOTES, KEY_DATECLIMBED},
                 null, null, null, null, null);
     }
 
@@ -184,7 +204,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     @Override
     public Cursor getHillGroup(String groupId, String countryClause, String moreFilters, String orderBy, int filter) {
 
-        if("T100".equals(groupId)) return getT100(moreFilters,orderBy,filter);
+        if ("T100".equals(groupId)) return getT100(moreFilters, orderBy, filter);
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         String where = "";
@@ -228,7 +248,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public Cursor getT100( String moreFilters, String orderBy, int filter) {
+    public Cursor getT100(String moreFilters, String orderBy, int filter) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         String where = "T100='1'";
@@ -265,29 +285,35 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public Hill getHill(long _rowIndex){
-
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(hills + " left join "
-                + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
-
-        queryBuilder.appendWhere(hillsKeyId + "=" + _rowIndex);
-
-        SQLiteDatabase db = getWritableDatabase();
-
-        Cursor cursor = queryBuilder.query(db, null, null,
-                null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            Hill hill = getHill(cursor);
-            cursor.close();
-            return hill;
-        } else {
-            cursor.close();
-            return null;
-        }
-
+    public Observable<Hill> getHill(long rowIndex) {
+        return makeObservable(getHillFromDatabase(rowIndex))
+                .subscribeOn(Schedulers.computation());
     }
+
+    private Callable<Hill> getHillFromDatabase(long _rowIndex) {
+        return () -> {
+            SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+            queryBuilder.setTables(hills + " left join "
+                    + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
+
+            queryBuilder.appendWhere(hillsKeyId + "=" + _rowIndex);
+
+            SQLiteDatabase db = getWritableDatabase();
+
+            Cursor cursor = queryBuilder.query(db, null, null,
+                    null, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                Hill hill = getHill(cursor);
+                cursor.close();
+                return hill;
+            } else {
+                cursor.close();
+                return null;
+            }
+        };
+    }
+
 
     @Override
     public void importBagging(String filePath) {

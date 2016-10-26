@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
@@ -77,37 +78,40 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
         LatLangBounds llb = new LatLangBounds();
         for (String rowid : rowids) {
             long lrow = Long.parseLong(rowid);
-            Hill hill = dbAdapter.getHill(lrow);
-            TinyHill t = new TinyHill();
-            t._id = hill.get_id();
-            t.setHillname(hill.getHillname());
-            double lat = hill.getLatitude();
-            double lng = hill.getLongitude();
-            llb.addLatLong(lat, lng);
-            t.setLatitude(lat);
-            t.setLongitude(lng);
-            if (hill.getHillClimbed() != null) {
-                t.setClimbed(true);
-            } else {
-                t.setClimbed(false);
-            }
-            BitmapDescriptor hillDescriptor;
+            dbAdapter.getHill(lrow).observeOn(AndroidSchedulers.mainThread()).subscribe(hill -> {
+                TinyHill t = new TinyHill();
+                t._id = hill.get_id();
+                t.setHillname(hill.getHillname());
+                double lat = hill.getLatitude();
+                double lng = hill.getLongitude();
+                llb.addLatLong(lat, lng);
+                t.setLatitude(lat);
+                t.setLongitude(lng);
+                if (hill.getHillClimbed() != null) {
+                    t.setClimbed(true);
+                } else {
+                    t.setClimbed(false);
+                }
+                BitmapDescriptor hillDescriptor;
 
-            if (t.isClimbed()) {
-                hillDescriptor = cmarker;
-            } else hillDescriptor = marker;
-            LatLng hillPosition = new LatLng(t.getLatitude(), t.getLongitude());
-            Marker marker = map.addMarker(new MarkerOptions()
-                    .draggable(false)
-                    .position(hillPosition)
-                    .title(t.getHillname()
+                if (t.isClimbed()) {
+                    hillDescriptor = cmarker;
+                } else hillDescriptor = marker;
+                LatLng hillPosition = new LatLng(t.getLatitude(), t.getLongitude());
+                Marker marker = map.addMarker(new MarkerOptions()
+                        .draggable(false)
+                        .position(hillPosition)
+                        .title(t.getHillname()
 
-                    )
-                    .icon(hillDescriptor)
-                    .anchor(0.5F, 0.5F)
-            );
-            marker.setTag(t._id);
-            markers.add(marker);
+                        )
+                        .icon(hillDescriptor)
+                        .anchor(0.5F, 0.5F)
+                );
+                marker.setTag(t._id);
+                markers.add(marker);
+            });
+
+
         }
         gotHills = true;
         final LatLngBounds bounds = new LatLngBounds(new LatLng(
@@ -133,7 +137,6 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
     private BitmapDescriptor marker;
     private BitmapDescriptor cmarker;
-
 
 
     @Override
@@ -170,8 +173,6 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
             }
 
         });
-
-
 
 
         String title;

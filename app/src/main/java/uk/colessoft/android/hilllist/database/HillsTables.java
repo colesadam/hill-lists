@@ -125,7 +125,6 @@ public class HillsTables {
 
             StringBuffer insertHillsBuffer;
 
-
             // read main hill data into hills table
             database.beginTransaction();
             String line;

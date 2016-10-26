@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BaggingTable;
@@ -82,8 +83,6 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.many_hills_map_v2);
-
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -91,9 +90,6 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         String title = getIntent().getExtras().getString("title");
         setTitle(title);
         ((BHApplication) getApplication()).getDbComponent().inject(this);
-        hill = dbAdapter.getHill(rowid);
-
-
     }
 
     private void addNearHills() {
@@ -173,23 +169,6 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         map = googleMap;
         map.setOnInfoWindowClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        LatLng hillPosition = new LatLng(hill.getLatitude(), hill.getLongitude());
-        Marker marker = map.addMarker(new MarkerOptions()
-                .draggable(false)
-                .position(hillPosition)
-                .title(hill.getHillname())
-                .snippet(String.valueOf(hill.getHeightm())
-                        + " m"
-                )
-                .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.purple_hill))
-                .anchor(0.5F, 0.5F)
-        );
-        marker.setTag(hill.get_id());
-        marker.showInfoWindow();
-
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));
-
         final ToggleButton mapButton = (ToggleButton) findViewById(R.id.satellite_button);
         mapButton.setChecked(true);
         mapButton.setOnClickListener(v -> {
@@ -200,9 +179,28 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
             }
 
         });
+        dbAdapter.getHill(rowid).observeOn(AndroidSchedulers.mainThread()).subscribe(hill -> {
+            this.hill = hill;
+            LatLng hillPosition = new LatLng(hill.getLatitude(), hill.getLongitude());
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .draggable(false)
+                    .position(hillPosition)
+                    .title(hill.getHillname())
+                    .snippet(String.valueOf(hill.getHeightm())
+                            + " m"
+                    )
+                    .icon(BitmapDescriptorFactory
+                            .fromResource(R.drawable.purple_hill))
+                    .anchor(0.5F, 0.5F)
+            );
+            marker.setTag(hill.get_id());
+            marker.showInfoWindow();
+
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));
+
+        });
 
     }
-
 
     @Override
     public void onInfoWindowClick(Marker marker) {

@@ -16,10 +16,10 @@ public class BaggingTable {
 	public static final String KEY_NOTES = "notes";
 	public static final String BAGGING_TABLE = "Bagging";
 
-	public static void onCreate(SQLiteDatabase db, Context context) {
+	public static void onCreate(SQLiteDatabase db) {
 		db.execSQL(BAGGING_CREATE);
 
-		OldHillDbAdapter oldHillDbAdapter = new OldHillDbAdapter(context);
+		OldHillDbAdapter oldHillDbAdapter = new OldHillDbAdapter();
 		try {
 			oldHillDbAdapter.open();
 			Cursor oldBagging = oldHillDbAdapter.getBaggedHillList();
@@ -41,7 +41,7 @@ public class BaggingTable {
             }
 			oldHillDbAdapter.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Log.d(TAG,"No old bagging table imported");
 		}
 
 	}

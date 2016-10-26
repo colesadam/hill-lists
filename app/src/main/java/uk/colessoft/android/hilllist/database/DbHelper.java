@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import java.util.Date;
 
+import rx.Observable;
 import uk.colessoft.android.hilllist.model.Hill;
 
 public interface DbHelper {
@@ -24,7 +25,7 @@ public interface DbHelper {
 
     Cursor getT100(String moreWhere, String orderBy, int filter);
 
-    Hill getHill(long _rowIndex) throws SQLException;
+    Observable<Hill> getHill(long _rowIndex) throws SQLException;
 
 
     void importBagging(final String filePath);
