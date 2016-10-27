@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -33,6 +34,9 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.BusinessSearchMapActivity;
@@ -119,21 +123,21 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
     private int mDay;
     private int thisId;
 
-    private TextView dateClimbed;
-    private TextView hillnameView;
+    @BindView(R.id.detail_date_climbed) private TextView dateClimbed;
+    @BindView(R.id.detail_hill_name) private TextView hillnameView;
     private CheckBox ctv;
-    private TextView hillheight;
-    private TextView hillLatitude;
-    private TextView hillLongitude;
-    private TextView osgridref;
-    private TextView hillsection;
-    private TextView os50k;
-    private TextView os25k;
-    private TextView summitFeature;
-    private TextView colHeight;
-    private TextView colGridRef;
-    private TextView drop;
-    private ViewGroup classificationLayout;
+    @BindView(R.id.detail_hill_height) private TextView hillheight;
+    @BindView(R.id.detail_hill_latitude) private TextView hillLatitude;
+    @BindView(R.id.detail_hill_longitude) private TextView hillLongitude;
+    @BindView(R.id.detail_hill_osgrid) private TextView osgridref;
+    @BindView(R.id.detail_hill_section) private TextView hillsection;
+    @BindView(R.id.detail_os50k) private TextView os50k;
+    @BindView(R.id.detail_os25k) private TextView os25k;
+    @BindView(R.id.detail_hill_summit_feature) private TextView summitFeature;
+    @BindView(R.id.detail_colheight) private TextView colHeight;
+    @BindView(R.id.detail_colgridref) private TextView colGridRef;
+    @BindView(R.id.detail_drop) private TextView drop;
+    @BindView(R.id.hill_classifications) private ViewGroup classificationLayout;
 
     HillDetailComponent hillDetailComponent;
 
@@ -274,71 +278,42 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
         updateFromPreferences();
         View viewer = inflater.inflate(R.layout.no_table_hill_detail, container,
                 false);
-
-        hillnameView = (TextView) viewer
-                .findViewById(R.id.detail_hill_name);
-        hillheight = (TextView) viewer
-                .findViewById(R.id.detail_hill_height);
-
-        hillLatitude = (TextView) viewer
-                .findViewById(R.id.detail_hill_latitude);
-        hillLongitude = (TextView) viewer
-                .findViewById(R.id.detail_hill_longitude);
-        osgridref = (TextView) viewer
-                .findViewById(R.id.detail_hill_osgrid);
-        hillsection = (TextView) viewer
-                .findViewById(R.id.detail_hill_section);
-
-        os50k = (TextView) viewer.findViewById(R.id.detail_os50k);
-        os25k = (TextView) viewer.findViewById(R.id.detail_os25k);
-
-        summitFeature = (TextView) viewer
-                .findViewById(R.id.detail_hill_summit_feature);
-        colHeight = (TextView) viewer
-                .findViewById(R.id.detail_colheight);
-        colGridRef = (TextView) viewer
-                .findViewById(R.id.detail_colgridref);
-        drop = (TextView) viewer.findViewById(R.id.detail_drop);
-        classificationLayout = (LinearLayout) viewer
-                .findViewById(R.id.hill_classifications);
-        dateClimbed = (TextView) viewer
-                .findViewById(R.id.detail_date_climbed);
+        ButterKnife.bind(getActivity());
         classificationLayout.removeAllViews();
 
         Toolbar toolbar = (Toolbar) viewer.findViewById(R.id.hill_detail_toolbar);
         toolbar.inflateMenu(R.menu.hill_detail_menu);
         ctv = (CheckBox) MenuItemCompat.getActionView(toolbar.getMenu().findItem(R.id.menuShowDue));
-        ctv.setOnClickListener(null);
+        ctv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    Context mContext = getActivity().getApplicationContext();
+                    Dialog dialog = new Dialog(mContext);
 
-        ctv.setOnClickListener(v -> {
+                    dialog.setContentView(R.layout.hill_climbed_dialog);
+                    dialog.setTitle("Mark Hill As Climbed");
 
-            CheckBox xcv = (CheckBox) v;
-            if (xcv.isChecked()) {
-                Context mContext = getActivity().getApplicationContext();
-                Dialog dialog = new Dialog(mContext);
+                    dbAdapter.markHillClimbed(hill.get_id(), new Date(), "");
+                    Toast climbed = Toast.makeText(getActivity().getApplication(),
+                            "Marked as Climbed", Toast.LENGTH_SHORT);
+                    climbed.show();
+                    //hill = dbAdapter.getHill(hill.get_id());
 
-                dialog.setContentView(R.layout.hill_climbed_dialog);
-                dialog.setTitle("Mark Hill As Climbed");
+                    bagFeature(hill);
+                } else {
 
-                dbAdapter.markHillClimbed(hill.get_id(), new Date(), "");
-                Toast climbed = Toast.makeText(getActivity().getApplication(),
-                        "Marked as Climbed", Toast.LENGTH_SHORT);
-                climbed.show();
-                //hill = dbAdapter.getHill(hill.get_id());
+                    dbAdapter.markHillNotClimbed(hill.get_id());
 
-                bagFeature(hill);
-            } else {
-
-                dbAdapter.markHillNotClimbed(hill.get_id());
-
-                Toast climbed;
-                climbed = Toast.makeText(getActivity().getApplication(),
-                        "Marked not Climbed", Toast.LENGTH_SHORT);
-                climbed.show();
-                noBagSenor(hill);
+                    Toast climbed;
+                    climbed = Toast.makeText(getActivity().getApplication(),
+                            "Marked not Climbed", Toast.LENGTH_SHORT);
+                    climbed.show();
+                    noBagSenor(hill);
+                }
             }
-
         });
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -373,6 +348,7 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
         thisId = rowid;
         presenter.getHill(rowid);
     }
+
 
     @Override
     public void updateHill(Hill hill) {
