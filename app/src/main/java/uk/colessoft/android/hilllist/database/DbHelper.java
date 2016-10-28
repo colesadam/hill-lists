@@ -10,9 +10,10 @@ import rx.Observable;
 import uk.colessoft.android.hilllist.model.Hill;
 
 public interface DbHelper {
-    void markHillClimbed(int hillNumber, Date dateClimbed, String notes);
 
-    void markHillNotClimbed(int hillNumber);
+    Observable<Long> markHillClimbed(int hillNumber, Date dateClimbed, String notes);
+
+    Observable<Integer> markHillNotClimbed(int hillNumber);
 
     Cursor getAllHillsCursor();
 

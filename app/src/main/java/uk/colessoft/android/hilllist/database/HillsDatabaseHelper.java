@@ -139,36 +139,51 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public void markHillClimbed(int hillNumber, Date dateClimbed, String notes) {
-        SQLiteDatabase db = getWritableDatabase();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public Observable<Long> markHillClimbed(int hillNumber, Date dateClimbed, String notes) {
 
-        ContentValues climbedValues = new ContentValues();
-        climbedValues.put("dateClimbed", dateFormat.format(dateClimbed));
-        climbedValues.put("_id", String.valueOf(hillNumber));
-        climbedValues.put("notes", notes);
-        Cursor existing = db.query(true, BAGGING_TABLE,
-                new String[]{KEY_ID},
-                KEY_ID + "='" + String.valueOf(hillNumber) + "'", null, null,
-                null, null, null);
-
-        db.beginTransaction();
-        if (existing.getCount() == 0) {
-            db.insert(BAGGING_TABLE, null, climbedValues);
-        } else {
-            db.update(BAGGING_TABLE, climbedValues, "_id='"
-                    + String.valueOf(hillNumber) + "'", null);
-        }
-        db.setTransactionSuccessful();
-        db.endTransaction();
-        existing.close();
+        return makeObservable(hillClimbed(hillNumber, dateClimbed, notes)).subscribeOn(Schedulers.computation());
 
     }
 
+    private Callable<Long> hillClimbed(int hillNumber, Date dateClimbed, String notes) {
+        return () -> {
+            SQLiteDatabase db = getWritableDatabase();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            ContentValues climbedValues = new ContentValues();
+            climbedValues.put("dateClimbed", dateFormat.format(dateClimbed));
+            climbedValues.put("_id", String.valueOf(hillNumber));
+            climbedValues.put("notes", notes);
+            Cursor existing = db.query(true, BAGGING_TABLE,
+                    new String[]{KEY_ID},
+                    KEY_ID + "='" + String.valueOf(hillNumber) + "'", null, null,
+                    null, null, null);
+
+            db.beginTransaction();
+            long result;
+            if (existing.getCount() == 0) {
+                result = db.insert(BAGGING_TABLE, null, climbedValues);
+            } else {
+                result = db.update(BAGGING_TABLE, climbedValues, "_id='"
+                        + String.valueOf(hillNumber) + "'", null);
+            }
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            existing.close();
+            return result;
+        };
+    }
+
     @Override
-    public void markHillNotClimbed(int hillNumber) {
+    public Observable<Integer> markHillNotClimbed(int hillNumber) {
+        return makeObservable(hillNotClimbed(hillNumber)).subscribeOn(Schedulers.computation());
+    }
+
+    private Callable<Integer> hillNotClimbed(int hillNumber) {return () -> {
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(BAGGING_TABLE, "_id='" + hillNumber + "'", null);
+        return db.delete(BAGGING_TABLE, "_id='" + hillNumber + "'", null);
+    };
+
     }
 
     @Override

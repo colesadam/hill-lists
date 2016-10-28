@@ -8,10 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +39,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.BusinessSearchMapActivity;
@@ -52,8 +55,10 @@ import uk.colessoft.android.hilllist.presenter.HillDetailPresenter;
 import uk.colessoft.android.hilllist.presenter.HillDetailPresenter_Factory;
 import uk.colessoft.android.hilllist.views.HillDetailView;
 
+import static android.content.ContentValues.TAG;
 
-public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPresenter> implements HillDetailView{
+
+public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPresenter> implements HillDetailView {
 
     static final int DATE_DIALOG_ID = 0;
     static final int MARK_HILL_CLIMBED_DIALOG = 1;
@@ -113,8 +118,7 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
 
         }
     };
-    @Inject
-    DbHelper dbAdapter;
+
 
     private boolean useMetricHeights;
     private Hill hill;
@@ -123,23 +127,62 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
     private int mDay;
     private int thisId;
 
-    @BindView(R.id.detail_date_climbed) private TextView dateClimbed;
-    @BindView(R.id.detail_hill_name) private TextView hillnameView;
+    @BindView(R.id.detail_date_climbed)
+    public TextView dateClimbed;
+    @BindView(R.id.detail_hill_name)
+    public TextView hillnameView;
     private CheckBox ctv;
-    @BindView(R.id.detail_hill_height) private TextView hillheight;
-    @BindView(R.id.detail_hill_latitude) private TextView hillLatitude;
-    @BindView(R.id.detail_hill_longitude) private TextView hillLongitude;
-    @BindView(R.id.detail_hill_osgrid) private TextView osgridref;
-    @BindView(R.id.detail_hill_section) private TextView hillsection;
-    @BindView(R.id.detail_os50k) private TextView os50k;
-    @BindView(R.id.detail_os25k) private TextView os25k;
-    @BindView(R.id.detail_hill_summit_feature) private TextView summitFeature;
-    @BindView(R.id.detail_colheight) private TextView colHeight;
-    @BindView(R.id.detail_colgridref) private TextView colGridRef;
-    @BindView(R.id.detail_drop) private TextView drop;
-    @BindView(R.id.hill_classifications) private ViewGroup classificationLayout;
+    @BindView(R.id.detail_hill_height)
+    public TextView hillheight;
+    @BindView(R.id.detail_hill_latitude)
+    public TextView hillLatitude;
+    @BindView(R.id.detail_hill_longitude)
+    public TextView hillLongitude;
+    @BindView(R.id.detail_hill_osgrid)
+    public TextView osgridref;
+    @BindView(R.id.detail_hill_section)
+    public TextView hillsection;
+    @BindView(R.id.detail_os50k)
+    public TextView os50k;
+    @BindView(R.id.detail_os25k)
+    public TextView os25k;
+    @BindView(R.id.detail_hill_summit_feature)
+    public TextView summitFeature;
+    @BindView(R.id.detail_colheight)
+    public TextView colHeight;
+    @BindView(R.id.detail_colgridref)
+    public TextView colGridRef;
+    @BindView(R.id.detail_drop)
+    public TextView drop;
+    @BindView(R.id.hill_classifications)
+    public ViewGroup classificationLayout;
+    @BindView(R.id.hill_detail_toolbar)
+    public Toolbar toolbar;
+    @BindView(R.id.save_notes)
+    public TextView saveNotes;
+    @BindView(R.id.detail_hill_notes)
+    public EditText notesText;
 
-    HillDetailComponent hillDetailComponent;
+    @OnClick(R.id.save_notes)
+    public void saveNotes(Button notes) {
+        Date d = new Date();
+        try {
+            d = iso8601Format.parse(dateClimbed.getText().toString());
+        } catch (ParseException e) {
+            Log.e(TAG, "Couldn't parse date", e);
+        }
+        hill.setNotes(notesText.getText().toString());
+        presenter.markHillClimbed(hill.get_id(), d, notesText.getText()
+                .toString(), "Saved");
+    }
+
+    @OnClick(R.id.detail_date_climbed)
+    public void date(View view) {
+        DatePickerDialog d = new DatePickerDialog(getActivity(), mDateSetListener,
+                mYear, mMonth, mDay);
+
+        d.show();
+    }
 
     private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -151,6 +194,9 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
             updateDisplay();
         }
     };
+    private SimpleDateFormat iso8601Format = new SimpleDateFormat(
+            "dd/MM/yyyy");
+
 
     private void showMapSingle() {
         Intent intent = new Intent(getActivity(), DetailGMapActivity.class);
@@ -212,107 +258,42 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
     private void bagFeature(final Hill hill) {
 
         hillnameView.setTextColor(getResources().getColor(R.color.light_green));
-        dateClimbed = (TextView) getActivity().findViewById(
-                R.id.detail_date_climbed);
-        TextView saveNotes = (TextView) getActivity().findViewById(R.id.save_notes);
-        final EditText notes = (EditText) getActivity().findViewById(
-                R.id.detail_hill_notes);
 
         ((View) dateClimbed.getParent()).setVisibility(View.VISIBLE);
-        // ((View)
-        // saveNotes.getParent().getParent()).setVisibility(View.VISIBLE);
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
         Date realDate = hill.getHillClimbed();
-        dateClimbed.setText(format.format(realDate));
+        dateClimbed.setText(iso8601Format.format(realDate));
         mYear = realDate.getYear() + 1900;
         mMonth = realDate.getMonth();
         mDay = realDate.getDate();
-
-
-        dateClimbed.setOnClickListener(v -> {
-            DatePickerDialog d = new DatePickerDialog(getActivity(), mDateSetListener,
-                    mYear, mMonth, mDay);
-
-            d.show();
-        });
-
-        saveNotes.setOnClickListener(arg0 -> {
-            SimpleDateFormat iso8601Format = new SimpleDateFormat(
-                    "dd/MM/yyyy");
-            Date d = new Date();
-            try {
-                d = iso8601Format.parse(dateClimbed.getText().toString());
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            dbAdapter.markHillClimbed(hill.get_id(), d, notes.getText()
-                    .toString());
-
-            Toast climbed;
-            climbed = Toast.makeText(getActivity().getApplication(),
-                    "Saved", Toast.LENGTH_SHORT);
-            climbed.show();
-
-        });
-
-        notes.setText(hill.getNotes());
+        notesText.setText(hill.getNotes());
 
     }
 
     @Override
     public HillDetailPresenter createPresenter() {
-        return ((BHApplication)getActivity().getApplication()).getHillDetailComponent().presenter();
+        return ((BHApplication) getActivity().getApplication()).getHillDetailComponent().presenter();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
+        updateFromPreferences();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        updateFromPreferences();
+
         View viewer = inflater.inflate(R.layout.no_table_hill_detail, container,
                 false);
-        ButterKnife.bind(getActivity());
-        classificationLayout.removeAllViews();
 
-        Toolbar toolbar = (Toolbar) viewer.findViewById(R.id.hill_detail_toolbar);
+        ButterKnife.bind(this, viewer);
+        classificationLayout.removeAllViews();
         toolbar.inflateMenu(R.menu.hill_detail_menu);
         ctv = (CheckBox) MenuItemCompat.getActionView(toolbar.getMenu().findItem(R.id.menuShowDue));
-        ctv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    Context mContext = getActivity().getApplicationContext();
-                    Dialog dialog = new Dialog(mContext);
-
-                    dialog.setContentView(R.layout.hill_climbed_dialog);
-                    dialog.setTitle("Mark Hill As Climbed");
-
-                    dbAdapter.markHillClimbed(hill.get_id(), new Date(), "");
-                    Toast climbed = Toast.makeText(getActivity().getApplication(),
-                            "Marked as Climbed", Toast.LENGTH_SHORT);
-                    climbed.show();
-                    //hill = dbAdapter.getHill(hill.get_id());
-
-                    bagFeature(hill);
-                } else {
-
-                    dbAdapter.markHillNotClimbed(hill.get_id());
-
-                    Toast climbed;
-                    climbed = Toast.makeText(getActivity().getApplication(),
-                            "Marked not Climbed", Toast.LENGTH_SHORT);
-                    climbed.show();
-                    noBagSenor(hill);
-                }
-            }
-        });
+        ctv.setOnCheckedChangeListener(hillClimbedOnCheckedChangeListener());
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -334,9 +315,7 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
                         Intent intent = new Intent(getActivity(), HillImagesActivity.class);
                         intent.putExtra("hillId", Long.valueOf(thisId));
                         startActivity(intent);
-
                     }
-
                 }
                 return false;
             }
@@ -344,7 +323,21 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
         return viewer;
     }
 
-    public void updateHill(int rowid){
+    @NonNull
+    private CompoundButton.OnCheckedChangeListener hillClimbedOnCheckedChangeListener() {
+        return (compoundButton, isChecked) -> {
+            if (isChecked) {
+                Date now = new Date();
+                String notes = "";
+                hill.setDateClimbed(now);
+                presenter.markHillClimbed(hill.get_id(), now, notes, "Marked as Climbed");
+            } else {
+                presenter.markHillNotClimbed(hill.get_id());
+            }
+        };
+    }
+
+    public void updateHill(int rowid) {
         thisId = rowid;
         presenter.getHill(rowid);
     }
@@ -391,7 +384,6 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
             String fullClassification = classesMap.get(classification);
             if (fullClassification != null) {
                 classificationTextView = new TextView(getActivity());
-                // classificationTextView.setBackgroundResource(R.color.white);
                 classificationTextView.setText(fullClassification);
                 classificationTextView.setPadding(5, 5, 5, 5);
                 classificationTextView.setTextAppearance(getActivity(), R.style.hill_detail_text);
@@ -404,21 +396,47 @@ public class HillDetailFragment extends MvpFragment<HillDetailView,HillDetailPre
             classificationTextView.setPadding(5, 5, 5, 5);
         }
 
-
-        final int id = hill.get_id();
         if (hill.getHillClimbed() != null) {
-
+            ctv.setOnCheckedChangeListener(null);
             ctv.setChecked(true);
+            ctv.setOnCheckedChangeListener(hillClimbedOnCheckedChangeListener());
+            bagFeature(hill);
 
-        } else
+        } else {
+            ctv.setOnCheckedChangeListener(null);
             ctv.setChecked(false);
+            ctv.setOnCheckedChangeListener(hillClimbedOnCheckedChangeListener());
+        }
+    }
 
+    @Override
+    public void hillMarkedClimbed(boolean succeeded, String message) {
+        Toast climbed = Toast.makeText(getActivity().getApplication(),
+                message, Toast.LENGTH_SHORT);
+        climbed.show();
+        bagFeature(hill);
+    }
 
+    @Override
+    public void hillMarkedUnclimbed(boolean succeeded) {
+        Toast climbed = Toast.makeText(getActivity().getApplication(),
+                "Marked not Climbed", Toast.LENGTH_SHORT);
+        climbed.show();
+        noBagSenor(hill);
     }
 
     private void updateDisplay() {
         dateClimbed.setText(new StringBuilder().append(mDay).append("/")
                 .append(mMonth + 1).append("/").append(mYear));
+        Date d = new Date();
+        try {
+            d = iso8601Format.parse(dateClimbed.getText().toString());
+        } catch (ParseException e) {
+            Log.e(TAG, "Couldn't parse date", e);
+        }
+        hill.setDateClimbed(d);
+        presenter.markHillClimbed(hill.get_id(),d,notesText.getText().toString(),"Date Updated");
+
     }
 
     private void updateFromPreferences() {

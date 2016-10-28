@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,5 +44,25 @@ public class HillDetailPresenter extends MvpBasePresenter<HillDetailView> {
             }
         });
 
+    }
+
+    public void markHillClimbed(int hillNumber, Date dateClimbed, String notes, String message) {
+        dbHelper.markHillClimbed(hillNumber, dateClimbed, notes)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    if (isViewAttached()) {
+                        getView().hillMarkedClimbed(result > 0 ? true : false, message);
+                    }
+                });
+    }
+
+    public void markHillNotClimbed(int hillNumber) {
+        dbHelper.markHillNotClimbed(hillNumber)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    if (isViewAttached()) {
+                        getView().hillMarkedUnclimbed(result > 0 ? true : false);
+                    }
+                });
     }
 }

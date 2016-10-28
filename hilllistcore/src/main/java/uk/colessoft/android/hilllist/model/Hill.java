@@ -201,7 +201,11 @@ public class Hill {
 		return hillClimbed;
 	}
 
-	private void setNotes(String notes) {
+	public void setDateClimbed(Date date) {
+		this.setHillClimbed(date);
+	}
+
+	public void setNotes(String notes) {
 		this.notes = notes;
 	}
 
