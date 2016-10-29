@@ -9,9 +9,10 @@
     </style>
 
     <style name="hill_detail_label" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="hill_detail_title" parent="@android:style/TextAppearance.Large">
@@ -24,9 +25,8 @@
 
     <style name="hill_detail_text" parent="@android:style/TextAppearance.Small">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_margin">1sp</item>
-        <item name="android:padding">5sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">1sp</item>
         <item name="android:textColor">@color/pale_blue</item>
         <item name="android:textSize">15sp</item>
     </style>

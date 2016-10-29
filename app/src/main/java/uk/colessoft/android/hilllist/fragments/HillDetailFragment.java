@@ -256,7 +256,6 @@ public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
         updateFromPreferences();
     }
 
@@ -277,15 +276,19 @@ public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPr
             switch (item.getItemId()) {
                 case R.id.menu_show_map: {
                     showMapSingle();
+                    return true;
                 }
                 case R.id.os_map: {
                     showOSMap();
+                    return true;
                 }
                 case R.id.scoot: {
                     scootSearch();
+                    return true;
                 }
                 case R.id.images: {
                     showImages();
+                    return true;
                 }
             }
             return false;
@@ -299,9 +302,8 @@ public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPr
         return (compoundButton, isChecked) -> {
             if (isChecked) {
                 LocalDate now = new LocalDate();
-                String notes = "";
                 hill.setDateClimbed(now);
-                presenter.markHillClimbed(hill.get_id(), now, notes, "Marked as Climbed");
+                presenter.markHillClimbed(hill.get_id(), now, "", "Marked as Climbed");
             } else {
                 presenter.markHillNotClimbed(hill.get_id());
             }
@@ -312,7 +314,6 @@ public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPr
         thisId = rowid;
         presenter.getHill(rowid);
     }
-
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -342,7 +343,6 @@ public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPr
         colHeight.setText(String.valueOf(hill.getColheight()));
         colGridRef.setText(hill.getColgridref());
         drop.setText(String.valueOf(hill.getDrop()));
-
         summitFeature.setText(hill.getFeature());
 
         String[] sClassifications = hill.getClassification().replace("\"", "").split(",");

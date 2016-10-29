@@ -311,22 +311,27 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
 
     private Callable<Hill> getHillFromDatabase(long _rowIndex) {
         return () -> {
+            System.out.println("########called");
             SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
             queryBuilder.setTables(hills + " left join "
                     + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
 
             queryBuilder.appendWhere(hillsKeyId + "=" + _rowIndex);
-
+System.out.println("####about to get db");
             SQLiteDatabase db = getWritableDatabase();
+            System.out.println("####got db");
 
             Cursor cursor = queryBuilder.query(db, null, null,
                     null, null, null, null);
+            System.out.println("#####"+cursor.getCount());
 
             if (cursor.moveToFirst()) {
                 Hill hill = getHill(cursor);
+                Log.d(TAG,"#######"+hill.getHillname());
                 cursor.close();
                 return hill;
             } else {
+                Log.d(TAG,"Not found");
                 cursor.close();
                 return null;
             }

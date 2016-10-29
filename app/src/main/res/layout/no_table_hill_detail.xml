@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
 
@@ -22,13 +25,15 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="2sp"
                     android:stretchColumns="1"
                     android:elevation="24dp">
 
@@ -37,21 +42,33 @@
                         style="@style/hill_detail_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Hillname" />
+                        tools:text="Big Mountain" />
 
                     <View
                         android:id="@+id/divider1"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@id/detail_hill_name"
-                        android:layout_marginLeft="2sp"
                         android:background="@color/primary_light"
                         android:layout_marginBottom="5sp" />
 
+
+                </RelativeLayout>
+
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animationCache="true">
+
                     <TextView
                         style="@style/hill_detail_label"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@+id/divider1"
+                        android:id="@+id/hill_height_label"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
                         android:text="@string/label_height" />
 
                     <TextView
@@ -59,18 +76,140 @@
                         style="@style/hill_detail_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/detail_hill_name"
-                        android:layout_margin="1sp"
-                        android:padding="5sp" />
-                </RelativeLayout>
+                        app:layout_constraintTop_toTopOf="@+id/hill_height_label"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/hill_height_label"
+                        tools:text="5000m" />
+
+                    <TextView
+                        style="@style/hill_detail_label"
+                        android:text="@string/label_latitude"
+                        android:id="@+id/position_label"
+                        app:layout_constraintTop_toBottomOf="@+id/hill_height_label"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/detail_hill_latitude"
+                        style="@style/hill_detail_text"
+                        android:layout_width="wrap_content"
+                        tools:text="3.700000W"
+                        app:layout_constraintTop_toTopOf="@+id/position_label"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/position_label" />
+
+                    <TextView
+                        android:id="@+id/detail_hill_longitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/hill_detail_text"
+                        app:layout_constraintRight_toLeftOf="@+id/detail_hill_latitude"
+                        app:layout_constraintTop_toTopOf="@+id/position_label"
+                        tools:text="57.000000N"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/position_label"/>
+
+                    <TextView
+                        style="@style/hill_detail_label"
+                        android:text="@string/label_osgrid"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:id="@+id/os_grid_label"
+                        app:layout_constraintTop_toBottomOf="@+id/position_label"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/detail_hill_osgrid"
+                        style="@style/hill_detail_text"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_width="wrap_content"
+                        tools:text="NN954976"
+                        app:layout_constraintBottom_toBottomOf="@+id/os_grid_label"
+                        app:layout_constraintTop_toTopOf="@+id/os_grid_label" />
+
+
+                    <TextView
+                        style="@style/hill_detail_label"
+                        android:text="@string/label_section"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:id="@+id/section_label"
+                        app:layout_constraintTop_toBottomOf="@+id/os_grid_label"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/detail_hill_section"
+                        style="@style/hill_detail_text"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        tools:text="08A"
+                        app:layout_constraintTop_toTopOf="@+id/section_label"
+                        app:layout_constraintBottom_toBottomOf="@+id/section_label" />
+
+                    <TextView
+                        style="@style/hill_detail_label"
+                        android:text="@string/label_os50k"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:id="@+id/os50_label"
+                        app:layout_constraintTop_toBottomOf="@+id/section_label"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/detail_os50k"
+                        style="@style/hill_detail_text"
+                        android:padding="5sp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        tools:text="36 43"
+                        app:layout_constraintTop_toTopOf="@+id/os50_label"
+                        app:layout_constraintBottom_toBottomOf="@+id/os50_label" />
+
+                    <TextView
+                        style="@style/hill_detail_label"
+                        android:text="@string/label_os25k"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/os25label"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/os50_label"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/detail_os25k"
+                        style="@style/hill_detail_text"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/os25label"
+                        tools:text="OL57S 303S"
+                        app:layout_constraintBottom_toBottomOf="@+id/os25label" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/primary_light"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/os25label"
+                        android:layout_marginTop="8dp" />
+
+
+                </android.support.constraint.ConstraintLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="2sp"
-                    android:layout_marginTop="5sp"
                     android:stretchColumns="2"
                     android:visibility="gone">
 
@@ -83,9 +222,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="1sp"
-                        android:padding="5sp"
-                        android:textColor="@color/pale_blue" />
+                        android:textColor="@color/pale_blue"
+                        tools:text="20/10/2015"
+                        android:layout_marginTop="10dp" />
 
                     <TextView
                         android:id="@+id/label_notes"
@@ -97,17 +236,15 @@
                         android:id="@+id/linearLayout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/label_notes"
-                        android:layout_marginLeft="4dp">
+                        android:layout_below="@+id/label_notes">
 
                         <EditText
                             android:id="@+id/detail_hill_notes"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_margin="1sp"
                             android:layout_weight="90"
-                            android:padding="5sp"
-                            android:textColor="@color/pale_blue"></EditText>
+                            android:textColor="@color/pale_blue"
+                            tools:text="this is my favourites"></EditText>
 
                         <Button
                             android:id="@+id/save_notes"
@@ -117,103 +254,17 @@
                             android:gravity="center"
                             android:text="@string/save_selections" />
                     </LinearLayout>
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="2sp"
-                    android:stretchColumns="2">
-
-                    <TextView
-                        style="@style/hill_detail_label"
-                        android:text="@string/label_latitude" />
-
-                    <TextView
-                        android:id="@+id/detail_hill_latitude"
-                        style="@style/hill_detail_text"
-                        android:layout_width="wrap_content"
-                        android:layout_toLeftOf="@+id/detail_hill_longitude"
-                        android:padding="5sp" />
-
-                    <TextView
-                        android:id="@+id/detail_hill_longitude"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="1sp"
-                        android:padding="5sp"
-                        android:textColor="@color/pale_blue" />
-
-                    <TextView
-                        style="@style/hill_detail_label"
-                        android:layout_below="@+id/detail_hill_latitude"
-                        android:text="@string/label_osgrid" />
-
-                    <TextView
-                        android:id="@+id/detail_hill_osgrid"
-                        style="@style/hill_detail_text"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/detail_hill_latitude"
-                        android:layout_margin="1sp"
-                        android:padding="5sp" />
-
-
-                    <TextView
-                        style="@style/hill_detail_label"
-                        android:layout_below="@+id/detail_hill_osgrid"
-                        android:text="@string/label_section" />
-
-                    <TextView
-                        android:id="@+id/detail_hill_section"
-                        style="@style/hill_detail_text"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/detail_hill_osgrid"
-                        android:padding="5sp" />
-
-                    <TextView
-                        style="@style/hill_detail_label"
-                        android:layout_below="@+id/detail_hill_section"
-                        android:text="@string/label_os50k" />
-
-                    <TextView
-                        android:id="@+id/detail_os50k"
-                        style="@style/hill_detail_text"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/detail_hill_section"
-                        android:padding="5sp" />
-
-                    <TextView
-                        style="@style/hill_detail_label"
-                        android:layout_below="@+id/detail_os50k"
-                        android:text="@string/label_os25k" />
-
-                    <TextView
-                        android:id="@+id/detail_os25k"
-                        style="@style/hill_detail_text"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/detail_os50k"
-                        android:padding="5sp" />
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_below="@+id/detail_os25k"
-                        android:layout_marginLeft="2sp"
+                        android:layout_below="@+id/linearLayout1"
                         android:background="@color/primary_light" />
-
-
                 </RelativeLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="2sp"
-                    android:layout_marginTop="2sp">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/label_summit_features"
@@ -224,31 +275,27 @@
                         android:id="@+id/detail_hill_summit_feature"
                         style="@style/hill_detail_text"
                         android:layout_below="@+id/label_summit_features"
-                        android:padding="5sp" />
+                        android:padding="5sp"
+                        tools:text="good pub" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/detail_hill_summit_feature"
-                        android:layout_marginLeft="2sp"
                         android:background="@color/primary_light" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="2sp"
-                    android:layout_marginTop="2sp"
-                    android:stretchColumns="2">
+                    android:stretchColumns="2"
+                    android:paddingBottom="4dp">
 
                     <TextView
                         android:id="@+id/label_classification"
                         style="@style/hill_detail_label"
-                        android:layout_marginLeft="1sp"
-                        android:layout_marginRight="2sp"
-                        android:layout_marginTop="0sp"
-                        android:text="@string/label_classification" />
+                        android:text="@string/label_classification"
+                        android:layout_marginBottom="4dp" />
 
                     <LinearLayout
                         android:id="@+id/hill_classifications"
@@ -264,16 +311,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/hill_classifications"
-                        android:layout_marginLeft="2sp"
                         android:background="@color/primary_light" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="2sp"
-                    android:layout_marginTop="2sp">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         style="@style/hill_detail_label"
@@ -283,8 +326,8 @@
                         android:id="@+id/detail_colheight"
                         style="@style/hill_detail_text"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="1sp"
-                        android:padding="5sp" />
+                        tools:text="150m"
+                        android:layout_marginTop="10dp" />
 
                     <TextView
                         style="@style/hill_detail_label"
@@ -296,12 +339,14 @@
                         style="@style/hill_detail_text"
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/detail_colheight"
-                        android:padding="5sp" />
+                        tools:text="-1.50000,57.23432"
+                        android:layout_marginTop="10dp" />
 
                     <TextView
                         style="@style/hill_detail_label"
                         android:layout_below="@+id/detail_colgridref"
-                        android:text="@string/label_drop" />
+                        android:text="@string/label_drop"
+                        android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:id="@+id/detail_drop"
@@ -309,7 +354,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/detail_colgridref"
                         android:gravity="right"
-                        android:padding="5sp" />
+                        tools:text="45m"
+                        android:layout_marginTop="10dp" />
 
                 </RelativeLayout>
             </LinearLayout>

@@ -5,6 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -15,10 +16,12 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
+import rx.schedulers.TestScheduler;
 import uk.colessoft.android.hilllist.TestComponentRule;
 import uk.colessoft.android.hilllist.model.Hill;
 
@@ -53,21 +56,19 @@ public class HillsDatabaseHelperTest {
 
     @Test
     public void markHillClimbed() throws Exception {
-        helper.markHillClimbed(1, new Date(), "some notes");
-        TestSubscriber<Hill> testSubscriber = new TestSubscriber<>();
-        helper.getHill(1).subscribe(testSubscriber);
-        testSubscriber.assertNoErrors();
-        assertEquals("some notes", testSubscriber.getOnNextEvents().get(0).getNotes());
+        TestSubscriber<Hill> testHillSubscriber = new TestSubscriber<>();
+
+        assertEquals("some notes", helper.markHillClimbed(1, new LocalDate(), "some notes")
+                .flatMap( result -> helper.getHill(1)).toBlocking().first().getNotes());
+
     }
 
     @Test
     public void markHillNotClimbed() throws Exception {
-        helper.markHillClimbed(1, new Date(), "some notes");
-        helper.markHillNotClimbed(1);
-        TestSubscriber<Hill> testSubscriber = new TestSubscriber<>();
-        helper.getHill(1).subscribe(testSubscriber);
-        testSubscriber.assertNoErrors();
-        assertNull(testSubscriber.getOnNextEvents().get(0).getNotes());
+        assertNull(helper.markHillClimbed(1, new LocalDate(), "some notes").flatMap(
+                r -> helper.markHillNotClimbed(1).flatMap(
+                        s -> helper.getHill(1))).toBlocking().first().getNotes());
+
     }
 
     @Test
@@ -79,7 +80,7 @@ public class HillsDatabaseHelperTest {
 
     @Test
     public void getBaggedHillList() throws Exception {
-        helper.markHillClimbed(1, new Date(), "some notes");
+        helper.markHillClimbed(1, new LocalDate(), "some notes");
         Cursor c = helper.getBaggedHillList();
         assertTrue(c.moveToFirst());
         assertEquals(c.getInt(c.getColumnIndex("_id")), 1);
@@ -98,12 +99,12 @@ public class HillsDatabaseHelperTest {
         }
         String notes = "some 'notes88***\",";
 
-        helper.markHillClimbed(1, new Date(), notes);
+        helper.markHillClimbed(1, new LocalDate(), notes).toBlocking().first();
         Cursor c = helper.getBaggedHillList();
 
         writeBaggingFile(testDirectory.getAbsolutePath(), c, fileName);
 
-        helper.markHillNotClimbed(1);
+        helper.markHillNotClimbed(1).toBlocking().first();
 
         helper.importBagging(storageFile.getAbsolutePath());
         c = helper.getBaggedHillList();
@@ -115,9 +116,7 @@ public class HillsDatabaseHelperTest {
     @Test
     public void getHill() throws Exception {
         TestSubscriber<Hill> testSubscriber = new TestSubscriber<>();
-        helper.getHill(1).subscribe(testSubscriber);
-        testSubscriber.assertNoErrors();
-        assertThat(testSubscriber.getOnNextEvents().get(0).getHillname(), is("Ben Chonzie"));
+        assertThat(helper.getHill(1).toBlocking().first().getHillname(), is("Ben Chonzie"));
     }
 
     @Test

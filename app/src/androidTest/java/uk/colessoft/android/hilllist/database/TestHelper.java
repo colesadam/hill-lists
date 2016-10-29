@@ -39,6 +39,6 @@ public class TestHelper extends HillsDatabaseHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         HillsTables.onCreate(db, context, null, 100);
-        BaggingTable.onCreate(db, context);
+        BaggingTable.onCreate(db);
     }
 }
