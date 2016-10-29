@@ -1,21 +1,15 @@
 package uk.colessoft.android.hilllist.presenter;
 
 
-import android.util.Log;
-
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import uk.colessoft.android.hilllist.database.DbHelper;
-import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.views.HillDetailView;
-
-import static android.content.ContentValues.TAG;
 
 public class HillDetailPresenter extends MvpBasePresenter<HillDetailView> {
 
@@ -46,7 +40,7 @@ public class HillDetailPresenter extends MvpBasePresenter<HillDetailView> {
 
     }
 
-    public void markHillClimbed(int hillNumber, Date dateClimbed, String notes, String message) {
+    public void markHillClimbed(int hillNumber, LocalDate dateClimbed, String notes, String message) {
         dbHelper.markHillClimbed(hillNumber, dateClimbed, notes)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {

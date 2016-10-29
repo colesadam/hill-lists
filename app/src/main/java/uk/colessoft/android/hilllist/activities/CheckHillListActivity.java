@@ -21,6 +21,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.joda.time.LocalDate;
+
 import java.text.DecimalFormat;
 import java.util.Date;
 
@@ -123,7 +125,7 @@ public class CheckHillListActivity extends AppCompatActivity {
         if (item.getTitle() == "Mark as climbed") {
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
                     .getMenuInfo();
-            dbAdapter.markHillClimbed((int) info.id, new Date(), "");
+            dbAdapter.markHillClimbed((int) info.id, new LocalDate(), "");
             Toast climbed;
             climbed = Toast.makeText(getApplication(), "Marked as Climbed",
                     Toast.LENGTH_SHORT);
@@ -207,7 +209,7 @@ public class CheckHillListActivity extends AppCompatActivity {
 
                     int row_id = result.getInt(result
                             .getColumnIndex(HillsTables.KEY_ID));
-                    dbAdapter.markHillClimbed(row_id, new Date(), "");
+                    dbAdapter.markHillClimbed(row_id, new LocalDate(), "");
 
                 } while (result.moveToNext());
             }
@@ -266,7 +268,7 @@ public class CheckHillListActivity extends AppCompatActivity {
                     ctv.setOnClickListener(v -> {
                         CheckBox xcv = (CheckBox) v;
                         if (xcv.isChecked()) {
-                            dbAdapter.markHillClimbed(id, new Date(), "");
+                            dbAdapter.markHillClimbed(id, new LocalDate(), "");
                         } else
                             dbAdapter.markHillNotClimbed(id);
 

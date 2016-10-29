@@ -1,6 +1,7 @@
 package uk.colessoft.android.hilllist.model;
 
-import java.util.Date;
+
+import org.joda.time.LocalDate;
 
 public class Hill {
 	private final int _id;
@@ -23,7 +24,7 @@ public class Hill {
 	private final String survey;
 	private final String climbed;
 	private final String classification;
-	private final Date revision;
+	private final String revision;
 	private final String comments;
 	private final int xcoord;
 	private final int ycoord;
@@ -32,7 +33,7 @@ public class Hill {
 	private final String streetmap;
 	private final String getamap;
 	private final String hillBagging;
-	private Date hillClimbed;
+	private LocalDate dateHillClimbed;
 	private String notes;
 
 	public Hill(int id, String section, String hillname, String section2,
@@ -40,9 +41,9 @@ public class Hill {
 			String map, String map25, String gridref, String colgridref,
 			float colheight, float drop, String gridref10, String feature,
 			String observations, String survey, String climbed,
-			String classification, Date revision, String comments, int xcoord,
+			String classification, String revision, String comments, int xcoord,
 			int ycoord, double latitude, double longitude, String streetmap,
-			String getamap, String hillBagging,Date hillClimbed,String notes) {
+			String getamap, String hillBagging,LocalDate dateHillClimbed,String notes) {
 		this._id = id;
 		this._section = section;
 		this.hillname = hillname;
@@ -72,7 +73,7 @@ public class Hill {
 		this.streetmap = streetmap;
 		this.getamap = getamap;
 		this.hillBagging = hillBagging;
-		this.setHillClimbed(hillClimbed);
+		this.setDateHillClimbed(dateHillClimbed);
 		this.setNotes(notes);
 
 	}
@@ -157,7 +158,7 @@ public class Hill {
 		return classification;
 	}
 
-	public Date getRevision() {
+	public String getRevision() {
 		return revision;
 	}
 
@@ -193,16 +194,16 @@ public class Hill {
 		return hillBagging;
 	}
 
-	private void setHillClimbed(Date hillClimbed) {
-		this.hillClimbed = hillClimbed;
+	private void setDateHillClimbed(LocalDate hillClimbed) {
+		this.dateHillClimbed = hillClimbed;
 	}
 
-	public Date getHillClimbed() {
-		return hillClimbed;
+	public LocalDate getDateHillClimbed() {
+		return dateHillClimbed;
 	}
 
-	public void setDateClimbed(Date date) {
-		this.setHillClimbed(date);
+	public void setDateClimbed(LocalDate date) {
+		this.setDateHillClimbed(date);
 	}
 
 	public void setNotes(String notes) {

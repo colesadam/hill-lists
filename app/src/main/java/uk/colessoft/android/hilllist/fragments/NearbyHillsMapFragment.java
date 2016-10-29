@@ -30,7 +30,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
-import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
@@ -87,7 +86,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
                 llb.addLatLong(lat, lng);
                 t.setLatitude(lat);
                 t.setLongitude(lng);
-                if (hill.getHillClimbed() != null) {
+                if (hill.getDateHillClimbed() != null) {
                     t.setClimbed(true);
                 } else {
                     t.setClimbed(false);

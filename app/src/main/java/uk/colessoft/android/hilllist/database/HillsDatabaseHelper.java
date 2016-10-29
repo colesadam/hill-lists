@@ -14,13 +14,17 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.Callable;
 
 
@@ -139,19 +143,18 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public Observable<Long> markHillClimbed(int hillNumber, Date dateClimbed, String notes) {
+    public Observable<Long> markHillClimbed(int hillNumber, LocalDate dateClimbed, String notes) {
 
         return makeObservable(hillClimbed(hillNumber, dateClimbed, notes)).subscribeOn(Schedulers.computation());
 
     }
 
-    private Callable<Long> hillClimbed(int hillNumber, Date dateClimbed, String notes) {
+    private Callable<Long> hillClimbed(int hillNumber, LocalDate dateClimbed, String notes) {
         return () -> {
             SQLiteDatabase db = getWritableDatabase();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             ContentValues climbedValues = new ContentValues();
-            climbedValues.put("dateClimbed", dateFormat.format(dateClimbed));
+            climbedValues.put("dateClimbed", dateClimbed.toString("yyyy-MM-dd"));
             climbedValues.put("_id", String.valueOf(hillNumber));
             climbedValues.put("notes", notes);
             Cursor existing = db.query(true, BAGGING_TABLE,
@@ -179,10 +182,11 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         return makeObservable(hillNotClimbed(hillNumber)).subscribeOn(Schedulers.computation());
     }
 
-    private Callable<Integer> hillNotClimbed(int hillNumber) {return () -> {
-        SQLiteDatabase db = getWritableDatabase();
-        return db.delete(BAGGING_TABLE, "_id='" + hillNumber + "'", null);
-    };
+    private Callable<Integer> hillNotClimbed(int hillNumber) {
+        return () -> {
+            SQLiteDatabase db = getWritableDatabase();
+            return db.delete(BAGGING_TABLE, "_id='" + hillNumber + "'", null);
+        };
 
     }
 
@@ -412,7 +416,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
                 .getColumnIndex(KEY_CLIMBED));
         String classification = cursor.getString(cursor
                 .getColumnIndex(KEY_CLASSIFICATION));
-        long revision = cursor.getLong(cursor
+        String revision = cursor.getString(cursor
                 .getColumnIndex(KEY_REVISION));
         String comments = cursor.getString(cursor
                 .getColumnIndex(KEY_COMMENTS));
@@ -430,13 +434,12 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
                 .getColumnIndex(HillsTables.KEY_GEOGRAPH));
         String hillBagging = cursor.getString(cursor
                 .getColumnIndex(KEY_HILLBAGGING));
-        Date dateClimbed = null;
+        LocalDate dateClimbed = null;
 
         try {
-            dateClimbed = iso8601Format.parse(cursor.getString(cursor
-                    .getColumnIndex(KEY_DATECLIMBED)));
-        } catch (java.text.ParseException e) {
-            Log.e(TAG, "getHill: parse exception", e);
+            System.out.println(cursor.getString(cursor.getColumnIndex(KEY_DATECLIMBED)));
+            dateClimbed = LocalDate.parse(cursor.getString(cursor.getColumnIndex(KEY_DATECLIMBED))
+                    , ISODateTimeFormat.date());
         } catch (NullPointerException npe) {
             Log.d(TAG, "getHill: no date climbed");
         }
@@ -447,7 +450,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         Hill result = new Hill(_id, _section, hillname, section, region, area,
                 heightm, heightf, map, map25, gridref, colgridref, colheight,
                 drop, gridref10, feature, observations, survey, climbed,
-                classification, new Date(revision), comments, xcoord, ycoord,
+                classification, revision, comments, xcoord, ycoord,
                 latitude, longitude, streetmap, getamap, hillBagging,
                 dateClimbed, notes);
         System.out.println(result.getClassification());

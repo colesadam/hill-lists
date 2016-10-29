@@ -31,11 +31,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.joda.time.LocalDate;
+
 import java.text.DecimalFormat;
 import java.util.Date;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
@@ -100,19 +103,14 @@ public class DisplayHillListFragment extends Fragment implements
                     CheckBox xcv = (CheckBox) v;
                     if (xcv.isChecked()) {
                         ((RelativeLayout)xcv.getParent()).setBackgroundColor(getResources().getColor(R.color.paler_light_green));
-                        dbAdapter.markHillClimbed(id, new Date(), "");
+                        dbAdapter.markHillClimbed(id, new LocalDate(), "").observeOn(AndroidSchedulers.mainThread())
+								.subscribe(result -> updateDetailIfPresent(id));
                     } else {
 						((RelativeLayout)xcv.getParent()).setBackgroundColor(getResources().getColor(R.color.white));
-                        dbAdapter.markHillNotClimbed(id);
+                        dbAdapter.markHillNotClimbed(id).observeOn(AndroidSchedulers.mainThread())
+								.subscribe(result -> updateDetailIfPresent(id));
                     }
-                    //dbAdapter.close();
-                    HillDetailFragment fragment = (HillDetailFragment) getActivity()
-                            .getSupportFragmentManager().findFragmentById(
-                                    R.id.hill_detail_fragment);
 
-                    if (fragment != null && fragment.isInLayout()) {
-                        hillSelectedListener.onHillSelected(id);
-                    }
                 });
 
 				return true;
@@ -120,6 +118,16 @@ public class DisplayHillListFragment extends Fragment implements
 			}
 
 			return false;
+		}
+
+		private void updateDetailIfPresent(int id) {
+			HillDetailFragment fragment = (HillDetailFragment) getActivity()
+                    .getSupportFragmentManager().findFragmentById(
+                            R.id.hill_detail_fragment);
+
+			if (fragment != null && fragment.isInLayout()) {
+                hillSelectedListener.onHillSelected(id);
+            }
 		}
 
 	}
@@ -235,7 +243,7 @@ public class DisplayHillListFragment extends Fragment implements
 					if (result.getString(result
 							.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) == null) {
 						Log.d(this.toString(), "debug: marking hill " + row_id);
-						dbAdapter.markHillClimbed(row_id, new Date(), "");
+						dbAdapter.markHillClimbed(row_id, new LocalDate(), "");
 					}
 
 				} else if (allMarked == 0) {

@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Handler;
 
+import org.joda.time.LocalDate;
+
 import java.util.Date;
 
 import rx.Observable;
@@ -11,7 +13,7 @@ import uk.colessoft.android.hilllist.model.Hill;
 
 public interface DbHelper {
 
-    Observable<Long> markHillClimbed(int hillNumber, Date dateClimbed, String notes);
+    Observable<Long> markHillClimbed(int hillNumber, LocalDate dateClimbed, String notes);
 
     Observable<Integer> markHillNotClimbed(int hillNumber);
 
