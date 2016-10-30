@@ -15,12 +15,8 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.functions.FuncN;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.model.TinyHill;
-import uk.colessoft.android.hilllist.views.HillDetailView;
 import uk.colessoft.android.hilllist.views.HillListView;
 
 public class HillListPresenter extends MvpBasePresenter<HillListView> {
@@ -49,7 +45,7 @@ public class HillListPresenter extends MvpBasePresenter<HillListView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                     if (isViewAttached()) {
-                        getView().hillMarkedClimbed(result > 0 ? true : false, hillNumber);
+                        getView().hillChangeBagging(result > 0 ? true : false, hillNumber);
                     }
                 });
     }
@@ -59,7 +55,7 @@ public class HillListPresenter extends MvpBasePresenter<HillListView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                     if (isViewAttached()) {
-                        getView().hillMarkedUnclimbed(result > 0 ? true : false, hillNumber);
+                        getView().hillChangeBagging(result > 0 ? true : false, hillNumber);
                     }
                 });
     }
@@ -74,17 +70,17 @@ public class HillListPresenter extends MvpBasePresenter<HillListView> {
                     m1.arg1 = hills.size();
                     m1.arg2 = -1;
                     handler.sendMessage(m1);
-                    int i=0;
+                    int i = 0;
                     for (TinyHill hill : hills) {
                         i++;
                         Message msg = handler.obtainMessage();
                         msg.arg1 = i;
                         handler.sendMessage(msg);
                         if (setClimbed) {
-                            String notes="";
-                            LocalDate date=new LocalDate();
-                            if(hill.isClimbed()){
-                                notes=hill.getNotes();
+                            String notes = "";
+                            LocalDate date = new LocalDate();
+                            if (hill.isClimbed()) {
+                                notes = hill.getNotes();
                                 date = hill.getDateClimbed();
                             }
                             observableList.add(dbHelper.markHillClimbed(hill._id, date, notes));
@@ -98,7 +94,7 @@ public class HillListPresenter extends MvpBasePresenter<HillListView> {
                     Message msg = handler.obtainMessage();
                     msg.arg2 = -2;
                     handler.sendMessage(msg);
-                    loadHills(groupId,countryClause,moreWhere,orderBy,filter);
+                    loadHills(groupId, countryClause, moreWhere, orderBy, filter);
                 }
         );
 

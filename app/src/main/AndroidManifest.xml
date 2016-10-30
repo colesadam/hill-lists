@@ -52,7 +52,6 @@
         <activity android:name=".activities.NearbyHillsFragmentActivity" />
         <activity android:name=".activities.NearbyHillsMapFragmentActivity" />
         <activity android:name=".activities.ListHillsMapFragmentActivity" />
-        <activity android:name=".activities.CheckHillListActivity" />
         <activity android:name=".activities.DetailGMapActivity" />
         <activity android:name=".activities.BusinessDetailActivity" />
         <activity
