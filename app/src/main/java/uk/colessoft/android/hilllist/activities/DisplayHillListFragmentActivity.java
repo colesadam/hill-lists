@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
+import uk.colessoft.android.hilllist.fragments.HillListFragment;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 
 public class DisplayHillListFragmentActivity extends AppCompatActivity implements
-		DisplayHillListFragment.OnHillSelectedListener {
+		HillListFragment.OnHillSelectedListener {
 	/** Called when the activity is first created. */
 
 	boolean useMetricHeights;

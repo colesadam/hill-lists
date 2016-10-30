@@ -25,6 +25,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 
@@ -32,6 +34,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.TinyHill;
 
 import static android.content.ContentValues.TAG;
 import static rx.schedulers.Schedulers.io;
@@ -285,7 +288,9 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
 
         SQLiteDatabase db = getReadableDatabase();
 
-        return queryBuilder.query(db, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", HILLS_TABLE + "." + KEY_ID, KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
+        return queryBuilder.query(db, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id"
+                        , HILLS_TABLE + "." + KEY_ID, KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM
+                        , KEY_HEIGHTF, KEY_HILLNAME,
                         KEY_NOTES, KEY_DATECLIMBED}, where,
                 new String[]{}, null, null, orderBy);
     }
@@ -304,34 +309,83 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
+    public Observable<List<TinyHill>> getHills(String groupId, String countryClause, String moreWhere
+            , String orderBy, int filter) {
+        return makeObservable(getHillsCallable(groupId, countryClause, moreWhere, orderBy, filter))
+                .subscribeOn(Schedulers.computation());
+    }
+
+    private Callable<List<TinyHill>> getHillsCallable(String groupId, String countryClause
+            , String moreWhere, String orderBy, int filter) {
+
+        return () -> {
+            Cursor cursor = getHillGroup(groupId, countryClause, moreWhere, orderBy, filter);
+
+            List<TinyHill> hills = new ArrayList<>();
+            cursor.moveToFirst();
+
+            do {
+                TinyHill hill = new TinyHill();
+                try {
+                    hill.setDateClimbed(LocalDate.parse(cursor.getString
+                                    (cursor.getColumnIndex(KEY_DATECLIMBED))
+                            , ISODateTimeFormat.date()));
+                } catch (NullPointerException npe) {
+                    Log.v(TAG, "getHill: no date climbed");
+                }
+                hill._id = cursor.getInt(0);
+                hill.setHeightF(cursor.getFloat(cursor
+                        .getColumnIndex(KEY_HEIGHTF)));
+                hill.setHeightM(cursor.getFloat(cursor
+                        .getColumnIndex(KEY_HEIGHTM)));
+                hill.setHillname(cursor.getString(cursor
+                        .getColumnIndex(KEY_HILLNAME)));
+                hill.setLatitude(cursor.getDouble(cursor
+                        .getColumnIndex(KEY_LATITUDE)));
+                hill.setLongitude(cursor.getDouble(cursor
+                        .getColumnIndex(KEY_LONGITUDE)));
+                if (hill.getDateClimbed() != null) {
+                    hill.setClimbed(true);
+                }
+                hill.setNotes(cursor.getString(cursor
+                        .getColumnIndex(KEY_NOTES)));
+
+                hills.add(hill);
+
+            } while (cursor.moveToNext());
+
+            return hills;
+        };
+
+    }
+
+
+    @Override
     public Observable<Hill> getHill(long rowIndex) {
         return makeObservable(getHillFromDatabase(rowIndex))
                 .subscribeOn(Schedulers.computation());
     }
 
+
     private Callable<Hill> getHillFromDatabase(long _rowIndex) {
         return () -> {
-            System.out.println("########called");
             SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
             queryBuilder.setTables(hills + " left join "
                     + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
 
             queryBuilder.appendWhere(hillsKeyId + "=" + _rowIndex);
-System.out.println("####about to get db");
             SQLiteDatabase db = getWritableDatabase();
-            System.out.println("####got db");
 
             Cursor cursor = queryBuilder.query(db, null, null,
                     null, null, null, null);
-            System.out.println("#####"+cursor.getCount());
 
             if (cursor.moveToFirst()) {
                 Hill hill = getHill(cursor);
-                Log.d(TAG,"#######"+hill.getHillname());
+                Log.d(TAG, hill.getHillname());
                 cursor.close();
                 return hill;
             } else {
-                Log.d(TAG,"Not found");
+                Log.d(TAG, "Not found");
                 cursor.close();
                 return null;
             }
@@ -381,7 +435,6 @@ System.out.println("####about to get db");
 
     private Hill getHill(Cursor cursor) throws SQLException {
 
-        SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd");
         int _id = cursor.getInt(0);
         String _section = cursor.getString(cursor
                 .getColumnIndex(KEY_XSECTION));
@@ -442,7 +495,6 @@ System.out.println("####about to get db");
         LocalDate dateClimbed = null;
 
         try {
-            System.out.println(cursor.getString(cursor.getColumnIndex(KEY_DATECLIMBED)));
             dateClimbed = LocalDate.parse(cursor.getString(cursor.getColumnIndex(KEY_DATECLIMBED))
                     , ISODateTimeFormat.date());
         } catch (NullPointerException npe) {

@@ -1,23 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
-<LinearLayout
-	android:orientation="vertical" android:layout_width="match_parent"
-	android:layout_height="wrap_content">
-	<LinearLayout android:visibility="gone" android:id="@+id/location_progress" 
-		android:orientation="horizontal" android:layout_width="match_parent"
-		android:layout_height="wrap_content" android:layout_gravity="center_vertical"
-		android:gravity="center_vertical" android:background="@color/v_dark_grey"
-		android:padding="5dp">
-		<ProgressBar android:layout_height="wrap_content"
-			android:id="@+id/progressBar1" android:layout_width="wrap_content"
-			style="@android:style/Widget.ProgressBar.Small"></ProgressBar>
-		<TextView android:textColor="@color/red" android:layout_height="wrap_content" android:text="@string/refresh_location"
-			android:layout_width="match_parent" android:gravity="right"></TextView>
-	</LinearLayout>
-	<ListView android:id="@+id/myListView" android:layout_width="match_parent"
-		android:layout_height="wrap_content" android:textSize="15sp"
-		android:background="@color/cardview_light_background" />
-</LinearLayout>
-	</android.support.v7.widget.CardView>
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/location_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/v_dark_grey"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ProgressBar>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/refresh_location"
+                android:textColor="@color/red"></TextView>
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/contentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/myListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_light_background"
+                android:textSize="15sp" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/loadingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/errorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"></TextView>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

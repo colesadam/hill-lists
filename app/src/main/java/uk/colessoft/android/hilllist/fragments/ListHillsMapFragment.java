@@ -29,7 +29,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsTables;
-import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSelectedListener;
+import uk.colessoft.android.hilllist.fragments.HillListFragment.OnHillSelectedListener;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
@@ -181,7 +181,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
             Cursor result = dbAdapter.getHillGroup(hilltype, countryClause,
                     where, orderBy, filterHills);
-            // dbAdapter.close();
+            // dbHelper.close();
             data = result;
             return result;
         }

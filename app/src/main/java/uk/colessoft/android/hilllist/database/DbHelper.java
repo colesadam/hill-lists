@@ -7,9 +7,11 @@ import android.os.Handler;
 import org.joda.time.LocalDate;
 
 import java.util.Date;
+import java.util.List;
 
 import rx.Observable;
 import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.TinyHill;
 
 public interface DbHelper {
 
@@ -30,6 +32,8 @@ public interface DbHelper {
 
     Observable<Hill> getHill(long _rowIndex) throws SQLException;
 
+    Observable<List<TinyHill>> getHills(String groupId, String countryClause,
+                                        String moreWhere, String orderBy, int filter);
 
     void importBagging(final String filePath);
 

@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
+import uk.colessoft.android.hilllist.fragments.HillListFragment;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.fragments.ListHillsMapFragment;
 
 public class ListHillsMapFragmentActivity extends AppCompatActivity implements
-        DisplayHillListFragment.OnHillSelectedListener,
+        HillListFragment.OnHillSelectedListener,
         ListHillsMapFragment.MapOnHillSelectedListener {
 
     @Override
