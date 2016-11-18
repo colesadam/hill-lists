@@ -1,55 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5sp"
-    android:paddingBottom="0sp">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/ln_h"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/check_hill_climbed"
-        android:orientation="vertical"
-        android:padding="2dp"
-        android:layout_marginLeft="7sp">
 
         <TextView
             android:id="@+id/name_entry"
             style="@style/hill_row_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cairn Toul - Stob Coire an t-Saighdeir" />
+            tools:text="Cairn Toul - Stob Coire an t-Saighdeir"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="8dp"
+            android:paddingTop="4dp" />
 
         <TextView
             android:id="@+id/number_entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3,625ft"
-
-            android:textSize="14sp" />
+            tools:text="3,625ft"
+            app:layout_constraintTop_toBottomOf="@+id/name_entry"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="14sp"
+            android:paddingBottom="4dp"
+            android:layout_marginLeft="8dp" />
 
         <TextView
             android:id="@+id/rowid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-    </LinearLayout>
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/name_entry"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
 
     <CheckBox
         android:id="@+id/check_hill_climbed"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="0dp"
         android:focusable="false"
-        android:gravity="right|top" />
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/primary_light"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

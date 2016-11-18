@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -109,10 +111,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         passedRowId = getActivity().getIntent().getExtras().getInt("selectedHill");
         getActivity().setTitle(title);
 
-        marker = BitmapDescriptorFactory
-                .fromResource(R.drawable.yellow_hill);
-        cmarker = BitmapDescriptorFactory
-                .fromResource(R.drawable.green_hill);
+
 
 
     }
@@ -130,6 +129,10 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         map.setOnInfoWindowClickListener(this);
         map.setOnMarkerClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        marker = BitmapDescriptorFactory
+                .fromResource(R.drawable.yellow_hill);
+        cmarker = BitmapDescriptorFactory
+                .fromResource(R.drawable.green_hill);
     }
 
     @Override
@@ -188,6 +191,13 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
     }
 
+    private Bitmap resizeMapIcons(String iconName, float scaleHeight){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getActivity().getPackageName()));
+
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, imageBitmap.getWidth(), (int)(imageBitmap.getHeight()/4+(imageBitmap.getHeight()*0.75F)*scaleHeight), false);
+        return resizedBitmap;
+    }
+
     private void update(Cursor hillsCursor) {
 
         LatLangBounds llb = new LatLangBounds();
@@ -206,8 +216,10 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                 if (passedRowId == 0) passedRowId = row_id;
                 String hillname = hillsCursor.getString(hillsCursor
                         .getColumnIndex(HillsTables.KEY_HILLNAME));
+                float height = hillsCursor.getFloat(hillsCursor.getColumnIndex(HillsTables.KEY_HEIGHTM));
 
                 TinyHill tinyHill = new TinyHill();
+                tinyHill.setHeightM(height);
                 tinyHill._id = row_id;
                 System.out.println(row_id);
 
@@ -225,9 +237,14 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                     tinyHill.setClimbed(false);
                 }
                 BitmapDescriptor hillDescriptor;
+                String hillDrawable;
                 if (tinyHill.isClimbed()) {
                     hillDescriptor = cmarker;
-                } else hillDescriptor = marker;
+                    hillDrawable="green_hill";
+                } else {
+                    hillDescriptor = marker;
+                    hillDrawable="yellow_hill";
+                }
                 LatLng hillPosition = new LatLng(tinyHill.getLatitude(), tinyHill.getLongitude());
                 map.addMarker(new MarkerOptions()
                         .draggable(false)
@@ -235,7 +252,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                         .title(tinyHill.getHillname()
 
                         )
-                        .icon(hillDescriptor)
+                        .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(hillDrawable,2*(tinyHill.getHeightM()/1345))))
                         .anchor(0.5F, 0.5F)
                 ).setTag(tinyHill._id);
 

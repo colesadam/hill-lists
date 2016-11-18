@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,8 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
+import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
 
 import org.joda.time.LocalDate;
@@ -41,8 +42,7 @@ import uk.colessoft.android.hilllist.views.HillListView;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
-public class HillListFragment extends
-        MvpLceFragment<SwipeRefreshLayout, List<TinyHill>, HillListView, HillListPresenter> implements HillListView, SwipeRefreshLayout.OnRefreshListener, HillsAdapter.BaggingHillListener
+public class HillListFragment extends MvpFragment<HillListView,HillListPresenter>  implements HillListView, HillsAdapter.BaggingHillListener
         , HillsAdapter.RowClickListener {
 
     private int climbedCount = 0;
@@ -79,16 +79,6 @@ public class HillListFragment extends
     };
 
     @Override
-    public void onRefresh() {
-
-    }
-
-    @Override
-    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
-        return null;
-    }
-
-    @Override
     public void setData(List<TinyHill> data) {
         String updateTitle=hilllistType + " - " + String.valueOf(data.size())
                 + " hills found";
@@ -97,21 +87,20 @@ public class HillListFragment extends
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void loadData(boolean pullToRefresh) {
+    public void loadData() {
         presenter.loadHills(hilltype, countryClause, where, orderBy, filterHills);
     }
 
     @Override
     public void onChecked(View xcv, int id) {
 
-        ((RelativeLayout) xcv.getParent()).setBackgroundColor(getResources().getColor(R.color.paler_light_green));
+        ((ConstraintLayout) xcv.getParent()).setBackgroundColor(getResources().getColor(R.color.paler_light_green));
         presenter.markHillClimbed(id, new LocalDate());
     }
 
     @Override
     public void onUnchecked(View xcv, int id) {
-        ((RelativeLayout) xcv.getParent()).setBackgroundColor(getResources().getColor(R.color.white));
+        ((ConstraintLayout) xcv.getParent()).setBackgroundColor(getResources().getColor(R.color.white));
         presenter.markHillNotClimbed(id);
     }
 
@@ -210,13 +199,12 @@ public class HillListFragment extends
         super.onViewCreated(view, savedInstance);
         ButterKnife.bind(this, view);
 
-        contentView.setOnRefreshListener(this);
         registerForContextMenu(recyclerView);
 
         adapter = new HillsAdapter(getActivity(), this, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
-        loadData(false);
+        loadData();
     }
 
 

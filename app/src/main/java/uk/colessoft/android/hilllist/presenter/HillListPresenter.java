@@ -35,7 +35,6 @@ public class HillListPresenter extends MvpBasePresenter<HillListView> {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(hills -> {
             if (isViewAttached()) {
                 getView().setData(hills);
-                getView().showContent();
             }
         });
     }

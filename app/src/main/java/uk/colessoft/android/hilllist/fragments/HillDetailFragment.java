@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,8 @@ import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.presenter.HillDetailPresenter;
 import uk.colessoft.android.hilllist.views.HillDetailView;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 
 public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPresenter> implements HillDetailView {
@@ -300,12 +303,14 @@ public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPr
     @NonNull
     private CompoundButton.OnCheckedChangeListener hillClimbedOnCheckedChangeListener() {
         return (compoundButton, isChecked) -> {
-            if (isChecked) {
-                LocalDate now = new LocalDate();
-                hill.setDateClimbed(now);
-                presenter.markHillClimbed(hill.get_id(), now, "", "Marked as Climbed");
-            } else {
-                presenter.markHillNotClimbed(hill.get_id());
+            if (hill != null) {
+                if (isChecked) {
+                    LocalDate now = new LocalDate();
+                    hill.setDateClimbed(now);
+                    presenter.markHillClimbed(hill.get_id(), now, "", "Marked as Climbed");
+                } else {
+                    presenter.markHillNotClimbed(hill.get_id());
+                }
             }
         };
     }
@@ -318,7 +323,7 @@ public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPr
     @SuppressLint("SetTextI18n")
     @Override
     public void updateHill(Hill hill) {
-
+        Log.d(TAG, "updateHill: called");
         this.hill = hill;
 
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
@@ -346,11 +351,11 @@ public class HillDetailFragment extends MvpFragment<HillDetailView, HillDetailPr
         summitFeature.setText(hill.getFeature());
 
         String[] sClassifications = hill.getClassification().replace("\"", "").split(",");
-
+        TextView classificationTextView;
         for (String classification : sClassifications) {
             String fullClassification = classesMap.get(classification);
             if (fullClassification != null) {
-                TextView classificationTextView = new TextView(getActivity());
+                classificationTextView = new TextView(getActivity());
                 classificationTextView.setText(fullClassification);
                 classificationTextView.setPadding(5, 5, 5, 5);
                 classificationTextView.setTextAppearance(getActivity(), R.style.hill_detail_text);

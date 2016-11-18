@@ -4,9 +4,9 @@ package uk.colessoft.android.hilllist.adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hannesdorfmann.annotatedadapter.annotation.ViewField;
@@ -99,7 +99,7 @@ public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapte
         vh.rowid.setText(String.valueOf(hillId));
         if(hills.get(position).isClimbed()){
             vh.climbedCheckBox.setChecked(true);
-            ((RelativeLayout) vh.hillName.getParent().getParent()).setBackgroundColor(lightGreenColour);
+            ((ConstraintLayout) vh.hillName.getParent()).setBackgroundColor(lightGreenColour);
 
         }else vh.climbedCheckBox.setChecked(false);
 
@@ -113,7 +113,6 @@ public class HillsAdapter extends SupportAnnotatedAdapter implements HillsAdapte
         });
 
         vh.itemView.setOnClickListener(view -> {
-            System.out.println("######"+hillId);
             rowClickListener.onRowClicked(hillId);
         });
 

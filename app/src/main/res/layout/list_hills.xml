@@ -34,10 +34,7 @@
                 android:textColor="@color/red"></TextView>
         </LinearLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/contentView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/myListView"
@@ -45,20 +42,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/cardview_light_background"
                 android:textSize="15sp" />
-        </android.support.v4.widget.SwipeRefreshLayout>
 
-        <ProgressBar
-            android:id="@+id/loadingView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true" />
 
-        <TextView
-            android:id="@+id/errorView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"></TextView>
+
 
     </LinearLayout>
 

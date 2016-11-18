@@ -17,12 +17,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,6 +52,8 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.NearbyHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
+import uk.colessoft.android.hilllist.adapter.HillsAdapter;
+import uk.colessoft.android.hilllist.adapter.NearbyHillsAdapter;
 import uk.colessoft.android.hilllist.database.DbHelper;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
@@ -56,10 +61,15 @@ import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 import static android.content.ContentValues.TAG;
 
 public class NearbyHillsFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<ArrayList<Map<String, ?>>> {
+        LoaderManager.LoaderCallbacks<ArrayList<Map<String, ?>>>,NearbyHillsAdapter.RowClickListener {
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001;
-    private SimpleAdapter nearbyHillsAdapter;
+    private NearbyHillsAdapter nearbyHillsAdapter;
+
+    @Override
+    public void onRowClicked(int rowId) {
+           hillSelectedListener.onHillSelected(rowId);
+    }
 
 
     public interface OnHillSelectedListener {
@@ -80,7 +90,7 @@ public class NearbyHillsFragment extends Fragment implements
     DbHelper dbAdapter;
 
     private View viewer;
-    private ListView hillListView;
+    private RecyclerView hillListView;
     private LocationManager lm;
     private MyLocationListener locationListener;
     private ArrayList<Map<String, ?>> nearbyHills;
@@ -156,7 +166,7 @@ public class NearbyHillsFragment extends Fragment implements
         // TODO Auto-generated method stub
         super.onOptionsItemSelected(item);
 
-        int index = hillListView.getSelectedItemPosition();
+        //int index = hillListView.getSelectedItemPosition();
 
         switch (item.getItemId()) {
             case android.R.id.home: {
@@ -345,7 +355,7 @@ public class NearbyHillsFragment extends Fragment implements
                              Bundle savedInstanceState) {
 
         viewer = inflater.inflate(R.layout.list_hills, container, false);
-        hillListView = (ListView) viewer
+        hillListView = (RecyclerView) viewer
                 .findViewById(R.id.myListView);
 
         return viewer;
@@ -503,46 +513,18 @@ public class NearbyHillsFragment extends Fragment implements
 
     }
 
-    private void updateList() {
-        nearbyHillsAdapter = new SimpleAdapter(getActivity(),
-                nearbyHills,
-                R.layout.nearby_hill_item, new String[]{"hillname",
-                "distance", "height",}, new int[]{
-                R.id.hillname_entry, R.id.distance_entry,
-                R.id.height_entry}) {
-
-            @Override
-            public void setViewText(TextView v, String text) {
-                switch (v.getId()) {
-                    case R.id.distance_entry: {
-                        if (useMetricDistances) {
-                            text = convText(v, text, df2) + " km";
-                        } else {
-                            text = convText(v, text, df2) + " miles";
-                        }
-                        break;
-                    }
-                    case R.id.height_entry: {
-                        if (useMetricHeights) {
-                            text = convText(v, text, df3) + "m";
-                        } else
-                            text = convText(v, text, df3) + "ft";
-                        break;
-                    }
-                }
-                super.setViewText(v, text);
-            }
-
-        };
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        nearbyHillsAdapter = new NearbyHillsAdapter(getActivity(), this);
+        hillListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         hillListView.setAdapter(nearbyHillsAdapter);
-        hillListView.setOnItemClickListener((parent, view, pos, id) -> {
-            HashMap entry = (HashMap) nearbyHills.get(pos);
-            int rowId = (Integer) entry.get("rowid");
+    }
 
-            hillSelectedListener.onHillSelected(rowId);
+    private void updateList() {
 
-            // finish();
-        });
+        nearbyHillsAdapter.setHills(nearbyHills);
+        nearbyHillsAdapter.notifyDataSetChanged();
 
         Fragment fragment2 = getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.hill_detail_fragment);
@@ -732,11 +714,9 @@ public class NearbyHillsFragment extends Fragment implements
                         hillExtract.put("rowid", row_id);
 
                         if (useMetricDistances) {
-                            hillExtract.put("distance",
-                                    Double.parseDouble(df2.format(distanceKm)));
+                            hillExtract.put("distance",distanceKm);
                         } else {
-                            hillExtract.put("distance",
-                                    Double.parseDouble(df2.format(distanceKm / 1.601)));
+                            hillExtract.put("distance",distanceKm / 1.601);
                         }
                         nearbyHills.add(hillExtract);
 
