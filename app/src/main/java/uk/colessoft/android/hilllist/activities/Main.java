@@ -83,7 +83,8 @@ public class Main extends AppCompatActivity {
 		View searchAll = findViewById(R.id.menu_search);
 
 		nearbyHills.setOnClickListener(v -> {
-            Intent intent = new Intent(Main.this, NearbyHillsFragmentActivity.class);
+            //Intent intent = new Intent(Main.this, NearbyHillsFragmentActivity.class);
+			Intent intent = new Intent(Main.this, LocationAwareFragmentActivity.class);
             startActivity(intent);
 
         });

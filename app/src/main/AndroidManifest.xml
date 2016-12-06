@@ -50,6 +50,7 @@
         <activity android:name=".activities.BaggingExportActivity" />
         <activity android:name=".activities.BusinessSearchMapActivity" />
         <activity android:name=".activities.NearbyHillsFragmentActivity" />
+        <activity android:name=".activities.LocationAwareFragmentActivity" />
         <activity android:name=".activities.NearbyHillsMapFragmentActivity" />
         <activity android:name=".activities.ListHillsMapFragmentActivity" />
         <activity android:name=".activities.DetailGMapActivity" />
