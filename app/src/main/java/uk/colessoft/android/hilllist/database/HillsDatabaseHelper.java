@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -33,8 +35,10 @@ import java.util.concurrent.Callable;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
+import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
+import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
 import static android.content.ContentValues.TAG;
 import static rx.schedulers.Schedulers.io;
@@ -211,6 +215,54 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         return db.query(HILLS_TABLE, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME},
                 null, null, null, null, null);
 
+    }
+
+    @Override
+    public Observable<List<TinyHill>> getNearbyHills(double lat1, double lon1, double nearRadius){
+        return makeObservable(getNearbyHillsCallable(lat1,lon1,nearRadius)).subscribeOn(Schedulers.computation());
+    }
+
+    private Callable<List<TinyHill>> getNearbyHillsCallable(double lat1, double lon1, double nearRadius) {
+
+        return () -> {
+
+            List<TinyHill> hills = new ArrayList<>();
+            Cursor hillsCursor = getHillsForNearby();
+
+            if (hillsCursor.moveToFirst()) {
+                Log.d(TAG, "getNearbyHillsCallable: something returned");
+                do {
+                    Double lat = hillsCursor.getDouble(hillsCursor
+                            .getColumnIndex(HillsTables.KEY_LATITUDE)) * 1E6;
+                    Double lng = hillsCursor.getDouble(hillsCursor
+                            .getColumnIndex(HillsTables.KEY_LONGITUDE)) * 1E6;
+
+                    double distanceKm = DistanceCalculator
+                            .calculationByDistance(lat1, lat / 1E6, lon1,
+                                    lng / 1E6);
+                    int row_id = hillsCursor.getInt(hillsCursor
+                            .getColumnIndex(HillsTables.KEY_HILL_ID));
+                    Log.d(TAG, "############" + row_id);
+                    if (distanceKm < nearRadius) {
+                        TinyHill hill = new TinyHill();
+                        hill.setHillname(hillsCursor.getString(hillsCursor
+                                .getColumnIndex(HillsTables.KEY_HILLNAME)));
+                        hill.setHeightM(hillsCursor.getFloat(hillsCursor
+                                .getColumnIndex(HillsTables.KEY_HEIGHTM)));
+                        hill.setHeightF(hillsCursor.getFloat(hillsCursor
+                                .getColumnIndex(HillsTables.KEY_HEIGHTF)));
+
+                        hill._id = hillsCursor.getInt(hillsCursor.getColumnIndex(HillsTables.KEY_HILL_ID));
+                        hill.setDistance(distanceKm);
+                        hills.add(hill);
+                    }
+
+                } while (hillsCursor.moveToNext());
+
+            }
+            return hills;
+
+        };
     }
 
     @Override

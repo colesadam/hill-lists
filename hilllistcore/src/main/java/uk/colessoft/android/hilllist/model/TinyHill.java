@@ -9,6 +9,15 @@ public class TinyHill {
 	private Double longitude;
 	private boolean climbed;
 	private LocalDate dateClimbed;
+	private Double distance;
+
+	public Double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Double distance) {
+		this.distance = distance;
+	}
 
 	public String getNotes() {
 		return notes;

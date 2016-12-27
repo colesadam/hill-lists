@@ -68,14 +68,13 @@ public class NearbyHillsAdapter extends SupportAnnotatedAdapter implements Nearb
     )
     public final int VIEWTYPE_HILL = 0;
 
-    private ArrayList<Map<String, ?>> hills;
+    private List<TinyHill> hills;
 
-
-    public void setHills(ArrayList<Map<String, ?>> hills) {
+    public void setHills(List<TinyHill> hills) {
         this.hills = hills;
     }
 
-    public ArrayList<Map<String, ?>> getHills() {
+    public List<TinyHill> getHills() {
         return hills;
     }
 
@@ -90,19 +89,23 @@ public class NearbyHillsAdapter extends SupportAnnotatedAdapter implements Nearb
         final DecimalFormat df3 = new DecimalFormat();
         final DecimalFormat df2 = new DecimalFormat("####.00");
         df3.isParseIntegerOnly();
-        vh.hillName.setText((String) hills.get(position).get("hillname"));
-        int hillId = (Integer) hills.get(position).get("rowid");
+        vh.hillName.setText(hills.get(position).getHillname());
+        int hillId = hills.get(position)._id;
         vh.rowid.setText(String.valueOf(hillId));
 
-        String height = df3.format((Float) hills.get(position).get("height"));
-        if (useMetricHeights) height = height + "m";
-        else height = height + "ft";
+        String height;
+
+        if (useMetricHeights) {
+            height = df3.format((Float) hills.get(position).getHeightM()) + "m";
+        } else height = df3.format((Float) hills.get(position).getHeightM()) + "ft";
 
         vh.hillHeight.setText(height);
 
-        String distance = df2.format(hills.get(position).get("distance"));
-        if (useMetricDistances) distance = distance + "km";
-        else distance = distance + "mi";
+
+        String distance;
+
+        if (useMetricDistances) distance = df2.format(hills.get(position).getDistance()) + "km";
+        else distance = df2.format(hills.get(position).getDistance() / 1.601) + "mi";
 
         vh.distance.setText(distance);
 

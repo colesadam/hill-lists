@@ -23,6 +23,8 @@ public interface DbHelper {
 
     Cursor getHillsForNearby();
 
+    Observable<List<TinyHill>> getNearbyHills(double lat1, double lon1, double nearRadius);
+
     Cursor getBaggedHillList();
 
     Cursor getHillGroup(String groupId, String countryClause,

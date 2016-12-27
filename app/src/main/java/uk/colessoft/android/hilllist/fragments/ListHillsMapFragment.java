@@ -110,10 +110,6 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         title = getActivity().getIntent().getExtras().getString("title");
         passedRowId = getActivity().getIntent().getExtras().getInt("selectedHill");
         getActivity().setTitle(title);
-
-
-
-
     }
 
     @Override
