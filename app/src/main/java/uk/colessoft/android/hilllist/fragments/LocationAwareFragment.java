@@ -15,7 +15,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +31,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.hannesdorfmann.mosby.mvp.MvpFragment;
+import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -35,16 +39,20 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
+import uk.colessoft.android.hilllist.adapter.HillsAdapter;
 import uk.colessoft.android.hilllist.adapter.NearbyHillsAdapter;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.presenter.NearbyHillsPresenter;
 import uk.colessoft.android.hilllist.views.NearbyHillsView;
 
 public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHillsPresenter> implements
-        NearbyHillsView, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        NearbyHillsView, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, NearbyHillsAdapter.RowClickListener {
 
     private GoogleApiClient mGoogleApiClient;
     //private Location mLastLocation;
@@ -59,10 +67,24 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
     private Comparator comparator;
     private final DecimalFormat df1 = new DecimalFormat("#,###,###,##0");
 
+    @BindView(R.id.myListView)
+    RecyclerView recyclerView;
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        registerForContextMenu(recyclerView);
+        nearbyHillsAdapter = new NearbyHillsAdapter(getActivity(),this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(nearbyHillsAdapter);
+    }
 
     @Override
     public NearbyHillsPresenter createPresenter() {
-        return new NearbyHillsPresenter(mGoogleApiClient);
+        return ((BHApplication) getActivity().getApplication())
+                .getNearbyHillsComponent().presenterFactory().create(mGoogleApiClient);
     }
 
     @Override
@@ -76,6 +98,7 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
                     .addApi(LocationServices.API)
                     .build();
         }
+        setHasOptionsMenu(true);
 
 
     }
@@ -110,12 +133,8 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View viewer = inflater.inflate(R.layout.test_location, container,
-                false);
+        return inflater.inflate(R.layout.list_hills, container, false);
 
-        mLatitudeText = (TextView) viewer.findViewById(R.id.textView2);
-        mLongitudeText = (TextView) viewer.findViewById(R.id.textView3);
-        return viewer;
     }
 
 
@@ -232,26 +251,18 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
             }
 
             case (R.id.menu_list_alpha): {
-
-                comparator = new HillNameComparator();
-                presenter.sort(comparator);
+                presenter.sortByName();
                 return true;
-
             }
+
             case (R.id.menu_list_height): {
-
-                comparator = new HillHeightComparator();
-                presenter.sort(comparator);
+                presenter.sortByHeight();
                 return true;
-
             }
 
             case (R.id.menu_by_distance): {
-
-                comparator = new HillDistanceComparator();
-                presenter.sort(comparator);
+                presenter.sortByDistance();
                 return true;
-
             }
 //            case (R.id.menu_show_map): {
 //                Intent intent = new Intent(getActivity(),
@@ -333,37 +344,18 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
         }
     }
 
-    private static class HillHeightComparator implements Comparator {
 
-        public int compare(Object hill1, Object hill2) {
-
-            Float height1 = ((TinyHill) hill1).getHeightM();
-            Float height2 = ((TinyHill) hill2).getHeightM();
-            return (height2.compareTo(height1));
-        }
+    @Override
+    public void onRowClicked(int index) {
 
     }
 
-    private static class HillDistanceComparator implements Comparator {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        public int compare(Object hill1, Object hill2) {
-
-            Double distance1 = ((TinyHill) hill1).getDistance();
-            Double distance2 = ((TinyHill) hill2).getDistance();
-            return (distance2.compareTo(distance1));
-        }
+        inflater.inflate(R.menu.hill_lists_menu, menu);
+        menu.findItem(R.id.menu_by_distance).setVisible(true);
+        menu.findItem(R.id.menu_set_range).setVisible(true);
 
     }
-
-    private static class HillNameComparator implements Comparator {
-
-        public int compare(Object hill1, Object hill2) {
-
-            String name1 = ((TinyHill) hill1).getHillname();
-            String name2 = ((TinyHill) hill2).getHillname();
-            return (name1.compareTo(name2));
-        }
-
-    }
-
 }

@@ -7,9 +7,11 @@ import android.content.Context;
 import uk.colessoft.android.hilllist.components.DaggerDatabaseComponent;
 import uk.colessoft.android.hilllist.components.DaggerHillDetailComponent;
 import uk.colessoft.android.hilllist.components.DaggerHillListComponent;
+import uk.colessoft.android.hilllist.components.DaggerNearbyHillsComponent;
 import uk.colessoft.android.hilllist.components.DatabaseComponent;
 import uk.colessoft.android.hilllist.components.HillDetailComponent;
 import uk.colessoft.android.hilllist.components.HillListComponent;
+import uk.colessoft.android.hilllist.components.NearbyHillsComponent;
 import uk.colessoft.android.hilllist.modules.AppModule;
 import uk.colessoft.android.hilllist.modules.DatabaseModule;
 
@@ -18,6 +20,7 @@ public class BHApplication extends Application {
     DatabaseComponent dbComponent;
     HillDetailComponent hillDetailComponent;
     HillListComponent hillListComponent;
+    NearbyHillsComponent nearbyHillsComponent;
 
     private static Context context;
 
@@ -32,6 +35,7 @@ public class BHApplication extends Application {
         dbComponent = DaggerDatabaseComponent.builder().appModule(new AppModule(this)).databaseModule(new DatabaseModule()).build();
         hillDetailComponent = DaggerHillDetailComponent.builder().appModule(new AppModule(this)).databaseModule(new DatabaseModule()).build();
         hillListComponent = DaggerHillListComponent.builder().appModule(new AppModule(this)).databaseModule(new DatabaseModule()).build();
+        nearbyHillsComponent = DaggerNearbyHillsComponent.builder().appModule(new AppModule(this)).databaseModule(new DatabaseModule()).build();
 
     }
 
@@ -40,6 +44,7 @@ public class BHApplication extends Application {
     }
     public HillDetailComponent getHillDetailComponent() {return hillDetailComponent;}
     public HillListComponent getHillListComponent() {return hillListComponent;}
+    public NearbyHillsComponent getNearbyHillsComponent() {return nearbyHillsComponent;}
 
     // Needed to replace the component with a test specific one
     public void setComponent(DatabaseComponent databaseComponent) {

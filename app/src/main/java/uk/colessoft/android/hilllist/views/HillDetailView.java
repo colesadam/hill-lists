@@ -1,7 +1,7 @@
 package uk.colessoft.android.hilllist.views;
 
 
-import com.hannesdorfmann.mosby.mvp.MvpView;
+import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 import uk.colessoft.android.hilllist.model.Hill;
 

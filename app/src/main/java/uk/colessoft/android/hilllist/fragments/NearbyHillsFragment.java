@@ -509,8 +509,6 @@ public class NearbyHillsFragment extends Fragment implements
             }
         }
 
-
-
     }
 
     @Override
@@ -523,7 +521,7 @@ public class NearbyHillsFragment extends Fragment implements
 
     private void updateList() {
 
-        nearbyHillsAdapter.setHills(nearbyHills);
+        //nearbyHillsAdapter.setHills(nearbyHills);
         nearbyHillsAdapter.notifyDataSetChanged();
 
         Fragment fragment2 = getActivity().getSupportFragmentManager()

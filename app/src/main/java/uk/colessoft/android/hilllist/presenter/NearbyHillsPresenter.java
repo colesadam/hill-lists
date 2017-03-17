@@ -8,7 +8,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
+import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,17 +33,12 @@ public class NearbyHillsPresenter extends MvpBasePresenter<NearbyHillsView>
     private DbHelper dbHelper;
     private double radius = 16;
     private Comparator comparator;
-    private Boolean climbed;
+    private Boolean climbed = false;
     private List<TinyHill> hills;
 
-    @Inject
-    public NearbyHillsPresenter(DbHelper dbHelper) {
-        super();
-        this.dbHelper = dbHelper;
-    }
-
-    public NearbyHillsPresenter(GoogleApiClient googleApiClient) {
+    public NearbyHillsPresenter(GoogleApiClient googleApiClient,DbHelper dbHelper) {
         mGoogleApiClient = googleApiClient;
+        this.dbHelper = dbHelper;
         createLocationRequest();
     }
 
@@ -79,13 +74,27 @@ public class NearbyHillsPresenter extends MvpBasePresenter<NearbyHillsView>
         );
     }
 
-    public void sort(Comparator comparator) {
-        this.comparator = comparator;
+    private void sort() {
         if(isViewAttached() && hills != null){
             Collections.sort(hills, comparator);
             getView().listChanged(hills);
         }
 
+    }
+
+    public void sortByHeight(){
+        comparator = new HillHeightComparator();
+        sort();
+    }
+
+    public void sortByName(){
+        comparator = new HillNameComparator();
+        sort();
+    }
+
+    public void sortByDistance(){
+        comparator = new HillDistanceComparator();
+        sort();
     }
 
     public void filter(Boolean climbed) {
@@ -148,5 +157,38 @@ public class NearbyHillsPresenter extends MvpBasePresenter<NearbyHillsView>
     protected void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, this);
+    }
+
+    private static class HillHeightComparator implements Comparator {
+
+        public int compare(Object hill1, Object hill2) {
+
+            Float height1 = ((TinyHill) hill1).getHeightM();
+            Float height2 = ((TinyHill) hill2).getHeightM();
+            return (height2.compareTo(height1));
+        }
+
+    }
+
+    private static class HillDistanceComparator implements Comparator {
+
+        public int compare(Object hill1, Object hill2) {
+
+            Double distance1 = ((TinyHill) hill1).getDistance();
+            Double distance2 = ((TinyHill) hill2).getDistance();
+            return (distance2.compareTo(distance1));
+        }
+
+    }
+
+    private static class HillNameComparator implements Comparator {
+
+        public int compare(Object hill1, Object hill2) {
+
+            String name1 = ((TinyHill) hill1).getHillname();
+            String name2 = ((TinyHill) hill2).getHillname();
+            return (name1.compareTo(name2));
+        }
+
     }
 }

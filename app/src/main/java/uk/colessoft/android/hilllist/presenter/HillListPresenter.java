@@ -4,7 +4,7 @@ package uk.colessoft.android.hilllist.presenter;
 import android.os.Handler;
 import android.os.Message;
 
-import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
+import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import org.joda.time.LocalDate;
 

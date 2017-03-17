@@ -230,19 +230,17 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
             Cursor hillsCursor = getHillsForNearby();
 
             if (hillsCursor.moveToFirst()) {
-                Log.d(TAG, "getNearbyHillsCallable: something returned");
                 do {
                     Double lat = hillsCursor.getDouble(hillsCursor
-                            .getColumnIndex(HillsTables.KEY_LATITUDE)) * 1E6;
+                            .getColumnIndex(HillsTables.KEY_LATITUDE));
                     Double lng = hillsCursor.getDouble(hillsCursor
-                            .getColumnIndex(HillsTables.KEY_LONGITUDE)) * 1E6;
+                            .getColumnIndex(HillsTables.KEY_LONGITUDE));
 
                     double distanceKm = DistanceCalculator
-                            .calculationByDistance(lat1, lat / 1E6, lon1,
-                                    lng / 1E6);
+                            .calculationByDistance(lat1, lat, lon1,
+                                    lng);
                     int row_id = hillsCursor.getInt(hillsCursor
                             .getColumnIndex(HillsTables.KEY_HILL_ID));
-                    Log.d(TAG, "############" + row_id);
                     if (distanceKm < nearRadius) {
                         TinyHill hill = new TinyHill();
                         hill.setHillname(hillsCursor.getString(hillsCursor

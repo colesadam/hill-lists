@@ -3,7 +3,7 @@ package uk.colessoft.android.hilllist.views;
 
 import android.location.Location;
 
-import com.hannesdorfmann.mosby.mvp.MvpView;
+import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 import java.util.ArrayList;
 import java.util.List;
