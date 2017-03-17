@@ -5,9 +5,8 @@ env:
   matrix:
     - ANDROID_TARGET=android-22  ANDROID_ABI=armeabi-v7a
 before_install:
-   - echo y | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.0-beta4"
-   - echo y | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.0-beta"  "echo -e \"\\n84831b9409646a918e30573bab4c9c91346d8abd\" > \"$ANDROID_HOME/licenses/android-sdk-preview-license\""
-
+   - echo y | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+   - echo y | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 android:
   components:
     # Uncomment the lines below if you want to
