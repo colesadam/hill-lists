@@ -4,6 +4,11 @@ jdk: oraclejdk8
 env:
   matrix:
     - ANDROID_TARGET=android-22  ANDROID_ABI=armeabi-v7a
+  global:
+    - ANDROID_HOME=/usr/local/android-sdk-25.0.2
+    - TOOLS=${ANDROID_HOME}/tools
+    - TEMP=${ANDROID_HOME}/:${TOOLS}/:${TOOLS}/bin:${TOOLS}/emulator:${ANDROID_HOME}/platform-tools
+    - PATH=${TEMP}:${PATH}
 before_install:
    - echo y | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
    - echo y | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"

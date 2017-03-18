@@ -2,13 +2,13 @@ package uk.colessoft.android.hilllist.fragments;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -24,19 +24,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,37 +40,43 @@ import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.adapter.HillsAdapter;
 import uk.colessoft.android.hilllist.adapter.NearbyHillsAdapter;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.presenter.NearbyHillsPresenter;
 import uk.colessoft.android.hilllist.views.NearbyHillsView;
 
 public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHillsPresenter> implements
-        NearbyHillsView, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, NearbyHillsAdapter.RowClickListener {
-
-    private GoogleApiClient mGoogleApiClient;
-    //private Location mLastLocation;
+        NearbyHillsView, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        NearbyHillsAdapter.RowClickListener {
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 0x00001;
-    private TextView mLatitudeText;
-    private TextView mLongitudeText;
-    private NearbyHillsAdapter nearbyHillsAdapter;
-    private double nearRadius;
-    private boolean useMetricHeights;
-    private boolean useMetricDistances;
-    private Comparator comparator;
     private final DecimalFormat df1 = new DecimalFormat("#,###,###,##0");
-
     @BindView(R.id.myListView)
     RecyclerView recyclerView;
+    private GoogleApiClient mGoogleApiClient;
+    private NearbyHillsAdapter nearbyHillsAdapter;
+    private double nearRadius;
+    private boolean useMetricDistances;
+    private Comparator comparator;
+    private OnHillSelectedListener hillSelectedListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            hillSelectedListener = (OnHillSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHillSelectedListener");
+        }
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         registerForContextMenu(recyclerView);
-        nearbyHillsAdapter = new NearbyHillsAdapter(getActivity(),this);
+        nearbyHillsAdapter = new NearbyHillsAdapter(getActivity(), this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(nearbyHillsAdapter);
@@ -99,8 +100,6 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
                     .build();
         }
         setHasOptionsMenu(true);
-
-
     }
 
     @Override
@@ -131,12 +130,10 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_hills, container, false);
-
     }
-
 
     @Override
     public void onStop() {
@@ -173,8 +170,6 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
-        useMetricHeights = prefs.getBoolean(
-                PreferencesActivity.PREF_METRIC_HEIGHTS, false);
         useMetricDistances = prefs.getBoolean(
                 PreferencesActivity.PREF_METRIC_DISTANCES, false);
     }
@@ -323,7 +318,6 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
 
     }
 
-
     @Override
     public void listChanged(List<TinyHill> nearbyHills) {
         nearbyHillsAdapter.setHills(nearbyHills);
@@ -338,12 +332,10 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
 
         if (fragment != null && fragment.isInLayout()) {
             if (nearbyHills != null && nearbyHills.size() > 0) {
-                // hillSelectedListener.onHillSelected((Integer) (nearbyHills
-                //         .get(0)).get("rowid"));
+                hillSelectedListener.onHillSelected(nearbyHills.get(0)._id);
             }
         }
     }
-
 
     @Override
     public void onRowClicked(int index) {
@@ -357,5 +349,9 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
         menu.findItem(R.id.menu_by_distance).setVisible(true);
         menu.findItem(R.id.menu_set_range).setVisible(true);
 
+    }
+
+    public interface OnHillSelectedListener {
+        void onHillSelected(int rowid);
     }
 }
