@@ -22,28 +22,40 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
+import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.FuncN;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
+
+import static android.os.Build.TAGS;
 
 public class NearbyHillsMapFragment extends SupportMapFragment implements GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
 
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001;
+    private final List<Marker> markers = new CopyOnWriteArrayList<>();
+    @Inject
+    DbHelper dbAdapter;
     private Runnable showWaitDialog;
     private String[] rowids;
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001;
-    private final List<Marker> markers = new ArrayList<>();
-
-    public interface HillTappedListener {
-        void hillTapped(int rowid);
-    }
+    private GoogleMap map;
+    private View viewer;
+    private boolean gotHills;
+    private ProgressDialog dialog;
+    private BitmapDescriptor marker;
+    private BitmapDescriptor cmarker;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -75,9 +87,31 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
         Log.d(getActivity().getClass().getName(), "[NearbyHillsMapFragment][rowids.length: " + rowids.length + "]");
         LatLangBounds llb = new LatLangBounds();
+        List<Observable<Hill>> observableList = new ArrayList<>();
+
         for (String rowid : rowids) {
-            long lrow = Long.parseLong(rowid);
-            dbAdapter.getHill(lrow).observeOn(AndroidSchedulers.mainThread()).subscribe(hill -> {
+            observableList.add(dbAdapter.getHill(Long.parseLong(rowid)));
+        }
+        Observable.merge(observableList).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Hill>() {
+            @Override
+            public void onCompleted() {
+                gotHills = true;
+                final LatLngBounds bounds = new LatLngBounds(new LatLng(
+                        llb.getSmallestLat(), llb.getSmallestLong()), new LatLng(llb.getLargestLat(),
+                        llb.getLargestLong()));
+                map.setOnMapLoadedCallback(() -> map.animateCamera(
+                        CameraUpdateFactory
+                                .newLatLngBounds(
+                                        bounds, 50)));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                throw new RuntimeException();
+            }
+
+            @Override
+            public void onNext(Hill hill) {
                 TinyHill t = new TinyHill();
                 t._id = hill.get_id();
                 t.setHillname(hill.getHillname());
@@ -97,6 +131,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
                     hillDescriptor = cmarker;
                 } else hillDescriptor = marker;
                 LatLng hillPosition = new LatLng(t.getLatitude(), t.getLongitude());
+                Log.d(TAGS, "Adding marker");
                 Marker marker = map.addMarker(new MarkerOptions()
                         .draggable(false)
                         .position(hillPosition)
@@ -108,35 +143,10 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
                 );
                 marker.setTag(t._id);
                 markers.add(marker);
-            });
-
-
-        }
-        gotHills = true;
-        final LatLngBounds bounds = new LatLngBounds(new LatLng(
-                llb.getSmallestLat(), llb.getSmallestLong()), new LatLng(llb.getLargestLat(),
-                llb.getLargestLong()));
-        map.setOnMapLoadedCallback(() -> map.animateCamera(
-                CameraUpdateFactory
-                        .newLatLngBounds(
-                                bounds, 50)));
-
-
+                if(markers.size()==rowids.length) this.onCompleted();
+            }
+        });
     }
-
-    private GoogleMap map;
-    private View viewer;
-
-    @Inject
-    DbHelper dbAdapter;
-
-    private boolean gotHills;
-
-    private ProgressDialog dialog;
-
-    private BitmapDescriptor marker;
-    private BitmapDescriptor cmarker;
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -232,5 +242,9 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
             }
 
         }
+    }
+
+    public interface HillTappedListener {
+        void hillTapped(int rowid);
     }
 }

@@ -111,6 +111,10 @@ public class NearbyHillsPresenter extends MvpBasePresenter<NearbyHillsView>
 
     }
 
+    public List<TinyHill> getCurrentHills(){
+        return hills;
+    }
+
     public void search(String query){
         List<TinyHill> filteredHills = new ArrayList<>();
         for(TinyHill hill:hills) {
@@ -118,6 +122,7 @@ public class NearbyHillsPresenter extends MvpBasePresenter<NearbyHillsView>
                 filteredHills.add(hill);
             }
         }
+        hills = filteredHills;
         if(isViewAttached()){
             getView().listChanged(filteredHills);
         }
@@ -151,10 +156,8 @@ public class NearbyHillsPresenter extends MvpBasePresenter<NearbyHillsView>
         mLocationRequest.setSmallestDisplacement(10); // 10 meters
     }
 
-    /**
-     * Stopping location updates
-     */
-    protected void stopLocationUpdates() {
+
+    public void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, this);
     }

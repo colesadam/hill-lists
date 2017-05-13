@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.Main;
+import uk.colessoft.android.hilllist.activities.NearbyHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.adapter.NearbyHillsAdapter;
 import uk.colessoft.android.hilllist.model.TinyHill;
@@ -55,7 +56,7 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
     RecyclerView recyclerView;
     private GoogleApiClient mGoogleApiClient;
     private NearbyHillsAdapter nearbyHillsAdapter;
-    private double nearRadius;
+    private double nearRadius = 16;
     private boolean useMetricDistances;
     private Comparator comparator;
     private OnHillSelectedListener hillSelectedListener;
@@ -259,32 +260,34 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
                 presenter.sortByDistance();
                 return true;
             }
-//            case (R.id.menu_show_map): {
-//                Intent intent = new Intent(getActivity(),
-//                        NearbyHillsMapFragmentActivity.class);
-//                String[] rowIds;
-//                int sindex = 0;
-//                if (nearbyHills != null) {
-//                    rowIds = new String[nearbyHills.size()];
-//                    for (Map hs : nearbyHills) {
-//                        String srow = hs.get("rowid").toString();
-//                        rowIds[sindex] = srow;
-//                        sindex++;
-//                    }
-//                } else {
-//                    rowIds = new String[0];
-//                }
-//
-//
-//                intent.putExtra("rowids", rowIds);
-//                intent.putExtra("title",
-//                        "Hills within " + df2.format(nearRadius / 1.601)
-//                                + " miles (" + nearRadius + "km)");
-//
-//                startActivity(intent);
-//                return true;
-//
-//            }
+            case (R.id.menu_show_map): {
+                Intent intent = new Intent(getActivity(),
+                        NearbyHillsMapFragmentActivity.class);
+                String[] rowIds;
+
+                List<TinyHill> currentHills = presenter.getCurrentHills();
+                int sindex = 0;
+                if (currentHills != null) {
+                    rowIds = new String[currentHills.size()];
+                    for (TinyHill hs : currentHills) {
+                        String srow = String.valueOf(hs._id);
+                        rowIds[sindex] = srow;
+                        sindex++;
+                    }
+                } else {
+                    rowIds = new String[0];
+                }
+
+
+                intent.putExtra("rowids", rowIds);
+                intent.putExtra("title",
+                        "Hills within " + df1.format(nearRadius / 1.601)
+                                + " miles (" + nearRadius + "km)");
+
+                startActivity(intent);
+                return true;
+
+            }
 
             case (R.id.menu_search): {
                 AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -319,6 +322,22 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        presenter.stopLocationUpdates();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mGoogleApiClient.isConnected()) {
+            presenter.startListening();
+    }
+
+
+    }
+
+    @Override
     public void listChanged(List<TinyHill> nearbyHills) {
         nearbyHillsAdapter.setHills(nearbyHills);
         nearbyHillsAdapter.notifyDataSetChanged();
@@ -339,7 +358,7 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
 
     @Override
     public void onRowClicked(int index) {
-
+        hillSelectedListener.onHillSelected(index);
     }
 
     @Override
