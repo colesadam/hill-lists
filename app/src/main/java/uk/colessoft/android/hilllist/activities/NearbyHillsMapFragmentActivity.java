@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.fragments.LocationAwareFragment;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment;
 import uk.colessoft.android.hilllist.fragments.NearbyHillsMapFragment;
 
 
-public class NearbyHillsMapFragmentActivity extends AppCompatActivity implements NearbyHillsFragment.OnLocationFoundListener, NearbyHillsFragment.OnHillSelectedListener, NearbyHillsMapFragment.HillTappedListener {
+public class NearbyHillsMapFragmentActivity extends AppCompatActivity
+        implements LocationAwareFragment.OnHillSelectedListener, NearbyHillsMapFragment.HillTappedListener {
     boolean useMetricHeights;
     boolean useMetricDistances;
 

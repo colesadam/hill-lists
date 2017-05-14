@@ -6,7 +6,7 @@
 	android:orientation="horizontal"
 	android:baselineAligned="false"
 	android:background="?attr/colorControlHighlight">
-	<fragment android:name="uk.colessoft.android.hilllist.fragments.NearbyHillsFragment"
+	<fragment android:name="uk.colessoft.android.hilllist.fragments.LocationAwareFragment"
 		android:layout_width="0dp" android:layout_height="match_parent"
 		android:id="@+id/nearby_hills_fragment" android:layout_weight="50"
 		android:layout_marginLeft="8dp"

@@ -126,6 +126,8 @@ public class LocationAwareFragment extends MvpFragment<NearbyHillsView, NearbyHi
 
             }
         }
+        presenter.setmGoogleApiClient(mGoogleApiClient);
+
         presenter.startListening();
     }
 

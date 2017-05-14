@@ -57,6 +57,10 @@ public class NearbyHillsPresenter extends MvpBasePresenter<NearbyHillsView>
 
     }
 
+    public void setmGoogleApiClient(GoogleApiClient apiClient){
+        this.mGoogleApiClient=apiClient;
+    }
+
     public void updateListOfHills(double radius) {
         this.radius = radius;
         dbHelper.getNearbyHills(mLastLocation.getLatitude(),
