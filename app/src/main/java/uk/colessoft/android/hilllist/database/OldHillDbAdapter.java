@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -367,6 +368,67 @@ public class OldHillDbAdapter implements DbHelper {
                 classification, new Date(revision), comments, xcoord, ycoord,
                 latitude, longitude, streetmap, getamap, hillBagging,
                 dateClimbed, notes);
+    }
+
+    @Override
+    public void importBagging(Reader fileReader) {
+        final String baggingCreation = "CREATE TABLE 'Bagging' ('_id','dateClimbed','notes');";
+        final ProgressDialog pbarDialog;
+        final Context myContext = null;
+        pbarDialog = ProgressDialog.show(context, null,
+                "Importing Bagging Table", true, false);
+        pbarDialog.setCancelable(false);
+        pbarDialog.setCanceledOnTouchOutside(false);
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                FileInputStream is = null;
+                try {
+
+                    db.delete("Bagging", null, null);
+
+                    BufferedReader reader = new BufferedReader(
+                            fileReader);
+
+                    // db.beginTransaction();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        // line=line.replace(",", "','");
+                        // line = "'" + line + "'";
+                        String[] lineSplit = line.split(",");
+                        String newLine = "";
+
+                        newLine = newLine + "\"" + lineSplit[0].substring(1, lineSplit[0].length() - 1) + "\"";
+                        newLine = newLine + ",";
+                        newLine = newLine + "\"" + lineSplit[1].substring(1, lineSplit[1].length() - 1) + "\"";
+                        newLine = newLine + ",";
+                        newLine = newLine + "\"" + lineSplit[2].substring(1, lineSplit[2].length() - 1) + "\"";
+
+
+                        db.execSQL("INSERT INTO Bagging VALUES (" + newLine + ");");
+                    }
+
+
+                } catch (IOException e) {
+
+                    Log.e(this.toString(), "error: " + e.toString());
+
+                } catch (SQLiteException se) {
+                    se.printStackTrace();
+                } finally {
+                    pbarDialog.cancel();
+                    try {
+                        is.close();
+                        // database.close();
+                    } catch (IOException e) {
+                        Log.e(this.toString(), "error: " + e.toString());
+                    }
+                }
+
+            }
+
+        };
+        thread.start();
     }
 
     public boolean createDatabase() throws IOException {

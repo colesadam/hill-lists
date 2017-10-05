@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Handler;
 
+import java.io.Reader;
 import java.util.Date;
 
 import uk.colessoft.android.hilllist.model.Hill;
@@ -27,7 +28,7 @@ public interface DbHelper {
     Hill getHill(long _rowIndex) throws SQLException;
 
 
-    void importBagging(final String filePath);
+    void importBagging(final Reader fileReader);
 
     void touch(Handler handler);
 

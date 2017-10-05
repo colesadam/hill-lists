@@ -25,6 +25,7 @@ import uk.colessoft.android.hilllist.database.DbHelper;
 public class SplashScreenActivity extends AppCompatActivity {
 
 	private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0x00001;
+	public static final int MAX = 20782;
 	private Thread splashThread;
 	private Handler handler;
 	private ProgressDialog progressDialog;
@@ -59,7 +60,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 		progressDialog = new ProgressDialog(SplashScreenActivity.this);
 		progressDialog.setTitle("Updating Database");
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		progressDialog.setMax(20600);
+		progressDialog.setMax(MAX);
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();

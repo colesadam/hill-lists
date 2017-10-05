@@ -89,7 +89,7 @@ public class HillsDatabaseHelperTest {
         if (storageFile.exists()) {
             storageFile.delete();
         }
-        String notes = "some 'notes88***\",";
+        String notes = "59 solo\nsecond of five";
 
         helper.markHillClimbed(1, new Date(), notes);
         Cursor c = helper.getBaggedHillList();
@@ -101,7 +101,7 @@ public class HillsDatabaseHelperTest {
         helper.importBagging(storageFile.getAbsolutePath());
         c = helper.getBaggedHillList();
         assertTrue(c.moveToFirst());
-        Log.d(TAG, "importBagging: "+ c.getString(c.getColumnIndex(KEY_NOTES)));
+        Log.d(TAG, "importBaggingTest: "+ c.getString(c.getColumnIndex(KEY_NOTES)));
         assertEquals(c.getString(c.getColumnIndex(KEY_NOTES)),notes);
     }
 

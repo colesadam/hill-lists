@@ -99,7 +99,9 @@ public class FolderPicker extends Dialog implements OnItemClickListener, OnClick
 			mAdapter.add(new Folder(mPath, true));
 		}
 		File[] dirs = mPath.listFiles(mDirFilter);
-		Arrays.sort(dirs);
+		if (dirs != null) {
+			Arrays.sort(dirs);
+		}
 		for (File dir : dirs) {
 			mAdapter.add(new Folder(dir));
 		}

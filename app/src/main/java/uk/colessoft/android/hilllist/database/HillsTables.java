@@ -17,7 +17,7 @@ import static android.content.ContentValues.TAG;
 
 public class HillsTables {
 
-    private static final String HILLS_CSV = "DoBIH_v15.3.csv";
+    private static final String HILLS_CSV = "DoBIH_v15.5.csv";
 
     public static final String KEY_TITLE = "title";
     public static final String HILLS_TABLE = "hills";
@@ -169,6 +169,7 @@ public class HillsTables {
         String[] headerArray = headerRow.split(",");
         StringBuilder createHillsTableBuilder = new StringBuilder();
         for (String header : headerArray) {
+            header = header.replace("\uFEFF","");
             if (!"Number".equals(header)) {
                 createHillsTableBuilder.append("'").append(header).append("',");
             }

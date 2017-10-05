@@ -36,7 +36,7 @@
 				android:src="@drawable/england"></ImageView>
 		</LinearLayout>
 		<TextView android:id="@+id/TextView02" android:layout_width="match_parent"
-			android:layout_height="wrap_content" android:text="Data from the Database of British Hills v15.3"
+			android:layout_height="wrap_content" android:text="Data from the Database of British Hills v15.5"
 			android:paddingBottom="50sp" android:textSize="18sp"
 
 			android:gravity="center" android:textColor="@color/white">
