@@ -134,7 +134,7 @@ public class FolderPicker extends Dialog implements OnItemClickListener, OnClick
 		}
 	}
 
-	private final FileFilter mDirFilter = file -> file.isDirectory();
+	private final FileFilter mDirFilter = File::isDirectory;
 
 	private final FileFilter mFileFilter = file -> file.isFile();
 	

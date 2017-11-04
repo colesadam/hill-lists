@@ -193,31 +193,22 @@ public class BaggingExportActivity extends AppCompatActivity implements OnClickL
 
     public void onClick(View v) {
         if (v == mPickFolder) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                mFolderDialog = new FolderPicker(this, this, 0);
-                mFolderDialog.show();
-            } else {
-                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 
-                intent.setType("*/*");
-                intent.putExtra(Intent.EXTRA_TITLE, "bagging_export.csv");
-                startActivityForResult(intent, WRITE_REQUEST_CODE);
-            }
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
 
+            intent.setType("*/*");
+            intent.putExtra(Intent.EXTRA_TITLE, "bagging_export.csv");
+            startActivityForResult(intent, WRITE_REQUEST_CODE);
 
         } else if (v == mPickFile) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                mFileDialog = new FolderPicker(this, this, android.R.style.Theme,
-                        true);
-                mFileDialog.show();
-            } else {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("*/*");
-                startActivityForResult(intent, READ_REQUEST_CODE);
-            }
+
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            startActivityForResult(intent, READ_REQUEST_CODE);
+
         }
 
     }
