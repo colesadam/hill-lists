@@ -1,137 +1,122 @@
 package uk.colessoft.android.hilllist.activities;
 
-import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.activities.dialogs.FolderPicker;
 import uk.colessoft.android.hilllist.database.DbHelper;
 
-public class BaggingExportActivity extends AppCompatActivity implements OnClickListener,
-		DialogInterface.OnClickListener {
+public class BaggingExportActivity extends AppCompatActivity {
 
-	private FolderPicker mFolderDialog;
-	private FolderPicker mFileDialog;
-	private View mPickFolder;
-	private View mPickFile;
+    private static final int READ_REQUEST_CODE = 42;
+    private static final int WRITE_REQUEST_CODE = 43;
 
-	@Inject
-	DbHelper dbAdapter;
+    @Inject
+    DbHelper dbAdapter;
 
-	private String filePath;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((BHApplication) getApplication()).getDbComponent().inject(this);
+        setContentView(R.layout.bagging_export);
+    }
 
-	private static String folderPath = Environment
-			.getExternalStorageDirectory().getAbsolutePath();
+    private void writeCsvFile(FileOutputStream stream) {
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		((BHApplication) getApplication()).getDbComponent().inject(this);
-		setContentView(R.layout.bagging_export);
-		mPickFolder = findViewById(R.id.pick_folder);
-		mPickFolder.setOnClickListener(this);
-		mPickFile = findViewById(R.id.pick_file);
-		View folderPathView = findViewById(R.id.folder_path);
-		View filePathView = findViewById(R.id.file_path);
+        Cursor baggedCursor = dbAdapter.getBaggedHillList();
+        startManagingCursor(baggedCursor);
+        try {
+            Writer writer = new OutputStreamWriter(stream);
 
-		mPickFile.setOnClickListener(this);
+            writeCsvFromCursor(baggedCursor, writer);
+            Toast backedUp = Toast.makeText(getApplication(), "Backed up data ",
+                    Toast.LENGTH_SHORT);
+            backedUp.show();
+        } catch (IOException e) {
+            Toast failed = Toast.makeText(getApplication(), "Backup Failed", Toast.LENGTH_LONG);
+            failed.show();
+        }
 
-	}
+    }
 
-	private void generateCsvFile(String sFileName) {
+    private void writeCsvFromCursor(Cursor baggedCursor, Writer writer) throws IOException {
+        if (baggedCursor.moveToFirst()) {
+            // Iterate over each cursor.
+            do {
+                writer.append("'");
+                writer.append(baggedCursor.getString(0));
+                writer.append("'");
+                writer.append(',');
+                writer.append("'");
+                writer.append(baggedCursor.getString(2));
+                writer.append("'");
+                writer.append(',');
+                writer.append("'");
+                writer.append(baggedCursor.getString(3));
+                writer.append("'");
+                writer.append('\n');
 
-		Cursor baggedCursor = dbAdapter.getBaggedHillList();
-		startManagingCursor(baggedCursor);
-		try {
-			File gpxfile = new File(folderPath, "bagging_export.csv");
+            } while (baggedCursor.moveToNext());
+        }
 
-			FileWriter writer = new FileWriter(gpxfile);
+        writer.flush();
+        writer.close();
+    }
 
-			if (baggedCursor.moveToFirst()) {
-				// Iterate over each cursor.
-				do {
 
-					writer.append("'");
-					writer.append(baggedCursor.getString(0));
-					writer.append("'");
-					writer.append(',');
-					writer.append("'");
-					writer.append(baggedCursor.getString(2));
-					writer.append("'");
-					writer.append(',');
-					writer.append("'");
-					writer.append(baggedCursor.getString(3));
-					writer.append("'");
-					writer.append('\n');
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
 
-				} while (baggedCursor.moveToNext());
-			}
+            try {
+                ParcelFileDescriptor pfd = getContentResolver().
+                        openFileDescriptor(uri, "w");
 
-			// generate whatever data you want
+                FileOutputStream fileOutputStream =
+                        new FileOutputStream(pfd.getFileDescriptor());
 
-			writer.flush();
-			writer.close();
-			Toast backedUp= Toast.makeText(getApplication(), "Backed up to "+gpxfile.getAbsolutePath(),
-					Toast.LENGTH_SHORT);
-			backedUp.show();
-		} catch (IOException e) {
-			Toast failed=Toast.makeText(getApplication(), "Backup Failed", Toast.LENGTH_LONG);
-			failed.show();
-		}
+                writeCsvFile(fileOutputStream);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+            Toast backedUp = Toast.makeText(getApplication(), "Importing Data",
+                    Toast.LENGTH_SHORT);
+            backedUp.show();
+            try {
+                ParcelFileDescriptor pfd = getContentResolver().
+                        openFileDescriptor(uri, "r");
 
-	}
+                FileInputStream fileInputStream =
+                        new FileInputStream(pfd.getFileDescriptor());
 
-	public void onClick(DialogInterface dialog, int which) {
-		if (dialog == mFolderDialog) {
-			((TextView) findViewById(R.id.folder_path)).setText(mFolderDialog
-					.getPath());
-			folderPath = mFolderDialog.getPath();
-			generateCsvFile("bagging.csv");
-		}
-		if (dialog == mFileDialog) {
-			String path = mFileDialog.getPath();
-			if (path == null) {
-				path = "no file selected";
-			}
-			((TextView) findViewById(R.id.file_path)).setText(path);
-			filePath = path;
-			importCsvFile();
-		}
-	}
+                dbAdapter.importBagging(new InputStreamReader(fileInputStream));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
 
-	public void onClick(View v) {
-		if (v == mPickFolder) {
-			mFolderDialog = new FolderPicker(this, this, 0);
-			
-			mFolderDialog.show();
-		} else if (v == mPickFile) {
-			mFileDialog = new FolderPicker(this, this, android.R.style.Theme,
-					true);
-			
-			mFileDialog.show();
-		
-		}
+    }
 
-	}
 
-	private void importCsvFile() {
-
-		dbAdapter.importBagging(filePath);
-
-	}
 }

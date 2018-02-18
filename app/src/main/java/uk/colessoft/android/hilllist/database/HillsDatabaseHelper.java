@@ -14,13 +14,19 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.opencsv.CSVReader;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import uk.colessoft.android.hilllist.model.Hill;
 
@@ -71,7 +77,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     private final String baggingKeyId = baggingTable + "." + KEY_ID;
     protected Context context;
     public static final String DATABASE_NAME = "hill-list.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private String hillTypes = HillsTables.HILLTYPES_TABLE;
     private String typesLinkKeyHillId = typesLink + "." + HillsTables.KEY_HILL_ID;
     private String hillTypesKeyId = hillTypes + "." + KEY_ID;
@@ -87,7 +93,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     protected HillsDatabaseHelper(Context context, String name, CursorFactory factory,
-                                int version) {
+                                  int version) {
         super(context, name, factory, version);
         this.context = context;
 
@@ -158,7 +164,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
                         + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
                         + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
-        KEY_NOTES, KEY_DATECLIMBED},
+                        KEY_NOTES, KEY_DATECLIMBED},
                 null, null, null, null, null);
     }
 
@@ -184,7 +190,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     @Override
     public Cursor getHillGroup(String groupId, String countryClause, String moreFilters, String orderBy, int filter) {
 
-        if("T100".equals(groupId)) return getT100(moreFilters,orderBy,filter);
+        if ("T100".equals(groupId)) return getT100(moreFilters, orderBy, filter);
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         String where = "";
@@ -228,7 +234,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public Cursor getT100( String moreFilters, String orderBy, int filter) {
+    public Cursor getT100(String moreFilters, String orderBy, int filter) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         String where = "T100='1'";
@@ -265,7 +271,7 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public Hill getHill(long _rowIndex){
+    public Hill getHill(long _rowIndex) {
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(hills + " left join "
@@ -290,42 +296,35 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public void importBagging(String filePath) {
+    public void importBagging(Reader fileReader) {
 
         SQLiteDatabase db = getWritableDatabase();
 
-        FileInputStream is = null;
         try {
-            File baggingFile = new File(filePath);
             db.delete(BAGGING_TABLE, null, null);
+            CSVReader csvReader = new CSVReader(fileReader, ',', '\'');
+            List<String[]> allOfit = csvReader.readAll();
 
-            is = new FileInputStream(baggingFile);
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(is));
-
-            String line;
             ContentValues values;
-            while ((line = reader.readLine()) != null) {
-
-                String[] lineSplit = line.split("',");
-
+            for (String[] row : allOfit) {
+                int size = row.length;
+                String notes = row[2];
+                if (size > 3) {
+                    for (int i = 3; i < size; i++) {
+                        notes = notes + "," + row[i];
+                    }
+                }
                 values = new ContentValues();
-                values.put("_id", lineSplit[0].substring(1, lineSplit[0].length()));
-                values.put("dateClimbed", lineSplit[1].substring(1, lineSplit[1].length()));
-                values.put("notes", lineSplit[2].substring(1, lineSplit[2].length() - 1));
-
+                values.put("_id", row[0]);
+                values.put("dateClimbed", row[1]);
+                values.put("notes", notes);
                 db.insert(BAGGING_TABLE, null, values);
+
             }
         } catch (IOException e) {
             Log.e(this.toString(), "error: " + e.toString());
         } catch (SQLiteException se) {
             se.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                Log.e(this.toString(), "error: " + e.toString());
-            }
         }
     }
 
