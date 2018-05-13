@@ -1,7 +1,10 @@
 package uk.colessoft.android.hilllist.model;
 
+import android.arch.persistence.room.Entity;
+
 import java.util.Date;
 
+@Entity(tableName = "hills")
 public class Hill {
 	private final int _id;
 	private final String _section;
