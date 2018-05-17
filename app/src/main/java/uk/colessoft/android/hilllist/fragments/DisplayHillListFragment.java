@@ -42,7 +42,7 @@ import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BaggingTable;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
@@ -137,7 +137,7 @@ public class DisplayHillListFragment extends Fragment implements
 		private String hilltype;
 		private String countryClause;
 		private int filterHills;
-		private DbHelper dbAdapter;
+		private BritishHillsDatasource dbAdapter;
 
 		public UpdateHillsTaskLoader(Context context) {
 			super(context);
@@ -146,7 +146,7 @@ public class DisplayHillListFragment extends Fragment implements
 
 		public UpdateHillsTaskLoader(Context context, String hilltype,
 				String countryClause, String where, String orderBy,
-				int filterHills, DbHelper dbAdapter) {
+				int filterHills, BritishHillsDatasource dbAdapter) {
 			super(context);
 			this.where = where;
 			this.orderBy = orderBy;
@@ -188,7 +188,7 @@ public class DisplayHillListFragment extends Fragment implements
 		private String hilltype;
 		private String countryClause;
 		private int filterHills;
-		private DbHelper dbAdapter;
+		private BritishHillsDatasource dbAdapter;
 		private int allMarked;
 		private Handler handler;
 
@@ -198,9 +198,9 @@ public class DisplayHillListFragment extends Fragment implements
 		}
 
 		public HillsClimbedTaskLoader(Context context, String hilltype,
-									  String countryClause, String where, String orderBy,
-									  int filterHills, DbHelper dbAdapter, int allMarked,
-									  Handler handler) {
+                                      String countryClause, String where, String orderBy,
+                                      int filterHills, BritishHillsDatasource dbAdapter, int allMarked,
+                                      Handler handler) {
 			super(context);
 			this.where = where;
 			this.orderBy = orderBy;
@@ -264,7 +264,7 @@ public class DisplayHillListFragment extends Fragment implements
 	}
 
 	@Inject
-	DbHelper dbAdapter;
+    BritishHillsDatasource dbAdapter;
 
 	private String where = null;
 	private String orderBy;

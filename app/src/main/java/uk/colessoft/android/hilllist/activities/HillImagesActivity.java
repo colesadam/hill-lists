@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.fragments.HillImageFragment;
 import uk.colessoft.android.hilllist.fragments.HillImagesFragment;
@@ -18,7 +18,7 @@ import uk.colessoft.android.hilllist.model.Hill;
 public class HillImagesActivity extends AppCompatActivity implements HillImagesFragment.OnFragmentInteractionListener {
 
     @Inject
-    DbHelper dbHelper;
+    BritishHillsDatasource dbHelper;
     private HillImagesFragment imagesFragment;
     private String IMAGES_FRAGMENT = "1";
     private String IMAGE_FRAGMENT = "2";

@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
@@ -28,7 +28,7 @@ public class Main extends AppCompatActivity {
 	public static final int OTHER_GB = 4;
 
 	@Inject
-	DbHelper dbHelper;
+    BritishHillsDatasource dbHelper;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

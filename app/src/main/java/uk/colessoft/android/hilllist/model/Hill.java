@@ -8,36 +8,36 @@ import java.util.Date;
 @Entity(tableName = "hills")
 public class Hill {
     @PrimaryKey
-	private final int _id;
+	private int _id;
 
-	private final String _section;
-	private final String hillname;
-	private final String section;
-	private final String region;
-	private final String area;
-	private final float heightm;
-	private final float heightf;
-	private final String map;
-	private final String map25;
-	private final String gridref;
-	private final String colgridref;
-	private final float colheight;
-	private final float drop;
-	private final String gridref10;
-	private final String feature;
-	private final String observations;
-	private final String survey;
-	private final String climbed;
-	private final String classification;
-	private final Date revision;
-	private final String comments;
-	private final int xcoord;
-	private final int ycoord;
-	private final double latitude;
-	private final double longitude;
-	private final String streetmap;
-	private final String getamap;
-	private final String hillBagging;
+	private String _section;
+	private String hillname;
+	private String hSection;
+	private String region;
+	private String area;
+	private float heightm;
+	private float heightf;
+	private String map;
+	private String map25;
+	private String gridref;
+	private String colgridref;
+	private float colheight;
+	private float drop;
+	private String gridref10;
+	private String feature;
+	private String observations;
+	private String survey;
+	private String climbed;
+	private String classification;
+	private Date revision;
+	private String comments;
+	private int xcoord;
+	private int ycoord;
+	private double latitude;
+	private double longitude;
+	private String streetmap;
+	private String getamap;
+	private String hillBagging;
 	private Date hillClimbed;
 	private String notes;
 
@@ -52,7 +52,7 @@ public class Hill {
 		this._id = id;
 		this._section = section;
 		this.hillname = hillname;
-		this.section = section2;
+		this.hSection = section2;
 		this.region = region;
 		this.area = area;
 		this.heightm = heightm;
@@ -83,9 +83,133 @@ public class Hill {
 
 	}
 
+	public Hill() {}
+
 	public int get_id() {
 		return _id;
 	}
+
+	public void set_section(String _section) {
+		this._section = _section;
+	}
+
+	public void setHillname(String hillname) {
+		this.hillname = hillname;
+	}
+
+	public void setHSection(String hSection) {
+		this.hSection = hSection;
+	}
+
+	public String getHSection() {
+		return hSection;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public void setHeightm(float heightm) {
+		this.heightm = heightm;
+	}
+
+	public void setHeightf(float heightf) {
+		this.heightf = heightf;
+	}
+
+	public void setMap(String map) {
+		this.map = map;
+	}
+
+	public void setMap25(String map25) {
+		this.map25 = map25;
+	}
+
+	public void setGridref(String gridref) {
+		this.gridref = gridref;
+	}
+
+	public void setColgridref(String colgridref) {
+		this.colgridref = colgridref;
+	}
+
+	public void setColheight(float colheight) {
+		this.colheight = colheight;
+	}
+
+	public void setDrop(float drop) {
+		this.drop = drop;
+	}
+
+	public void setGridref10(String gridref10) {
+		this.gridref10 = gridref10;
+	}
+
+	public void setFeature(String feature) {
+		this.feature = feature;
+	}
+
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
+
+	public void setSurvey(String survey) {
+		this.survey = survey;
+	}
+
+	public void setClimbed(String climbed) {
+		this.climbed = climbed;
+	}
+
+	public void setClassification(String classification) {
+		this.classification = classification;
+	}
+
+	public void setRevision(Date revision) {
+		this.revision = revision;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public void setXcoord(int xcoord) {
+		this.xcoord = xcoord;
+	}
+
+	public void setYcoord(int ycoord) {
+		this.ycoord = ycoord;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public void setStreetmap(String streetmap) {
+		this.streetmap = streetmap;
+	}
+
+	public void setGetamap(String getamap) {
+		this.getamap = getamap;
+	}
+
+	public void setHillBagging(String hillBagging) {
+		this.hillBagging = hillBagging;
+	}
+
+	public void set_id(int id) {this._id = id;}
 
 	public String get_section() {
 		return _section;
@@ -95,8 +219,8 @@ public class Hill {
 		return hillname;
 	}
 
-	public String getSection() {
-		return section;
+	public String gethSection() {
+		return hSection;
 	}
 
 	public String getRegion() {
@@ -199,7 +323,7 @@ public class Hill {
 		return hillBagging;
 	}
 
-	private void setHillClimbed(Date hillClimbed) {
+	public void setHillClimbed(Date hillClimbed) {
 		this.hillClimbed = hillClimbed;
 	}
 
@@ -207,7 +331,7 @@ public class Hill {
 		return hillClimbed;
 	}
 
-	private void setNotes(String notes) {
+	public void setNotes(String notes) {
 		this.notes = notes;
 	}
 

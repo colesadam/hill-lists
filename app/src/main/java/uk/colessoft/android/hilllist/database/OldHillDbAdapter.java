@@ -24,7 +24,7 @@ import java.util.Date;
 import uk.colessoft.android.hilllist.model.Hill;
 
 
-public class OldHillDbAdapter implements DbHelper {
+public class OldHillDbAdapter implements BritishHillsDatasource {
     private static final String DATABASE_NAME = "hill-list.db";
     private static final String HILLS_TABLE = "hills";
     private static final String BAGGING_TABLE = "Bagging";

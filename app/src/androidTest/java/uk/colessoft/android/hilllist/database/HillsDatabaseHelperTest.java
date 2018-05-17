@@ -3,7 +3,6 @@ package uk.colessoft.android.hilllist.database;
 import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +19,6 @@ import java.util.Date;
 import uk.colessoft.android.hilllist.TestComponentRule;
 import uk.colessoft.android.hilllist.model.Hill;
 
-import static android.content.ContentValues.TAG;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -28,7 +26,6 @@ import static junit.framework.Assert.assertNull;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static uk.colessoft.android.hilllist.database.BaggingTable.KEY_NOTES;
 
 @RunWith(AndroidJUnit4.class)
 public class HillsDatabaseHelperTest {
@@ -37,7 +34,7 @@ public class HillsDatabaseHelperTest {
     @Rule
     public final TestComponentRule component =
             new TestComponentRule(InstrumentationRegistry.getTargetContext());
-    private DbHelper helper;
+    private BritishHillsDatasource helper;
 
     @Before
     public void thing() throws Exception{

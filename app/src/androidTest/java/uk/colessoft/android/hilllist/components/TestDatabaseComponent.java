@@ -11,7 +11,7 @@ import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
 import uk.colessoft.android.hilllist.activities.HillImagesActivity;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.SplashScreenActivity;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.fragments.ListHillsMapFragment;
@@ -25,7 +25,7 @@ import uk.colessoft.android.hilllist.modules.TestDatabaseModule;
         TestDatabaseModule.class})
 public interface TestDatabaseComponent extends DatabaseComponent {
 
-    DbHelper dbHelper();
+    BritishHillsDatasource dbHelper();
     void inject(SplashScreenActivity activity);
     void inject(BaggingExportActivity activity);
     void inject(BusinessSearchMapActivity activity);

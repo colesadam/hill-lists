@@ -2,28 +2,28 @@ package uk.colessoft.android.hilllist.modules;
 
 
 import android.app.Application;
+import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import uk.colessoft.android.hilllist.dao.HillDao;
 import uk.colessoft.android.hilllist.dao.HillTypeDao;
 import uk.colessoft.android.hilllist.dao.TypeLinkDao;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsDatabase;
 import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
+import uk.colessoft.android.hilllist.database.HillsLocalDatasource;
 
 @Module
 public class DatabaseModule {
 
-    @Provides
-    @Singleton
-    DbHelper provideDbHelper(Application application) {
-        return HillsDatabaseHelper.getInstance(application);
 
-    }
 
     @Provides
     @Singleton

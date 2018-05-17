@@ -49,7 +49,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.NearbyHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
@@ -77,7 +77,7 @@ public class NearbyHillsFragment extends Fragment implements
     private int firstRow;
 
     @Inject
-    DbHelper dbAdapter;
+    BritishHillsDatasource dbAdapter;
 
     private View viewer;
     private ListView hillListView;
@@ -657,7 +657,7 @@ public class NearbyHillsFragment extends Fragment implements
         private String hilltype;
         private String countryClause;
         private int filterHills;
-        private DbHelper dbAdapter;
+        private BritishHillsDatasource dbAdapter;
         private double lat1;
         private double lon1;
         private double nearRadius;
@@ -671,7 +671,7 @@ public class NearbyHillsFragment extends Fragment implements
         }
 
         public UpdateHillsTaskLoader(Context context, String orderBy,
-                                     int filterHills, DbHelper dbAdapter,
+                                     int filterHills, BritishHillsDatasource dbAdapter,
                                      boolean useMetricDistances, boolean useMetricHeights,
                                      double lat1, double lon1, double nearRadius, DecimalFormat df2) {
             super(context);

@@ -9,7 +9,7 @@ import org.junit.runners.model.Statement;
 
 import uk.colessoft.android.hilllist.components.DaggerTestDatabaseComponent;
 import uk.colessoft.android.hilllist.components.TestDatabaseComponent;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.modules.AppModule;
 import uk.colessoft.android.hilllist.modules.TestDatabaseModule;
 
@@ -25,7 +25,7 @@ public class TestComponentRule implements TestRule {
                 .build();
     }
 
-    public DbHelper getDbHelper(){
+    public BritishHillsDatasource getDbHelper(){
 
         return mTestComponent.dbHelper();
 

@@ -1,0 +1,288 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "869b316c23d5d9ae8440085a3e3ddbf8",
+    "entities": [
+      {
+        "tableName": "hills",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `_section` TEXT, `hillname` TEXT, `hSection` TEXT, `region` TEXT, `area` TEXT, `heightm` REAL NOT NULL, `heightf` REAL NOT NULL, `map` TEXT, `map25` TEXT, `gridref` TEXT, `colgridref` TEXT, `colheight` REAL NOT NULL, `drop` REAL NOT NULL, `gridref10` TEXT, `feature` TEXT, `observations` TEXT, `survey` TEXT, `climbed` TEXT, `classification` TEXT, `revision` TEXT, `comments` TEXT, `xcoord` INTEGER NOT NULL, `ycoord` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `streetmap` TEXT, `getamap` TEXT, `hillBagging` TEXT, `hillClimbed` TEXT, `notes` TEXT, PRIMARY KEY(`_id`))",
+        "fields": [
+          {
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "_section",
+            "columnName": "_section",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hillname",
+            "columnName": "hillname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hSection",
+            "columnName": "hSection",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "region",
+            "columnName": "region",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "area",
+            "columnName": "area",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "heightm",
+            "columnName": "heightm",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "heightf",
+            "columnName": "heightf",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "map",
+            "columnName": "map",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "map25",
+            "columnName": "map25",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gridref",
+            "columnName": "gridref",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "colgridref",
+            "columnName": "colgridref",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "colheight",
+            "columnName": "colheight",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "drop",
+            "columnName": "drop",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gridref10",
+            "columnName": "gridref10",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "feature",
+            "columnName": "feature",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "observations",
+            "columnName": "observations",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "survey",
+            "columnName": "survey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "climbed",
+            "columnName": "climbed",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "classification",
+            "columnName": "classification",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "revision",
+            "columnName": "revision",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "xcoord",
+            "columnName": "xcoord",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ycoord",
+            "columnName": "ycoord",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "streetmap",
+            "columnName": "streetmap",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "getamap",
+            "columnName": "getamap",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hillBagging",
+            "columnName": "hillBagging",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hillClimbed",
+            "columnName": "hillClimbed",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "hilltypes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `title` TEXT NOT NULL, PRIMARY KEY(`_id`))",
+        "fields": [
+          {
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "typeslink",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hill_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type_Id` INTEGER NOT NULL, FOREIGN KEY(`hill_id`) REFERENCES `hills`(`_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`type_Id`) REFERENCES `hilltypes`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "hill_id",
+            "columnName": "hill_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type_Id",
+            "columnName": "type_Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "hill_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "hills",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "hill_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          },
+          {
+            "table": "hilltypes",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "type_Id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"869b316c23d5d9ae8440085a3e3ddbf8\")"
+    ]
+  }
+}

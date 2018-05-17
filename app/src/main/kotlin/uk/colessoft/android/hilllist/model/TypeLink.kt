@@ -15,7 +15,7 @@ import android.arch.persistence.room.PrimaryKey
         ))
 data class TypeLink(
         @PrimaryKey(autoGenerate = true)
-        val id: Long,
-        val ownerId: Long
+        val hill_id: Long,
+        val type_Id: Long
 
 )

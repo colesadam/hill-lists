@@ -38,13 +38,13 @@ import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
 import uk.colessoft.android.hilllist.activities.HillImagesActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.model.Hill;
 
 
 public class HillDetailFragment extends Fragment {
     @Inject
-    DbHelper dbAdapter;
+    BritishHillsDatasource dbAdapter;
 
     private boolean useMetricHeights;
     static final int DATE_DIALOG_ID = 0;
@@ -340,7 +340,7 @@ public class HillDetailFragment extends Fragment {
         }
         hillLongitude.setText(String.valueOf(absL) + ll);
         osgridref.setText(hill.getGridref());
-        hillsection.setText(hill.getSection());
+        hillsection.setText(hill.gethSection());
         os50k.setText(hill.getMap());
         os25k.setText(hill.getMap25());
         colHeight.setText(String.valueOf(hill.getColheight()));

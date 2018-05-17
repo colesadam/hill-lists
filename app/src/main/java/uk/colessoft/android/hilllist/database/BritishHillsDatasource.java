@@ -9,7 +9,7 @@ import java.util.Date;
 
 import uk.colessoft.android.hilllist.model.Hill;
 
-public interface DbHelper {
+public interface BritishHillsDatasource {
     void markHillClimbed(int hillNumber, Date dateClimbed, String notes);
 
     void markHillNotClimbed(int hillNumber);
@@ -32,5 +32,4 @@ public interface DbHelper {
 
     void touch(Handler handler);
 
-    void close();
 }

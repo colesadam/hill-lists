@@ -24,7 +24,7 @@ import javax.inject.Inject;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BaggingTable;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
@@ -35,7 +35,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
     static final private int SHOW_NEARBY = Menu.FIRST;
 
     @Inject
-    DbHelper dbAdapter;
+    BritishHillsDatasource dbAdapter;
     private GoogleMap map;
 
     private Hill hill;

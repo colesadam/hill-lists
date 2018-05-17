@@ -21,7 +21,7 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 
 public class BaggingExportActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class BaggingExportActivity extends AppCompatActivity {
     private static final int WRITE_REQUEST_CODE = 43;
 
     @Inject
-    DbHelper dbAdapter;
+    BritishHillsDatasource dbAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

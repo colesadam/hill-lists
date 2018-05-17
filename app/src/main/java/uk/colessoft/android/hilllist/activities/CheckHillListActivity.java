@@ -29,7 +29,7 @@ import javax.inject.Inject;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BaggingTable;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 
 public class CheckHillListActivity extends AppCompatActivity {
@@ -42,7 +42,7 @@ public class CheckHillListActivity extends AppCompatActivity {
     private final int ALL_NOT_CLIMBED = 2;
 
     @Inject
-    DbHelper dbAdapter;
+    BritishHillsDatasource dbAdapter;
 
     private String where = null;
     private String orderBy;

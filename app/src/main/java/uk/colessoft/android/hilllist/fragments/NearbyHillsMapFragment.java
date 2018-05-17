@@ -28,7 +28,7 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
@@ -125,7 +125,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     private View viewer;
 
     @Inject
-    DbHelper dbAdapter;
+    BritishHillsDatasource dbAdapter;
 
     private boolean gotHills;
 

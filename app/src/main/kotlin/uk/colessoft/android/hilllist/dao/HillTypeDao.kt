@@ -4,5 +4,5 @@ import android.arch.persistence.room.Dao
 
 
 @Dao
-class HillTypeDao {
+interface HillTypeDao {
 }

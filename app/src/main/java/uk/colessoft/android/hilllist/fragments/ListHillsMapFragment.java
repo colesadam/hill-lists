@@ -27,7 +27,7 @@ import javax.inject.Inject;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BaggingTable;
-import uk.colessoft.android.hilllist.database.DbHelper;
+import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSelectedListener;
 import uk.colessoft.android.hilllist.model.TinyHill;
@@ -37,7 +37,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     @Inject
-    DbHelper dbAdapter;
+    BritishHillsDatasource dbAdapter;
 
     private OnHillSelectedListener hillSelectedListener;
     private MapOnHillSelectedListener mapOnHillSelectedListener;
@@ -146,7 +146,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         private String hilltype;
         private String countryClause;
         private int filterHills;
-        private DbHelper dbAdapter;
+        private BritishHillsDatasource dbAdapter;
 
         public UpdateHillsTaskLoader(Context context) {
             super(context);
@@ -155,7 +155,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
         public UpdateHillsTaskLoader(Context context, String hilltype,
                                      String countryClause, String where, String orderBy,
-                                     int filterHills, DbHelper dbAdapter) {
+                                     int filterHills, BritishHillsDatasource dbAdapter) {
             super(context);
             this.where = where;
             this.orderBy = orderBy;

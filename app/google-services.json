@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "14208076163",
+    "firebase_url": "https://api-project-14208076163.firebaseio.com",
+    "project_id": "api-project-14208076163",
+    "storage_bucket": "api-project-14208076163.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14208076163:android:2b9ac06ee5a0330a",
+        "android_client_info": {
+          "package_name": "uk.colessoft.android.hilllist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14208076163-uilc2v1mhdnr2fnsjdngm84fnqrmcspt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxdiMZZpvwXQDYehS6kipWo2mQZUo9nB4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
