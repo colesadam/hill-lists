@@ -1,12 +1,15 @@
 package uk.colessoft.android.hilllist.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
 @Entity(tableName = "hills")
 public class Hill {
+    @PrimaryKey
 	private final int _id;
+
 	private final String _section;
 	private final String hillname;
 	private final String section;
