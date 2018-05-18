@@ -1,5 +1,7 @@
 package uk.colessoft.android.hilllist.database;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.db.SupportSQLiteStatement;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -67,15 +69,15 @@ public class HillsTables {
     private static Handler handler;
 
 
-    public static void onCreate(SQLiteDatabase database, Context context, Handler handler, int rows) {
+    public static void onCreate(SupportSQLiteDatabase database, Context context){//, Handler handler, int rows) {
 
-        createSimpleTables(database);
-        HillsTables.handler = handler;
+        //createSimpleTables(database);
+        //HillsTables.handler = handler;
         long startTime = System.currentTimeMillis();
 
 
 
-        createAndPopulateHillsTable(database, context, startTime, rows);
+        createAndPopulateHillsTable(database, context, startTime);//, rows);
 
         populateHillTypes(database, startTime);
 
@@ -83,11 +85,11 @@ public class HillsTables {
 
     }
 
-    private static void populateHillTypes(SQLiteDatabase database, long startTime) {
+    private static void populateHillTypes(SupportSQLiteDatabase database, long startTime) {
 
-        Cursor c = database.query(HILLS_TABLE, null, null, null, null, null, null, null);
-        SQLiteStatement insertHillType = database.compileStatement("INSERT or IGNORE into " + HILLTYPES_TABLE + " VALUES(?,?)");
-        SQLiteStatement insertHillTypeLink = database.compileStatement("INSERT into " + TYPES_LINK_TABLE + " (" + KEY_HILL_ID + "," + KEY_TYPES_ID + ") values (?,?)");
+        Cursor c = database.query(HILLS_TABLE);
+        SupportSQLiteStatement insertHillType = database.compileStatement("INSERT or IGNORE into " + HILLTYPES_TABLE + " VALUES(?,?)");
+        SupportSQLiteStatement insertHillTypeLink = database.compileStatement("INSERT into " + TYPES_LINK_TABLE + " (" + KEY_HILL_ID + "," + KEY_TYPES_ID + ") values (?,?)");
 
         // Populate static hill types data
         database.beginTransaction();
@@ -112,7 +114,7 @@ public class HillsTables {
                         + (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    private static void createAndPopulateHillsTable(SQLiteDatabase database, Context context, long startTime, int rows) {
+    private static void createAndPopulateHillsTable(SupportSQLiteDatabase database, Context context, long startTime){//, int rows) {
         InputStream is;
         Log.d(TAG, "createAndPopulateHillsTable: starting");
         try {
@@ -121,7 +123,7 @@ public class HillsTables {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
 
-            createHillsTable(database, reader);
+            //createHillsTable(database, reader);
 
             StringBuffer insertHillsBuffer;
 
@@ -130,7 +132,7 @@ public class HillsTables {
             database.beginTransaction();
             String line;
             int count = 0;
-            while ((line = reader.readLine()) != null && count <= rows) {
+            while ((line = reader.readLine()) != null && count <= 23000) {
                 count++;
                 if(handler != null) {
                     handler.dispatchMessage(Message.obtain(handler, 0, 0, 1, 1));
@@ -162,7 +164,7 @@ public class HillsTables {
         }
     }
 
-    private static void createHillsTable(SQLiteDatabase database, BufferedReader reader) throws IOException {
+    private static void createHillsTable(SupportSQLiteDatabase database, BufferedReader reader) throws IOException {
         String headerRow = reader.readLine();
         String hillsTableStarter = "CREATE TABLE '" + HILLS_TABLE
                 + "' ('" + KEY_ID + "' integer primary key,";
@@ -178,13 +180,13 @@ public class HillsTables {
         database.execSQL(hillsTableStarter + c.substring(0, c.length() - 1) + ")");
     }
 
-    private static void createSimpleTables(SQLiteDatabase database) {
+    private static void createSimpleTables(SupportSQLiteDatabase database) {
         database.execSQL("PRAGMA foreign_keys=ON;");
         database.execSQL(HILLTYPES_CREATE);
         database.execSQL(TYPESLINK_CREATE);
     }
 
-    public static void onUpgrade(SQLiteDatabase database, int oldVersion,
+    public static void onUpgrade(SupportSQLiteDatabase database, int oldVersion,
                                  int newVersion, Context context, Handler handler, int rows) {
         Log.w(HillsTables.class.getName(), "Upgrading database from version "
                 + oldVersion + " to " + newVersion
@@ -192,7 +194,7 @@ public class HillsTables {
         database.execSQL("DROP TABLE IF EXISTS " + HILLS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + HILLTYPES_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + TYPES_LINK_TABLE);
-        onCreate(database, context, handler, rows);
+        //onCreate(database, context, handler, rows);
     }
 
 }

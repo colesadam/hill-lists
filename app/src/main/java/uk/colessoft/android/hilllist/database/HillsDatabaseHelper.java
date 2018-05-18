@@ -31,6 +31,16 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+    }
+
     public static synchronized HillsDatabaseHelper getInstance(Context context) {
 
         if (sInstance == null) {
@@ -45,15 +55,15 @@ public class HillsDatabaseHelper extends SQLiteOpenHelper {
         return sInstance;
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        HillsTables.onCreate(db, context, handler, 9999999);
-        BaggingTable.onCreate(db, context);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        HillsTables.onUpgrade(db, oldVersion, newVersion, context, handler, 99999999);
-    }
+//    @Override
+//    public void onCreate(SQLiteDatabase db) {
+//        HillsTables.onCreate(db, context);//, handler, 9999999);
+//        BaggingTable.onCreate(db, context);
+//    }
+//
+//    @Override
+//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+//        HillsTables.onUpgrade(db, oldVersion, newVersion, context, handler, 99999999);
+//    }
 
 }

@@ -11,8 +11,9 @@ import uk.colessoft.android.hilllist.model.TypeLink
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.TypeConverters
 import android.arch.persistence.room.migration.Migration
+import uk.colessoft.android.hilllist.model.Bagging
 
-@Database(entities = arrayOf(Hill::class, HillType::class, TypeLink::class), version = 3)
+@Database(entities = arrayOf(Hill::class, HillType::class, TypeLink::class, Bagging::class), version = 3)
 @TypeConverters(DateConverters :: class)
 abstract class HillsDatabase : RoomDatabase() {
 

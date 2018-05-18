@@ -1,5 +1,7 @@
 package uk.colessoft.android.hilllist.database;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.db.SupportSQLiteStatement;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -16,7 +18,7 @@ public class BaggingTable {
 	public static final String KEY_NOTES = "notes";
 	public static final String BAGGING_TABLE = "Bagging";
 
-	public static void onCreate(SQLiteDatabase db, Context context) {
+	public static void onCreate(SupportSQLiteDatabase db, Context context) {
 		db.execSQL(BAGGING_CREATE);
 
 		OldHillDbAdapter oldHillDbAdapter = new OldHillDbAdapter(context);
@@ -26,7 +28,7 @@ public class BaggingTable {
 
 			if(oldBagging.moveToFirst()){
                 Log.d(TAG, "onCreate: importing old bagging");
-                SQLiteStatement insertB = db.compileStatement("INSERT into " + BAGGING_TABLE + " VALUES(?,?,?)");
+                SupportSQLiteStatement insertB = db.compileStatement("INSERT into " + BAGGING_TABLE + " VALUES(?,?,?)");
                 db.beginTransaction();
                 do {
                     insertB.bindString(1,oldBagging.getString(0));
