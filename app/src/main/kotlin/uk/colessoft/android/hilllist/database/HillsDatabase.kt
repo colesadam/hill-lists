@@ -27,7 +27,6 @@ abstract class HillsDatabase : RoomDatabase() {
 
 class Migration2To3 : Migration(2,3) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }
