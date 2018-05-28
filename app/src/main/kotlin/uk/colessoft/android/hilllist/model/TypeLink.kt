@@ -5,7 +5,7 @@ import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "typeslink",
-        foreignKeys = arrayOf(ForeignKey(entity = Hill::class,
+        foreignKeys = arrayOf(ForeignKey(entity = FullHill::class,
                 parentColumns = arrayOf("_id"),
                 childColumns = arrayOf("hill_id"),
                 onDelete = ForeignKey.CASCADE),
@@ -15,6 +15,7 @@ import android.arch.persistence.room.PrimaryKey
         ))
 data class TypeLink(
         @PrimaryKey(autoGenerate = true)
+        val _id: Long,
         val hill_id: Long,
         val type_Id: Long
 

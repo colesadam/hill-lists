@@ -362,12 +362,36 @@ public class OldHillDbAdapter implements BritishHillsDatasource {
 
         String notes = cursor.getString(cursor.getColumnIndex(KEY_NOTES));
 
-        return new Hill(_id, _section, hillname, section, region, area,
-                heightm, heightf, map, map25, gridref, colgridref, colheight,
-                drop, gridref10, feature, observations, survey, climbed,
-                classification, new Date(revision), comments, xcoord, ycoord,
-                latitude, longitude, streetmap, getamap, hillBagging,
-                dateClimbed, notes);
+        return new Hill(
+                dateClimbed,
+                notes,
+                _id,
+                hillname,
+                section,
+                area,
+                classification,
+                map,
+                map25,
+                heightm,
+                heightf,
+                gridref,
+                gridref10,
+                drop,
+                colgridref,
+                colheight,
+                feature,
+                observations,
+                survey,
+                climbed,
+                new Date(revision),
+                comments,
+                streetmap,
+                hillBagging,
+                xcoord,
+                ycoord,
+                latitude,
+                longitude,
+                _section);
     }
 
     @Override

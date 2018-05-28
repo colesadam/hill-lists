@@ -254,7 +254,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
 
         SupportSQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.query(hills + " left join "
+        Cursor cursor = db.query("select  * from "+hills + " left join "
                         + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId + " where " + hillsKeyId + "=" + _rowIndex, null);
 
         if (cursor.moveToFirst()) {
@@ -311,8 +311,6 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                 .getColumnIndex(KEY_HILLNAME));
         String section = cursor.getString(cursor
                 .getColumnIndex(KEY_SECTION));
-        String region = cursor.getString(cursor
-                .getColumnIndex(KEY_SECTIONNAME));
         String area = cursor.getString(cursor
                 .getColumnIndex(KEY_AREA));
         float heightm = cursor.getFloat(cursor
@@ -357,8 +355,6 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                 .getColumnIndex(KEY_LONGITUDE));
         String streetmap = cursor.getString(cursor
                 .getColumnIndex(KEY_STREETMAP));
-        String getamap = cursor.getString(cursor
-                .getColumnIndex(HillsTables.KEY_GEOGRAPH));
         String hillBagging = cursor.getString(cursor
                 .getColumnIndex(KEY_HILLBAGGING));
         Date dateClimbed = null;
@@ -375,12 +371,36 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         String notes = cursor.getString(cursor
                 .getColumnIndex(KEY_NOTES));
 
-        Hill result = new Hill(_id, _section, hillname, section, region, area,
-                heightm, heightf, map, map25, gridref, colgridref, colheight,
-                drop, gridref10, feature, observations, survey, climbed,
-                classification, new Date(revision), comments, xcoord, ycoord,
-                latitude, longitude, streetmap, getamap, hillBagging,
-                dateClimbed, notes);
+        Hill result = new Hill(
+                dateClimbed,
+                notes,
+                _id,
+                hillname,
+                section,
+                area,
+                classification,
+                map,
+                map25,
+                heightm,
+                heightf,
+                gridref,
+                gridref10,
+                drop,
+                colgridref,
+                colheight,
+                feature,
+                observations,
+                survey,
+                climbed,
+                new Date(revision),
+                comments,
+                streetmap,
+                hillBagging,
+                xcoord,
+                ycoord,
+                latitude,
+                longitude,
+                _section);
         System.out.println(result.getClassification());
         return result;
 

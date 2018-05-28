@@ -154,7 +154,7 @@ public class HillDetailFragment extends Fragment {
         // ((View)
         // saveNotes.getParent().getParent()).setVisibility(View.VISIBLE);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date realDate = hill.getHillClimbed();
+        Date realDate = hill.getDateClimbed();
         dateClimbed.setText(format.format(realDate));
         mYear = realDate.getYear() + 1900;
         mMonth = realDate.getMonth();
@@ -320,7 +320,7 @@ public class HillDetailFragment extends Fragment {
         TextView saveNotes = (TextView) getActivity().findViewById(R.id.save_notes);
         // ((View) saveNotes.getParent().getParent()).setVisibility(View.GONE);
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
-        if (hill.getHillClimbed() != null) {
+        if (hill.getDateClimbed() != null) {
 
             bagFeature(hill);
         }
@@ -340,7 +340,7 @@ public class HillDetailFragment extends Fragment {
         }
         hillLongitude.setText(String.valueOf(absL) + ll);
         osgridref.setText(hill.getGridref());
-        hillsection.setText(hill.gethSection());
+        hillsection.setText(hill.getHSection());
         os50k.setText(hill.getMap());
         os25k.setText(hill.getMap25());
         colHeight.setText(String.valueOf(hill.getColheight()));
@@ -370,7 +370,7 @@ public class HillDetailFragment extends Fragment {
 
 
         final int id = hill.get_id();
-        if (hill.getHillClimbed() != null) {
+        if (hill.getDateClimbed() != null) {
 
             ctv.setChecked(true);
 

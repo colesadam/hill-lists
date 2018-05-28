@@ -37,7 +37,6 @@ public class DatabaseModule {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
                         HillsTables.onCreate(db, application);//, handler, 9999999);
-                        BaggingTable.onCreate(db, application);
                     }
                 }).build();
     }

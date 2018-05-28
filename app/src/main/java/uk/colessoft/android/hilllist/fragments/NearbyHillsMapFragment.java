@@ -86,7 +86,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
             llb.addLatLong(lat, lng);
             t.setLatitude(lat);
             t.setLongitude(lng);
-            if (hill.getHillClimbed() != null) {
+            if (hill.getDateClimbed() != null) {
                 t.setClimbed(true);
             } else {
                 t.setClimbed(false);

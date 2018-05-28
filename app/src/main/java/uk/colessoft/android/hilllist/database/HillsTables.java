@@ -87,7 +87,7 @@ public class HillsTables {
 
     private static void populateHillTypes(SupportSQLiteDatabase database, long startTime) {
 
-        Cursor c = database.query(HILLS_TABLE);
+        Cursor c = database.query("select * from "+HILLS_TABLE);
         SupportSQLiteStatement insertHillType = database.compileStatement("INSERT or IGNORE into " + HILLTYPES_TABLE + " VALUES(?,?)");
         SupportSQLiteStatement insertHillTypeLink = database.compileStatement("INSERT into " + TYPES_LINK_TABLE + " (" + KEY_HILL_ID + "," + KEY_TYPES_ID + ") values (?,?)");
 
@@ -124,6 +124,7 @@ public class HillsTables {
                     new InputStreamReader(is));
 
             //createHillsTable(database, reader);
+            String headerRow = reader.readLine();
 
             StringBuffer insertHillsBuffer;
 
