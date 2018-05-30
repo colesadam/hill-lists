@@ -85,7 +85,7 @@ public class HillsTables {
 
     }
 
-    private static void populateHillTypes(SupportSQLiteDatabase database, long startTime) {
+    static void populateHillTypes(SupportSQLiteDatabase database, long startTime) {
 
         Cursor c = database.query("select * from "+HILLS_TABLE);
         SupportSQLiteStatement insertHillType = database.compileStatement("INSERT or IGNORE into " + HILLTYPES_TABLE + " VALUES(?,?)");
