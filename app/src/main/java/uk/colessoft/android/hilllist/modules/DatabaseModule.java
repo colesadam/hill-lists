@@ -34,6 +34,7 @@ public class DatabaseModule {
     @Provides
     @Singleton
     HillsDatabase providesRoomDatabase(Application application) {
+
         return Room.databaseBuilder(application, HillsDatabase.class, "hill-list.db").addMigrations(HillsDatabase.MIGRATION_2_3)
                 .addCallback(new RoomDatabase.Callback() {
                     @Override
