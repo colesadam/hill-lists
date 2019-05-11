@@ -87,7 +87,6 @@
     <string name="deweys_desc">A Dewey is a mountain or hill in England, Wales or the Isle of Man, that exceeds 500 metres in height, but is below 610 metres (2000ft) in altitude; it must be separated from adjacent tops by a height difference of at least 30 metres on all sides</string>
     <string name="trail_100_desc">A list of 100 UK hills which appeared in an issue of Trail Magazine.  It is a subjective list, compiled by canvassing opinions from Trail staff and readers, taking into consideration view, difficulty, features, historical interest, etc.</string>
     <string name="bhdescription">The British Hills application relies on the fantastic efforts of Graham Jackson, Chris Crocker, John Barnard, George Gradwell, Simon Edwardes, Mark Jackson and Jim Bloomer. Please visit http://hills-database.co.uk to read about how the database is constructed and donate to keep the updates coming. The data is licensed under Creative Commons 3.0</string>
-    <string name="donatetext">The British Hills application is free. However the creation and maintenance of the application amount to many hours of work. I intend to keep British Hills both free and without advertising. However, if you like the app and wish to contribute towards it\'s maintenance, please consider making a small donation by clicking on the PayPal button below.</string>
     <string name="google_map">Google Map</string>
     <string name="ordnance_survey_map">Ordnance Survey Map</string>
     <string name="scoot_search">Scoot Search</string>

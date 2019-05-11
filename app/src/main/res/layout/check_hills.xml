@@ -16,7 +16,7 @@
 		android:layout_height="wrap_content" android:paddingBottom="2sp"
 		android:layout_gravity="right" 
 		android:layout_alignParentTop="true" android:layout_alignParentRight="true"
-		android:paddingTop="2sp" android:layout_width="wrap_content" android:layout_alignRight="@+id/name_entry"
+		android:paddingTop="2sp" android:layout_width="wrap_content"
 		android:layout_toRightOf="@+id/hill_name_checked" ></CheckBox>
 
 

@@ -22,7 +22,6 @@ public class AboutActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
 		
-		ImageButton donateButton=(ImageButton) findViewById(R.id.donateButton);
 		TextView link = (TextView) findViewById(R.id.abt1);
 
 		Map<String,String> attributions= ResourceUtils.getHashMapResource(this,R.xml.cc_attributions);
@@ -49,16 +48,7 @@ public class AboutActivity extends AppCompatActivity {
 
 		Linkify.addLinks(link, Linkify.ALL);
 		
-		donateButton.setOnClickListener(new View.OnClickListener(){
 
-			private final String donateLink="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QRHT3PRRVBTM4";
-
-			public void onClick(View v) {
-				Intent intent = new Intent("android.intent.action.VIEW",
-						Uri.parse(donateLink));
-				startActivity(intent);
-				
-			}});
 		
 	}
 
