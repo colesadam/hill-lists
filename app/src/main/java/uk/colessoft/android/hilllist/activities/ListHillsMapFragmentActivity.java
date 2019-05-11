@@ -2,7 +2,7 @@ package uk.colessoft.android.hilllist.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:layout_marginTop="16dp"
     android:layout_marginBottom="16dp">
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_scotland"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -31,9 +31,9 @@
             android:id="@+id/scottish_hills"
             style="@style/cardview_title"
             android:text="@string/label_scottish_hills" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_wales"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -58,9 +58,9 @@
             android:id="@+id/welsh_hills"
             style="@style/cardview_title"
             android:text="@string/label_welsh_hills" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_england"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -87,9 +87,9 @@
             android:id="@+id/english_hills"
             style="@style/cardview_title"
             android:text="@string/label_english_hills" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_gb"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -115,9 +115,9 @@
             android:id="@+id/other_GB_hills"
             style="@style/cardview_title"
             android:text="@string/label_other_GB_hills" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_forecasts"
 
         android:layout_width="0dp"
@@ -144,10 +144,10 @@
             android:text="@string/viewforecasts" />
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_nearby"
 
 
@@ -175,9 +175,9 @@
             android:text="@string/label_nearby_hills" />
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_backup"
 
 
@@ -210,9 +210,9 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/menu_search"
 
 
@@ -238,9 +238,9 @@
             style="@style/cardview_title"
             android:text="@string/search" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centre_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -249,7 +249,7 @@
         tools:layout_editor_absoluteX="481dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centre_vertical"
         android:layout_width="960dp"
         android:layout_height="wrap_content"
@@ -258,7 +258,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="316dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -267,7 +267,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="158dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_vertical"
         android:layout_width="960dp"
         android:layout_height="wrap_content"
@@ -276,4 +276,4 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="473dp" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

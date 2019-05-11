@@ -1,20 +1,18 @@
 package uk.colessoft.android.hilllist.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.db.SupportSQLiteQuery;
-import android.arch.persistence.db.SupportSQLiteQueryBuilder;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
+import androidx.sqlite.db.SupportSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteQueryBuilder;
+import androidx.room.RoomDatabase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.opencsv.CSVReader;
@@ -56,7 +54,6 @@ import static uk.colessoft.android.hilllist.database.HillsTables.KEY_MAP25;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_OBSERVATIONS;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_REVISION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SECTION;
-import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SECTIONNAME;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_STREETMAP;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_SURVEY;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_TITLE;

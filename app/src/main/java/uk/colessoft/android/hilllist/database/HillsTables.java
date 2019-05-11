@@ -1,11 +1,9 @@
 package uk.colessoft.android.hilllist.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.db.SupportSQLiteStatement;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteStatement;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;

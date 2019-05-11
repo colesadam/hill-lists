@@ -1,6 +1,6 @@
 package uk.colessoft.android.hilllist.model;
 
-import android.arch.persistence.room.ColumnInfo;
+import androidx.room.ColumnInfo;
 
 import java.util.Date;
 

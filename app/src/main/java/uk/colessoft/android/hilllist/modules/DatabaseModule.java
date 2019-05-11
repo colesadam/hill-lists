@@ -2,29 +2,23 @@ package uk.colessoft.android.hilllist.modules;
 
 
 import android.app.Application;
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.NonNull;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.annotation.NonNull;
 
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import uk.colessoft.android.hilllist.dao.HillDao;
 import uk.colessoft.android.hilllist.dao.HillTypeDao;
 import uk.colessoft.android.hilllist.dao.TypeLinkDao;
-import uk.colessoft.android.hilllist.database.BaggingTable;
-import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsDatabase;
-import uk.colessoft.android.hilllist.database.HillsDatabaseHelper;
-import uk.colessoft.android.hilllist.database.HillsLocalDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 
-import static android.arch.persistence.room.RoomDatabase.JournalMode.TRUNCATE;
+import static androidx.room.RoomDatabase.JournalMode.TRUNCATE;
 
 @Module
 public class DatabaseModule {

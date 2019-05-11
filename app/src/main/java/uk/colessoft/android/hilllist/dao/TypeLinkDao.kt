@@ -1,6 +1,6 @@
 package uk.colessoft.android.hilllist.dao
 
-import android.arch.persistence.room.Dao
+import androidx.room.Dao
 
 
 @Dao

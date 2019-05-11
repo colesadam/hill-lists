@@ -1,13 +1,13 @@
 package uk.colessoft.android.hilllist.database
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import uk.colessoft.android.hilllist.dao.HillDao
 import uk.colessoft.android.hilllist.dao.HillTypeDao
 import uk.colessoft.android.hilllist.dao.TypeLinkDao
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.TypeConverters
-import android.arch.persistence.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import uk.colessoft.android.hilllist.BHApplication
 import uk.colessoft.android.hilllist.model.*
 

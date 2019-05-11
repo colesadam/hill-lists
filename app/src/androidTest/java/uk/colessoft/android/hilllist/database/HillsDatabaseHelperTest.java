@@ -1,8 +1,8 @@
 package uk.colessoft.android.hilllist.database;
 
 import android.database.Cursor;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,7 +19,7 @@ import java.util.Date;
 import uk.colessoft.android.hilllist.TestComponentRule;
 import uk.colessoft.android.hilllist.model.Hill;
 
-import static android.support.test.InstrumentationRegistry.getTargetContext;
+import static androidx.test.InstrumentationRegistry.getTargetContext;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;

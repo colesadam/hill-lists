@@ -4,8 +4,10 @@ package uk.colessoft.android.hilllist.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.AsyncTaskLoader;
+import androidx.loader.content.Loader;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ToggleButton;
 
@@ -132,17 +134,17 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
         return search_string;
     }
 
-    public android.support.v4.content.Loader<ArrayList> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList> onCreateLoader(int id, Bundle args) {
         return new ScootSearchTaskLoader(this, businesses, search_string, searchHandler, lat, lon);
     }
 
-    public void onLoadFinished(android.support.v4.content.Loader<ArrayList> loader, ArrayList data) {
+    public void onLoadFinished(Loader<ArrayList> loader, ArrayList data) {
         businesses = data;
         addBusinesses();
 
     }
 
-    public void onLoaderReset(android.support.v4.content.Loader<ArrayList> loader) {
+    public void onLoaderReset(Loader<ArrayList> loader) {
         // TODO Auto-generated method stub
 
     }
@@ -189,7 +191,7 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
     }
 
     private static class ScootSearchTaskLoader extends
-            android.support.v4.content.AsyncTaskLoader<ArrayList> {
+            AsyncTaskLoader<ArrayList> {
         String searchString;
         ArrayList<Business> foundBusinesses;
         ScootXMLHandler searchHandler;

@@ -1,6 +1,6 @@
 package uk.colessoft.android.hilllist.database
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -3,7 +3,7 @@ package uk.colessoft.android.hilllist.activities;
 import android.os.Build;
 import android.util.Log;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.InstrumentationRegistry.getInstrumentation;
 
 public class HillTest {
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/english_hewitts"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -36,9 +36,9 @@
 
             style="@style/cardview_title"
             android:text="Hewitts" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/english_nuttalls"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -65,9 +65,9 @@
             style="@style/cardview_title"
             android:text="Nuttalls" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/english_marilyns"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -96,10 +96,10 @@
             android:text="@string/label_marilyns" />
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/wainwrights"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -126,9 +126,9 @@
             android:text="@string/label_wainwrights" />
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/wainrights_outlying_fells"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -153,9 +153,9 @@
             style="@style/cardview_title"
             android:text="@string/label_wainwright_fells" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/birketts"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -181,9 +181,9 @@
             style="@style/cardview_title"
             android:text="@string/label_birketts" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
+    <androidx.cardview.widget.CardView         android:clickable="true"         android:focusable="true"         android:foreground="?attr/selectableItemBackground"
         android:id="@+id/allenglish"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -209,10 +209,10 @@
             style="@style/cardview_title"
             android:text="@string/label_allEnglish" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centre_vertical_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
         tools:layout_editor_absoluteX="206dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_vertical_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
         tools:layout_editor_absoluteX="136dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_vertical_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -239,7 +239,7 @@
         tools:layout_editor_absoluteX="271dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centre_horizontal"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
@@ -248,7 +248,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="302dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -257,7 +257,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="151dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/three_quarter_horizontal"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
@@ -265,7 +265,7 @@
         app:layout_constraintGuide_percent="1.0"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="452dp" />
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/one_quarter_horizontal"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
@@ -274,4 +274,4 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="452dp" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

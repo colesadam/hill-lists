@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/hewitts"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -34,9 +34,9 @@
 
             style="@style/cardview_title"
             android:text="Hewitts" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/nuttalls"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -66,9 +66,9 @@
             style="@style/cardview_title"
             android:text="Nuttalls" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/marilyns"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -100,10 +100,10 @@
             android:text="@string/label_marilyns" />
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/county_tops"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -133,9 +133,9 @@
             android:text="@string/label_county_tops" />
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/deweys"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -163,9 +163,9 @@
             style="@style/cardview_title"
             android:text="@string/label_deweys" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/iomni"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -193,9 +193,9 @@
             style="@style/cardview_title"
             android:text="@string/label_iomni" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/t100"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -224,10 +224,10 @@
             style="@style/cardview_title"
             android:text="@string/label_trail100" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centre_vertical_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -236,21 +236,21 @@
         tools:layout_editor_absoluteX="206dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_vertical_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.25" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_vertical_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.75" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centre_horizontal"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
@@ -259,7 +259,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="302dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -268,7 +268,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="151dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/three_quarter_horizontal"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
@@ -277,7 +277,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="452dp" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/one_quarter_horizontal"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
@@ -286,4 +286,4 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="452dp" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

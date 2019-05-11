@@ -1,8 +1,8 @@
 package uk.colessoft.android.hilllist.model
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "typeslink",
         foreignKeys = arrayOf(ForeignKey(entity = FullHill::class,
