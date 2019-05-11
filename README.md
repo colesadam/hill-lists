@@ -1,2 +1,2 @@
-# hill-lists [![Build Status](https://travis-ci.org/colesadam/hill-lists.svg?branch=master)](https://travis-ci.org/colesadam/hill-lists)
+# hill-lists [![Build Status](https://app.bitrise.io/app/e4fede2832fa5804/status.svg?token=M9rqqkgoTkE5shrhKDF1tw)](https://app.bitrise.io/app/e4fede2832fa5804)
 British Hills for Android
