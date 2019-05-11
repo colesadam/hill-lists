@@ -10,11 +10,11 @@ class DateConverters {
 
     @TypeConverter
     fun dateFromString(value: String): Date? {
-        return if (value == null) null else iso8601Format.parse(value)
+        return iso8601Format.parse(value)
     }
 
     @TypeConverter
     fun stringFromDate(value: Date): String? {
-        return if (value == null) null else iso8601Format.format(value)
+        return iso8601Format.format(value)
     }
 }

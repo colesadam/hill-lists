@@ -7,11 +7,6 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
-    dexOptions {
-        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
-        preDexLibraries = preDexEnabled && !travisBuild
-    }
-
     defaultConfig {
         applicationId "uk.colessoft.android.hilllist"
         minSdkVersion 19
@@ -41,7 +36,6 @@ android {
     sourceSets {
         androidTest.assets.srcDirs +=
                 files("$projectDir/schemas".toString())
-        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 

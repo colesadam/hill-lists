@@ -208,7 +208,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                         .getColumnIndex(HillsTables.KEY_HILLNAME));
 
                 TinyHill tinyHill = new TinyHill();
-                tinyHill._id = row_id;
+                tinyHill.set_id(row_id);
                 System.out.println(row_id);
 
 //				if(passedRowId==row_id){
@@ -237,7 +237,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
                         )
                         .icon(hillDescriptor)
                         .anchor(0.5F, 0.5F)
-                ).setTag(tinyHill._id);
+                ).setTag(tinyHill.get_id());
 
 
             } while (hillsCursor.moveToNext());

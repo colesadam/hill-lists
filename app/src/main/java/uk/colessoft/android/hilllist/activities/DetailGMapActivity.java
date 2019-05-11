@@ -126,7 +126,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
                     String hillname = hillsCursor.getString(hillsCursor
                             .getColumnIndex(HillsTables.KEY_HILLNAME));
                     TinyHill tinyHill = new TinyHill();
-                    tinyHill._id = row_id;
+                    tinyHill.set_id(row_id);
                     tinyHill.setHillname(hillname);
                     tinyHill.setLatitude(lat);
                     tinyHill.setLongitude(lng);
@@ -150,7 +150,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
                             )
                             .icon(hillDescriptor)
                             .anchor(0.5F, 0.5F)
-                    ).setTag(tinyHill._id);
+                    ).setTag(tinyHill.get_id());
                 }
 
             } while (hillsCursor.moveToNext());
