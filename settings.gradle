@@ -1,1 +1,1 @@
-include ':app', ':hilllistcore'
+include ':app'
