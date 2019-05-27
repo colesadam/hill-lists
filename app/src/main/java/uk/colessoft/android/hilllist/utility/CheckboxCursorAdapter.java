@@ -11,8 +11,8 @@ import android.widget.SimpleCursorAdapter;
 import java.util.ArrayList;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.HillsTables;
+import uk.colessoft.android.hilllist.model.Bagging;
 
 class CheckboxCursorAdapter extends SimpleCursorAdapter {
 
@@ -41,7 +41,7 @@ class CheckboxCursorAdapter extends SimpleCursorAdapter {
 		}
 		this.c.moveToPosition(pos);		
 		String hillName=c.getString(c.getColumnIndex(HillsTables.KEY_HILLNAME));
-		String dateClimbed=c.getString(c.getColumnIndex(BaggingTable.KEY_DATECLIMBED));
+		String dateClimbed=c.getString(c.getColumnIndex(Bagging.KEY_DATECLIMBED));
 		String id=c.getString(c.getColumnIndex(HillsTables.KEY_ID));
 		
 		CheckBox cBox = (CheckBox) v.findViewById(R.id.check_hill_climbed);

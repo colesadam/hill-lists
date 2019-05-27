@@ -28,9 +28,9 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
+import uk.colessoft.android.hilllist.model.Bagging;
 
 public class CheckHillListActivity extends AppCompatActivity {
     /**
@@ -255,7 +255,7 @@ public class CheckHillListActivity extends AppCompatActivity {
                     final int id = cursor.getInt(cursor
                             .getColumnIndex(HillsTables.KEY_ID));
                     if (cursor.getString(cursor
-                            .getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
+                            .getColumnIndex(Bagging.KEY_DATECLIMBED)) != null) {
 
 
                         ctv.setChecked(true);

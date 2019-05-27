@@ -41,9 +41,9 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activities.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
+import uk.colessoft.android.hilllist.model.Bagging;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
@@ -65,7 +65,7 @@ public class DisplayHillListFragment extends Fragment implements
 			case R.id.name_entry: {
 				((RelativeLayout)tv.getParent().getParent()).setBackgroundColor(getResources().getColor(R.color.white));
 				if (cursor.getString(cursor
-						.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
+						.getColumnIndex(Bagging.KEY_DATECLIMBED)) != null) {
 					((RelativeLayout)tv.getParent().getParent()).setBackgroundColor(getResources().getColor(R.color.paler_light_green));
 				}
 				tv.setText(vtext);
@@ -88,7 +88,7 @@ public class DisplayHillListFragment extends Fragment implements
 				final int id = cursor.getInt(cursor
 						.getColumnIndex(HillsTables.KEY_HILL_ID));
 				if (cursor.getString(cursor
-						.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
+						.getColumnIndex(Bagging.KEY_DATECLIMBED)) != null) {
 
 					ctv.setChecked(true);
 
@@ -233,7 +233,7 @@ public class DisplayHillListFragment extends Fragment implements
 				if (allMarked == 1) {
 
 					if (result.getString(result
-							.getColumnIndex(BaggingTable.KEY_DATECLIMBED)) == null) {
+							.getColumnIndex(Bagging.KEY_DATECLIMBED)) == null) {
 						Log.d(this.toString(), "debug: marking hill " + row_id);
 						dbAdapter.markHillClimbed(row_id, new Date(), "");
 					}

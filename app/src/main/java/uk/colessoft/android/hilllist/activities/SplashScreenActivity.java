@@ -27,7 +27,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 	private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0x00001;
 	public static final int MAX = 20782;
 	private Thread splashThread;
-	private Handler handler;
 	private ProgressDialog progressDialog;
 
 	@Inject
@@ -45,21 +44,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 		TextView link=(TextView) findViewById(R.id.TextView03);
 		Linkify.addLinks(link, Linkify.ALL);
 
-		handler = new Handler(){
-			@Override
-			public void handleMessage(Message msg) {
-				if(msg.arg1 == 0)
-					progressDialog.incrementProgressBy(1);
-				else {
-					SplashScreenActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
-					progressDialog.cancel();
-				}
-			}
-		};
-
 		progressDialog = new ProgressDialog(SplashScreenActivity.this);
 		progressDialog.setTitle("Updating Database");
-		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		progressDialog.setMax(MAX);
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
@@ -74,37 +60,22 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 				SplashScreenActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
-
-				dbAdapter.touch(handler);
-				handler.sendMessage(Message.obtain(handler, 0, 1, 1, 1));
-
 				try {
 
 					int waited = 0;
-
 					while (waited < 1800) {
-
 						sleep(100);
-
 						waited += 100;
-
 					}
 
 				} catch (InterruptedException e) {
-
 					// do nothing
-
 				} finally {
-
 					finish();
 					Intent i = new Intent(SplashScreenActivity.this,
-
 							Main.class);
-
 					startActivity(i);
-
 				}
-
 			}
 
 		};

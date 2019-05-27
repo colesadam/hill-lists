@@ -23,9 +23,9 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.database.BaggingTable;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
+import uk.colessoft.android.hilllist.model.Bagging;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
@@ -131,7 +131,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
                     tinyHill.setLatitude(lat);
                     tinyHill.setLongitude(lng);
                     if (hillsCursor.getString(hillsCursor
-                            .getColumnIndex(BaggingTable.KEY_DATECLIMBED)) != null) {
+                            .getColumnIndex(Bagging.KEY_DATECLIMBED)) != null) {
                         tinyHill.setClimbed(true);
                     } else {
                         tinyHill.setClimbed(false);

@@ -28,9 +28,7 @@ import javax.inject.Inject;
 import uk.colessoft.android.hilllist.model.Hill;
 
 import static android.content.ContentValues.TAG;
-import static uk.colessoft.android.hilllist.database.BaggingTable.BAGGING_TABLE;
-import static uk.colessoft.android.hilllist.database.BaggingTable.KEY_DATECLIMBED;
-import static uk.colessoft.android.hilllist.database.BaggingTable.KEY_NOTES;
+
 import static uk.colessoft.android.hilllist.database.HillsTables.HILLS_TABLE;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_AREA;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_CLASSIFICATION;
@@ -60,6 +58,9 @@ import static uk.colessoft.android.hilllist.database.HillsTables.KEY_TITLE;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XCOORD;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XSECTION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_YCOORD;
+import static uk.colessoft.android.hilllist.model.Bagging.BAGGING_TABLE;
+import static uk.colessoft.android.hilllist.model.Bagging.KEY_DATECLIMBED;
+import static uk.colessoft.android.hilllist.model.Bagging.KEY_NOTES;
 
 
 public class HillsLocalDatasource implements BritishHillsDatasource {
@@ -109,7 +110,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         climbedValues.put("_id", String.valueOf(hillNumber));
         climbedValues.put("notes", notes);
 
-        SupportSQLiteQuery query = SupportSQLiteQueryBuilder.builder(BAGGING_TABLE).columns(new String[]{KEY_ID}).selection("KEY_ID",new Object[]{String.valueOf(hillNumber)}).create();
+        SupportSQLiteQuery query = SupportSQLiteQueryBuilder.builder(BAGGING_TABLE).columns(new String[]{KEY_ID + "=?"}).selection(KEY_ID, new Object[]{String.valueOf(hillNumber)}).create();
 
         Cursor existing = db.query(query);
 

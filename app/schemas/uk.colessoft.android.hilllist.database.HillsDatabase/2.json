@@ -1,0 +1,776 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "088cffeda3c75ce04eeaa9d082559e3e",
+    "entities": [
+      {
+        "tableName": "hills",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `Name` TEXT, `Parent (SMC)` TEXT, `Parent name (SMC)` TEXT, `Section` TEXT, `Section name` TEXT, `Area` TEXT, `Island` TEXT, `Topo Section` TEXT, `County` TEXT, `Classification` TEXT, `Map 1:50k` TEXT, `Map 1:25k` TEXT, `Metres` REAL NOT NULL, `Feet` REAL NOT NULL, `Grid ref` TEXT, `Grid ref 10` TEXT, `Drop` REAL NOT NULL, `Col grid ref` TEXT, `Col height` REAL NOT NULL, `Feature` TEXT, `Observations` TEXT, `Survey` TEXT, `Climbed` TEXT, `Country` TEXT, `County Top` TEXT, `Revision` TEXT NOT NULL, `Comments` TEXT, `Streetmap/OSiViewer` TEXT, `Geograph/MountainViews` TEXT, `Hill-bagging` TEXT, `Xcoord` INTEGER NOT NULL, `Ycoord` INTEGER NOT NULL, `Latitude` REAL NOT NULL, `Longitude` REAL NOT NULL, `GridrefXY` TEXT, `_Section` TEXT, `Parent (Ma)` TEXT, `Parent name (Ma)` TEXT, `MVNumber` TEXT, `Ma` TEXT, `Ma=` TEXT, `Hu` TEXT, `Hu=` TEXT, `Tu` TEXT, `Tu=` TEXT, `Sim` TEXT, `M` TEXT, `MT` TEXT, `F` TEXT, `C` TEXT, `G` TEXT, `D` TEXT, `DT` TEXT, `Mur` TEXT, `CT` TEXT, `GT` TEXT, `Hew` TEXT, `N` TEXT, `5` TEXT, `5D` TEXT, `5H` TEXT, `4` TEXT, `3` TEXT, `2` TEXT, `1` TEXT, `1=` TEXT, `0` TEXT, `W` TEXT, `WO` TEXT, `B` TEXT, `CoH` TEXT, `CoH=` TEXT, `CoU` TEXT, `CoU=` TEXT, `CoA` TEXT, `CoA=` TEXT, `CoL` TEXT, `CoL=` TEXT, `SIB` TEXT, `sMa` TEXT, `sHu` TEXT, `sSim` TEXT, `s5` TEXT, `s5D` TEXT, `s5H` TEXT, `s5M` TEXT, `s4` TEXT, `Sy` TEXT, `Fel` TEXT, `BL` TEXT, `Bg` TEXT, `T100` TEXT, `xMT` TEXT, `xC` TEXT, `xG` TEXT, `xN` TEXT, `xDT` TEXT, `Dil` TEXT, `VL` TEXT, `A` TEXT, `5M` TEXT, `Ca` TEXT, `Bin` TEXT, `O` TEXT, `Un` TEXT, PRIMARY KEY(`_id`))",
+        "fields": [
+          {
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hillname",
+            "columnName": "Name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "parentSMC",
+            "columnName": "Parent (SMC)",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "parentnameSMC",
+            "columnName": "Parent name (SMC)",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hSection",
+            "columnName": "Section",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sectionname",
+            "columnName": "Section name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "area",
+            "columnName": "Area",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "island",
+            "columnName": "Island",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "topoSection",
+            "columnName": "Topo Section",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "county",
+            "columnName": "County",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "classification",
+            "columnName": "Classification",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "map",
+            "columnName": "Map 1:50k",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "map25",
+            "columnName": "Map 1:25k",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "heightm",
+            "columnName": "Metres",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "heightf",
+            "columnName": "Feet",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gridref",
+            "columnName": "Grid ref",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gridref10",
+            "columnName": "Grid ref 10",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "drop",
+            "columnName": "Drop",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colgridref",
+            "columnName": "Col grid ref",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "colheight",
+            "columnName": "Col height",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "feature",
+            "columnName": "Feature",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "observations",
+            "columnName": "Observations",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "survey",
+            "columnName": "Survey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "climbed",
+            "columnName": "Climbed",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "Country",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "countyTop",
+            "columnName": "County Top",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "revision",
+            "columnName": "Revision",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "Comments",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "streetmap",
+            "columnName": "Streetmap/OSiViewer",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "geographMountainViews",
+            "columnName": "Geograph/MountainViews",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hillBagging",
+            "columnName": "Hill-bagging",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "xcoord",
+            "columnName": "Xcoord",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ycoord",
+            "columnName": "Ycoord",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "Latitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "Longitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gridrefXY",
+            "columnName": "GridrefXY",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "_section",
+            "columnName": "_Section",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "parentMa",
+            "columnName": "Parent (Ma)",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "parentnameMa",
+            "columnName": "Parent name (Ma)",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mVNumber",
+            "columnName": "MVNumber",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ma",
+            "columnName": "Ma",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maTop",
+            "columnName": "Ma=",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hu",
+            "columnName": "Hu",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "huTop",
+            "columnName": "Hu=",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tu",
+            "columnName": "Tu",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tuTop",
+            "columnName": "Tu=",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sim",
+            "columnName": "Sim",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "m",
+            "columnName": "M",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mT",
+            "columnName": "MT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "f",
+            "columnName": "F",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "c",
+            "columnName": "C",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "g",
+            "columnName": "G",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "d",
+            "columnName": "D",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dT",
+            "columnName": "DT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mur",
+            "columnName": "Mur",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cT",
+            "columnName": "CT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gT",
+            "columnName": "GT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hew",
+            "columnName": "Hew",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "n",
+            "columnName": "N",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "five",
+            "columnName": "5",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiveD",
+            "columnName": "5D",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiveH",
+            "columnName": "5H",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "four",
+            "columnName": "4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "three",
+            "columnName": "3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "two",
+            "columnName": "2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "one",
+            "columnName": "1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "oneTop",
+            "columnName": "1=",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "zero",
+            "columnName": "0",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "w",
+            "columnName": "W",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wO",
+            "columnName": "WO",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "b",
+            "columnName": "B",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coH",
+            "columnName": "CoH",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coHTop",
+            "columnName": "CoH=",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coU",
+            "columnName": "CoU",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coUTop",
+            "columnName": "CoU=",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coA",
+            "columnName": "CoA",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coATop",
+            "columnName": "CoA=",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coL",
+            "columnName": "CoL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coLTop",
+            "columnName": "CoL=",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sIB",
+            "columnName": "SIB",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sMa",
+            "columnName": "sMa",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sHu",
+            "columnName": "sHu",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sSim",
+            "columnName": "sSim",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "s5",
+            "columnName": "s5",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "s5D",
+            "columnName": "s5D",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "s5H",
+            "columnName": "s5H",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "s5M",
+            "columnName": "s5M",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "s4",
+            "columnName": "s4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sy",
+            "columnName": "Sy",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fel",
+            "columnName": "Fel",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bL",
+            "columnName": "BL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bg",
+            "columnName": "Bg",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "t100",
+            "columnName": "T100",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "xMT",
+            "columnName": "xMT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "xC",
+            "columnName": "xC",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "xG",
+            "columnName": "xG",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "xN",
+            "columnName": "xN",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "xDT",
+            "columnName": "xDT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dil",
+            "columnName": "Dil",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vL",
+            "columnName": "VL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "a",
+            "columnName": "A",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiveM",
+            "columnName": "5M",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ca",
+            "columnName": "Ca",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bin",
+            "columnName": "Bin",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "o",
+            "columnName": "O",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "un",
+            "columnName": "Un",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "hilltypes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `title` TEXT NOT NULL, PRIMARY KEY(`_id`))",
+        "fields": [
+          {
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "typeslink",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `hill_id` INTEGER NOT NULL, `type_Id` INTEGER NOT NULL, FOREIGN KEY(`hill_id`) REFERENCES `hills`(`_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`type_Id`) REFERENCES `hilltypes`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hill_id",
+            "columnName": "hill_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type_Id",
+            "columnName": "type_Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "hills",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "hill_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          },
+          {
+            "table": "hilltypes",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "type_Id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Bagging",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `dateClimbed` TEXT NOT NULL, `notes` TEXT NOT NULL, PRIMARY KEY(`_id`))",
+        "fields": [
+          {
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateClimbed",
+            "columnName": "dateClimbed",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"088cffeda3c75ce04eeaa9d082559e3e\")"
+    ]
+  }
+}
