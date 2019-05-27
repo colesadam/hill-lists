@@ -25,7 +25,7 @@ import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
-import uk.colessoft.android.hilllist.model.Bagging;
+import uk.colessoft.android.hilllist.entities.Bagging;
 import uk.colessoft.android.hilllist.model.Hill;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
@@ -116,7 +116,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
                         .getColumnIndex(HillsTables.KEY_LONGITUDE));
 
 
-                double distanceKm = DistanceCalculator.calculationByDistance(hill.getLatitude(), lat, hill.getLongitude(), lng);
+                double distanceKm = DistanceCalculator.calculationByDistance(hill.getFullHill().getLatitude(), lat, hill.getFullHill().getLongitude(), lng);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillsTables.KEY_HILL_ID));
                 double nearRadius = 16.09;
@@ -173,19 +173,19 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         map = googleMap;
         map.setOnInfoWindowClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        LatLng hillPosition = new LatLng(hill.getLatitude(), hill.getLongitude());
+        LatLng hillPosition = new LatLng(hill.getFullHill().getLatitude(), hill.getFullHill().getLongitude());
         Marker marker = map.addMarker(new MarkerOptions()
                 .draggable(false)
                 .position(hillPosition)
-                .title(hill.getHillname())
-                .snippet(String.valueOf(hill.getHeightm())
+                .title(hill.getFullHill().getHillname())
+                .snippet(String.valueOf(hill.getFullHill().getHeightm())
                         + " m"
                 )
                 .icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.purple_hill))
                 .anchor(0.5F, 0.5F)
         );
-        marker.setTag(hill.get_id());
+        marker.setTag(hill.getFullHill().get_id());
         marker.showInfoWindow();
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));

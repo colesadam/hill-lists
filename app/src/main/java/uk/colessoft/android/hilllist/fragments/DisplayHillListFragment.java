@@ -43,7 +43,7 @@ import uk.colessoft.android.hilllist.activities.Main;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
-import uk.colessoft.android.hilllist.model.Bagging;
+import uk.colessoft.android.hilllist.entities.Bagging;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 

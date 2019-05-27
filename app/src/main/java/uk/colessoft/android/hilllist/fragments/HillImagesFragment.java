@@ -149,7 +149,7 @@ public class HillImagesFragment extends Fragment {
 
     public void getImages(Hill hill) {
         Log.d(TAG, "Getting Images");
-        Call<GeographImageSearchResponse> call = geographService.imageSearch(hill.getLatitude() + "," + hill.getLongitude());
+        Call<GeographImageSearchResponse> call = geographService.imageSearch(hill.getFullHill().getLatitude() + "," + hill.getFullHill().getLongitude());
 
         call.enqueue(new Callback<GeographImageSearchResponse>() {
             @Override

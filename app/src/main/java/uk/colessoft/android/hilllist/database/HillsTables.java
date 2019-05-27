@@ -4,7 +4,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Message;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -56,15 +55,14 @@ public class HillsTables {
 
 
     public static void onCreate(SupportSQLiteDatabase database, Context context){
-
         long startTime = System.currentTimeMillis();
-        createAndPopulateHillsTable(database, context, startTime);//, rows);
+        populateHillsTable(database, context, startTime);
         populateHillTypes(database, startTime);
     }
 
     static void populateHillTypes(SupportSQLiteDatabase database, long startTime) {
 
-        Cursor c = database.query("select * from "+HILLS_TABLE);
+        Cursor c = database.query("select * from " + HILLS_TABLE);
         SupportSQLiteStatement insertHillType = database.compileStatement("INSERT or IGNORE into " + HILLTYPES_TABLE + " VALUES(?,?)");
         SupportSQLiteStatement insertHillTypeLink = database.compileStatement("INSERT into " + TYPES_LINK_TABLE + " (" + KEY_HILL_ID + "," + KEY_TYPES_ID + ") values (?,?)");
 
@@ -91,26 +89,20 @@ public class HillsTables {
                         + (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    private static void createAndPopulateHillsTable(SupportSQLiteDatabase database, Context context, long startTime){
-        InputStream is;
-        Log.d(TAG, "createAndPopulateHillsTable: starting");
+    private static void populateHillsTable(SupportSQLiteDatabase database, Context context, long startTime){
+        StringBuffer insertHillsBuffer;
+
+        Log.d(TAG, "populateHillsTable: starting");
         try {
-
-            is = context.getAssets().open(HILLS_CSV);
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(is));
+                    new InputStreamReader(context.getAssets().open(HILLS_CSV)));
 
-            String headerRow = reader.readLine();
-
-            StringBuffer insertHillsBuffer;
-
+            reader.readLine();
 
             // read main hill data into hills table
             database.beginTransaction();
             String line;
-            int count = 0;
-            while ((line = reader.readLine()) != null && count <= 23000) {
-                count++;
+            while ((line = reader.readLine()) != null) {
 
                 insertHillsBuffer = new StringBuffer();
                 insertHillsBuffer.append("INSERT INTO " + HILLS_TABLE
@@ -136,18 +128,6 @@ public class HillsTables {
             Log.e(TAG,
                     "Failed to populate hills database table", e);
         }
-    }
-
-
-    public static void onUpgrade(SupportSQLiteDatabase database, int oldVersion,
-                                 int newVersion, Context context, int rows) {
-        Log.w(HillsTables.class.getName(), "Upgrading database from version "
-                + oldVersion + " to " + newVersion
-                + ", which will destroy all old hills data");
-        database.execSQL("DROP TABLE IF EXISTS " + HILLS_TABLE);
-        database.execSQL("DROP TABLE IF EXISTS " + HILLTYPES_TABLE);
-        database.execSQL("DROP TABLE IF EXISTS " + TYPES_LINK_TABLE);
-        onCreate(database, context);
     }
 
 }

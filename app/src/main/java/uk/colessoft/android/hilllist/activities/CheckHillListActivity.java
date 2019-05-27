@@ -30,7 +30,7 @@ import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
-import uk.colessoft.android.hilllist.model.Bagging;
+import uk.colessoft.android.hilllist.entities.Bagging;
 
 public class CheckHillListActivity extends AppCompatActivity {
     /**

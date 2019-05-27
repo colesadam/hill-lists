@@ -1,4 +1,4 @@
-package uk.colessoft.android.hilllist.model
+package uk.colessoft.android.hilllist.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

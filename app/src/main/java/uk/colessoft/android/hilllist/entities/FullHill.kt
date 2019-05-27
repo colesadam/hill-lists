@@ -1,4 +1,4 @@
-package uk.colessoft.android.hilllist.model
+package uk.colessoft.android.hilllist.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -114,4 +114,5 @@ data class FullHill(
         @ColumnInfo(name = "Bin") val bin: String?,
         @ColumnInfo(name = "O") val o: String?,
         @ColumnInfo(name = "Un") val un: String?)
+
 

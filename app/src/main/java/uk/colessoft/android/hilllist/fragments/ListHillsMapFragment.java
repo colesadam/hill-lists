@@ -29,7 +29,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment.OnHillSelectedListener;
-import uk.colessoft.android.hilllist.model.Bagging;
+import uk.colessoft.android.hilllist.entities.Bagging;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
 

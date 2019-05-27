@@ -90,8 +90,8 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
             }
 
         });
-        lat = hill.getLatitude();
-        lon = hill.getLongitude();
+        lat = hill.getFullHill().getLatitude();
+        lon = hill.getFullHill().getLongitude();
 
 
     }
@@ -101,7 +101,7 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
 
 
         LatLangBounds llb = new LatLangBounds();
-        llb.addLatLong(hill.getLatitude(),hill.getLongitude());
+        llb.addLatLong(hill.getFullHill().getLatitude(),hill.getFullHill().getLongitude());
         for (Business business : businesses) {
             Double lat = (double) business.getLatitude();
             Double lng = (double) business.getLongitude();
@@ -160,15 +160,15 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
         Marker marker = map.addMarker(new MarkerOptions()
                 .draggable(false)
                 .position(hillPosition)
-                .title(hill.getHillname())
-                .snippet(String.valueOf(hill.getHeightm())
+                .title(hill.getFullHill().getHillname())
+                .snippet(String.valueOf(hill.getFullHill().getHeightm())
                         + " m"
                 )
                 .icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.purple_hill))
                 .anchor(0.5F, 0.5F)
         );
-        marker.setTag(hill.get_id());
+        marker.setTag(hill.getFullHill().get_id());
         marker.showInfoWindow();
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));
@@ -178,11 +178,11 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        if(!marker.getTitle().equals(hill.getHillname())){
+        if(!marker.getTitle().equals(hill.getFullHill().getHillname())){
             Intent intent = new Intent(this, BusinessDetailActivity.class);
 		intent.putExtra("result_number",(Integer)marker.getTag());
-		intent.putExtra("latitude", hill.getLatitude());
-		intent.putExtra("longitude", hill.getLongitude());
+		intent.putExtra("latitude", hill.getFullHill().getLatitude());
+		intent.putExtra("longitude", hill.getFullHill().getLongitude());
 		intent.putExtra("search_string", search_string);
 
 

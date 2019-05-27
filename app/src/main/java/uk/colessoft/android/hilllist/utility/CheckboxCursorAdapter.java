@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.HillsTables;
-import uk.colessoft.android.hilllist.model.Bagging;
+import uk.colessoft.android.hilllist.entities.Bagging;
 
 class CheckboxCursorAdapter extends SimpleCursorAdapter {
 

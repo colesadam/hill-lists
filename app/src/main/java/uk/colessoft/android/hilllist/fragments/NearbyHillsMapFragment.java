@@ -79,14 +79,14 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
             long lrow = Long.parseLong(rowid);
             Hill hill = dbAdapter.getHill(lrow);
             TinyHill t = new TinyHill();
-            t.set_id(hill.get_id());
-            t.setHillname(hill.getHillname());
-            double lat = hill.getLatitude();
-            double lng = hill.getLongitude();
+            t.set_id(hill.getFullHill().get_id());
+            t.setHillname(hill.getFullHill().getHillname());
+            double lat = hill.getFullHill().getLatitude();
+            double lng = hill.getFullHill().getLongitude();
             llb.addLatLong(lat, lng);
             t.setLatitude(lat);
             t.setLongitude(lng);
-            if (hill.getDateClimbed() != null) {
+            if (hill.getBagging().get(0).getDateClimbed() != null) {
                 t.setClimbed(true);
             } else {
                 t.setClimbed(false);

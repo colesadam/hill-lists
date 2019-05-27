@@ -4,7 +4,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.SupportSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteQueryBuilder;
-import androidx.room.RoomDatabase;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,11 +20,14 @@ import com.opencsv.CSVReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import uk.colessoft.android.hilllist.entities.Bagging;
+import uk.colessoft.android.hilllist.entities.FullHill;
 import uk.colessoft.android.hilllist.model.Hill;
 
 import static android.content.ContentValues.TAG;
@@ -58,9 +61,9 @@ import static uk.colessoft.android.hilllist.database.HillsTables.KEY_TITLE;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XCOORD;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XSECTION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_YCOORD;
-import static uk.colessoft.android.hilllist.model.Bagging.BAGGING_TABLE;
-import static uk.colessoft.android.hilllist.model.Bagging.KEY_DATECLIMBED;
-import static uk.colessoft.android.hilllist.model.Bagging.KEY_NOTES;
+import static uk.colessoft.android.hilllist.entities.Bagging.BAGGING_TABLE;
+import static uk.colessoft.android.hilllist.entities.Bagging.KEY_DATECLIMBED;
+import static uk.colessoft.android.hilllist.entities.Bagging.KEY_NOTES;
 
 
 public class HillsLocalDatasource implements BritishHillsDatasource {
@@ -369,13 +372,11 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         String notes = cursor.getString(cursor
                 .getColumnIndex(KEY_NOTES));
 
-        Hill result = new Hill(
-                dateClimbed,
-                notes,
+        Hill result = new Hill(new FullHill(
                 _id,
-                hillname,
-                section,
-                area,
+                hillname,"","",
+                section,"",
+                area,"","","",
                 classification,
                 map,
                 map25,
@@ -389,17 +390,17 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                 feature,
                 observations,
                 survey,
-                climbed,
+                climbed,"","",
                 new Date(revision),
                 comments,
-                streetmap,
+                streetmap,"",
                 hillBagging,
                 xcoord,
                 ycoord,
                 latitude,
                 longitude,
-                _section);
-        System.out.println(result.getClassification());
+                _section,"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""),null,null);
+        System.out.println(result.getFullHill().getClassification());
         return result;
 
     }

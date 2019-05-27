@@ -8,7 +8,9 @@ import uk.colessoft.android.hilllist.dao.TypeLinkDao
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
-import uk.colessoft.android.hilllist.BHApplication
+import uk.colessoft.android.hilllist.entities.Bagging
+import uk.colessoft.android.hilllist.entities.FullHill
+import uk.colessoft.android.hilllist.entities.TypeLink
 import uk.colessoft.android.hilllist.model.*
 
 @Database(entities = arrayOf(FullHill::class, HillType::class, TypeLink::class, Bagging::class), version = 3)

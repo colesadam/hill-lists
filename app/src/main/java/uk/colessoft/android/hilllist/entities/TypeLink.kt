@@ -1,8 +1,9 @@
-package uk.colessoft.android.hilllist.model
+package uk.colessoft.android.hilllist.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import uk.colessoft.android.hilllist.model.HillType
 
 @Entity(tableName = "typeslink",
         foreignKeys = arrayOf(ForeignKey(entity = FullHill::class,

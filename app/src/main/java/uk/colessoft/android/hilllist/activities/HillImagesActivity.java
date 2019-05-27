@@ -115,7 +115,7 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
     private class GetHillAsyncTask extends AsyncTask<Long, Void, Hill> {
         @Override
         protected void onPostExecute(Hill hill) {
-            getSupportActionBar().setTitle("Images of " + hill.getHillname());
+            getSupportActionBar().setTitle("Images of " + hill.getFullHill().getHillname());
             imagesFragment.getImages(hill);
         }
 
