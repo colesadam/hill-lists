@@ -4,25 +4,25 @@ package uk.colessoft.android.hilllist.model
 import androidx.room.Embedded
 import androidx.room.Relation
 import uk.colessoft.android.hilllist.entities.Bagging
-import uk.colessoft.android.hilllist.entities.FullHill
+import uk.colessoft.android.hilllist.entities.Hill
 import uk.colessoft.android.hilllist.entities.TypeLink
-import java.util.Date
 
-data class Hill
+data class HillDetail
 (
         @Embedded
-        val fullHill: FullHill,
+        val hill: Hill
+){
 
         @Relation(parentColumn = "_id",
                 entityColumn = "_id",
                 entity = Bagging::class)
-        val bagging: List<Bagging>,
+        var bagging: List<Bagging>? = null
 
         @Relation(parentColumn = "_id",
                 entityColumn = "hill_id",
                 entity = TypeLink::class,
                 projection = arrayOf("type_Id"))
-        val types: List<Long>
-)
+        var types: List<Long>? = null
+}
 
 

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import uk.colessoft.android.hilllist.model.HillType
 
 @Entity(tableName = "typeslink",
-        foreignKeys = arrayOf(ForeignKey(entity = FullHill::class,
+        foreignKeys = arrayOf(ForeignKey(entity = Hill::class,
                 parentColumns = arrayOf("_id"),
                 childColumns = arrayOf("hill_id"),
                 onDelete = ForeignKey.CASCADE),

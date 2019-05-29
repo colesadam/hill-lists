@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 
 public class HillDetailFragmentActivity extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class HillDetailFragmentActivity extends AppCompatActivity {
 	private static final int DATE_DIALOG_ID = 0;
 	private static final int MARK_HILL_CLIMBED_DIALOG = 1;
 
-	private Hill hill;
+	private HillDetail hillDetail;
 	private int mYear;
 	private int mMonth;
 	private int mDay;

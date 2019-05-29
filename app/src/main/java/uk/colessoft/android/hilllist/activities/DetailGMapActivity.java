@@ -26,7 +26,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.entities.Bagging;
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
@@ -38,7 +38,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
     BritishHillsDatasource dbAdapter;
     private GoogleMap map;
 
-    private Hill hill;
+    private HillDetail hillDetail;
     private int rowid;
     private boolean firstRun = true;
 
@@ -91,7 +91,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         String title = getIntent().getExtras().getString("title");
         setTitle(title);
         ((BHApplication) getApplication()).getDbComponent().inject(this);
-        hill = dbAdapter.getHill(rowid);
+        hillDetail = dbAdapter.getHill(rowid);
 
 
     }
@@ -105,7 +105,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         BitmapDescriptor cmarker = BitmapDescriptorFactory
                 .fromResource(R.drawable.green_hill);
         LatLangBounds llb = new LatLangBounds();
-        // iterate over cursor and get hill positions
+        // iterate over cursor and get hillDetail positions
         // Make sure there is at least one row.
         if (hillsCursor.moveToFirst()) {
             // Iterate over each cursor.
@@ -116,7 +116,7 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
                         .getColumnIndex(HillsTables.KEY_LONGITUDE));
 
 
-                double distanceKm = DistanceCalculator.calculationByDistance(hill.getFullHill().getLatitude(), lat, hill.getFullHill().getLongitude(), lng);
+                double distanceKm = DistanceCalculator.calculationByDistance(hillDetail.getHill().getLatitude(), lat, hillDetail.getHill().getLongitude(), lng);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillsTables.KEY_HILL_ID));
                 double nearRadius = 16.09;
@@ -173,19 +173,19 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         map = googleMap;
         map.setOnInfoWindowClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        LatLng hillPosition = new LatLng(hill.getFullHill().getLatitude(), hill.getFullHill().getLongitude());
+        LatLng hillPosition = new LatLng(hillDetail.getHill().getLatitude(), hillDetail.getHill().getLongitude());
         Marker marker = map.addMarker(new MarkerOptions()
                 .draggable(false)
                 .position(hillPosition)
-                .title(hill.getFullHill().getHillname())
-                .snippet(String.valueOf(hill.getFullHill().getHeightm())
+                .title(hillDetail.getHill().getHillname())
+                .snippet(String.valueOf(hillDetail.getHill().getHeightm())
                         + " m"
                 )
                 .icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.purple_hill))
                 .anchor(0.5F, 0.5F)
         );
-        marker.setTag(hill.getFullHill().get_id());
+        marker.setTag(hillDetail.getHill().get_id());
         marker.showInfoWindow();
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));

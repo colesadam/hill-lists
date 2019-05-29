@@ -20,15 +20,13 @@ import com.opencsv.CSVReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import uk.colessoft.android.hilllist.entities.Bagging;
-import uk.colessoft.android.hilllist.entities.FullHill;
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.entities.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 
 import static android.content.ContentValues.TAG;
 
@@ -245,7 +243,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     }
 
     @Override
-    public Hill getHill(long _rowIndex) {
+    public HillDetail getHill(long _rowIndex) {
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(hills + " left join "
@@ -259,9 +257,9 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                         + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId + " where " + hillsKeyId + "=" + _rowIndex, null);
 
         if (cursor.moveToFirst()) {
-            Hill hill = getHill(cursor);
+            HillDetail hillDetail = getHill(cursor);
             cursor.close();
-            return hill;
+            return hillDetail;
         } else {
             cursor.close();
             return null;
@@ -302,7 +300,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         }
     }
 
-    private Hill getHill(Cursor cursor) throws SQLException {
+    private HillDetail getHill(Cursor cursor) throws SQLException {
 
         SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd");
         int _id = cursor.getInt(0);
@@ -372,7 +370,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         String notes = cursor.getString(cursor
                 .getColumnIndex(KEY_NOTES));
 
-        Hill result = new Hill(new FullHill(
+        HillDetail result = new HillDetail(new Hill(
                 _id,
                 hillname,"","",
                 section,"",
@@ -399,8 +397,8 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                 ycoord,
                 latitude,
                 longitude,
-                _section,"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""),null,null);
-        System.out.println(result.getFullHill().getClassification());
+                _section,"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""));
+        System.out.println(result.getHill().getClassification());
         return result;
 
     }

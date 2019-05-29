@@ -39,7 +39,7 @@ import uk.colessoft.android.hilllist.activities.HillImagesActivity;
 import uk.colessoft.android.hilllist.activities.OsMapActivity;
 import uk.colessoft.android.hilllist.activities.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 
 
 public class HillDetailFragment extends Fragment {
@@ -50,7 +50,7 @@ public class HillDetailFragment extends Fragment {
     static final int DATE_DIALOG_ID = 0;
     static final int MARK_HILL_CLIMBED_DIALOG = 1;
 
-    private Hill hill;
+    private HillDetail hillDetail;
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -78,7 +78,7 @@ public class HillDetailFragment extends Fragment {
     private void showMapSingle() {
         Intent intent = new Intent(getActivity(), DetailGMapActivity.class);
         intent.putExtra("rowid", thisId);
-        intent.putExtra("title", "Map of " + hill.getFullHill().getHillname());
+        intent.putExtra("title", "Map of " + hillDetail.getHill().getHillname());
 
         startActivity(intent);
     }
@@ -88,8 +88,8 @@ public class HillDetailFragment extends Fragment {
 //				Uri.parse(osLink));
 
         Intent intent = new Intent(getActivity(), OsMapActivity.class);
-        intent.putExtra("x", String.valueOf(hill.getFullHill().getXcoord()));
-        intent.putExtra("y", String.valueOf(hill.getFullHill().getYcoord()));
+        intent.putExtra("x", String.valueOf(hillDetail.getHill().getXcoord()));
+        intent.putExtra("y", String.valueOf(hillDetail.getHill().getYcoord()));
         startActivity(intent);
     }
 
@@ -114,7 +114,7 @@ public class HillDetailFragment extends Fragment {
 
                     intent.putExtra("search_string", value);
                     intent.putExtra("title",
-                            value + " near " + hill.getFullHill().getHillname());
+                            value + " near " + hillDetail.getHill().getHillname());
                     startActivity(intent);
 
                 });
@@ -128,7 +128,7 @@ public class HillDetailFragment extends Fragment {
     }
 
 
-    private void noBagSenor(final Hill hill) {
+    private void noBagSenor(final HillDetail hillDetail) {
 
 
         ((View) dateClimbed.getParent()).setVisibility(View.GONE);
@@ -138,7 +138,7 @@ public class HillDetailFragment extends Fragment {
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
     }
 
-    private void bagFeature(final Hill hill) {
+    private void bagFeature(final HillDetail hillDetail) {
 
 
         hillnameView = (TextView) viewer
@@ -154,7 +154,7 @@ public class HillDetailFragment extends Fragment {
         // ((View)
         // saveNotes.getParent().getParent()).setVisibility(View.VISIBLE);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date realDate = hill.getBagging().get(0).getDateClimbed();
+        Date realDate = hillDetail.getBagging().get(0).getDateClimbed();
         dateClimbed.setText(format.format(realDate));
         mYear = realDate.getYear() + 1900;
         mMonth = realDate.getMonth();
@@ -179,7 +179,7 @@ public class HillDetailFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            dbAdapter.markHillClimbed(hill.getFullHill().get_id(), d, notes.getText()
+            dbAdapter.markHillClimbed(hillDetail.getHill().get_id(), d, notes.getText()
                     .toString());
 
             Toast climbed;
@@ -189,7 +189,7 @@ public class HillDetailFragment extends Fragment {
 
         });
 
-        notes.setText(hill.getBagging().get(0).getNotes());
+        notes.setText(hillDetail.getBagging().get(0).getNotes());
 
     }
 
@@ -220,7 +220,7 @@ public class HillDetailFragment extends Fragment {
                 Dialog dialog = new Dialog(mContext);
 
                 dialog.setContentView(R.layout.hill_climbed_dialog);
-                dialog.setTitle("Mark Hill As Climbed");
+                dialog.setTitle("Mark HillDetail As Climbed");
 
                 DatePicker datePicker = (DatePicker) dialog
                         .findViewById(R.id.dialog_climbed_date_picker);
@@ -229,23 +229,23 @@ public class HillDetailFragment extends Fragment {
                 Button ok = (Button) dialog.findViewById(R.id.Button_ok);
                 Button cancel = (Button) dialog.findViewById(R.id.Button_cancel);
 
-                dbAdapter.markHillClimbed(hill.getFullHill().get_id(), new Date(), "");
+                dbAdapter.markHillClimbed(hillDetail.getHill().get_id(), new Date(), "");
                 Toast climbed;
                 climbed = Toast.makeText(getActivity().getApplication(),
                         "Marked as Climbed", Toast.LENGTH_SHORT);
                 climbed.show();
-                hill = dbAdapter.getHill(hill.getFullHill().get_id());
+                hillDetail = dbAdapter.getHill(hillDetail.getHill().get_id());
 
-                bagFeature(hill);
+                bagFeature(hillDetail);
             } else {
 
-                dbAdapter.markHillNotClimbed(hill.getFullHill().get_id());
+                dbAdapter.markHillNotClimbed(hillDetail.getHill().get_id());
 
                 Toast climbed;
                 climbed = Toast.makeText(getActivity().getApplication(),
                         "Marked not Climbed", Toast.LENGTH_SHORT);
                 climbed.show();
-                noBagSenor(hill);
+                noBagSenor(hillDetail);
             }
 
         });
@@ -312,7 +312,7 @@ public class HillDetailFragment extends Fragment {
                 .findViewById(R.id.hill_classifications);
         classificationLayout.removeAllViews();
         System.out.println(rowid);
-        hill = dbAdapter.getHill(rowid);
+        hillDetail = dbAdapter.getHill(rowid);
         dateClimbed = (TextView) viewer
                 .findViewById(R.id.detail_date_climbed);
         ((View) dateClimbed.getParent()).setVisibility(View.GONE);
@@ -320,36 +320,36 @@ public class HillDetailFragment extends Fragment {
         TextView saveNotes = (TextView) getActivity().findViewById(R.id.save_notes);
         // ((View) saveNotes.getParent().getParent()).setVisibility(View.GONE);
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
-        if (hill.getBagging().get(0).getDateClimbed() != null) {
+        if (hillDetail.getBagging().get(0).getDateClimbed() != null) {
 
-            bagFeature(hill);
+            bagFeature(hillDetail);
         }
-        String osLink = hill.getFullHill().getHillBagging();
+        String osLink = hillDetail.getHill().getHillBagging();
 
-        hillnameView.setText(hill.getFullHill().getHillname());
+        hillnameView.setText(hillDetail.getHill().getHillname());
         if (useMetricHeights) {
-            hillheight.setText(hill.getFullHill().getHeightm() + "m");
+            hillheight.setText(hillDetail.getHill().getHeightm() + "m");
         } else
-            hillheight.setText(hill.getFullHill().getHeightf() + "ft");
-        hillLatitude.setText(String.valueOf(hill.getFullHill().getLatitude()) + "N");
+            hillheight.setText(hillDetail.getHill().getHeightf() + "ft");
+        hillLatitude.setText(String.valueOf(hillDetail.getHill().getLatitude()) + "N");
         String ll = "E";
-        double absL = hill.getFullHill().getLongitude();
-        if (hill.getFullHill().getLongitude() < 0) {
+        double absL = hillDetail.getHill().getLongitude();
+        if (hillDetail.getHill().getLongitude() < 0) {
             ll = "W";
             absL = 0 - absL;
         }
         hillLongitude.setText(String.valueOf(absL) + ll);
-        osgridref.setText(hill.getFullHill().getGridref());
-        hillsection.setText(hill.getFullHill().getHSection());
-        os50k.setText(hill.getFullHill().getMap());
-        os25k.setText(hill.getFullHill().getMap25());
-        colHeight.setText(String.valueOf(hill.getFullHill().getColheight()));
-        colGridRef.setText(hill.getFullHill().getColgridref());
-        drop.setText(String.valueOf(hill.getFullHill().getDrop()));
+        osgridref.setText(hillDetail.getHill().getGridref());
+        hillsection.setText(hillDetail.getHill().getHSection());
+        os50k.setText(hillDetail.getHill().getMap());
+        os25k.setText(hillDetail.getHill().getMap25());
+        colHeight.setText(String.valueOf(hillDetail.getHill().getColheight()));
+        colGridRef.setText(hillDetail.getHill().getColgridref());
+        drop.setText(String.valueOf(hillDetail.getHill().getDrop()));
 
-        summitFeature.setText(hill.getFullHill().getFeature());
+        summitFeature.setText(hillDetail.getHill().getFeature());
 
-        String[] sClassifications = hill.getFullHill().getClassification().replace("\"", "").split(",");
+        String[] sClassifications = hillDetail.getHill().getClassification().replace("\"", "").split(",");
         TextView classificationTextView = null;
         for (String classification : sClassifications) {
             String fullClassification = classesMap.get(classification);
@@ -369,8 +369,8 @@ public class HillDetailFragment extends Fragment {
         }
 
 
-        final int id = hill.getFullHill().get_id();
-        if (hill.getBagging().get(0).getDateClimbed() != null) {
+        final int id = hillDetail.getHill().get_id();
+        if (hillDetail.getBagging().get(0).getDateClimbed() != null) {
 
             ctv.setChecked(true);
 

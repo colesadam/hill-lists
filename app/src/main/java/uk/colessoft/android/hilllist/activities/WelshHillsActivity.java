@@ -41,7 +41,7 @@ public class WelshHillsActivity extends AppCompatActivity {
     protected void onPrepareDialog(int id, Dialog dialog) {
         // TODO Auto-generated method stub
         super.onPrepareDialog(id, dialog);
-        dialog.setTitle("Main Welsh Hill Groups");
+        dialog.setTitle("Main Welsh HillDetail Groups");
 
     }
 

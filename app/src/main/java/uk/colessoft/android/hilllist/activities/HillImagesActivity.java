@@ -13,7 +13,7 @@ import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
 import uk.colessoft.android.hilllist.fragments.HillImageFragment;
 import uk.colessoft.android.hilllist.fragments.HillImagesFragment;
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 
 public class HillImagesActivity extends AppCompatActivity implements HillImagesFragment.OnFragmentInteractionListener {
 
@@ -22,7 +22,7 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
     private HillImagesFragment imagesFragment;
     private String IMAGES_FRAGMENT = "1";
     private String IMAGE_FRAGMENT = "2";
-    private Hill retrievedHill;
+    private HillDetail retrievedHillDetail;
     private long hillId;
     private HillDetailFragment detailFragment;
     private HillImageFragment hillImageFragment;
@@ -112,15 +112,15 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
         }
     }
 
-    private class GetHillAsyncTask extends AsyncTask<Long, Void, Hill> {
+    private class GetHillAsyncTask extends AsyncTask<Long, Void, HillDetail> {
         @Override
-        protected void onPostExecute(Hill hill) {
-            getSupportActionBar().setTitle("Images of " + hill.getFullHill().getHillname());
-            imagesFragment.getImages(hill);
+        protected void onPostExecute(HillDetail hillDetail) {
+            getSupportActionBar().setTitle("Images of " + hillDetail.getHill().getHillname());
+            imagesFragment.getImages(hillDetail);
         }
 
         @Override
-        protected Hill doInBackground(Long... params) {
+        protected HillDetail doInBackground(Long... params) {
             System.out.println("Called with hill id:" + params[0]);
             return dbHelper.getHill(params[0]);
 

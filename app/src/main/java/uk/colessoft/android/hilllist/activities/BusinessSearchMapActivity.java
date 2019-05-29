@@ -39,7 +39,7 @@ import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.model.Business;
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 import uk.colessoft.android.hilllist.model.ScootXMLHandler;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
@@ -57,7 +57,7 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
     BritishHillsDatasource dbAdapter;
 
     private GoogleMap map;
-    private Hill hill;
+    private HillDetail hillDetail;
     private static ArrayList<Business> businesses = new ArrayList<>();
 
 
@@ -77,7 +77,7 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
         String title = getIntent().getExtras().getString("title");
         search_string = getIntent().getExtras().getString("search_string");
         setTitle(title);
-        hill = dbAdapter.getHill(rowid);
+        hillDetail = dbAdapter.getHill(rowid);
 
 
         final ToggleButton mapButton = (ToggleButton) findViewById(R.id.satellite_button);
@@ -90,8 +90,8 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
             }
 
         });
-        lat = hill.getFullHill().getLatitude();
-        lon = hill.getFullHill().getLongitude();
+        lat = hillDetail.getHill().getLatitude();
+        lon = hillDetail.getHill().getLongitude();
 
 
     }
@@ -101,7 +101,7 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
 
 
         LatLangBounds llb = new LatLangBounds();
-        llb.addLatLong(hill.getFullHill().getLatitude(),hill.getFullHill().getLongitude());
+        llb.addLatLong(hillDetail.getHill().getLatitude(), hillDetail.getHill().getLongitude());
         for (Business business : businesses) {
             Double lat = (double) business.getLatitude();
             Double lng = (double) business.getLongitude();
@@ -160,15 +160,15 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
         Marker marker = map.addMarker(new MarkerOptions()
                 .draggable(false)
                 .position(hillPosition)
-                .title(hill.getFullHill().getHillname())
-                .snippet(String.valueOf(hill.getFullHill().getHeightm())
+                .title(hillDetail.getHill().getHillname())
+                .snippet(String.valueOf(hillDetail.getHill().getHeightm())
                         + " m"
                 )
                 .icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.purple_hill))
                 .anchor(0.5F, 0.5F)
         );
-        marker.setTag(hill.getFullHill().get_id());
+        marker.setTag(hillDetail.getHill().get_id());
         marker.showInfoWindow();
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));
@@ -178,11 +178,11 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        if(!marker.getTitle().equals(hill.getFullHill().getHillname())){
+        if(!marker.getTitle().equals(hillDetail.getHill().getHillname())){
             Intent intent = new Intent(this, BusinessDetailActivity.class);
 		intent.putExtra("result_number",(Integer)marker.getTag());
-		intent.putExtra("latitude", hill.getFullHill().getLatitude());
-		intent.putExtra("longitude", hill.getFullHill().getLongitude());
+		intent.putExtra("latitude", hillDetail.getHill().getLatitude());
+		intent.putExtra("longitude", hillDetail.getHill().getLongitude());
 		intent.putExtra("search_string", search_string);
 
 

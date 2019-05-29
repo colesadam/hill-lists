@@ -44,7 +44,7 @@ public class EnglishHillsActivity extends AppCompatActivity {
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		// TODO Auto-generated method stub
 		super.onPrepareDialog(id, dialog);
-		dialog.setTitle("Main English Hill Groups");
+		dialog.setTitle("Main English HillDetail Groups");
 		
 	}
 	

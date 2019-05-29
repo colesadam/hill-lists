@@ -9,12 +9,16 @@ class DateConverters {
     val iso8601Format = SimpleDateFormat("yyyy-MM-dd")
 
     @TypeConverter
-    fun dateFromString(value: String): Date? {
-        return iso8601Format.parse(value)
+    fun dateFromString(value: String?): Date? {
+        return value?.let {
+            iso8601Format.parse(value)
+        }
     }
 
     @TypeConverter
-    fun stringFromDate(value: Date): String? {
-        return iso8601Format.format(value)
+    fun stringFromDate(value: Date?): String? {
+        return value?.let{
+            iso8601Format.format(value)
+        }
     }
 }

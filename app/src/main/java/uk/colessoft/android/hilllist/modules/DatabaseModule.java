@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import uk.colessoft.android.hilllist.dao.HillDao;
+import uk.colessoft.android.hilllist.dao.HillDetailDao;
 import uk.colessoft.android.hilllist.dao.HillTypeDao;
 import uk.colessoft.android.hilllist.dao.TypeLinkDao;
 import uk.colessoft.android.hilllist.database.HillsDatabase;
@@ -54,5 +55,11 @@ public class DatabaseModule {
     @Singleton
     TypeLinkDao providesTypeLinkDao(HillsDatabase database) {
         return database.typeLinkDao();
+    }
+
+    @Provides
+    @Singleton
+    HillDetailDao providesHillDetailDao(HillsDatabase database) {
+        return database.hillDetailDao();
     }
 }

@@ -44,7 +44,7 @@ public class OtherGBHillsActivity extends AppCompatActivity {
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		// TODO Auto-generated method stub
 		super.onPrepareDialog(id, dialog);
-		dialog.setTitle("Other Hill Groups");
+		dialog.setTitle("Other HillDetail Groups");
 		
 	}
 	

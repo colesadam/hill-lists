@@ -7,7 +7,7 @@ import android.os.Handler;
 import java.io.Reader;
 import java.util.Date;
 
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 
 public interface BritishHillsDatasource {
     void markHillClimbed(int hillNumber, Date dateClimbed, String notes);
@@ -25,7 +25,7 @@ public interface BritishHillsDatasource {
 
     Cursor getT100(String moreWhere, String orderBy, int filter);
 
-    Hill getHill(long _rowIndex) throws SQLException;
+    HillDetail getHill(long _rowIndex) throws SQLException;
 
 
     void importBagging(final Reader fileReader);

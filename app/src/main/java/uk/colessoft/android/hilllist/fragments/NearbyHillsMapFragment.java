@@ -29,7 +29,7 @@ import javax.inject.Inject;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
@@ -68,7 +68,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
         //dialog = ProgressDialog.show(getActivity(), "Please wait...",
 
-        //        "Getting Hill Positions ...", true);
+        //        "Getting HillDetail Positions ...", true);
         //Thread timer = new Thread(showWaitDialog);
 
         //timer.start();
@@ -77,16 +77,16 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
         LatLangBounds llb = new LatLangBounds();
         for (String rowid : rowids) {
             long lrow = Long.parseLong(rowid);
-            Hill hill = dbAdapter.getHill(lrow);
+            HillDetail hillDetail = dbAdapter.getHill(lrow);
             TinyHill t = new TinyHill();
-            t.set_id(hill.getFullHill().get_id());
-            t.setHillname(hill.getFullHill().getHillname());
-            double lat = hill.getFullHill().getLatitude();
-            double lng = hill.getFullHill().getLongitude();
+            t.set_id(hillDetail.getHill().get_id());
+            t.setHillname(hillDetail.getHill().getHillname());
+            double lat = hillDetail.getHill().getLatitude();
+            double lng = hillDetail.getHill().getLongitude();
             llb.addLatLong(lat, lng);
             t.setLatitude(lat);
             t.setLongitude(lng);
-            if (hill.getBagging().get(0).getDateClimbed() != null) {
+            if (hillDetail.getBagging().get(0).getDateClimbed() != null) {
                 t.setClimbed(true);
             } else {
                 t.setClimbed(false);

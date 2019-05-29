@@ -44,7 +44,7 @@ public class HillsTables {
     public static final String KEY_COMMENTS = "Comments";
     public static final String KEY_STREETMAP = "Streetmap/OSiViewer";
     public static final String KEY_GEOGRAPH = "Geograph/MountainViews";
-    public static final String KEY_HILLBAGGING = "Hill-bagging";
+    public static final String KEY_HILLBAGGING = "HillDetail-bagging";
     public static final String KEY_XCOORD = "Xcoord";
     public static final String KEY_YCOORD = "Ycoord";
     public static final String KEY_LATITUDE = "Latitude";

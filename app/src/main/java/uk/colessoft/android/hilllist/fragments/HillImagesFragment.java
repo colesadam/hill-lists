@@ -25,7 +25,7 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.adapter.GalleryAdapter;
 import uk.colessoft.android.hilllist.model.GeographImageDetail;
 import uk.colessoft.android.hilllist.model.GeographImageSearchResponse;
-import uk.colessoft.android.hilllist.model.Hill;
+import uk.colessoft.android.hilllist.model.HillDetail;
 import uk.colessoft.android.hilllist.service.GeographService;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
@@ -147,9 +147,9 @@ public class HillImagesFragment extends Fragment {
         mListener = null;
     }
 
-    public void getImages(Hill hill) {
+    public void getImages(HillDetail hillDetail) {
         Log.d(TAG, "Getting Images");
-        Call<GeographImageSearchResponse> call = geographService.imageSearch(hill.getFullHill().getLatitude() + "," + hill.getFullHill().getLongitude());
+        Call<GeographImageSearchResponse> call = geographService.imageSearch(hillDetail.getHill().getLatitude() + "," + hillDetail.getHill().getLongitude());
 
         call.enqueue(new Callback<GeographImageSearchResponse>() {
             @Override
