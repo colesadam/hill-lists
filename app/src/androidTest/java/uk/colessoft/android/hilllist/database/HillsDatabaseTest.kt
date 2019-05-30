@@ -6,13 +6,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
+import androidx.test.runner.AndroidJUnit4
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import uk.colessoft.android.hilllist.dao.HillDetailDao
 import java.io.IOException
 
-
+@RunWith(AndroidJUnit4::class)
 class HillsDatabaseTest {
 
     private lateinit var hillsDatabase: HillsDatabase
