@@ -42,5 +42,4 @@ captures/
 .idea/modules/
 keystore.properties
 /.idea/
-app/src/androidTest/
 /.settings/
