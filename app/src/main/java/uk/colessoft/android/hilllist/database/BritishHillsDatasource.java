@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Handler;
 
+import androidx.lifecycle.LiveData;
+
 import java.io.Reader;
 import java.util.Date;
 
@@ -26,6 +28,8 @@ public interface BritishHillsDatasource {
     Cursor getT100(String moreWhere, String orderBy, int filter);
 
     HillDetail getHill(long _rowIndex) throws SQLException;
+
+    LiveData<HillDetail> getHillReactive (long hillId);
 
 
     void importBagging(final Reader fileReader);

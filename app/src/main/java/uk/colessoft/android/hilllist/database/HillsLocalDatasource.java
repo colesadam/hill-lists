@@ -1,5 +1,6 @@
 package uk.colessoft.android.hilllist.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.SupportSQLiteQuery;
@@ -249,8 +250,31 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     @Override
     public HillDetail getHill(long _rowIndex) {
 
-       return hillDetailDao.getHillDetail(_rowIndex);
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(hills + " left join "
+                + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
 
+        queryBuilder.appendWhere(hillsKeyId + "=" + _rowIndex);
+
+        SupportSQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = db.query("select  * from "+hills + " left join "
+                        + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId + " where " + hillsKeyId + "=" + _rowIndex, null);
+
+        if (cursor.moveToFirst()) {
+            HillDetail hillDetail = getHill(cursor);
+            cursor.close();
+            return hillDetail;
+        } else {
+            cursor.close();
+            return null;
+        }
+
+    }
+
+    @Override
+    public LiveData<HillDetail> getHillReactive(long hillId) {
+        return null;
     }
 
     @Override
