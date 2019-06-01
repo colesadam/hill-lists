@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import uk.colessoft.android.hilllist.dao.HillDetailDao;
 import uk.colessoft.android.hilllist.entities.Hill;
 import uk.colessoft.android.hilllist.model.HillDetail;
 
@@ -88,6 +89,9 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     public HillsLocalDatasource(HillsDatabase database){
         this.dbHelper = database.getOpenHelper();
     }
+
+    @Inject
+    public HillDetailDao hillDetailDao;
 
     private Handler handler;
     protected static HillsLocalDatasource sInstance;
@@ -245,25 +249,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     @Override
     public HillDetail getHill(long _rowIndex) {
 
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(hills + " left join "
-                + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
-
-        queryBuilder.appendWhere(hillsKeyId + "=" + _rowIndex);
-
-        SupportSQLiteDatabase db = getWritableDatabase();
-
-        Cursor cursor = db.query("select  * from "+hills + " left join "
-                        + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId + " where " + hillsKeyId + "=" + _rowIndex, null);
-
-        if (cursor.moveToFirst()) {
-            HillDetail hillDetail = getHill(cursor);
-            cursor.close();
-            return hillDetail;
-        } else {
-            cursor.close();
-            return null;
-        }
+       return hillDetailDao.getHillDetail(_rowIndex);
 
     }
 
