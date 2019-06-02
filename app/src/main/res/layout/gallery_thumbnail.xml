@@ -21,7 +21,7 @@
         android:singleLine="true"
         />
 
-    <uk.colessoft.android.hilllist.views.SquareLayout
+    <uk.colessoft.android.hilllist.view.SquareLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
 >
@@ -34,7 +34,7 @@
             android:src="@drawable/achioch"
             android:adjustViewBounds="true" />
 
-    </uk.colessoft.android.hilllist.views.SquareLayout>
+    </uk.colessoft.android.hilllist.view.SquareLayout>
         <TextView
             android:id="@+id/photo_author"
             android:layout_width="match_parent"

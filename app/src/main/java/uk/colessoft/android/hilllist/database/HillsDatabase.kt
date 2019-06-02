@@ -9,10 +9,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import uk.colessoft.android.hilllist.dao.HillDetailDao
-import uk.colessoft.android.hilllist.entities.Bagging
-import uk.colessoft.android.hilllist.entities.Hill
-import uk.colessoft.android.hilllist.entities.HillType
-import uk.colessoft.android.hilllist.entities.TypeLink
+import uk.colessoft.android.hilllist.entity.Bagging
+import uk.colessoft.android.hilllist.entity.Hill
+import uk.colessoft.android.hilllist.entity.HillType
+import uk.colessoft.android.hilllist.entity.TypeLink
 
 @Database(entities = arrayOf(Hill::class, HillType::class, TypeLink::class, Bagging::class), version = 3)
 @TypeConverters(DateConverters :: class)

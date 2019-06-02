@@ -27,7 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.dao.HillDetailDao;
-import uk.colessoft.android.hilllist.entities.Hill;
+import uk.colessoft.android.hilllist.entity.Hill;
 import uk.colessoft.android.hilllist.model.HillDetail;
 
 import static android.content.ContentValues.TAG;
@@ -61,9 +61,9 @@ import static uk.colessoft.android.hilllist.database.HillsTables.KEY_TITLE;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XCOORD;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XSECTION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_YCOORD;
-import static uk.colessoft.android.hilllist.entities.Bagging.BAGGING_TABLE;
-import static uk.colessoft.android.hilllist.entities.Bagging.KEY_DATECLIMBED;
-import static uk.colessoft.android.hilllist.entities.Bagging.KEY_NOTES;
+import static uk.colessoft.android.hilllist.entity.Bagging.BAGGING_TABLE;
+import static uk.colessoft.android.hilllist.entity.Bagging.KEY_DATECLIMBED;
+import static uk.colessoft.android.hilllist.entity.Bagging.KEY_NOTES;
 
 
 public class HillsLocalDatasource implements BritishHillsDatasource {
@@ -274,7 +274,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
 
     @Override
     public LiveData<HillDetail> getHillReactive(long hillId) {
-        return null;
+        return hillDetailDao.getHillDetail(hillId);
     }
 
     @Override

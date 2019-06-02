@@ -1,5 +1,6 @@
 package uk.colessoft.android.hilllist.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
@@ -11,6 +12,6 @@ interface HillDetailDao {
 
     @Transaction
     @Query("SELECT * FROM hills WHERE _id = :hillId")
-    fun getHillDetail(hillId: Long): HillDetail
+    fun getHillDetail(hillId: Long): LiveData<HillDetail>
 
 }

@@ -4,23 +4,21 @@ package uk.colessoft.android.hilllist.components;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import uk.colessoft.android.hilllist.activities.BaggingExportActivity;
-import uk.colessoft.android.hilllist.activities.BusinessSearchMapActivity;
-import uk.colessoft.android.hilllist.activities.CheckHillListActivity;
-import uk.colessoft.android.hilllist.activities.DetailGMapActivity;
-import uk.colessoft.android.hilllist.activities.HillImagesActivity;
-import uk.colessoft.android.hilllist.activities.Main;
-import uk.colessoft.android.hilllist.activities.SplashScreenActivity;
-import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
-import uk.colessoft.android.hilllist.database.HillsLocalDatasource;
-import uk.colessoft.android.hilllist.fragments.DisplayHillListFragment;
-import uk.colessoft.android.hilllist.fragments.HillDetailFragment;
-import uk.colessoft.android.hilllist.fragments.ListHillsMapFragment;
-import uk.colessoft.android.hilllist.fragments.NearbyHillsFragment;
-import uk.colessoft.android.hilllist.fragments.NearbyHillsMapFragment;
-import uk.colessoft.android.hilllist.modules.AppModule;
-import uk.colessoft.android.hilllist.modules.DatabaseModule;
-import uk.colessoft.android.hilllist.modules.HelperModule;
+import uk.colessoft.android.hilllist.activity.BaggingExportActivity;
+import uk.colessoft.android.hilllist.activity.BusinessSearchMapActivity;
+import uk.colessoft.android.hilllist.activity.CheckHillListActivity;
+import uk.colessoft.android.hilllist.activity.DetailGMapActivity;
+import uk.colessoft.android.hilllist.activity.HillImagesActivity;
+import uk.colessoft.android.hilllist.activity.Main;
+import uk.colessoft.android.hilllist.activity.SplashScreenActivity;
+import uk.colessoft.android.hilllist.fragment.DisplayHillListFragment;
+import uk.colessoft.android.hilllist.fragment.HillDetailFragment;
+import uk.colessoft.android.hilllist.fragment.ListHillsMapFragment;
+import uk.colessoft.android.hilllist.fragment.NearbyHillsFragment;
+import uk.colessoft.android.hilllist.fragment.NearbyHillsMapFragment;
+import uk.colessoft.android.hilllist.module.AppModule;
+import uk.colessoft.android.hilllist.module.DatabaseModule;
+import uk.colessoft.android.hilllist.module.HelperModule;
 
 @Singleton
 @Component(modules = {AppModule.class,

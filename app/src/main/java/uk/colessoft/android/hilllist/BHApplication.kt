@@ -5,8 +5,8 @@ import android.app.Application
 
 import uk.colessoft.android.hilllist.components.DaggerDatabaseComponent
 import uk.colessoft.android.hilllist.components.DatabaseComponent
-import uk.colessoft.android.hilllist.modules.AppModule
-import uk.colessoft.android.hilllist.modules.DatabaseModule
+import uk.colessoft.android.hilllist.module.AppModule
+import uk.colessoft.android.hilllist.module.DatabaseModule
 
 class BHApplication : Application() {
 

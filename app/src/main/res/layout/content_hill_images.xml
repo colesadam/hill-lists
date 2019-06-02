@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="uk.colessoft.android.hilllist.activities.HillImagesActivity"
+    tools:context="uk.colessoft.android.hilllist.activity.HillImagesActivity"
     tools:showIn="@layout/activity_hill_images"
     android:layout_margin="8dp">
 

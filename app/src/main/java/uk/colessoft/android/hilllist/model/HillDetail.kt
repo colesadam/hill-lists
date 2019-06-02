@@ -3,9 +3,9 @@ package uk.colessoft.android.hilllist.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import uk.colessoft.android.hilllist.entities.Bagging
-import uk.colessoft.android.hilllist.entities.Hill
-import uk.colessoft.android.hilllist.entities.TypeLink
+import uk.colessoft.android.hilllist.entity.Bagging
+import uk.colessoft.android.hilllist.entity.Hill
+import uk.colessoft.android.hilllist.entity.TypeLink
 
 data class HillDetail
 (

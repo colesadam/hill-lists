@@ -5,7 +5,7 @@
 	android:orientation="horizontal"
 	android:baselineAligned="false"
 	android:background="?attr/colorControlHighlight">
-	<fragment android:name="uk.colessoft.android.hilllist.fragments.HillDetailFragment"
+	<fragment android:name="uk.colessoft.android.hilllist.fragment.HillDetailFragment"
 		android:layout_width="0dp" android:layout_height="match_parent"
 		android:id="@+id/hill_detail_fragment" android:layout_weight="50"
 		tools:layout="@layout/no_table_hill_detail"
@@ -25,7 +25,7 @@
 
 		<fragment
 			android:id="@+id/hills_map_fragment"
-			android:name="uk.colessoft.android.hilllist.fragments.ListHillsMapFragment"
+			android:name="uk.colessoft.android.hilllist.fragment.ListHillsMapFragment"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			tools:layout="@layout/many_hills_map_v2" />

@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 import uk.colessoft.android.hilllist.R
-import uk.colessoft.android.hilllist.fragments.HillImagesFragment
+import uk.colessoft.android.hilllist.fragment.HillImagesFragment
 
 
 class GalleryAdapter(private val mContext: Context, private val images: List<HillImagesFragment.Image>) : RecyclerView.Adapter<GalleryAdapter.MyViewHolder>() {
