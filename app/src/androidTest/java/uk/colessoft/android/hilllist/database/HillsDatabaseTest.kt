@@ -7,16 +7,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.room.OnConflictStrategy
 import androidx.room.Room
+import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
-import androidx.test.runner.AndroidJUnit4
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import uk.colessoft.android.hilllist.dao.HillDetailDao
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
@@ -48,30 +47,17 @@ class HillsDatabaseTest {
     @SmallTest
     fun getHillDetailShouldReturnCorrectHill() {
         val db = hillsDatabase.openHelper.writableDatabase
-        val values = ContentValues()
-        values.put("_id", 1)
-        values.put("name", "TestHill")
-
-        db.insert("hills", OnConflictStrategy.REPLACE, values)
+        insertHill(db, 1, "TestHill")
 
         assert("TestHill".equals(getValue(hillDetailDao.getHillDetail(1)).hill?.hillname))
-
     }
 
     @Test
     @SmallTest
     fun getHillDetailShouldReturnCorrectBagging() {
         val db = hillsDatabase.openHelper.writableDatabase
-        val values = ContentValues()
-        values.put("_id", 1)
-        values.put("name", "TestHill")
-        db.insert("hills", OnConflictStrategy.REPLACE, values)
-
-        val climbedValues = ContentValues()
-        climbedValues.put("dateClimbed", "2012-10-10")
-        climbedValues.put("_id", 1)
-        climbedValues.put("notes", "this is fine")
-        db.insert("bagging", OnConflictStrategy.REPLACE, climbedValues)
+        insertHill(db, 1, "TestHill")
+        insertBagging(db, "2012-10-10", 1, "this is fine")
 
         assert("this is fine".equals(getValue(hillDetailDao.getHillDetail(1)).bagging?.first()?.notes))
 
@@ -82,34 +68,46 @@ class HillsDatabaseTest {
     fun getHillDetailShouldReturnCorrectTypeLinks() {
         val db = hillsDatabase.openHelper.writableDatabase
 
-        val values = ContentValues()
-        values.put("_id", 1)
-        values.put("name", "TestHill")
-        db.insert("hills", OnConflictStrategy.REPLACE, values)
-
-        val typeValues1 = ContentValues()
-        typeValues1.put("_id", 43)
-        typeValues1.put("title", "Hill type 1")
-        val typeValues2 = ContentValues()
-        typeValues2.put("_id", 54)
-        typeValues2.put("title", "Hill type 2")
-        db.insert("hilltypes", OnConflictStrategy.REPLACE, typeValues1)
-        db.insert("hilltypes", OnConflictStrategy.REPLACE, typeValues2)
-
-        val typeLinkValues1 = ContentValues()
-        typeLinkValues1.put("hill_id", 1)
-        typeLinkValues1.put("type_id", 43)
-        val typeLinkValues2 = ContentValues()
-        typeLinkValues2.put("hill_id", 1)
-        typeLinkValues2.put("type_id", 54)
-        db.insert("typeslink", OnConflictStrategy.REPLACE, typeLinkValues1)
-        db.insert("typeslink", OnConflictStrategy.REPLACE, typeLinkValues2)
+        insertHill(db, 1, "TestHill")
+        insertTypeValues(db, 43, "Hill type 1")
+        insertTypeValues(db, 54, "Hill type 2")
+        insertTypeLinks(db, 1, 43)
+        insertTypeLinks(db, 1, 54)
 
         val types: List<Long>? = getValue(hillDetailDao.getHillDetail(1)).types
         assertEquals(2, types?.size)
         assertTrue(types?.contains(43) ?: false)
         assertTrue(types?.contains(54) ?: false)
 
+    }
+
+    private fun insertTypeLinks(db: SupportSQLiteDatabase, hillId: Int, typeId: Int) {
+        val typeLinkValues1 = ContentValues()
+        typeLinkValues1.put("hill_id", hillId)
+        typeLinkValues1.put("type_id", typeId)
+        db.insert("typeslink", OnConflictStrategy.REPLACE, typeLinkValues1)
+    }
+
+    private fun insertTypeValues(db: SupportSQLiteDatabase, typeId: Int, typeName: String) {
+        val typeValues1 = ContentValues()
+        typeValues1.put("_id", typeId)
+        typeValues1.put("title", typeName)
+        db.insert("hilltypes", OnConflictStrategy.REPLACE, typeValues1)
+    }
+
+    private fun insertBagging(db: SupportSQLiteDatabase, dateClimbed: String, hillId: Int, notes: String) {
+        val climbedValues = ContentValues()
+        climbedValues.put("dateClimbed", dateClimbed)
+        climbedValues.put("_id", hillId)
+        climbedValues.put("notes", notes)
+        db.insert("bagging", OnConflictStrategy.REPLACE, climbedValues)
+    }
+
+    private fun insertHill(db: SupportSQLiteDatabase, id: Int, name: String) {
+        val values = ContentValues()
+        values.put("_id", id)
+        values.put("name", name)
+        db.insert("hills", OnConflictStrategy.REPLACE, values)
     }
 
     @Throws(InterruptedException::class)

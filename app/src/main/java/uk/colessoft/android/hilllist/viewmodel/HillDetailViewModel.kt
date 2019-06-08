@@ -1,21 +1,16 @@
 package uk.colessoft.android.hilllist.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource
 import uk.colessoft.android.hilllist.model.HillDetail
-import javax.inject.Inject
 
 
-class HillDetailViewModel(application: Application): AndroidViewModel(application) {
+class HillDetailViewModel(private val repository: BritishHillsDatasource, private val hillId: Long): ViewModel() {
 
-    val hillDetail: LiveData<HillDetail>
-
-    @Inject
-    private lateinit var datasource: BritishHillsDatasource
+    public val hillDetail:LiveData<HillDetail>
 
     init {
-        hillDetail = datasource.getHillReactive(1)
+        hillDetail = repository.getHillReactive(hillId)
     }
 }

@@ -3,8 +3,8 @@ package uk.colessoft.android.hilllist
 
 import android.app.Application
 
-import uk.colessoft.android.hilllist.components.DaggerDatabaseComponent
-import uk.colessoft.android.hilllist.components.DatabaseComponent
+import uk.colessoft.android.hilllist.component.DaggerDatabaseComponent
+import uk.colessoft.android.hilllist.component.DatabaseComponent
 import uk.colessoft.android.hilllist.module.AppModule
 import uk.colessoft.android.hilllist.module.DatabaseModule
 

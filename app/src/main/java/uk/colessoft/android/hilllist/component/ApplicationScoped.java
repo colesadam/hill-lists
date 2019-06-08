@@ -1,4 +1,4 @@
-package uk.colessoft.android.hilllist.components;
+package uk.colessoft.android.hilllist.component;
 
 
 import javax.inject.Scope;

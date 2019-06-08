@@ -81,7 +81,8 @@ public class HillDetailFragmentActivity extends AppCompatActivity {
 
 		HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.hill_detail_fragment);
-		fragment.updateHill(rowid);
+
+		//fragment.updateHill(rowid);
 
 	}
 

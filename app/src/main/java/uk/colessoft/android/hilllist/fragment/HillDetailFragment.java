@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,11 +42,16 @@ import uk.colessoft.android.hilllist.activity.OsMapActivity;
 import uk.colessoft.android.hilllist.activity.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.model.HillDetail;
+import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModel;
+import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModelFactory;
 
 
 public class HillDetailFragment extends Fragment {
     @Inject
     BritishHillsDatasource dbAdapter;
+
+    @Inject
+    HillDetailViewModelFactory hillDetailViewModelFactory;
 
     private boolean useMetricHeights;
     static final int DATE_DIALOG_ID = 0;
@@ -198,6 +205,10 @@ public class HillDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
+
+//        HillDetailViewModel viewModel = ViewModelProviders.of(this, hillDetailViewModelFactory.create(userId))
+//                .get(HillDetailViewModel.class);
+//        long hillId = getActivity().get
     }
 
     @Override
