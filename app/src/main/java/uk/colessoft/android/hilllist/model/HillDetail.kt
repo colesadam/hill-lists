@@ -9,16 +9,16 @@ import uk.colessoft.android.hilllist.entity.TypeLink
 
 data class HillDetail
 (
-        @Embedded
+        @Embedded(prefix = "hill_")
         val hill: Hill
 ){
 
-        @Relation(parentColumn = "_id",
+        @Relation(parentColumn = "hill__id",
                 entityColumn = "_id",
                 entity = Bagging::class)
         var bagging: List<Bagging>? = null
 
-        @Relation(parentColumn = "_id",
+        @Relation(parentColumn = "hill__id",
                 entityColumn = "hill_id",
                 entity = TypeLink::class,
                 projection = arrayOf("type_Id"))

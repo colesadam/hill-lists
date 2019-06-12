@@ -81,6 +81,45 @@ class HillsDatabaseTest {
 
     }
 
+    @Test
+    @SmallTest
+    fun getHillsWithGroupIdShouldReturnCorrectly() {
+        val db = hillsDatabase.openHelper.writableDatabase
+        insertHill(db, 1, "TestHill")
+        insertHill(db, 2, "another hill")
+        insertBagging(db, "2012-10-10", 1, "this is fine")
+        insertTypeValues(db, 43, "Hill type 1")
+        insertTypeValues(db, 54, "Hill type 2")
+        insertTypeLinks(db, 1, 43)
+        insertTypeLinks(db, 1, 54)
+        insertTypeLinks(db, 2, 54)
+        val groupId = "Hill type 1"
+
+        val hills = hillDetailDao.getHills(groupId)
+
+        assertEquals(1, getValue(hills)?.size)
+    }
+
+    @Test
+    @SmallTest
+    fun getHillsWithGroupIdShouldReturnCorrectlyWithDescendingName() {
+        val db = hillsDatabase.openHelper.writableDatabase
+        insertHill(db, 1, "TestHill")
+        insertHill(db, 2, "another hill")
+        insertBagging(db, "2012-10-10", 1, "this is fine")
+        insertTypeValues(db, 43, "Hill type 1")
+        insertTypeValues(db, 54, "Hill type 2")
+        insertTypeLinks(db, 1, 43)
+        insertTypeLinks(db, 1, 54)
+        insertTypeLinks(db, 2, 54)
+        val groupId = "Hill type 2"
+
+        val hills = getValue(hillDetailDao.getHills(groupId,orderBy = "hills.name asc"))
+
+        assertEquals(2, hills?.size)
+        assertEquals(2, hills?.first().hill._id)
+    }
+
     private fun insertTypeLinks(db: SupportSQLiteDatabase, hillId: Int, typeId: Int) {
         val typeLinkValues1 = ContentValues()
         typeLinkValues1.put("hill_id", hillId)
