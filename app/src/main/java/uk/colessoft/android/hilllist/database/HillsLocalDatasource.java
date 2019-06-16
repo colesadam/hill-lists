@@ -107,13 +107,13 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
 
 
     @Override
-    public void markHillClimbed(int hillNumber, Date dateClimbed, String notes) {
+    public void markHillClimbed(long hillNumber, Date dateClimbed, String notes) {
         SupportSQLiteDatabase db = getWritableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         ContentValues climbedValues = new ContentValues();
         climbedValues.put("dateClimbed", dateFormat.format(dateClimbed));
-        climbedValues.put("_id", String.valueOf(hillNumber));
+        climbedValues.put("tl_id", String.valueOf(hillNumber));
         climbedValues.put("notes", notes);
 
         SupportSQLiteQuery query = SupportSQLiteQueryBuilder.builder(BAGGING_TABLE).columns(new String[]{KEY_ID + "=?"}).selection(KEY_ID, new Object[]{String.valueOf(hillNumber)}).create();
@@ -125,7 +125,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         if (existing.getCount() == 0) {
             db.insert(BAGGING_TABLE, 0, climbedValues);
         } else {
-            db.update(BAGGING_TABLE, 0, climbedValues, "_id='"
+            db.update(BAGGING_TABLE, 0, climbedValues, "tl_id='"
                     + String.valueOf(hillNumber) + "'", null);
         }
         db.setTransactionSuccessful();
@@ -135,9 +135,9 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     }
 
     @Override
-    public void markHillNotClimbed(int hillNumber) {
+    public void markHillNotClimbed(long hillNumber) {
         SupportSQLiteDatabase db = getWritableDatabase();
-        db.delete(BAGGING_TABLE, "_id='" + hillNumber + "'", null);
+        db.delete(BAGGING_TABLE, "tl_id='" + hillNumber + "'", null);
     }
 
     @Override
@@ -145,8 +145,8 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         Log.d(TAG, "getAllHillsCursor: ######## getting all hills");
         SupportSQLiteDatabase db = getReadableDatabase();
         return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
-                        + " ON (" + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE
-                        + "._id)", new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
+                        + " ON (" + HILLS_TABLE + ".tl_id" + "=" + BAGGING_TABLE
+                        + ".tl_id)", new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
                         KEY_NOTES, KEY_DATECLIMBED});
     }
 
@@ -162,7 +162,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     public Cursor getBaggedHillList() {
         SupportSQLiteDatabase db = getReadableDatabase();
         return db.query(HILLS_TABLE + " INNER JOIN " + BAGGING_TABLE + " ON ("
-                        + HILLS_TABLE + "._id" + "=" + BAGGING_TABLE + "._id)",
+                        + HILLS_TABLE + ".tl_id" + "=" + BAGGING_TABLE + ".tl_id)",
                 new String[]{HILLS_TABLE + "." + KEY_ID, KEY_HILLNAME,
                         KEY_DATECLIMBED, KEY_NOTES});
     }
@@ -297,7 +297,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                     }
                 }
                 values = new ContentValues();
-                values.put("_id", row[0]);
+                values.put("tl_id", row[0]);
                 values.put("dateClimbed", row[1]);
                 values.put("notes", notes);
                 db.insert(BAGGING_TABLE, 0, values);

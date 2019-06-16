@@ -21,7 +21,7 @@ public class HillsTables {
     public static final String HILLS_TABLE = "hills";
     public static final String HILLTYPES_TABLE = "hilltypes";
     public static final String TYPES_LINK_TABLE = "typeslink";
-    public static final String KEY_ID = "_id";
+    public static final String KEY_ID = "tl_id";
     public static final String KEY_HILLNAME = "Name";
     public static final String KEY_SECTION = "Section";
     public static final String KEY_SECTIONNAME = "Section name";

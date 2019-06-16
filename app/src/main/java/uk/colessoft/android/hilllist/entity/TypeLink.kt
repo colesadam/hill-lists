@@ -6,16 +6,16 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "typeslink",
         foreignKeys = arrayOf(ForeignKey(entity = Hill::class,
-                parentColumns = arrayOf("_id"),
+                parentColumns = arrayOf("h_id"),
                 childColumns = arrayOf("hill_id"),
                 onDelete = ForeignKey.CASCADE),
                 ForeignKey(entity = HillType::class,
-                        parentColumns = arrayOf("_id"),
+                        parentColumns = arrayOf("ht_id"),
                         childColumns = arrayOf("type_Id"))
         ))
 data class TypeLink(
         @PrimaryKey(autoGenerate = true)
-        val _id: Long,
+        val tl_id: Long,
         val hill_id: Long,
         val type_Id: Long
 

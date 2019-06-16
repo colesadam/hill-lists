@@ -2,15 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "cf6c8e79ec960f0e5a9c49b4ececfcd0",
+    "identityHash": "7cd920ec69d7ec2c47183c98c8751e10",
     "entities": [
       {
         "tableName": "hills",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `Name` TEXT, `Parent (SMC)` TEXT, `Parent name (SMC)` TEXT, `Section` TEXT, `Section name` TEXT, `Area` TEXT, `Island` TEXT, `Topo Section` TEXT, `County` TEXT, `Classification` TEXT, `Map 1:50k` TEXT, `Map 1:25k` TEXT, `Metres` REAL, `Feet` REAL, `Grid ref` TEXT, `Grid ref 10` TEXT, `Drop` REAL, `Col grid ref` TEXT, `Col height` REAL, `Feature` TEXT, `Observations` TEXT, `Survey` TEXT, `Climbed` TEXT, `Country` TEXT, `County Top` TEXT, `Revision` TEXT, `Comments` TEXT, `Streetmap/OSiViewer` TEXT, `Geograph/MountainViews` TEXT, `HillDetail-bagging` TEXT, `Xcoord` INTEGER, `Ycoord` INTEGER, `Latitude` REAL, `Longitude` REAL, `GridrefXY` TEXT, `_Section` TEXT, `Parent (Ma)` TEXT, `Parent name (Ma)` TEXT, `MVNumber` TEXT, `Ma` TEXT, `Ma=` TEXT, `Hu` TEXT, `Hu=` TEXT, `Tu` TEXT, `Tu=` TEXT, `Sim` TEXT, `M` TEXT, `MT` TEXT, `F` TEXT, `C` TEXT, `G` TEXT, `D` TEXT, `DT` TEXT, `Mur` TEXT, `CT` TEXT, `GT` TEXT, `Hew` TEXT, `N` TEXT, `5` TEXT, `5D` TEXT, `5H` TEXT, `4` TEXT, `3` TEXT, `2` TEXT, `1` TEXT, `1=` TEXT, `0` TEXT, `W` TEXT, `WO` TEXT, `B` TEXT, `CoH` TEXT, `CoH=` TEXT, `CoU` TEXT, `CoU=` TEXT, `CoA` TEXT, `CoA=` TEXT, `CoL` TEXT, `CoL=` TEXT, `SIB` TEXT, `sMa` TEXT, `sHu` TEXT, `sSim` TEXT, `s5` TEXT, `s5D` TEXT, `s5H` TEXT, `s5M` TEXT, `s4` TEXT, `Sy` TEXT, `Fel` TEXT, `BL` TEXT, `Bg` TEXT, `T100` TEXT, `xMT` TEXT, `xC` TEXT, `xG` TEXT, `xN` TEXT, `xDT` TEXT, `Dil` TEXT, `VL` TEXT, `A` TEXT, `5M` TEXT, `Ca` TEXT, `Bin` TEXT, `O` TEXT, `Un` TEXT, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`h_id` INTEGER NOT NULL, `Name` TEXT, `Parent (SMC)` TEXT, `Parent name (SMC)` TEXT, `Section` TEXT, `Section name` TEXT, `Area` TEXT, `Island` TEXT, `Topo Section` TEXT, `County` TEXT, `Classification` TEXT, `Map 1:50k` TEXT, `Map 1:25k` TEXT, `Metres` REAL, `Feet` REAL, `Grid ref` TEXT, `Grid ref 10` TEXT, `Drop` REAL, `Col grid ref` TEXT, `Col height` REAL, `Feature` TEXT, `Observations` TEXT, `Survey` TEXT, `Climbed` TEXT, `Country` TEXT, `County Top` TEXT, `Revision` TEXT, `Comments` TEXT, `Streetmap/OSiViewer` TEXT, `Geograph/MountainViews` TEXT, `HillDetail-bagging` TEXT, `Xcoord` INTEGER, `Ycoord` INTEGER, `Latitude` REAL, `Longitude` REAL, `GridrefXY` TEXT, `_Section` TEXT, `Parent (Ma)` TEXT, `Parent name (Ma)` TEXT, `MVNumber` TEXT, `Ma` TEXT, `Ma=` TEXT, `Hu` TEXT, `Hu=` TEXT, `Tu` TEXT, `Tu=` TEXT, `Sim` TEXT, `M` TEXT, `MT` TEXT, `F` TEXT, `C` TEXT, `G` TEXT, `D` TEXT, `DT` TEXT, `Mur` TEXT, `CT` TEXT, `GT` TEXT, `Hew` TEXT, `N` TEXT, `5` TEXT, `5D` TEXT, `5H` TEXT, `4` TEXT, `3` TEXT, `2` TEXT, `1` TEXT, `1=` TEXT, `0` TEXT, `W` TEXT, `WO` TEXT, `B` TEXT, `CoH` TEXT, `CoH=` TEXT, `CoU` TEXT, `CoU=` TEXT, `CoA` TEXT, `CoA=` TEXT, `CoL` TEXT, `CoL=` TEXT, `SIB` TEXT, `sMa` TEXT, `sHu` TEXT, `sSim` TEXT, `s5` TEXT, `s5D` TEXT, `s5H` TEXT, `s5M` TEXT, `s4` TEXT, `Sy` TEXT, `Fel` TEXT, `BL` TEXT, `Bg` TEXT, `T100` TEXT, `xMT` TEXT, `xC` TEXT, `xG` TEXT, `xN` TEXT, `xDT` TEXT, `Dil` TEXT, `VL` TEXT, `A` TEXT, `5M` TEXT, `Ca` TEXT, `Bin` TEXT, `O` TEXT, `Un` TEXT, PRIMARY KEY(`h_id`))",
         "fields": [
           {
-            "fieldPath": "_id",
-            "columnName": "_id",
+            "fieldPath": "h_id",
+            "columnName": "h_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -647,7 +647,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "_id"
+            "h_id"
           ],
           "autoGenerate": false
         },
@@ -656,11 +656,11 @@
       },
       {
         "tableName": "hilltypes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `title` TEXT NOT NULL, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ht_id` INTEGER NOT NULL, `title` TEXT NOT NULL, PRIMARY KEY(`ht_id`))",
         "fields": [
           {
-            "fieldPath": "_id",
-            "columnName": "_id",
+            "fieldPath": "ht_id",
+            "columnName": "ht_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -673,7 +673,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "_id"
+            "ht_id"
           ],
           "autoGenerate": false
         },
@@ -682,11 +682,11 @@
       },
       {
         "tableName": "typeslink",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `hill_id` INTEGER NOT NULL, `type_Id` INTEGER NOT NULL, FOREIGN KEY(`hill_id`) REFERENCES `hills`(`_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`type_Id`) REFERENCES `hilltypes`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`tl_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `hill_id` INTEGER NOT NULL, `type_Id` INTEGER NOT NULL, FOREIGN KEY(`hill_id`) REFERENCES `hills`(`h_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`type_Id`) REFERENCES `hilltypes`(`ht_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
-            "fieldPath": "_id",
-            "columnName": "_id",
+            "fieldPath": "tl_id",
+            "columnName": "tl_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -705,7 +705,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "_id"
+            "tl_id"
           ],
           "autoGenerate": true
         },
@@ -719,7 +719,7 @@
               "hill_id"
             ],
             "referencedColumns": [
-              "_id"
+              "h_id"
             ]
           },
           {
@@ -730,18 +730,18 @@
               "type_Id"
             ],
             "referencedColumns": [
-              "_id"
+              "ht_id"
             ]
           }
         ]
       },
       {
         "tableName": "Bagging",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `dateClimbed` TEXT NOT NULL, `notes` TEXT NOT NULL, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`b_id` INTEGER NOT NULL, `dateClimbed` TEXT NOT NULL, `notes` TEXT NOT NULL, PRIMARY KEY(`b_id`))",
         "fields": [
           {
-            "fieldPath": "_id",
-            "columnName": "_id",
+            "fieldPath": "b_id",
+            "columnName": "b_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -760,7 +760,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "_id"
+            "b_id"
           ],
           "autoGenerate": false
         },
@@ -770,7 +770,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"cf6c8e79ec960f0e5a9c49b4ececfcd0\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7cd920ec69d7ec2c47183c98c8751e10\")"
     ]
   }
 }

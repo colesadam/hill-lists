@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "hilltypes")
 data class HillType(
         @PrimaryKey
-        val _id: Long,
+        val ht_id: Long,
         val title: String = ""
 )

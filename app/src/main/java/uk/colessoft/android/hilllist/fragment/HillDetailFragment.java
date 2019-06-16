@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -42,7 +41,6 @@ import uk.colessoft.android.hilllist.activity.OsMapActivity;
 import uk.colessoft.android.hilllist.activity.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.model.HillDetail;
-import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModel;
 import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModelFactory;
 
 
@@ -186,7 +184,7 @@ public class HillDetailFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            dbAdapter.markHillClimbed(hillDetail.getHill().get_id(), d, notes.getText()
+            dbAdapter.markHillClimbed(hillDetail.getHill().getH_id(), d, notes.getText()
                     .toString());
 
             Toast climbed;
@@ -240,17 +238,17 @@ public class HillDetailFragment extends Fragment {
                 Button ok = (Button) dialog.findViewById(R.id.Button_ok);
                 Button cancel = (Button) dialog.findViewById(R.id.Button_cancel);
 
-                dbAdapter.markHillClimbed(hillDetail.getHill().get_id(), new Date(), "");
+                dbAdapter.markHillClimbed(hillDetail.getHill().getH_id(), new Date(), "");
                 Toast climbed;
                 climbed = Toast.makeText(getActivity().getApplication(),
                         "Marked as Climbed", Toast.LENGTH_SHORT);
                 climbed.show();
-                hillDetail = dbAdapter.getHill(hillDetail.getHill().get_id());
+                hillDetail = dbAdapter.getHill(hillDetail.getHill().getH_id());
 
                 bagFeature(hillDetail);
             } else {
 
-                dbAdapter.markHillNotClimbed(hillDetail.getHill().get_id());
+                dbAdapter.markHillNotClimbed(hillDetail.getHill().getH_id());
 
                 Toast climbed;
                 climbed = Toast.makeText(getActivity().getApplication(),
@@ -380,7 +378,7 @@ public class HillDetailFragment extends Fragment {
         }
 
 
-        final int id = hillDetail.getHill().get_id();
+        final long id = hillDetail.getHill().getH_id();
         if (hillDetail.getBagging().get(0).getDateClimbed() != null) {
 
             ctv.setChecked(true);

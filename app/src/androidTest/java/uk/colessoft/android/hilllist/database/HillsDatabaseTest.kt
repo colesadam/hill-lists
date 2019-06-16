@@ -114,10 +114,10 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 2"
 
-        val hills = getValue(hillDetailDao.getHills(groupId,orderBy = "hills.name asc"))
+        val hills = getValue(hillDetailDao.getHills(groupId,orderBy = "name asc"))
 
         assertEquals(2, hills?.size)
-        assertEquals(2, hills?.first().hill._id)
+        assertEquals(2, hills?.first().hill.h_id)
     }
 
     private fun insertTypeLinks(db: SupportSQLiteDatabase, hillId: Int, typeId: Int) {
@@ -129,7 +129,7 @@ class HillsDatabaseTest {
 
     private fun insertTypeValues(db: SupportSQLiteDatabase, typeId: Int, typeName: String) {
         val typeValues1 = ContentValues()
-        typeValues1.put("_id", typeId)
+        typeValues1.put("ht_id", typeId)
         typeValues1.put("title", typeName)
         db.insert("hilltypes", OnConflictStrategy.REPLACE, typeValues1)
     }
@@ -137,14 +137,14 @@ class HillsDatabaseTest {
     private fun insertBagging(db: SupportSQLiteDatabase, dateClimbed: String, hillId: Int, notes: String) {
         val climbedValues = ContentValues()
         climbedValues.put("dateClimbed", dateClimbed)
-        climbedValues.put("_id", hillId)
+        climbedValues.put("b_id", hillId)
         climbedValues.put("notes", notes)
         db.insert("bagging", OnConflictStrategy.REPLACE, climbedValues)
     }
 
     private fun insertHill(db: SupportSQLiteDatabase, id: Int, name: String) {
         val values = ContentValues()
-        values.put("_id", id)
+        values.put("h_id", id)
         values.put("name", name)
         db.insert("hills", OnConflictStrategy.REPLACE, values)
     }

@@ -8,7 +8,7 @@ import java.util.Date
 
 @Entity(tableName = "hills")
 data class Hill(
-        @PrimaryKey val _id: Int,
+        @PrimaryKey val h_id: Long,
         @ColumnInfo(name = "Name") val hillname: String?,
         @ColumnInfo(name = "Parent (SMC)") val parentSMC: String?,
         @ColumnInfo(name = "Parent name (SMC)") val parentnameSMC: String?,

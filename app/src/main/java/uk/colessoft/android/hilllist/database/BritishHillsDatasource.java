@@ -12,9 +12,9 @@ import java.util.Date;
 import uk.colessoft.android.hilllist.model.HillDetail;
 
 public interface BritishHillsDatasource {
-    void markHillClimbed(int hillNumber, Date dateClimbed, String notes);
+    void markHillClimbed(long hillNumber, Date dateClimbed, String notes);
 
-    void markHillNotClimbed(int hillNumber);
+    void markHillNotClimbed(long hillNumber);
 
     Cursor getAllHillsCursor();
 

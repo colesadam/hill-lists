@@ -168,7 +168,7 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
                         .fromResource(R.drawable.purple_hill))
                 .anchor(0.5F, 0.5F)
         );
-        marker.setTag(hillDetail.getHill().get_id());
+        marker.setTag(hillDetail.getHill().getH_id());
         marker.showInfoWindow();
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(hillPosition, 7));
