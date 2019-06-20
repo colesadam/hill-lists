@@ -102,7 +102,7 @@ class HillsDatabaseTest {
 
     @Test
     @SmallTest
-    fun getHillsWithGroupIdShouldReturnCorrectlyWithDescendingName() {
+    fun getHillsWithGroupIdShouldReturnCorrectlyWithAscendingName() {
         val db = hillsDatabase.openHelper.writableDatabase
         insertHill(db, 1, "TestHill")
         insertHill(db, 2, "another hill")

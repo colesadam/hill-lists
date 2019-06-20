@@ -20,7 +20,13 @@ interface HillDetailDao {
         LEFT JOIN bagging ON b_id = h_id
         JOIN hilltypes ON typeslink.type_Id = ht_id
         WHERE hilltypes.title = :groupId
-        ORDER BY :orderBy""")
-    fun getHills(groupId: String?, orderBy: String? = "h_id asc"/*, countryClause: String?, moreFilters: String?, , filter: Int?*/): LiveData<List<HillDetail>>
+        ORDER BY
+        CASE WHEN :orderBy="id asc" THEN h_id END ASC,
+        CASE WHEN :orderBy="id desc" THEN h_id END DESC,
+        CASE WHEN :orderBy="name asc" THEN LOWER(name) END ASC,
+        CASE WHEN :orderBy="name desc" THEN LOWER(name) END DESC,
+        CASE WHEN :orderBy="height asc" THEN Metres END ASC,
+        CASE WHEN :orderBy="height desc" THEN Metres END DESC""")
+    fun getHills(groupId: String?, orderBy: String? = "height desc"/*, countryClause: String?, moreFilters: String?, , filter: Int?*/): LiveData<List<HillDetail>>
 
 }
