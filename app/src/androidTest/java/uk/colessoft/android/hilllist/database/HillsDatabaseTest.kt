@@ -17,6 +17,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import uk.colessoft.android.hilllist.dao.HillDetailDao
+import uk.colessoft.android.hilllist.dao.HillsOrder
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -114,7 +115,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 2"
 
-        val hills = getValue(hillDetailDao.getHills(groupId,orderBy = "name asc"))
+        val hills = getValue(hillDetailDao.getHills(groupId,orderBy = HillsOrder.NAME_ASC))
 
         assertEquals(2, hills?.size)
         assertEquals(2, hills?.first().hill.h_id)

@@ -5,35 +5,91 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Transaction
-import androidx.sqlite.db.SupportSQLiteQuery
+import androidx.sqlite.db.SimpleSQLiteQuery
+import uk.colessoft.android.hilllist.database.HillsTables.HILLS_TABLE
+import uk.colessoft.android.hilllist.database.HillsTables.KEY_ID
+import uk.colessoft.android.hilllist.entity.Bagging.Companion.KEY_DATECLIMBED
+import uk.colessoft.android.hilllist.entity.Bagging.Companion.KEY_NOTES
 import uk.colessoft.android.hilllist.model.HillDetail
 
 
 @Dao
-interface HillDetailDao {
+abstract class HillDetailDao {
 
     @Transaction
     @Query("SELECT * FROM hills WHERE h_id = :hillId")
-    fun getHillDetail(hillId: Long): LiveData<HillDetail>
+    abstract fun getHillDetail(hillId: Long): LiveData<HillDetail>
 
     @RawQuery
-    fun getHillsRaw(groupId: String?, orderBy: String? = "height desc"/*, countryClause: String?, moreFilters: String?, , filter: Int?*/): LiveData<List<HillDetail>>
+    abstract fun getHillsRaw(query: SimpleSQLiteQuery): LiveData<List<HillDetail>>
 
-    fun getHills(groupId: String?, orderBy: String? = "height desc"): LiveData<List<HillDetail>>{
-        val query = new SupportSQLiteQuery("""SELECT h_id, latitude, longitude,Metres,Feet,
-        name,notes,dateClimbed,b_id from hills
-        JOIN typeslink ON typeslink.hill_id = h_id
-        LEFT JOIN bagging ON b_id = h_id
-        JOIN hilltypes ON typeslink.type_Id = ht_id
-        WHERE hilltypes.title = :groupId
-        ORDER BY
-        CASE WHEN :orderBy="id asc" THEN h_id END ASC,
-        CASE WHEN :orderBy="id desc" THEN h_id END DESC,
-        CASE WHEN :orderBy="name asc" THEN LOWER(name) END ASC,
-        CASE WHEN :orderBy="name desc" THEN LOWER(name) END DESC,
-        CASE WHEN :orderBy="height asc" THEN Metres END ASC,
-        CASE WHEN :orderBy="height desc" THEN Metres END DESC""",
-        new Object[]{userId})
+    val hillQuery: String
+        get() {
+            return """SELECT h_id, latitude, longitude,Metres,Feet,
+            name,notes,dateClimbed,b_id from hills
+            JOIN typeslink ON typeslink.hill_id = h_id
+            LEFT JOIN bagging ON b_id = h_id
+            JOIN hilltypes ON typeslink.type_Id = ht_id"""
+        }
+
+    fun getHills(groupId: String?, orderBy: HillsOrder = HillsOrder.HEIGHT_DESC): LiveData<List<HillDetail>> {
+        return getHillsRaw(SimpleSQLiteQuery("$hillQuery " + createHillsClause(groupId,null,null,null)
+        + " order by " + orderBy.sql,arrayOf()))
     }
+
+    private fun createHillsClause(groupId: String?, countryClause:  String?="cast(_Section as float) <45", moreFilters: String?, filter: Int?):String {
+        if ("T100" == groupId) return getT100(moreFilters, filter)
+
+        var where = ""
+
+        if (filter == 1)
+            where = KEY_DATECLIMBED + " NOT NULL"
+        else if (filter == 2)
+            where = KEY_DATECLIMBED + " IS NULL"
+
+        if (groupId != null) {
+            val groups = groupId.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+            var groupSelector = ""
+            for (group in groups) {
+                groupSelector += "title = '" + group + "' OR "
+            }
+            groupSelector = groupSelector.trim { it <= ' ' }.substring(0, groupSelector.length - 3)
+            where = addToWhere("($groupSelector)", where)
+        }
+
+        where = addToWhere(countryClause, where)
+        where = addToWhere(moreFilters, where)
+
+        return "where " + where
+    }
+
+    private fun getT100(moreFilters: String?, filter: Int?): String{
+
+        var where = "T100='1'"
+
+        if (filter == 1)
+            where = "$KEY_DATECLIMBED NOT NULL"
+        else if (filter == 2)
+            where = "$KEY_DATECLIMBED IS NULL"
+
+
+        where = addToWhere(moreFilters, where)
+
+
+        return "$hillQuery where " + where
+    }
+
+    private fun addToWhere(filter: String?, where: String): String {
+        var where = where
+        if ("" != where && filter != null && "" != filter)
+            where = "$where AND "
+        where = where + nonNull(filter)
+        return where
+    }
+
+    private fun nonNull(filter: String?): String {
+        return filter ?: ""
+    }
+
 
 }
