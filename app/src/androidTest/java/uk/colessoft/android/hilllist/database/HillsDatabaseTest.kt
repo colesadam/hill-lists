@@ -16,6 +16,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import uk.colessoft.android.hilllist.dao.CountryClause
 import uk.colessoft.android.hilllist.dao.HillDetailDao
 import uk.colessoft.android.hilllist.dao.HillsOrder
 import java.io.IOException
@@ -96,7 +97,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 1"
 
-        val hills = hillDetailDao.getHills(groupId)
+        val hills = hillDetailDao.getHills(groupId,country = null)
 
         assertEquals(1, getValue(hills)?.size)
     }
@@ -115,10 +116,48 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 2"
 
-        val hills = getValue(hillDetailDao.getHills(groupId,orderBy = HillsOrder.NAME_ASC))
+        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, null))
 
         assertEquals(2, hills?.size)
         assertEquals(2, hills?.first().hill.h_id)
+    }
+
+    @Test
+    @SmallTest
+    fun getHillsWithGroupIdShouldReturnCorrectlyWithCountryFilter() {
+        val db = hillsDatabase.openHelper.writableDatabase
+        insertHill(db, 1, "TestHill","S")
+        insertHill(db, 2, "another hill","E")
+        insertBagging(db, "2012-10-10", 1, "this is fine")
+        insertTypeValues(db, 43, "Hill type 1")
+        insertTypeValues(db, 54, "Hill type 2")
+        insertTypeLinks(db, 1, 43)
+        insertTypeLinks(db, 1, 54)
+        insertTypeLinks(db, 2, 54)
+        val groupId = "Hill type 2"
+
+        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, CountryClause.SCOTLAND))
+
+        assertEquals(1, hills?.size)
+    }
+
+    @Test
+    @SmallTest
+    fun getHillsWithGroupIdShouldReturnCorrectlyWithNoIreland() {
+        val db = hillsDatabase.openHelper.writableDatabase
+        insertHill(db, 1, "TestHill","M")
+        insertHill(db, 2, "another hill","I")
+        insertBagging(db, "2012-10-10", 1, "this is fine")
+        insertTypeValues(db, 43, "Hill type 1")
+        insertTypeValues(db, 54, "Hill type 2")
+        insertTypeLinks(db, 1, 43)
+        insertTypeLinks(db, 1, 54)
+        insertTypeLinks(db, 2, 54)
+        val groupId = "Hill type 2"
+
+        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, CountryClause.UK))
+
+        assertEquals(1, hills?.size)
     }
 
     private fun insertTypeLinks(db: SupportSQLiteDatabase, hillId: Int, typeId: Int) {
@@ -143,10 +182,11 @@ class HillsDatabaseTest {
         db.insert("bagging", OnConflictStrategy.REPLACE, climbedValues)
     }
 
-    private fun insertHill(db: SupportSQLiteDatabase, id: Int, name: String) {
+    private fun insertHill(db: SupportSQLiteDatabase, id: Int, name: String, country: String = "S") {
         val values = ContentValues()
         values.put("h_id", id)
         values.put("name", name)
+        values.put("country", country)
         db.insert("hills", OnConflictStrategy.REPLACE, values)
     }
 

@@ -6,22 +6,12 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.sqlite.db.SimpleSQLiteQuery
-import uk.colessoft.android.hilllist.database.HillsTables.HILLS_TABLE
-import uk.colessoft.android.hilllist.database.HillsTables.KEY_ID
 import uk.colessoft.android.hilllist.entity.Bagging.Companion.KEY_DATECLIMBED
-import uk.colessoft.android.hilllist.entity.Bagging.Companion.KEY_NOTES
 import uk.colessoft.android.hilllist.model.HillDetail
 
 
 @Dao
 abstract class HillDetailDao {
-
-    @Transaction
-    @Query("SELECT * FROM hills WHERE h_id = :hillId")
-    abstract fun getHillDetail(hillId: Long): LiveData<HillDetail>
-
-    @RawQuery
-    abstract fun getHillsRaw(query: SimpleSQLiteQuery): LiveData<List<HillDetail>>
 
     val hillQuery: String
         get() {
@@ -32,12 +22,21 @@ abstract class HillDetailDao {
             JOIN hilltypes ON typeslink.type_Id = ht_id"""
         }
 
-    fun getHills(groupId: String?, orderBy: HillsOrder = HillsOrder.HEIGHT_DESC): LiveData<List<HillDetail>> {
-        return getHillsRaw(SimpleSQLiteQuery("$hillQuery " + createHillsClause(groupId,null,null,null)
-        + " order by " + orderBy.sql,arrayOf()))
+    @Transaction
+    @Query("SELECT * FROM hills WHERE h_id = :hillId")
+    abstract fun getHillDetail(hillId: Long): LiveData<HillDetail>
+
+    @RawQuery
+    abstract fun getHillsRaw(query: SimpleSQLiteQuery): LiveData<List<HillDetail>>
+
+
+    fun getHills(groupId: String?, orderBy: HillsOrder = HillsOrder.HEIGHT_DESC, country: CountryClause?): LiveData<List<HillDetail>> {
+        return getHillsRaw(
+                SimpleSQLiteQuery("$hillQuery " + getWhereClause(groupId, country, null, null)
+                        + " order by " + orderBy.sql, arrayOf()))
     }
 
-    private fun createHillsClause(groupId: String?, countryClause:  String?="cast(_Section as float) <45", moreFilters: String?, filter: Int?):String {
+    private fun getWhereClause(groupId: String?, country: CountryClause?, moreFilters: String?, filter: Int?): String {
         if ("T100" == groupId) return getT100(moreFilters, filter)
 
         var where = ""
@@ -57,13 +56,13 @@ abstract class HillDetailDao {
             where = addToWhere("($groupSelector)", where)
         }
 
-        where = addToWhere(countryClause, where)
+        where = addToWhere(country?.sql ?: "", where)
         where = addToWhere(moreFilters, where)
 
         return "where " + where
     }
 
-    private fun getT100(moreFilters: String?, filter: Int?): String{
+    private fun getT100(moreFilters: String?, filter: Int?): String {
 
         var where = "T100='1'"
 
@@ -72,9 +71,7 @@ abstract class HillDetailDao {
         else if (filter == 2)
             where = "$KEY_DATECLIMBED IS NULL"
 
-
         where = addToWhere(moreFilters, where)
-
 
         return "$hillQuery where " + where
     }
@@ -83,12 +80,8 @@ abstract class HillDetailDao {
         var where = where
         if ("" != where && filter != null && "" != filter)
             where = "$where AND "
-        where = where + nonNull(filter)
+        where = where + (filter ?: "")
         return where
-    }
-
-    private fun nonNull(filter: String?): String {
-        return filter ?: ""
     }
 
 
