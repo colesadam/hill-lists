@@ -105,6 +105,25 @@ class HillsDatabaseTest {
 
     @Test
     @SmallTest
+    fun getHillsWithGroupIdShouldReturnCorrectlyWithMultipleGroups() {
+        val db = hillsDatabase.openHelper.writableDatabase
+        insertHill(db, 1, "TestHill")
+        insertHill(db, 2, "another hill")
+        insertBagging(db, "2012-10-10", 1, "this is fine")
+        insertTypeValues(db, 43, "Hill type 1")
+        insertTypeValues(db, 54, "Hill type 2")
+        insertTypeLinks(db, 1, 43)
+        insertTypeLinks(db, 1, 54)
+        insertTypeLinks(db, 2, 54)
+        val groupId = "Hill type 1,Hill type 2"
+
+        val hills = hillDetailDao.getHills(groupId,country = null, climbed= null)
+
+        assertEquals(2, getValue(hills)?.size)
+    }
+
+    @Test
+    @SmallTest
     fun getHillsWithGroupIdShouldReturnCorrectlyWithAscendingName() {
         val db = hillsDatabase.openHelper.writableDatabase
         insertHill(db, 1, "TestHill")
