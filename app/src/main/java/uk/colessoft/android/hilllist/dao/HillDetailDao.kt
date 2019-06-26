@@ -30,21 +30,16 @@ abstract class HillDetailDao {
     abstract fun getHillsRaw(query: SimpleSQLiteQuery): LiveData<List<HillDetail>>
 
 
-    fun getHills(groupId: String?, orderBy: HillsOrder = HillsOrder.HEIGHT_DESC, country: CountryClause?): LiveData<List<HillDetail>> {
+    fun getHills(groupId: String?, orderBy: HillsOrder = HillsOrder.HEIGHT_DESC, country: CountryClause?, climbed: IsHillClimbed?): LiveData<List<HillDetail>> {
         return getHillsRaw(
-                SimpleSQLiteQuery("$hillQuery " + getWhereClause(groupId, country, null, null)
+                SimpleSQLiteQuery("$hillQuery " + getWhereClause(groupId, country, null, climbed)
                         + " order by " + orderBy.sql, arrayOf()))
     }
 
-    private fun getWhereClause(groupId: String?, country: CountryClause?, moreFilters: String?, filter: Int?): String {
-        if ("T100" == groupId) return getT100(moreFilters, filter)
+    private fun getWhereClause(groupId: String?, country: CountryClause?, moreFilters: String?, climbed: IsHillClimbed?): String {
+        if ("T100" == groupId) return getT100(moreFilters, climbed)
 
-        var where = ""
-
-        if (filter == 1)
-            where = KEY_DATECLIMBED + " NOT NULL"
-        else if (filter == 2)
-            where = KEY_DATECLIMBED + " IS NULL"
+        var where = climbed?.sql ?: ""
 
         if (groupId != null) {
             val groups = groupId.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
@@ -56,21 +51,17 @@ abstract class HillDetailDao {
             where = addToWhere("($groupSelector)", where)
         }
 
-        where = addToWhere(country?.sql ?: "", where)
+        where = country?.let {addToWhere(country?.sql, where)} ?: where
         where = addToWhere(moreFilters, where)
 
         return "where " + where
     }
 
-    private fun getT100(moreFilters: String?, filter: Int?): String {
+    private fun getT100(moreFilters: String?, climbed: IsHillClimbed?): String {
 
         var where = "T100='1'"
 
-        if (filter == 1)
-            where = "$KEY_DATECLIMBED NOT NULL"
-        else if (filter == 2)
-            where = "$KEY_DATECLIMBED IS NULL"
-
+        where = climbed?.let{addToWhere(climbed?.sql,where)} ?: where
         where = addToWhere(moreFilters, where)
 
         return "$hillQuery where " + where

@@ -19,6 +19,7 @@ import org.junit.Test
 import uk.colessoft.android.hilllist.dao.CountryClause
 import uk.colessoft.android.hilllist.dao.HillDetailDao
 import uk.colessoft.android.hilllist.dao.HillsOrder
+import uk.colessoft.android.hilllist.dao.IsHillClimbed
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -97,7 +98,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 1"
 
-        val hills = hillDetailDao.getHills(groupId,country = null)
+        val hills = hillDetailDao.getHills(groupId,country = null, climbed= null)
 
         assertEquals(1, getValue(hills)?.size)
     }
@@ -116,7 +117,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 2"
 
-        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, null))
+        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, null, null))
 
         assertEquals(2, hills?.size)
         assertEquals(2, hills?.first().hill.h_id)
@@ -136,7 +137,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 2"
 
-        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, CountryClause.SCOTLAND))
+        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, CountryClause.SCOTLAND, null))
 
         assertEquals(1, hills?.size)
     }
@@ -155,7 +156,26 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 2"
 
-        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, CountryClause.UK))
+        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, CountryClause.UK, null))
+
+        assertEquals(1, hills?.size)
+    }
+
+    @Test
+    @SmallTest
+    fun getHillsWithGroupIdShouldReturnCorrectlyFilteringOnlyClimbed() {
+        val db = hillsDatabase.openHelper.writableDatabase
+        insertHill(db, 1, "TestHill","M")
+        insertHill(db, 2, "another hill","I")
+        insertBagging(db, "2012-10-10", 1, "this is fine")
+        insertTypeValues(db, 43, "Hill type 1")
+        insertTypeValues(db, 54, "Hill type 2")
+        insertTypeLinks(db, 1, 43)
+        insertTypeLinks(db, 1, 54)
+        insertTypeLinks(db, 2, 54)
+        val groupId = "Hill type 2"
+
+        val hills = getValue(hillDetailDao.getHills(groupId,HillsOrder.NAME_ASC, country=null, climbed=IsHillClimbed.YES))
 
         assertEquals(1, hills?.size)
     }
