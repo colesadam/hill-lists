@@ -38,26 +38,22 @@ abstract class HillDetailDao {
     private fun getWhereClause(groupId: String?, country: CountryClause?, moreFilters: String?, climbed: IsHillClimbed?): String {
         if ("T100" == groupId) return getT100(moreFilters, climbed)
 
-        var where = climbed?.sql ?: ""
-
-        if (groupId != null) {
-            val groups = groupId.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-            var groupSelector = ""
-            for (group in groups) {
-                groupSelector += "title = '" + group + "' OR "
-            }
-            groupSelector = groupSelector.trim { it <= ' ' }.substring(0, groupSelector.length - 3)
-            where = addToWhere("($groupSelector)", where)
+        fun groupClause(groupId: String?): String {
+            return groupId?.split(",")?.fold("") { currentValue, result ->
+                currentValue + "title = '$result' OR "
+            }?.trim { it <= ' ' }?.dropLast(3) ?: ""
         }
 
-        where = country?.let {addToWhere(country?.sql, where)} ?: where
-        where = addToWhere(moreFilters, where)
-
-        return "where " + where
+        return "WHERE " + addToWhere(moreFilters,
+                addToWhere(country?.sql,
+                        addToWhere(groupClause(groupId), climbed?.sql ?: "")
+                )
+        )
     }
 
     private fun getT100(moreFilters: String?, climbed: IsHillClimbed?): String {
-        return "$hillQuery WHERE " + addToWhere(moreFilters,climbed?.let{addToWhere(climbed.sql,"T100='1'")} ?: "T100='1'")
+        return "$hillQuery WHERE " + addToWhere(moreFilters, climbed?.let { addToWhere(climbed.sql, "T100='1'") }
+                ?: "T100='1'")
     }
 
     private fun addToWhere(filter: String?, where: String): String {
