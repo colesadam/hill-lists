@@ -15,7 +15,7 @@ abstract class HillDetailDao {
 
     val hillQuery: String
         get() {
-            return """SELECT h_id, latitude, longitude,Metres,Feet,
+            return """SELECT DISTINCT h_id, latitude, longitude,Metres,Feet,
             name,notes,dateClimbed,b_id from hills
             JOIN typeslink ON typeslink.hill_id = h_id
             LEFT JOIN bagging ON b_id = h_id

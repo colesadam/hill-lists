@@ -119,7 +119,9 @@ class HillsDatabaseTest {
 
         val hills = hillDetailDao.getHills(groupId,country = null, climbed= null)
 
-        assertEquals(2, getValue(hills)?.size)
+        val h = getValue(hills)
+        assertEquals(2, h?.size)
+        assertEquals(2,h?.first().types?.size)
     }
 
     @Test
