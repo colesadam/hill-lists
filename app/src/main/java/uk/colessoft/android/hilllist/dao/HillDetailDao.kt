@@ -6,7 +6,6 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.sqlite.db.SimpleSQLiteQuery
-import uk.colessoft.android.hilllist.entity.Bagging.Companion.KEY_DATECLIMBED
 import uk.colessoft.android.hilllist.model.HillDetail
 
 
@@ -58,21 +57,12 @@ abstract class HillDetailDao {
     }
 
     private fun getT100(moreFilters: String?, climbed: IsHillClimbed?): String {
-
-        var where = "T100='1'"
-
-        where = climbed?.let{addToWhere(climbed?.sql,where)} ?: where
-        where = addToWhere(moreFilters, where)
-
-        return "$hillQuery where " + where
+        return "$hillQuery WHERE " + addToWhere(moreFilters,climbed?.let{addToWhere(climbed.sql,"T100='1'")} ?: "T100='1'")
     }
 
     private fun addToWhere(filter: String?, where: String): String {
-        var where = where
-        if ("" != where && filter != null && "" != filter)
-            where = "$where AND "
-        where = where + (filter ?: "")
-        return where
+        return (if ("" != where && !filter.isNullOrEmpty())
+            "$where AND " else where) + (filter ?: "")
     }
 
 
