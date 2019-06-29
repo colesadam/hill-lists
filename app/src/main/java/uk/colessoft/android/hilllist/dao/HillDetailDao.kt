@@ -29,13 +29,13 @@ abstract class HillDetailDao {
     abstract fun getHillsRaw(query: SimpleSQLiteQuery): LiveData<List<HillDetail>>
 
 
-    fun getHills(groupId: String?, orderBy: HillsOrder = HillsOrder.HEIGHT_DESC, country: CountryClause?, climbed: IsHillClimbed?): LiveData<List<HillDetail>> {
+    fun getHills(groupId: String?, country: CountryClause?, climbed: IsHillClimbed?, moreFilters: String?, orderBy: HillsOrder = HillsOrder.HEIGHT_DESC): LiveData<List<HillDetail>> {
         return getHillsRaw(
-                SimpleSQLiteQuery("$hillQuery " + getWhereClause(groupId, country, null, climbed)
+                SimpleSQLiteQuery("$hillQuery " + whereClause(groupId, country, moreFilters, climbed)
                         + " order by " + orderBy.sql, arrayOf()))
     }
 
-    private fun getWhereClause(groupId: String?, country: CountryClause?, moreFilters: String?, climbed: IsHillClimbed?): String {
+    private fun whereClause(groupId: String?, country: CountryClause?, moreFilters: String?, climbed: IsHillClimbed?): String {
         if ("T100" == groupId) return getT100(moreFilters, climbed)
 
         fun groupClause(groupId: String?): String {
