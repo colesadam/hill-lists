@@ -48,9 +48,6 @@ public class HillDetailFragment extends Fragment {
     @Inject
     BritishHillsDatasource dbAdapter;
 
-    @Inject
-    HillDetailViewModelFactory hillDetailViewModelFactory;
-
     private boolean useMetricHeights;
     static final int DATE_DIALOG_ID = 0;
     static final int MARK_HILL_CLIMBED_DIALOG = 1;

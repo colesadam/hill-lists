@@ -5,10 +5,15 @@ import android.database.SQLException;
 import android.os.Handler;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.io.Reader;
 import java.util.Date;
+import java.util.List;
 
+import uk.colessoft.android.hilllist.dao.CountryClause;
+import uk.colessoft.android.hilllist.dao.HillsOrder;
+import uk.colessoft.android.hilllist.dao.IsHillClimbed;
 import uk.colessoft.android.hilllist.model.HillDetail;
 
 public interface BritishHillsDatasource {
@@ -29,8 +34,11 @@ public interface BritishHillsDatasource {
 
     HillDetail getHill(long _rowIndex) throws SQLException;
 
-    LiveData<HillDetail> getHillReactive (long hillId);
+    LiveData<HillDetail> getHillReactive(long hillId);
 
+    LiveData<List<HillDetail>> getHills(String groupId, CountryClause country,
+                                               IsHillClimbed climbed, String moreFilters,
+                                               HillsOrder order);
 
     void importBagging(final Reader fileReader);
 

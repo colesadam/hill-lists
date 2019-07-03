@@ -1,6 +1,7 @@
 package uk.colessoft.android.hilllist.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.SupportSQLiteQuery;
@@ -26,7 +27,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import uk.colessoft.android.hilllist.dao.CountryClause;
 import uk.colessoft.android.hilllist.dao.HillDetailDao;
+import uk.colessoft.android.hilllist.dao.HillsOrder;
+import uk.colessoft.android.hilllist.dao.IsHillClimbed;
 import uk.colessoft.android.hilllist.entity.Hill;
 import uk.colessoft.android.hilllist.model.HillDetail;
 
@@ -275,6 +279,11 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     @Override
     public LiveData<HillDetail> getHillReactive(long hillId) {
         return hillDetailDao.getHillDetail(hillId);
+    }
+
+    @Override
+    public LiveData<List<HillDetail>> getHills(String groupId, CountryClause country, IsHillClimbed climbed, String moreFilters, HillsOrder order) {
+        return hillDetailDao.getHills(groupId, country, climbed, moreFilters, order);
     }
 
     @Override
