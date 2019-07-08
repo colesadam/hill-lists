@@ -41,7 +41,6 @@ import uk.colessoft.android.hilllist.activity.OsMapActivity;
 import uk.colessoft.android.hilllist.activity.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.model.HillDetail;
-import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModelFactory;
 
 
 public class HillDetailFragment extends Fragment {

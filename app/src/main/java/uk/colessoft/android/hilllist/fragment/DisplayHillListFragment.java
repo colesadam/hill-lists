@@ -86,7 +86,7 @@ public class DisplayHillListFragment extends Fragment implements
 			case R.id.check_hill_climbed: {
 				CheckBox ctv = (CheckBox) tv;
 				final int id = cursor.getInt(cursor
-						.getColumnIndex(HillsTables.KEY_HILL_ID));
+						.getColumnIndex("h_id"));
 				if (cursor.getString(cursor
 						.getColumnIndex(Bagging.KEY_DATECLIMBED)) != null) {
 
@@ -229,7 +229,7 @@ public class DisplayHillListFragment extends Fragment implements
 			result.moveToFirst();
 			do {
 				int row_id = result.getInt(result
-						.getColumnIndex(HillsTables.KEY_HILL_ID));
+						.getColumnIndex("h_id"));
 				if (allMarked == 1) {
 
 					if (result.getString(result

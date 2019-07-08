@@ -9,19 +9,20 @@ import uk.colessoft.android.hilllist.dao.IsHillClimbed
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource
 import uk.colessoft.android.hilllist.entity.Hill
 import uk.colessoft.android.hilllist.model.HillDetail
+import javax.inject.Inject
 
 
+class HillDetailViewModel : ViewModel() {
 
-
-class HillDetailViewModel(private val repository: BritishHillsDatasource, private val hillId: Long, groupId: String?, country: CountryClause?, climbed: IsHillClimbed?, moreFilters: String?, orderBy: HillsOrder): ViewModel() {
+    @Inject
+    lateinit var repository: BritishHillsDatasource
 
     private val selected= MutableLiveData<HillDetail>()
-    val hills:LiveData<List<HillDetail>>
+    lateinit var hills:LiveData<List<HillDetail>>
 
-    init {
-        //selected = repository.getHillReactive(hillId)
-        hills = repository.getHills(groupId,country,climbed,moreFilters,orderBy)
 
+    fun getHills(hillId: Long?, groupId: String?, country: CountryClause?, climbed: IsHillClimbed?, moreFilters: String?, orderBy: HillsOrder){
+        repository.getHills(groupId,country,climbed,moreFilters,orderBy)
     }
 
     fun select(hill: HillDetail) {

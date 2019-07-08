@@ -14,17 +14,22 @@ import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.fragment.DisplayHillListFragment;
 import uk.colessoft.android.hilllist.fragment.HillDetailFragment;
 import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModel;
-import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModelFactory;
+import uk.colessoft.android.hilllist.viewmodel.ViewModelFactory;
+//import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModelFactory;
 
 public class DisplayHillListFragmentActivity extends AppCompatActivity implements
 		DisplayHillListFragment.OnHillSelectedListener {
 	/** Called when the activity is first created. */
 
 	boolean useMetricHeights;
+	//@Inject
+	//HillDetailViewModelFactory factory;
+
 	@Inject
-	HillDetailViewModelFactory factory;
+	protected ViewModelFactory<HillDetailViewModel> viewModelFactory;
 
 	ViewModel viewModel;
+
 
 
 	@Override
@@ -40,7 +45,7 @@ public class DisplayHillListFragmentActivity extends AppCompatActivity implement
 			setTitle("Results");
 		int country = getIntent().getExtras().getInt("country");
 		String where = getIntent().getExtras().getString("search");
-		viewModel = ViewModelProviders.of(this,factory.create(0,hilltype, CountryClause.ENGLAND,null,where,null)).get(HillDetailViewModel.class);
+		viewModel = ViewModelProviders.of(this, viewModelFactory).get(HillDetailViewModel.class);
 		setContentView(R.layout.hill_list_fragment);
 
 	}

@@ -20,11 +20,10 @@ import uk.colessoft.android.hilllist.fragment.NearbyHillsMapFragment;
 import uk.colessoft.android.hilllist.module.AppModule;
 import uk.colessoft.android.hilllist.module.DatabaseModule;
 import uk.colessoft.android.hilllist.module.HelperModule;
-import uk.colessoft.android.hilllist.module.ViewModelFactoryModule;
 
 @Singleton
 @Component(modules = {AppModule.class,
-        DatabaseModule.class, HelperModule.class, ViewModelFactoryModule.class})
+        DatabaseModule.class, HelperModule.class})
 public interface DatabaseComponent {
 
     void inject(SplashScreenActivity activity);
@@ -39,5 +38,5 @@ public interface DatabaseComponent {
     void inject(ListHillsMapFragment listHillsMapFragment);
     void inject(NearbyHillsFragment nearbyHillsFragment);
     void inject(NearbyHillsMapFragment nearbyHillsMapFragment);
-    void inject(DisplayHillListFragmentActivity displayHillListFragmentActivity);
+    //void inject(DisplayHillListFragmentActivity displayHillListFragmentActivity);
 }

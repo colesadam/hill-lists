@@ -79,12 +79,12 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
 
 
     private final String baggingTable = BAGGING_TABLE;
-    private final String baggingKeyId = baggingTable + "." + KEY_ID;
+    private final String baggingKeyId = baggingTable + "." + "b_id";
     protected Context context;
 
     private String hillTypes = HillsTables.HILLTYPES_TABLE;
-    private String typesLinkKeyHillId = typesLink + "." + HillsTables.KEY_HILL_ID;
-    private String hillTypesKeyId = hillTypes + "." + KEY_ID;
+    private String typesLinkKeyHillId = typesLink + "." + "tl_id";
+    private String hillTypesKeyId = hillTypes + "." + "ht_id";
     private String hillTypesTitle = hillTypes + "." + KEY_TITLE;
 
 
@@ -209,7 +209,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
 
         SupportSQLiteDatabase db = getReadableDatabase();
 
-        return db.query("select "+ HILLS_TABLE + "." + KEY_ID + " as hill_id,"+ HILLS_TABLE + "." + KEY_ID+","+ KEY_LATITUDE+","+ KEY_LONGITUDE+","+ KEY_HEIGHTM+","+ KEY_HEIGHTF+","+ KEY_HILLNAME+","+
+        return db.query("select "+ HILLS_TABLE + "." + KEY_ID + " as hill_id,"+ HILLS_TABLE + "." + KEY_ID + " as _id,"+ HILLS_TABLE + "." + KEY_ID+","+ KEY_LATITUDE+","+ KEY_LONGITUDE+","+ KEY_HEIGHTM+","+ KEY_HEIGHTF+","+ KEY_HILLNAME+","+
                 KEY_NOTES+","+ KEY_DATECLIMBED+ " from " + hills + includeTypes + " left join "
                         + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId + " where " + where + " order by " + orderBy, new String[]{});
     }
