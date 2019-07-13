@@ -12,17 +12,15 @@ import uk.colessoft.android.hilllist.model.HillDetail
 import javax.inject.Inject
 
 
-class HillDetailViewModel : ViewModel() {
+class HillDetailViewModel @Inject constructor(private val repository : BritishHillsDatasource) : ViewModel() {
 
-    @Inject
-    lateinit var repository: BritishHillsDatasource
 
     private val selected= MutableLiveData<HillDetail>()
     lateinit var hills:LiveData<List<HillDetail>>
 
 
-    fun getHills(hillId: Long?, groupId: String?, country: CountryClause?, climbed: IsHillClimbed?, moreFilters: String?, orderBy: HillsOrder){
-        repository.getHills(groupId,country,climbed,moreFilters,orderBy)
+    fun getHills(hillId: Long?, groupId: String?, country: CountryClause?, climbed: IsHillClimbed?, moreFilters: String?, orderBy: HillsOrder):LiveData<List<HillDetail>>{
+        return repository.getHills(groupId,country,climbed,moreFilters,orderBy)
     }
 
     fun select(hill: HillDetail) {
