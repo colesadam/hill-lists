@@ -72,7 +72,6 @@ public class BusinessSearchMapActivity extends AppCompatActivity implements Goog
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        ((BHApplication) getApplication()).getDbComponent().inject(this);
         int rowid = getIntent().getExtras().getInt("rowid");
         String title = getIntent().getExtras().getString("title");
         search_string = getIntent().getExtras().getString("search_string");

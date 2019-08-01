@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activity.dialogs.BaseActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.entity.Bagging;
@@ -31,7 +32,7 @@ import uk.colessoft.android.hilllist.model.TinyHill;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
-public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
+public class DetailGMapActivity extends BaseActivity implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
     static final private int SHOW_NEARBY = Menu.FIRST;
 
     @Inject
@@ -90,7 +91,6 @@ public class DetailGMapActivity extends AppCompatActivity implements GoogleMap.O
         rowid = getIntent().getExtras().getInt("rowid");
         String title = getIntent().getExtras().getString("title");
         setTitle(title);
-        ((BHApplication) getApplication()).getDbComponent().inject(this);
         hillDetail = dbAdapter.getHill(rowid);
 
 

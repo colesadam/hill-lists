@@ -282,8 +282,8 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     }
 
     @Override
-    public LiveData<List<HillDetail>> getHills(String groupId, CountryClause country, IsHillClimbed climbed, String moreFilters, HillsOrder order) {
-        return hillDetailDao.getHills(groupId, country, climbed, moreFilters, order);
+    public LiveData<List<HillDetail>> getHills(String groupId, CountryClause country, String moreFilters) {
+        return hillDetailDao.getHills(groupId, country, moreFilters);
     }
 
     @Override

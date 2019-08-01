@@ -184,11 +184,6 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
     }
 
-    @Override
-    public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
-        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
-    }
 
     public void moveMarker(int rowid) {
 

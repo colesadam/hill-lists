@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.dao.HillDao;
 import uk.colessoft.android.hilllist.dao.HillDetailDao;
 import uk.colessoft.android.hilllist.dao.HillTypeDao;
@@ -27,7 +28,7 @@ public class DatabaseModule {
 
     @Provides
     @Singleton
-    HillsDatabase providesRoomDatabase(Application application) {
+    HillsDatabase providesRoomDatabase(BHApplication application) {
 
         return Room.databaseBuilder(application, HillsDatabase.class, "hill-list.db").addMigrations(HillsDatabase.MIGRATION_2_3)
                 .addCallback(new RoomDatabase.Callback() {

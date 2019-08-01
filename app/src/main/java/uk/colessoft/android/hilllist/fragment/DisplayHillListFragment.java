@@ -12,7 +12,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
@@ -33,21 +38,27 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activity.DisplayHillListFragmentActivity;
 import uk.colessoft.android.hilllist.activity.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.activity.Main;
 import uk.colessoft.android.hilllist.activity.PreferencesActivity;
+import uk.colessoft.android.hilllist.dao.HillsOrder;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.entity.Bagging;
+import uk.colessoft.android.hilllist.model.HillDetail;
+import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModel;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
-public class DisplayHillListFragment extends Fragment implements
+public class DisplayHillListFragment extends DaggerFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 	
 	private int climbedCount=0;
@@ -263,6 +274,26 @@ public class DisplayHillListFragment extends Fragment implements
 
 	}
 
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		viewModel = ViewModelProviders.of(getActivity()).get(HillDetailViewModel.class);
+
+		final Observer<List<HillDetail>> nameObserver = new Observer<List<HillDetail>>() {
+			@Override
+			public void onChanged(@Nullable final List<HillDetail> s) {
+				// Update the UI, in this case, a TextView.
+				Log.d("LIVEDATA", "onChanged: #############" + s.get(0).getHill().getHillname());
+			}
+		};
+
+		viewModel.getHills().observe(getActivity(),nameObserver);
+		viewModel.orderHills(HillsOrder.ID_ASC);
+		viewModel.orderHills(HillsOrder.NAME_DESC);
+		viewModel.orderHills(HillsOrder.NAME_ASC);
+
+	}
+
 	@Inject
     BritishHillsDatasource dbAdapter;
 
@@ -277,6 +308,7 @@ public class DisplayHillListFragment extends Fragment implements
 	private final DecimalFormat df3 = new DecimalFormat();
 	private int filterHills;
 	private OnHillSelectedListener hillSelectedListener;
+	private HillDetailViewModel viewModel;
 
 	private int currentRowId;
 
@@ -364,6 +396,8 @@ public class DisplayHillListFragment extends Fragment implements
 				.getSupportFragmentManager().findFragmentById(
 						R.id.hill_detail_fragment);
 
+
+
 	}
 
 	@Override
@@ -380,7 +414,6 @@ public class DisplayHillListFragment extends Fragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
 
 		setHasOptionsMenu(true);
 

@@ -1,27 +1,28 @@
 package uk.colessoft.android.hilllist
 
 
-import android.app.Application
-import uk.colessoft.android.hilllist.component.DaggerComponentProvider
+import android.app.Activity
+import android.content.Context
+import androidx.multidex.MultiDex
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
+import dagger.android.DispatchingAndroidInjector
+import uk.colessoft.android.hilllist.component.DaggerAppComponent
+import javax.inject.Inject
 
-import uk.colessoft.android.hilllist.component.DaggerDatabaseComponent
-import uk.colessoft.android.hilllist.component.DatabaseComponent
-import uk.colessoft.android.hilllist.module.AppModule
-import uk.colessoft.android.hilllist.module.DatabaseModule
+class BHApplication : DaggerApplication(){
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
-class BHApplication : Application(),DaggerComponentProvider {
+    override fun activityInjector(): DispatchingAndroidInjector<Activity>? = dispatchingAndroidInjector
 
-    override lateinit var dbComponent: DatabaseComponent
-        internal set
-
-    override fun onCreate() {
-        super.onCreate()
-
-        dbComponent = DaggerDatabaseComponent.builder().appModule(AppModule(this)).databaseModule(DatabaseModule()).build()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder().applicationBind(this).build()
     }
 
-    // Needed to replace the component with a test specific one
-    fun setComponent(databaseComponent: DatabaseComponent) {
-        dbComponent = databaseComponent
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 }

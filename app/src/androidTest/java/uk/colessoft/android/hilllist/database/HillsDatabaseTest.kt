@@ -98,7 +98,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 1"
 
-        val hills = hillDetailDao.getHills(groupId, null, null, null)
+        val hills = hillDetailDao.getHills(groupId, null, null)
 
         assertEquals(1, getValue(hills)?.size)
     }
@@ -117,31 +117,11 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 1,Hill type 2"
 
-        val hills = hillDetailDao.getHills(groupId, null, null, null)
+        val hills = hillDetailDao.getHills(groupId, null, null)
 
         val h = getValue(hills)
         assertEquals(2, h?.size)
         assertEquals(2, h?.first().types?.size)
-    }
-
-    @Test
-    @SmallTest
-    fun getHillsWithGroupIdShouldReturnCorrectlyWithAscendingName() {
-        val db = hillsDatabase.openHelper.writableDatabase
-        insertHill(db, 1, "TestHill")
-        insertHill(db, 2, "another hill")
-        insertBagging(db, "2012-10-10", 1, "this is fine")
-        insertTypeValues(db, 43, "Hill type 1")
-        insertTypeValues(db, 54, "Hill type 2")
-        insertTypeLinks(db, 1, 43)
-        insertTypeLinks(db, 1, 54)
-        insertTypeLinks(db, 2, 54)
-        val groupId = "Hill type 2"
-
-        val hills = getValue(hillDetailDao.getHills(groupId, null, null, null, HillsOrder.NAME_ASC))
-
-        assertEquals(2, hills?.size)
-        assertEquals(2, hills?.first().hill.h_id)
     }
 
     @Test
@@ -158,7 +138,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 2"
 
-        val hills = getValue(hillDetailDao.getHills(groupId, CountryClause.SCOTLAND, null, null, HillsOrder.NAME_ASC))
+        val hills = getValue(hillDetailDao.getHills(groupId, CountryClause.SCOTLAND, null))
 
         assertEquals(1, hills?.size)
     }
@@ -177,26 +157,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 2, 54)
         val groupId = "Hill type 2"
 
-        val hills = getValue(hillDetailDao.getHills(groupId, CountryClause.UK, null, null, HillsOrder.NAME_ASC))
-
-        assertEquals(1, hills?.size)
-    }
-
-    @Test
-    @SmallTest
-    fun getHillsWithGroupIdShouldReturnCorrectlyFilteringOnlyClimbed() {
-        val db = hillsDatabase.openHelper.writableDatabase
-        insertHill(db, 1, "TestHill", "M")
-        insertHill(db, 2, "another hill", "I")
-        insertBagging(db, "2012-10-10", 1, "this is fine")
-        insertTypeValues(db, 43, "Hill type 1")
-        insertTypeValues(db, 54, "Hill type 2")
-        insertTypeLinks(db, 1, 43)
-        insertTypeLinks(db, 1, 54)
-        insertTypeLinks(db, 2, 54)
-        val groupId = "Hill type 2"
-
-        val hills = getValue(hillDetailDao.getHills(groupId, null, IsHillClimbed.YES, null))
+        val hills = getValue(hillDetailDao.getHills(groupId, CountryClause.UK, null))
 
         assertEquals(1, hills?.size)
     }
@@ -214,7 +175,7 @@ class HillsDatabaseTest {
         insertTypeLinks(db, 1, 54)
         insertTypeLinks(db, 2, 54)
 
-        val hills = hillDetailDao.getHills(null, null, null, "name LIKE '%another%'")
+        val hills = hillDetailDao.getHills(null, null, "name LIKE '%another%'")
 
         assertEquals(1, getValue(hills)?.size)
     }

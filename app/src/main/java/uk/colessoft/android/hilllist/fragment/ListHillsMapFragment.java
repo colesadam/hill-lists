@@ -62,7 +62,6 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
 
         setHasOptionsMenu(true);
 

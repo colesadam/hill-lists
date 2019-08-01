@@ -4,6 +4,7 @@ package uk.colessoft.android.hilllist.component
 import javax.inject.Singleton
 
 import dagger.Component
+import dagger.Subcomponent
 import uk.colessoft.android.hilllist.activity.BaggingExportActivity
 import uk.colessoft.android.hilllist.activity.BusinessSearchMapActivity
 import uk.colessoft.android.hilllist.activity.CheckHillListActivity
@@ -23,7 +24,7 @@ import uk.colessoft.android.hilllist.module.HelperModule
 import uk.colessoft.android.hilllist.viewmodel.HillDetailViewModel
 
 @Singleton
-@Component(modules = [AppModule::class, DatabaseModule::class, HelperModule::class])
+@Subcomponent(modules = [DatabaseModule::class, HelperModule::class])
 interface DatabaseComponent {
 
     fun inject(activity: SplashScreenActivity)
@@ -38,5 +39,4 @@ interface DatabaseComponent {
     fun inject(listHillsMapFragment: ListHillsMapFragment)
     fun inject(nearbyHillsFragment: NearbyHillsFragment)
     fun inject(nearbyHillsMapFragment: NearbyHillsMapFragment)
-    val viewModel: HillDetailViewModel
 }

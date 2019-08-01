@@ -32,6 +32,7 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activity.BusinessSearchMapActivity;
@@ -43,7 +44,7 @@ import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.model.HillDetail;
 
 
-public class HillDetailFragment extends Fragment {
+public class HillDetailFragment extends DaggerFragment {
     @Inject
     BritishHillsDatasource dbAdapter;
 
@@ -198,7 +199,6 @@ public class HillDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
 
 //        HillDetailViewModel viewModel = ViewModelProviders.of(this, hillDetailViewModelFactory.create(userId))
 //                .get(HillDetailViewModel.class);

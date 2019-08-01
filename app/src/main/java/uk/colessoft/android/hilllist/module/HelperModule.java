@@ -1,13 +1,19 @@
 package uk.colessoft.android.hilllist.module;
 
+import javax.inject.Singleton;
+
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsLocalDatasource;
 
 @Module
-public abstract class HelperModule {
+public class HelperModule {
 
-    @Binds
-    public abstract BritishHillsDatasource bindDatasource(HillsLocalDatasource datasource);
+    @Provides
+    @Singleton
+    public  BritishHillsDatasource bindDatasource(HillsLocalDatasource datasource){
+        return datasource;
+    }
 }

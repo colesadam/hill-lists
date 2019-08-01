@@ -30,14 +30,14 @@ abstract class HillDetailDao {
     abstract fun getHillsRaw(query: SimpleSQLiteQuery): LiveData<List<HillDetail>>
 
 
-    fun getHills(groupId: String?, country: CountryClause?, climbed: IsHillClimbed?, moreFilters: String?, orderBy: HillsOrder = HillsOrder.HEIGHT_DESC): LiveData<List<HillDetail>> {
+    fun getHills(groupId: String?, country: CountryClause?, moreFilters: String?): LiveData<List<HillDetail>> {
         return getHillsRaw(
-                SimpleSQLiteQuery("$hillQuery " + whereClause(groupId, country, moreFilters, climbed)
-                        + " order by " + orderBy.sql, arrayOf()))
+                SimpleSQLiteQuery("$hillQuery " + whereClause(groupId, country, moreFilters)
+                        + " order by " + HillsOrder.HEIGHT_DESC.sql, arrayOf()))
     }
 
-    private fun whereClause(groupId: String?, country: CountryClause?, moreFilters: String?, climbed: IsHillClimbed?): String {
-        if ("T100" == groupId) return getT100(moreFilters, climbed)
+    private fun whereClause(groupId: String?, country: CountryClause?, moreFilters: String?): String {
+        if ("T100" == groupId) return getT100(moreFilters)
 
         fun groupClause(groupId: String?): String {
             return groupId?.split(",")?.fold("") { currentValue, result ->
@@ -47,14 +47,13 @@ abstract class HillDetailDao {
 
         return "WHERE " + addToWhere(moreFilters,
                 addToWhere(country?.sql,
-                        addToWhere(groupClause(groupId), climbed?.sql ?: "")
+                        addToWhere(groupClause(groupId), "")
                 )
         )
     }
 
-    private fun getT100(moreFilters: String?, climbed: IsHillClimbed?): String {
-        return "$hillQuery WHERE " + addToWhere(moreFilters, climbed?.let { addToWhere(climbed.sql, "T100='1'") }
-                ?: "T100='1'")
+    private fun getT100(moreFilters: String?): String {
+        return "$hillQuery WHERE " + addToWhere(moreFilters, "T100='1'")
     }
 
     private fun addToWhere(filter: String?, where: String): String {

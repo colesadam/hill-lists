@@ -16,11 +16,12 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activity.dialogs.BaseActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
-public class Main extends AppCompatActivity {
+public class Main extends BaseActivity {
 
 	public static final int SCOTLAND = 1;
 	public static final int WALES = 2;
@@ -68,7 +69,6 @@ public class Main extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 
-		((BHApplication) getApplication()).getDbComponent().inject(this);		//setTitle(getTitle() + " - Choose an Option");
 		boolean successful;
 		
 

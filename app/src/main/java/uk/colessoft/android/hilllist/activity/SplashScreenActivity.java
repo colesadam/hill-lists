@@ -37,8 +37,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 		super.onCreate(savedInstanceState);
 
-		((BHApplication) getApplication()).getDbComponent().inject(this);
-
 		setContentView(R.layout.splash);
 		TextView link=(TextView) findViewById(R.id.TextView03);
 		Linkify.addLinks(link, Linkify.ALL);

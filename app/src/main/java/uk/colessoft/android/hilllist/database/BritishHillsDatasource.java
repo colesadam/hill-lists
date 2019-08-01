@@ -36,9 +36,7 @@ public interface BritishHillsDatasource {
 
     LiveData<HillDetail> getHillReactive(long hillId);
 
-    LiveData<List<HillDetail>> getHills(String groupId, CountryClause country,
-                                               IsHillClimbed climbed, String moreFilters,
-                                               HillsOrder order);
+    LiveData<List<HillDetail>> getHills(String groupId, CountryClause country, String moreFilters);
 
     void importBagging(final Reader fileReader);
 

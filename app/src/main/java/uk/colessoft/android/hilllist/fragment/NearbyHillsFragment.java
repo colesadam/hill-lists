@@ -44,6 +44,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.activity.Main;
@@ -55,7 +56,7 @@ import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
 import static android.content.ContentValues.TAG;
 
-public class NearbyHillsFragment extends Fragment implements
+public class NearbyHillsFragment extends DaggerFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Map<String, ?>>> {
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001;
@@ -71,7 +72,6 @@ public class NearbyHillsFragment extends Fragment implements
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        ((BHApplication) getActivity().getApplication()).getDbComponent().inject(this);
     }
 
     private int firstRow;

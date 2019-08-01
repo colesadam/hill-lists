@@ -9,13 +9,14 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.BHApplication;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activity.dialogs.BaseActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.fragment.HillDetailFragment;
 import uk.colessoft.android.hilllist.fragment.HillImageFragment;
 import uk.colessoft.android.hilllist.fragment.HillImagesFragment;
 import uk.colessoft.android.hilllist.model.HillDetail;
 
-public class HillImagesActivity extends AppCompatActivity implements HillImagesFragment.OnFragmentInteractionListener {
+public class HillImagesActivity extends BaseActivity implements HillImagesFragment.OnFragmentInteractionListener {
 
     @Inject
     BritishHillsDatasource dbHelper;
@@ -40,7 +41,6 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
         getSupportActionBar().setTitle(savedInstanceState.getCharSequence("title"));
         hillId = savedInstanceState.getLong("hillId");
 
-        ((BHApplication) getApplication()).getDbComponent().inject(this);
         imagesFragment = (HillImagesFragment) getSupportFragmentManager().findFragmentByTag(IMAGES_FRAGMENT);
         if (findViewById(R.id.hill_image_fragment) != null) {
             GetHillAsyncTask task = new GetHillAsyncTask();
@@ -72,7 +72,6 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
 
         }
 
-        ((BHApplication) getApplication()).getDbComponent().inject(this);
         GetHillAsyncTask getHillAsyncTask = new GetHillAsyncTask();
         hillId = getIntent().getExtras().getLong("hillId");
 
@@ -103,7 +102,6 @@ public class HillImagesActivity extends AppCompatActivity implements HillImagesF
             getSupportFragmentManager().popBackStack();
 
             GetHillAsyncTask getHillAsyncTask = new GetHillAsyncTask();
-            ((BHApplication)getApplication()).getDbComponent().inject(this);
             imagesFragment = (HillImagesFragment) getSupportFragmentManager().findFragmentByTag(IMAGES_FRAGMENT);
             getHillAsyncTask.execute(hillId);
 

@@ -101,7 +101,6 @@ public class CheckHillListActivity extends AppCompatActivity {
 
         }
 
-        ((BHApplication) getApplication()).getDbComponent().inject(this);
 
         orderBy = "cast(" + HillsTables.KEY_HEIGHTM + " as float)" + " desc";
         updateList(2);

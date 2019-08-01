@@ -34,7 +34,6 @@ public class BaggingExportActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((BHApplication) getApplication()).getDbComponent().inject(this);
         setContentView(R.layout.bagging_export);
     }
 
