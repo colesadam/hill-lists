@@ -5,9 +5,11 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import uk.colessoft.android.hilllist.activity.DisplayHillListFragmentActivity;
+import uk.colessoft.android.hilllist.activity.HillDetailFragmentActivity;
 import uk.colessoft.android.hilllist.activity.Main;
 import uk.colessoft.android.hilllist.activity.SplashScreenActivity;
 import uk.colessoft.android.hilllist.fragment.DisplayHillListFragment;
+import uk.colessoft.android.hilllist.fragment.HillDetailFragment;
 
 @Module
 public abstract class ActivityBuilder {
@@ -20,6 +22,12 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector()
     abstract DisplayHillListFragment bindDisplayHillListFragment();
+
+    @ContributesAndroidInjector()
+    abstract HillDetailFragmentActivity bindHillDetailFragmentActivity();
+
+    @ContributesAndroidInjector()
+    abstract HillDetailFragment bindHillDetailFragment();
 
 
 }

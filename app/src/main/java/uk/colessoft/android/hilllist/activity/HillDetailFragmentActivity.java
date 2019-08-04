@@ -14,10 +14,11 @@ import java.util.Date;
 import java.util.HashMap;
 
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.activity.dialogs.BaseActivity;
 import uk.colessoft.android.hilllist.fragment.HillDetailFragment;
 import uk.colessoft.android.hilllist.model.HillDetail;
 
-public class HillDetailFragmentActivity extends AppCompatActivity {
+public class HillDetailFragmentActivity extends BaseActivity {
 
 	private String osLink;
 	private static final int DATE_DIALOG_ID = 0;

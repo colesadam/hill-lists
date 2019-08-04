@@ -16,7 +16,7 @@
 		<TextView android:textColor="@color/red" android:layout_height="wrap_content" android:text="@string/refresh_location"
 			android:layout_width="match_parent" android:gravity="right"></TextView>
 	</LinearLayout>
-	<RecyclerView android:id="@+id/myListView" android:layout_width="match_parent"
+	<androidx.recyclerview.widget.RecyclerView android:id="@+id/myListView" android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:textSize="15sp"
 		android:background="@color/cardview_light_background" />
 </LinearLayout>
