@@ -28,12 +28,6 @@ class HillDetailViewModel @Inject constructor(private val repository: BritishHil
         }
     }
 
-    fun getSelectedHills(hillId: Long?, groupId: String?, country: CountryClause?, moreFilters: String?) {
-
-        hills.addSource(repository.getHills(groupId, country, moreFilters)) { result: List<HillDetail>? ->
-            result?.let { hills.value = sortHills(it, currentOrder) }
-        }
-    }
 
     private fun sortHills(hills: List<HillDetail>, currentOrder: HillsOrder): List<HillDetail>? {
         return when (currentOrder) {
@@ -49,7 +43,8 @@ class HillDetailViewModel @Inject constructor(private val repository: BritishHil
     }
 
     fun orderHills(order: HillsOrder) = hills.value?.let {
-        hills.value = sortHills(it, order)
+        hills.setValue(sortHills(it, order))
+        //hills.value = sortHills(it, order)
     }.also { currentOrder = order }
 
     fun filterClimbed(climbed: IsHillClimbed) {

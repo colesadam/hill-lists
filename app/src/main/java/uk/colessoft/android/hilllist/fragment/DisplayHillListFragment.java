@@ -23,6 +23,8 @@ import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter.ViewBinder;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -274,25 +276,6 @@ public class DisplayHillListFragment extends DaggerFragment implements
 
 	}
 
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		viewModel = ViewModelProviders.of(getActivity()).get(HillDetailViewModel.class);
-
-		final Observer<List<HillDetail>> nameObserver = new Observer<List<HillDetail>>() {
-			@Override
-			public void onChanged(@Nullable final List<HillDetail> s) {
-				// Update the UI, in this case, a TextView.
-				Log.d("LIVEDATA", "onChanged: #############" + s.get(0).getHill().getHillname());
-			}
-		};
-
-		viewModel.getHills().observe(getActivity(),nameObserver);
-		viewModel.orderHills(HillsOrder.ID_ASC);
-		viewModel.orderHills(HillsOrder.NAME_DESC);
-		viewModel.orderHills(HillsOrder.NAME_ASC);
-
-	}
 
 	@Inject
     BritishHillsDatasource dbAdapter;
@@ -300,7 +283,7 @@ public class DisplayHillListFragment extends DaggerFragment implements
 	private String where = null;
 	private String orderBy;
 
-	private ListView myListView;
+	private RecyclerView myListView;
 	private boolean useMetricHeights;
 	private String hilltype;
 	private String hilllistType;
@@ -381,17 +364,17 @@ public class DisplayHillListFragment extends DaggerFragment implements
 		cursorAdapter.setViewBinder(new HillsViewBinder());
 		
 		myListView.setAdapter(cursorAdapter);
-		myListView.setOnItemClickListener((parent, view, pos, id) -> {
-
-            // Extract the row id.
-            int rowId = Integer.parseInt(((TextView) (view
-                    .findViewById(R.id.rowid))).getText().toString());
-
-            currentRowId = rowId;
-
-            hillSelectedListener.onHillSelected(rowId);
-
-        });
+//		myListView.setOnItemClickListener((parent, view, pos, id) -> {
+//
+//            // Extract the row id.
+//            int rowId = Integer.parseInt(((TextView) (view
+//                    .findViewById(R.id.rowid))).getText().toString());
+//
+//            currentRowId = rowId;
+//
+//            hillSelectedListener.onHillSelected(rowId);
+//
+//        });
 		HillDetailFragment fragment = (HillDetailFragment) getActivity()
 				.getSupportFragmentManager().findFragmentById(
 						R.id.hill_detail_fragment);
@@ -409,6 +392,26 @@ public class DisplayHillListFragment extends DaggerFragment implements
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnHillSelectedListener");
 		}
+	}
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		viewModel = ViewModelProviders.of(getActivity()).get(HillDetailViewModel.class);
+
+		final Observer<List<HillDetail>> nameObserver = new Observer<List<HillDetail>>() {
+			@Override
+			public void onChanged(@Nullable final List<HillDetail> s) {
+				// Update the UI, in this case, a TextView.
+				Log.d("LIVEDATA", "fragment onChanged: #############" + s.get(0).getHill().getHillname());
+			}
+		};
+
+		viewModel.getHills().observe(getActivity(),nameObserver);
+
+		viewModel.orderHills(HillsOrder.NAME_DESC);
+		viewModel.orderHills(HillsOrder.NAME_ASC);
+
 	}
 
 	@Override
@@ -484,7 +487,7 @@ public class DisplayHillListFragment extends DaggerFragment implements
 		// TODO Auto-generated method stub
 		super.onOptionsItemSelected(item);
 
-		int index = myListView.getSelectedItemPosition();
+		//int index = myListView.getSelectedItemPosition();
 
 		switch (item.getItemId()) {
 		case android.R.id.home:{

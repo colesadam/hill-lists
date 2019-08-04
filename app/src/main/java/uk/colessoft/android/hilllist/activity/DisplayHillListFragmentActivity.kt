@@ -46,8 +46,7 @@ class DisplayHillListFragmentActivity : BaseActivity(), DisplayHillListFragment.
         val where = intent.extras!!.getString("search")
         vm = ViewModelProviders.of(this, vmFactory)[HillDetailViewModel::class.java]
 
-        vm.getSelectedHills(null, hilltype, null,
-                null)
+        //
         setContentView(R.layout.hill_list_fragment)
 
     }
