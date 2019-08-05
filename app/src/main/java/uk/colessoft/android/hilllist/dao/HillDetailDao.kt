@@ -1,13 +1,12 @@
 package uk.colessoft.android.hilllist.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.sqlite.db.SimpleSQLiteQuery
-import uk.colessoft.android.hilllist.model.HillDetail
+import uk.colessoft.android.hilllist.domain.HillDetail
 
 
 @Dao

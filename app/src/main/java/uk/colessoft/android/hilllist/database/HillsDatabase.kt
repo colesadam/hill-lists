@@ -2,17 +2,14 @@ package uk.colessoft.android.hilllist.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import uk.colessoft.android.hilllist.dao.HillDao
-import uk.colessoft.android.hilllist.dao.HillTypeDao
-import uk.colessoft.android.hilllist.dao.TypeLinkDao
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
-import uk.colessoft.android.hilllist.dao.HillDetailDao
-import uk.colessoft.android.hilllist.entity.Bagging
-import uk.colessoft.android.hilllist.entity.Hill
-import uk.colessoft.android.hilllist.entity.HillType
-import uk.colessoft.android.hilllist.entity.TypeLink
+import uk.colessoft.android.hilllist.dao.*
+import uk.colessoft.android.hilllist.domain.entity.Bagging
+import uk.colessoft.android.hilllist.domain.entity.Hill
+import uk.colessoft.android.hilllist.domain.entity.HillType
+import uk.colessoft.android.hilllist.domain.entity.TypeLink
 
 @Database(entities = arrayOf(Hill::class, HillType::class, TypeLink::class, Bagging::class), version = 3)
 @TypeConverters(DateConverters :: class)
@@ -22,6 +19,7 @@ abstract class HillsDatabase : RoomDatabase() {
     abstract fun hillTypeDao(): HillTypeDao
     abstract fun typeLinkDao(): TypeLinkDao
     abstract fun hillDetailDao(): HillDetailDao
+    abstract fun baggingDao(): BaggingDao
 
     companion object {
         @JvmField

@@ -10,7 +10,7 @@ import okhttp3.mockwebserver.MockWebServer;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import uk.colessoft.android.hilllist.model.GeographImageSearchResponse;
+import uk.colessoft.android.hilllist.domain.GeographImageSearchResponse;
 import uk.colessoft.android.hilllist.service.GeographService;
 
 import static org.junit.Assert.assertTrue;

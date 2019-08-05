@@ -7,7 +7,7 @@ import androidx.multidex.MultiDex
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
-import uk.colessoft.android.hilllist.component.DaggerAppComponent
+import uk.colessoft.android.hilllist.di.component.DaggerAppComponent
 import javax.inject.Inject
 
 class BHApplication : DaggerApplication(){

@@ -5,7 +5,7 @@
 	android:layout_width="match_parent" android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:background="?attr/colorControlHighlight">
-	<fragment android:name="uk.colessoft.android.hilllist.fragment.NearbyHillsFragment"
+	<fragment android:name="uk.colessoft.android.hilllist.ui.fragment.NearbyHillsFragment"
 		android:layout_height="0dp" android:layout_width="match_parent"
 		android:id="@+id/nearby_hills_fragment" android:layout_weight="50"
 		android:layout_marginBottom="4dp"
@@ -13,7 +13,7 @@
 		android:layout_marginRight="8dp"
 		android:layout_marginTop="8dp">
 	</fragment>
-	<fragment android:name="uk.colessoft.android.hilllist.fragment.HillDetailFragment"
+	<fragment android:name="uk.colessoft.android.hilllist.ui.fragment.HillDetailFragment"
 		android:layout_height="0dp" android:layout_width="match_parent"
 		android:id="@+id/hill_detail_fragment" android:layout_weight="50"
 		android:layout_marginTop="4dp"

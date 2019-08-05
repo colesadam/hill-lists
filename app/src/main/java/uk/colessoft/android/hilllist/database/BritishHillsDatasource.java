@@ -5,16 +5,13 @@ import android.database.SQLException;
 import android.os.Handler;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.io.Reader;
 import java.util.Date;
 import java.util.List;
 
 import uk.colessoft.android.hilllist.dao.CountryClause;
-import uk.colessoft.android.hilllist.dao.HillsOrder;
-import uk.colessoft.android.hilllist.dao.IsHillClimbed;
-import uk.colessoft.android.hilllist.model.HillDetail;
+import uk.colessoft.android.hilllist.domain.HillDetail;
 
 public interface BritishHillsDatasource {
     void markHillClimbed(long hillNumber, Date dateClimbed, String notes);

@@ -1,7 +1,6 @@
 package uk.colessoft.android.hilllist.database;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.SupportSQLiteQuery;
@@ -29,10 +28,8 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.dao.CountryClause;
 import uk.colessoft.android.hilllist.dao.HillDetailDao;
-import uk.colessoft.android.hilllist.dao.HillsOrder;
-import uk.colessoft.android.hilllist.dao.IsHillClimbed;
-import uk.colessoft.android.hilllist.entity.Hill;
-import uk.colessoft.android.hilllist.model.HillDetail;
+import uk.colessoft.android.hilllist.domain.entity.Hill;
+import uk.colessoft.android.hilllist.domain.HillDetail;
 
 import static android.content.ContentValues.TAG;
 
@@ -65,9 +62,9 @@ import static uk.colessoft.android.hilllist.database.HillsTables.KEY_TITLE;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XCOORD;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_XSECTION;
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_YCOORD;
-import static uk.colessoft.android.hilllist.entity.Bagging.BAGGING_TABLE;
-import static uk.colessoft.android.hilllist.entity.Bagging.KEY_DATECLIMBED;
-import static uk.colessoft.android.hilllist.entity.Bagging.KEY_NOTES;
+import static uk.colessoft.android.hilllist.domain.entity.Bagging.BAGGING_TABLE;
+import static uk.colessoft.android.hilllist.domain.entity.Bagging.KEY_DATECLIMBED;
+import static uk.colessoft.android.hilllist.domain.entity.Bagging.KEY_NOTES;
 
 
 public class HillsLocalDatasource implements BritishHillsDatasource {

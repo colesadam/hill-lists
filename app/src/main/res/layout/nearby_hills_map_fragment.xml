@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/nearby_hills_map_fragment"
-        android:name="uk.colessoft.android.hilllist.fragment.NearbyHillsMapFragment"
+        android:name="uk.colessoft.android.hilllist.ui.fragment.NearbyHillsMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></fragment>
 
