@@ -8,6 +8,7 @@ import uk.colessoft.android.hilllist.dao.IsHillClimbed
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource
 import uk.colessoft.android.hilllist.domain.HillDetail
 import uk.colessoft.android.hilllist.domain.HillSearch
+import uk.colessoft.android.hilllist.domain.entity.Bagging
 import javax.inject.Inject
 
 
@@ -37,6 +38,14 @@ class HillDetailViewModel @Inject constructor(private val repository: BritishHil
             HillsOrder.NAME_ASC -> hills.sortedBy { it.hill.hillname }
             HillsOrder.NAME_DESC -> hills.sortedByDescending { it.hill.hillname }
         }
+    }
+
+    fun markHillClimbed(bagging: Bagging){
+        repository.markHillClimbedRoom(bagging.b_id, bagging.dateClimbed, bagging.notes)
+    }
+
+    fun markHillNotClimbed(hillId: Long){
+        repository.markHillNotClimbedRoom(hillId)
     }
 
     fun orderHills(order: HillsOrder) = hills.value?.let {

@@ -11,8 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -59,6 +58,25 @@ class BaggingDaoTest {
             } while (cursor.moveToNext());
 
         }
+    }
+
+    @Test
+    @SmallTest
+    fun deleteFromBaggingShouldDelete(){
+        val db: SupportSQLiteDatabase = hillsDatabase.openHelper.writableDatabase
+        val bagging = Bagging(99L, GregorianCalendar(2014, 2, 11).time, "this is definitely a hill")
+        insertBagging(db,"2014-02-11",bagging.b_id.toInt(), bagging.notes)
+        baggingDao.deleteByHillId(99L)
+        val cursor = db.query("select * from bagging")
+        assertFalse(cursor.moveToFirst())
+    }
+
+    private fun insertBagging(db: SupportSQLiteDatabase, dateClimbed: String, hillId: Int, notes: String) {
+        val climbedValues = ContentValues()
+        climbedValues.put("dateClimbed", dateClimbed)
+        climbedValues.put("b_id", hillId)
+        climbedValues.put("notes", notes)
+        db.insert("bagging", OnConflictStrategy.REPLACE, climbedValues)
     }
 
 }

@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.os.AsyncTask;
 import android.os.Handler;
 import androidx.annotation.NonNull;
 import android.util.Log;
@@ -26,8 +27,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import uk.colessoft.android.hilllist.dao.BaggingDao;
 import uk.colessoft.android.hilllist.dao.CountryClause;
 import uk.colessoft.android.hilllist.dao.HillDetailDao;
+import uk.colessoft.android.hilllist.domain.entity.Bagging;
 import uk.colessoft.android.hilllist.domain.entity.Hill;
 import uk.colessoft.android.hilllist.domain.HillDetail;
 
@@ -95,6 +98,9 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     @Inject
     public HillDetailDao hillDetailDao;
 
+    @Inject
+    public BaggingDao baggingDao;
+
     private Handler handler;
     protected static HillsLocalDatasource sInstance;
 
@@ -133,6 +139,46 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         db.endTransaction();
         existing.close();
 
+    }
+
+    @Override
+    public void markHillClimbedRoom(long hillNumber, Date dateClimbed, String notes){
+        new markHillClimbedAsyncTask(baggingDao).execute(new Bagging(hillNumber, dateClimbed, notes));
+    }
+
+    private static class markHillClimbedAsyncTask extends AsyncTask<Bagging, Void, Void> {
+
+        private BaggingDao baggingDao;
+
+        markHillClimbedAsyncTask(BaggingDao dao) {
+            baggingDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Bagging... params) {
+            baggingDao.insertBagging(params[0]);
+            return null;
+        }
+    }
+
+    @Override
+    public void markHillNotClimbedRoom(long hillNumber){
+        new markHillNotClimbedAsyncTask(baggingDao).execute(hillNumber);
+    }
+
+    private static class markHillNotClimbedAsyncTask extends AsyncTask<Long, Void, Void> {
+
+        private BaggingDao baggingDao;
+
+        markHillNotClimbedAsyncTask(BaggingDao dao) {
+            baggingDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Long... params) {
+            baggingDao.deleteByHillId(params[0]);
+            return null;
+        }
     }
 
     @Override
