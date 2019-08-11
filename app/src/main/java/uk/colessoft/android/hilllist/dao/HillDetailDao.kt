@@ -47,7 +47,7 @@ abstract class HillDetailDao {
         return "WHERE " + addToWhere(moreFilters,
                 addToWhere(country?.sql,
                         addToWhere(groupClause(groupId), "")
-                )
+                ).removeSuffix(" AND ")
         )
     }
 

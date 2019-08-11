@@ -55,8 +55,7 @@ import uk.colessoft.android.hilllist.ui.viewmodel.HillDetailViewModel;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
-public class DisplayHillListFragment extends DaggerFragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+public class DisplayHillListFragment extends DaggerFragment{
 
     private int climbedCount = 0;
 
@@ -97,102 +96,6 @@ public class DisplayHillListFragment extends DaggerFragment implements
 
     public interface CheckBoxListener {
         void onCheckBoxClicked(int hill_id, boolean checked);
-    }
-
-    private static class HillsClimbedTaskLoader extends AsyncTaskLoader<Cursor> {
-        private Cursor data;
-        private String where = null;
-        private String orderBy;
-        private String hilltype;
-        private String countryClause;
-        private int filterHills;
-        private BritishHillsDatasource dbAdapter;
-        private int allMarked;
-        private Handler handler;
-
-        public HillsClimbedTaskLoader(Context context) {
-            super(context);
-            // TODO Auto-generated constructor stub
-        }
-
-        public HillsClimbedTaskLoader(Context context, String hilltype,
-                                      String countryClause, String where, String orderBy,
-                                      int filterHills, BritishHillsDatasource dbAdapter, int allMarked) {
-            super(context);
-            this.where = where;
-            this.orderBy = orderBy;
-            this.hilltype = hilltype;
-            this.countryClause = countryClause;
-            this.filterHills = filterHills;
-            this.dbAdapter = dbAdapter;
-            this.allMarked = allMarked;
-        }
-
-        @Override
-        public Cursor loadInBackground() {
-            //dbAdapter.open();
-
-            Cursor result = dbAdapter.getHillGroup(hilltype, countryClause,
-                    where, orderBy, filterHills);
-            int numberOfHills = result.getCount();
-            Message m1;
-            m1 = handler.obtainMessage();
-            m1.arg1 = numberOfHills;
-            m1.arg2 = -1;
-            handler.sendMessage(m1);
-            int i = 0;
-            Message msg;
-            result.moveToFirst();
-            do {
-                int row_id = result.getInt(result
-                        .getColumnIndex("h_id"));
-                if (allMarked == 1) {
-
-                    if (result.getString(result
-                            .getColumnIndex(Bagging.KEY_DATECLIMBED)) == null) {
-                        Log.d(this.toString(), "debug: marking hill " + row_id);
-                        dbAdapter.markHillClimbed(row_id, new Date(), "");
-                    }
-
-                } else if (allMarked == 0) {
-                    dbAdapter.markHillNotClimbed(row_id);
-                }
-                i++;
-                msg = handler.obtainMessage();
-                msg.arg1 = i;
-                handler.sendMessage(msg);
-
-            } while (result.moveToNext());
-            return null;
-        }
-
-        @Override
-        protected void onStartLoading() {
-            if (data != null) {
-                deliverResult(data);
-            }
-
-            if (takeContentChanged() || data == null) {
-                forceLoad();
-            }
-        }
-
-    }
-
-
-    private String convText(TextView v, String text) {
-
-        double dblAmt;
-        dblAmt = Double.valueOf(text);
-        return df3.format(dblAmt);
-
-    }
-
-    private void markAllHills(int allMarked) {
-        Bundle b = new Bundle();
-        b.putInt("allMarked", allMarked);
-        getLoaderManager().restartLoader(1, b, this);
-
     }
 
     @Override
@@ -263,8 +166,6 @@ public class DisplayHillListFragment extends DaggerFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        updateFromPreferences();
-
         View viewer = inflater.inflate(R.layout.list_hills, container, false);
         myListView = viewer
                 .findViewById(R.id.myListView);
@@ -319,9 +220,7 @@ public class DisplayHillListFragment extends DaggerFragment implements
             }
 
             case (R.id.menu_show_all): {
-                int ALL_HILLS = 0;
-                filterHills = ALL_HILLS;
-                updateList();
+                viewModel.filterClimbed(null);
                 return true;
             }
             case (R.id.menu_show_map): {
@@ -359,7 +258,7 @@ public class DisplayHillListFragment extends DaggerFragment implements
                             else
                                 where = null;
 
-                            updateList();
+                            viewModel.searchHills(where);
 
                         });
 
@@ -387,81 +286,5 @@ public class DisplayHillListFragment extends DaggerFragment implements
     }
 
 
-    private void refresh(final Cursor result) {
-
-        //cursorAdapter.swapCursor(result);
-        // populate detail view with first row
-
-        if (result.getCount() != 0) {
-
-            result.moveToPosition(0);
-            int firstRow = result.getInt(result.getColumnIndexOrThrow("hill_id"));
-
-            HillDetailFragment fragment = (HillDetailFragment) getActivity()
-                    .getSupportFragmentManager().findFragmentById(
-                            R.id.hill_detail_fragment);
-
-            if (fragment != null && fragment.isInLayout()) {
-
-                // populate detail view with first row
-                currentRowId = firstRow;
-                //hillSelectedListener.onHillSelected(firstRow);
-            }
-            // hillSelectedListener.onHillSelected(firstRow);
-
-        }
-        String updateTitle = hilllistType + " - " + String.valueOf(result.getCount())
-                + " hills found";
-        getActivity().setTitle(updateTitle);
-        //reset climbed count
-
-
-    }
-
-    private void updateFromPreferences() {
-        Context context = getActivity().getApplicationContext();
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
-
-        useMetricHeights = prefs.getBoolean(
-                PreferencesActivity.PREF_METRIC_HEIGHTS, false);
-    }
-
-    private void updateList() {
-        getLoaderManager().restartLoader(0, null, this);
-
-    }
-
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        dialog = new ProgressDialog(getActivity());
-        int allMarked = args.getInt("allMarked");
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        this.dialog.setMessage("Marking Hills Climbed");
-        this.dialog.show();
-        return new HillsClimbedTaskLoader(getActivity(), hilltype,
-                countryClause, where, orderBy, filterHills, dbAdapter,
-                allMarked);
-
-
-    }
-
-    public void onLoaderReset(Loader<Cursor> loader) {
-
-        //cursorAdapter.swapCursor(null);
-
-    }
-
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (this.dialog.isShowing()) {
-            this.dialog.dismiss();
-        }
-        if (loader.getId() == 0)
-            refresh(data);
-        else {
-            getLoaderManager().getLoader(0).reset();
-            updateList();
-        }
-
-    }
 
 }
