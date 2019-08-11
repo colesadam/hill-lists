@@ -15,7 +15,8 @@ import uk.colessoft.android.hilllist.domain.HillDetail
 
 
 
-class HillDetailListAdapter(private var dataset: List<HillDetail>, private var listener: DisplayHillListFragment.OnHillSelectedListener
+class HillDetailListAdapter(private var dataset: List<HillDetail>, private var listener: DisplayHillListFragment.OnHillSelectedListener,
+                            private var cListener: DisplayHillListFragment.CheckBoxListener
 ) :
         RecyclerView.Adapter<HillDetailListAdapter.HillDetailViewHolder>() {
 
@@ -60,6 +61,11 @@ class HillDetailListAdapter(private var dataset: List<HillDetail>, private var l
             override fun onClick(v: View?) {
             listener.onHillSelected(hill.hill.h_id.toInt());
         } })
+
+        checked.setOnClickListener(object:View.OnClickListener {
+            override fun onClick(v: View?) {
+                cListener.onCheckBoxClicked(hill.hill.h_id.toInt(),checked.isChecked);
+            } })
 
     }
 

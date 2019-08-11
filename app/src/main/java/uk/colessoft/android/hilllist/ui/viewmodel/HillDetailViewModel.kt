@@ -9,6 +9,7 @@ import uk.colessoft.android.hilllist.database.BritishHillsDatasource
 import uk.colessoft.android.hilllist.domain.HillDetail
 import uk.colessoft.android.hilllist.domain.HillSearch
 import uk.colessoft.android.hilllist.domain.entity.Bagging
+import java.util.*
 import javax.inject.Inject
 
 
@@ -18,7 +19,7 @@ class HillDetailViewModel @Inject constructor(private val repository: BritishHil
     private val selected = MutableLiveData<HillDetail>()
     val hills = MediatorLiveData<List<HillDetail>>()
     private var currentOrder = HillsOrder.HEIGHT_DESC
-    private var isClimbed = null
+    private var filterClimbed: IsHillClimbed? = null
 
     init {
         hills.addSource(repository.getHills(hillSearch.groupId, hillSearch.country, hillSearch.moreFilters)) { result: List<HillDetail>? ->
@@ -40,12 +41,20 @@ class HillDetailViewModel @Inject constructor(private val repository: BritishHil
         }
     }
 
-    fun markHillClimbed(bagging: Bagging){
+    fun markHillClimbed(bagging: Bagging) {
         repository.markHillClimbedRoom(bagging.b_id, bagging.dateClimbed, bagging.notes)
     }
 
-    fun markHillNotClimbed(hillId: Long){
+    fun markHillNotClimbed(hillId: Long) {
         repository.markHillNotClimbedRoom(hillId)
+    }
+
+    fun markAllHillsClimbed() {
+        hills.value?.forEach { hill -> repository.markHillClimbedRoom(hill.hill.h_id, Date(), "") }
+    }
+
+    fun markAllHillsNotClimbed() {
+        hills.value?.forEach({ hill -> repository.markHillNotClimbedRoom(hill.hill.h_id) })
     }
 
     fun orderHills(order: HillsOrder) = hills.value?.let {
@@ -55,12 +64,19 @@ class HillDetailViewModel @Inject constructor(private val repository: BritishHil
 
     fun filterClimbed(climbed: IsHillClimbed) {
         hills.value = hills.value?.filter {
-
-            if (climbed == IsHillClimbed.YES)
-                it.bagging != null
-            else it.bagging == null
+            if (it.bagging == null)
+                true
+            else {
+                if (climbed == IsHillClimbed.YES) {
+                    it.bagging!!.isNotEmpty()
+                } else it.bagging!!.isEmpty()
+            }
         }
 
+    }
+
+    fun reset() {
+        hills.value
     }
 
     fun select(hill: HillDetail) {
