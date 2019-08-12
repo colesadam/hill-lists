@@ -403,7 +403,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                 .getColumnIndex(KEY_CLIMBED));
         String classification = cursor.getString(cursor
                 .getColumnIndex(KEY_CLASSIFICATION));
-        long revision = cursor.getLong(cursor
+        String revision = cursor.getString(cursor
                 .getColumnIndex(KEY_REVISION));
         String comments = cursor.getString(cursor
                 .getColumnIndex(KEY_COMMENTS));
@@ -452,7 +452,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                 observations,
                 survey,
                 climbed,"","",
-                new Date(revision),
+                revision,
                 comments,
                 streetmap,"",
                 hillBagging,

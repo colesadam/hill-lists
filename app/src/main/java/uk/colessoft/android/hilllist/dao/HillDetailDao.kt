@@ -47,8 +47,8 @@ abstract class HillDetailDao {
         return "WHERE " + addToWhere(moreFilters,
                 addToWhere(country?.sql,
                         addToWhere(groupClause(groupId), "")
-                ).removeSuffix(" AND ")
-        )
+                )
+        ).removeSuffix(" AND ")
     }
 
     private fun getT100(moreFilters: String?): String {

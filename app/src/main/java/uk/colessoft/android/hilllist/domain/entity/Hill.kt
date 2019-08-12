@@ -34,7 +34,7 @@ data class Hill(
         @ColumnInfo(name = "Climbed") val climbed: String?,
         @ColumnInfo(name = "Country") val country: String?,
         @ColumnInfo(name = "County Top") val countyTop: String?,
-        @ColumnInfo(name = "Revision") val revision: Date?,
+        @ColumnInfo(name = "Revision") val revision: String?,
         @ColumnInfo(name = "Comments") val comments: String?,
         @ColumnInfo(name = "Streetmap/OSiViewer") val streetmap: String?,
         @ColumnInfo(name = "Geograph/MountainViews") val geographMountainViews: String?,
