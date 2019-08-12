@@ -11,7 +11,7 @@ import uk.colessoft.android.hilllist.ui.activity.DetailGMapActivity
 import uk.colessoft.android.hilllist.ui.activity.HillImagesActivity
 import uk.colessoft.android.hilllist.ui.activity.Main
 import uk.colessoft.android.hilllist.ui.activity.SplashScreenActivity
-import uk.colessoft.android.hilllist.ui.fragment.DisplayHillListFragment
+import uk.colessoft.android.hilllist.ui.fragment.HillListFragment
 import uk.colessoft.android.hilllist.ui.fragment.HillDetailFragment
 import uk.colessoft.android.hilllist.ui.fragment.ListHillsMapFragment
 import uk.colessoft.android.hilllist.ui.fragment.NearbyHillsFragment
@@ -30,7 +30,7 @@ interface DatabaseComponent {
     fun inject(activity: DetailGMapActivity)
     fun inject(main: Main)
     fun inject(hillImagesActivity: HillImagesActivity)
-    fun inject(displayHillListFragment: DisplayHillListFragment)
+    fun inject(hillListFragment: HillListFragment)
     fun inject(hillDetailFragment: HillDetailFragment)
     fun inject(listHillsMapFragment: ListHillsMapFragment)
     fun inject(nearbyHillsFragment: NearbyHillsFragment)

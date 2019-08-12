@@ -8,7 +8,7 @@
     android:background="?attr/colorControlHighlight">
 <fragment
     
-    android:name="uk.colessoft.android.hilllist.ui.fragment.DisplayHillListFragment"
+    android:name="uk.colessoft.android.hilllist.ui.fragment.HillListFragment"
     android:layout_height="0dp"
     android:layout_width="match_parent"
     android:id="@+id/hill_list_fragment"

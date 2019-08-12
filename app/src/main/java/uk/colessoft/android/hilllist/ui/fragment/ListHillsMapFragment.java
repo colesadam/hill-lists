@@ -27,7 +27,7 @@ import javax.inject.Inject;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
-import uk.colessoft.android.hilllist.ui.fragment.DisplayHillListFragment.OnHillSelectedListener;
+import uk.colessoft.android.hilllist.ui.fragment.HillListFragment.OnHillSelectedListener;
 import uk.colessoft.android.hilllist.domain.entity.Bagging;
 import uk.colessoft.android.hilllist.domain.TinyHill;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;

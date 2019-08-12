@@ -16,88 +16,15 @@ import javax.inject.Inject
 import androidx.lifecycle.Transformations
 
 
-class HillDetailViewModel @Inject constructor(private val repository: BritishHillsDatasource, val hillSearch: HillSearch) : ViewModel() {
+class HillDetailViewModel @Inject constructor(private val repository: BritishHillsDatasource, val hillId: Long) :  HillHoldingViewModel() {
 
 
-    private val selected = MutableLiveData<HillDetail>()
-    val hills: LiveData<List<HillDetail>>
-    private var currentOrder = HillsOrder.HEIGHT_DESC
-    private var filterClimbed: IsHillClimbed? = null
-    private var searchString: String? = null
-    private val filterLiveData = MutableLiveData<SearchFilter>()
+    override val selected : LiveData<HillDetail>
+
 
     init {
-
-        hills = Transformations.switchMap<SearchFilter?, List<HillDetail>>(filterLiveData
-        ) { filter ->
-            {
-                val whereClause = {
-                    val climbedSql = filter?.climbed?.sql ?: ""
-                    val searchSql = filter?.searchString?.let { "${filter?.searchString}" }
-                            ?: ""
-                    val and = filter?.climbed?.sql?.let { " AND " } ?: ""
-                    "$climbedSql$and$searchSql"
-                }.invoke()
-
-                Transformations.map<MutableList<HillDetail>?, List<HillDetail>?>(
-                        repository.getHills(hillSearch.groupId, hillSearch.country, whereClause)) { result -> result?.let { sortHills(it, currentOrder) } }
-            }.invoke()
-        }
-        filterLiveData.postValue(SearchFilter(null, null, HillsOrder.HEIGHT_DESC))
+        selected = repository.getHillReactive(hillId)
     }
 
-
-    private fun sortHills(hills: List<HillDetail>, currentOrder: HillsOrder): List<HillDetail>? {
-        return when (currentOrder) {
-            HillsOrder.HEIGHT_ASC -> hills.sortedBy { it.hill.heightm }
-            HillsOrder.HEIGHT_DESC -> hills.sortedByDescending { it.hill.heightm }
-
-            HillsOrder.ID_ASC -> hills.sortedBy { it.hill.h_id }
-            HillsOrder.ID_DESC -> hills.sortedByDescending { it.hill.h_id }
-
-            HillsOrder.NAME_ASC -> hills.sortedBy { it.hill.hillname }
-            HillsOrder.NAME_DESC -> hills.sortedByDescending { it.hill.hillname }
-        }
-    }
-
-    fun markHillClimbed(bagging: Bagging) {
-        repository.markHillClimbedRoom(bagging.b_id, bagging.dateClimbed, bagging.notes)
-    }
-
-    fun markHillNotClimbed(hillId: Long) {
-        repository.markHillNotClimbedRoom(hillId)
-    }
-
-    fun markAllHillsClimbed() {
-        hills.value?.forEach { hill -> repository.markHillClimbedRoom(hill.hill.h_id, Date(), "") }
-    }
-
-    fun markAllHillsNotClimbed() {
-        hills.value?.forEach({ hill -> repository.markHillNotClimbedRoom(hill.hill.h_id) })
-    }
-
-    fun orderHills(order: HillsOrder) {
-        Log.d("order=", order.sql)
-        currentOrder = order
-        filterLiveData.value = SearchFilter(filterClimbed, searchString, currentOrder)
-    }
-
-    fun filterClimbed(climbed: IsHillClimbed?) {
-        filterClimbed = climbed
-        filterLiveData.value = SearchFilter(filterClimbed, searchString, currentOrder)
-    }
-
-    fun searchHills(search: String?) {
-        this.searchString = search
-        filterLiveData.value = SearchFilter(filterClimbed, searchString, currentOrder)
-    }
-
-    fun reset() {
-        hills.value
-    }
-
-    fun select(hill: HillDetail) {
-        selected.value = hill
-    }
 
 }

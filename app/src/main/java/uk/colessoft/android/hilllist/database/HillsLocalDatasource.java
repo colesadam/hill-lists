@@ -22,6 +22,7 @@ import com.opencsv.CSVReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -461,6 +462,8 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                 longitude,
                 _section,"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""));
         System.out.println(result.getHill().getClassification());
+        Date finalDateClimbed = dateClimbed;
+        result.setBagging(new ArrayList<Bagging>(){{add(new Bagging(_id, finalDateClimbed,notes));}});
         return result;
 
     }

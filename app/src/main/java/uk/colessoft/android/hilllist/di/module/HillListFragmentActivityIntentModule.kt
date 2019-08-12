@@ -2,15 +2,15 @@ package uk.colessoft.android.hilllist.di.module
 
 import dagger.Module
 import dagger.Provides
-import uk.colessoft.android.hilllist.ui.activity.DisplayHillListFragmentActivity
+import uk.colessoft.android.hilllist.ui.activity.HillListFragmentActivity
 import uk.colessoft.android.hilllist.ui.activity.Main
 import uk.colessoft.android.hilllist.dao.CountryClause
 import uk.colessoft.android.hilllist.domain.HillSearch
 
 @Module
-class DisplayHillListFragmentActivityIntentModule {
+class HillListFragmentActivityIntentModule {
     @Provides
-    fun providesHillSearch(activity: DisplayHillListFragmentActivity): HillSearch {
+    fun providesHillSearch(activity: HillListFragmentActivity): HillSearch {
         val hillType = activity.intent.getSerializableExtra("hilltype") as String
         val country = {
             val c: Int = activity.intent.getSerializableExtra("country") as Int

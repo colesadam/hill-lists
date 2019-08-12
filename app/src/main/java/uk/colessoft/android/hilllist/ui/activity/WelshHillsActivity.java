@@ -97,7 +97,7 @@ public class WelshHillsActivity extends AppCompatActivity {
 
     private void showHills(String hilltype, String hilllistType) {
         Intent intent = new Intent(WelshHillsActivity.this,
-                DisplayHillListFragmentActivity.class);
+                HillListFragmentActivity.class);
         intent.putExtra("hilllistType", hilllistType);
         intent.putExtra("hilltype", hilltype);
         intent.putExtra("country", Main.WALES);

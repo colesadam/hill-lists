@@ -1,5 +1,6 @@
 package uk.colessoft.android.hilllist.ui.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -11,7 +12,10 @@ import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,11 +39,15 @@ import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.ui.activity.BusinessSearchMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.DetailGMapActivity;
+import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity;
 import uk.colessoft.android.hilllist.ui.activity.HillImagesActivity;
 import uk.colessoft.android.hilllist.ui.activity.OsMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.domain.HillDetail;
+import uk.colessoft.android.hilllist.ui.viewmodel.HillDetailViewModel;
+import uk.colessoft.android.hilllist.ui.viewmodel.HillHoldingViewModel;
+import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel;
 
 
 public class HillDetailFragment extends DaggerFragment {
@@ -49,6 +57,9 @@ public class HillDetailFragment extends DaggerFragment {
     private boolean useMetricHeights;
     static final int DATE_DIALOG_ID = 0;
     static final int MARK_HILL_CLIMBED_DIALOG = 1;
+
+    private HillHoldingViewModel viewModel;
+
 
     private HillDetail hillDetail;
     private int mYear;
@@ -71,7 +82,7 @@ public class HillDetailFragment extends DaggerFragment {
 
     private View viewer;
 
-    private int thisId;
+    private long thisId;
     private CheckBox ctv;
 
 
@@ -198,8 +209,8 @@ public class HillDetailFragment extends DaggerFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        HillDetailViewModel viewModel = ViewModelProviders.of(this, hillDetailViewModelFactory.create(userId))
-//                .get(HillDetailViewModel.class);
+//        HillListViewModel viewModel = ViewModelProviders.of(this, hillDetailViewModelFactory.create(userId))
+//                .get(HillListViewModel.class);
 //        long hillId = getActivity().get
     }
 
@@ -282,8 +293,29 @@ public class HillDetailFragment extends DaggerFragment {
         return viewer;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Activity parent = getActivity();
+        if(parent instanceof HillDetailFragmentActivity) {
+            viewModel = ViewModelProviders.of(getActivity()).get(HillDetailViewModel.class);
+        }else{
+            viewModel = ViewModelProviders.of(getActivity()).get(HillListViewModel.class);
+        }
 
-    public void updateHill(int rowid) {
+        final Observer<HillDetail> hillDetailObserver = new Observer<HillDetail>() {
+            @Override
+            public void onChanged(@Nullable final HillDetail hillDetail) {
+
+                Log.d("ChangedData", "Hill returned:" + hillDetail.getHill().getHillname());
+
+            }
+        };
+
+        viewModel.getSelected().observe(getActivity(), hillDetailObserver);
+    }
+
+    public void updateHill(long rowid) {
 
         thisId = rowid;
         hillnameView = (TextView) viewer

@@ -151,7 +151,7 @@ public class Main extends BaseActivity {
 
 	private void search() {
 		final Intent intent = new Intent(Main.this,
-				DisplayHillListFragmentActivity.class);
+				HillListFragmentActivity.class);
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 

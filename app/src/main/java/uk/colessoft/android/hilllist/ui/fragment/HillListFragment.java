@@ -5,13 +5,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,18 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.cursoradapter.widget.SimpleCursorAdapter.ViewBinder;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.AsyncTaskLoader;
-import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,17 +33,16 @@ import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.dao.IsHillClimbed;
 import uk.colessoft.android.hilllist.ui.activity.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.ui.activity.Main;
-import uk.colessoft.android.hilllist.ui.activity.PreferencesActivity;
 import uk.colessoft.android.hilllist.ui.adapter.HillDetailListAdapter;
 import uk.colessoft.android.hilllist.dao.HillsOrder;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.domain.entity.Bagging;
 import uk.colessoft.android.hilllist.domain.HillDetail;
-import uk.colessoft.android.hilllist.ui.viewmodel.HillDetailViewModel;
+import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
-public class DisplayHillListFragment extends DaggerFragment{
+public class HillListFragment extends DaggerFragment{
 
     private int climbedCount = 0;
 
@@ -67,7 +54,7 @@ public class DisplayHillListFragment extends DaggerFragment{
     private String where = null;
     private String orderBy;
 
-    private RecyclerView myListView;
+    private RecyclerView hillsView;
     private boolean useMetricHeights;
     private String hilltype;
     private String hilllistType;
@@ -76,22 +63,17 @@ public class DisplayHillListFragment extends DaggerFragment{
     private int filterHills;
     private OnHillSelectedListener hillSelectedListener;
     private CheckBoxListener checkBoxListener;
-    private HillDetailViewModel viewModel;
+    private HillListViewModel viewModel;
 
     private int currentRowId;
-
     private ProgressDialog dialog;
-
-    private RecyclerView.Adapter<HillDetailListAdapter.HillDetailViewHolder> cursorAdapter;
-
-    private RecyclerView.LayoutManager layoutManager;
-
+    private RecyclerView.Adapter<HillDetailListAdapter.HillDetailViewHolder> hillsAdapter;
 
     private ProgressDialog pdialog;
 
 
     public interface OnHillSelectedListener {
-        void onHillSelected(int rowid);
+        void onHillSelected(long rowid);
     }
 
     public interface CheckBoxListener {
@@ -101,7 +83,7 @@ public class DisplayHillListFragment extends DaggerFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        myListView.setAdapter(cursorAdapter);
+        hillsView.setAdapter(hillsAdapter);
 
         HillDetailFragment fragment = (HillDetailFragment) getActivity()
                 .getSupportFragmentManager().findFragmentById(
@@ -123,7 +105,7 @@ public class DisplayHillListFragment extends DaggerFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        viewModel = ViewModelProviders.of(getActivity()).get(HillDetailViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(HillListViewModel.class);
         checkBoxListener = new CheckBoxListener() {
             @Override
             public void onCheckBoxClicked(int hill_id, boolean checked) {
@@ -135,10 +117,10 @@ public class DisplayHillListFragment extends DaggerFragment{
         final Observer<List<HillDetail>> nameObserver = new Observer<List<HillDetail>>() {
             @Override
             public void onChanged(@Nullable final List<HillDetail> newHills) {
-                cursorAdapter = new HillDetailListAdapter(newHills, hillSelectedListener, checkBoxListener);
-                myListView.setAdapter(cursorAdapter);
+                hillsAdapter = new HillDetailListAdapter(newHills, hillSelectedListener, checkBoxListener);
+                hillsView.setAdapter(hillsAdapter);
                 hills = newHills;
-                cursorAdapter.notifyDataSetChanged();
+                hillsAdapter.notifyDataSetChanged();
                 Log.d("ChangedData", "Hills returned:" + newHills.size());
                 String updateTitle = hilllistType + " - " + String.valueOf(newHills.size())
                         + " hills found";
@@ -147,8 +129,6 @@ public class DisplayHillListFragment extends DaggerFragment{
         };
 
         viewModel.getHills().observe(getActivity(), nameObserver);
-
-
     }
 
     @Override
@@ -167,13 +147,13 @@ public class DisplayHillListFragment extends DaggerFragment{
                              Bundle savedInstanceState) {
 
         View viewer = inflater.inflate(R.layout.list_hills, container, false);
-        myListView = viewer
+        hillsView = viewer
                 .findViewById(R.id.myListView);
-        myListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        hillsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         df3.isParseIntegerOnly();
         super.onCreate(savedInstanceState);
 
-        registerForContextMenu(myListView);
+        registerForContextMenu(hillsView);
 
         hilllistType = getActivity().getIntent().getExtras()
                 .getString("hilllistType");
@@ -284,7 +264,5 @@ public class DisplayHillListFragment extends DaggerFragment{
         return false;
 
     }
-
-
 
 }

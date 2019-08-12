@@ -7,35 +7,35 @@ import androidx.lifecycle.ViewModelProviders
 
 import uk.colessoft.android.hilllist.R
 import uk.colessoft.android.hilllist.ui.activity.dialogs.BaseActivity
-import uk.colessoft.android.hilllist.ui.fragment.DisplayHillListFragment
+import uk.colessoft.android.hilllist.ui.fragment.HillListFragment
 import uk.colessoft.android.hilllist.ui.fragment.HillDetailFragment
-import uk.colessoft.android.hilllist.ui.viewmodel.HillDetailViewModel
+import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel
 import uk.colessoft.android.hilllist.ui.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 
-class DisplayHillListFragmentActivity : BaseActivity(), DisplayHillListFragment.OnHillSelectedListener {
+class HillListFragmentActivity : BaseActivity(), HillListFragment.OnHillSelectedListener {
 
     internal var useMetricHeights: Boolean = false
 
 
     @Inject
-    lateinit var vmFactory: ViewModelFactory<HillDetailViewModel>
+    lateinit var vmFactory: ViewModelFactory<HillListViewModel>
 
-    lateinit var vm: HillDetailViewModel
+    lateinit var vm: HillListViewModel
 
     public override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
-        vm = ViewModelProviders.of(this, vmFactory)[HillDetailViewModel::class.java]
+        vm = ViewModelProviders.of(this, vmFactory)[HillListViewModel::class.java]
 
         setContentView(R.layout.hill_list_fragment)
 
     }
 
 
-    override fun onHillSelected(rowid: Int) {
+    override fun onHillSelected(rowid: Long) {
 
         val fragment = supportFragmentManager
                 .findFragmentById(R.id.hill_detail_fragment) as HillDetailFragment?

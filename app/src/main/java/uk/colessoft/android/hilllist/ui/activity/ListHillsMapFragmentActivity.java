@@ -5,12 +5,12 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import uk.colessoft.android.hilllist.R;
-import uk.colessoft.android.hilllist.ui.fragment.DisplayHillListFragment;
+import uk.colessoft.android.hilllist.ui.fragment.HillListFragment;
 import uk.colessoft.android.hilllist.ui.fragment.HillDetailFragment;
 import uk.colessoft.android.hilllist.ui.fragment.ListHillsMapFragment;
 
 public class ListHillsMapFragmentActivity extends AppCompatActivity implements
-        DisplayHillListFragment.OnHillSelectedListener,
+        HillListFragment.OnHillSelectedListener,
         ListHillsMapFragment.MapOnHillSelectedListener {
 
     @Override
@@ -19,7 +19,7 @@ public class ListHillsMapFragmentActivity extends AppCompatActivity implements
         setContentView(R.layout.hills_map_fragment);
     }
 
-    public void onHillSelected(int rowid) {
+    public void onHillSelected(long rowid) {
 
         HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.hill_detail_fragment);

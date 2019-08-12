@@ -38,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="uk.colessoft.android.hilllist.ui.activity.DisplayHillListFragmentActivity" />
+        <activity android:name="uk.colessoft.android.hilllist.ui.activity.HillListFragmentActivity" />
 
         <uses-library android:name="com.google.android.maps" />
 

@@ -10,13 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import uk.colessoft.android.hilllist.R
 import uk.colessoft.android.hilllist.ui.activity.PreferencesActivity
-import uk.colessoft.android.hilllist.ui.fragment.DisplayHillListFragment
+import uk.colessoft.android.hilllist.ui.fragment.HillListFragment
 import uk.colessoft.android.hilllist.domain.HillDetail
 
 
 
-class HillDetailListAdapter(private var dataset: List<HillDetail>, private var listener: DisplayHillListFragment.OnHillSelectedListener,
-                            private var cListener: DisplayHillListFragment.CheckBoxListener
+class HillDetailListAdapter(private var dataset: List<HillDetail>, private var listener: HillListFragment.OnHillSelectedListener,
+                            private var cListener: HillListFragment.CheckBoxListener
 ) :
         RecyclerView.Adapter<HillDetailListAdapter.HillDetailViewHolder>() {
 
@@ -59,7 +59,7 @@ class HillDetailListAdapter(private var dataset: List<HillDetail>, private var l
         }
         holder.view.setOnClickListener(object:View.OnClickListener {
             override fun onClick(v: View?) {
-            listener.onHillSelected(hill.hill.h_id.toInt());
+            listener.onHillSelected(hill.hill.h_id);
         } })
 
         checked.setOnClickListener(object:View.OnClickListener {
