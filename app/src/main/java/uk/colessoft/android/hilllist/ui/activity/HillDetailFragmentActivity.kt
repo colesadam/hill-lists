@@ -75,12 +75,10 @@ class HillDetailFragmentActivity : BaseActivity() {
         vm = ViewModelProviders.of(this, vmFactory)[HillDetailViewModel::class.java]
         updateFromPreferences()
         setContentView(R.layout.hill_detail_fragment)
-        val rowid = intent.extras!!.getLong("rowid")
 
         val fragment = supportFragmentManager
                 .findFragmentById(R.id.hill_detail_fragment) as HillDetailFragment?
 
-        fragment!!.updateHill(rowid)
 
     }
 

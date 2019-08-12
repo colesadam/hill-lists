@@ -306,7 +306,7 @@ public class HillDetailFragment extends DaggerFragment {
         final Observer<HillDetail> hillDetailObserver = new Observer<HillDetail>() {
             @Override
             public void onChanged(@Nullable final HillDetail hillDetail) {
-
+                updateHill(hillDetail);
                 Log.d("ChangedData", "Hill returned:" + hillDetail.getHill().getHillname());
 
             }
@@ -315,9 +315,8 @@ public class HillDetailFragment extends DaggerFragment {
         viewModel.getSelected().observe(getActivity(), hillDetailObserver);
     }
 
-    public void updateHill(long rowid) {
+    public void updateHill(HillDetail hillDetail) {
 
-        thisId = rowid;
         hillnameView = (TextView) viewer
                 .findViewById(R.id.detail_hill_name);
         TextView hillheight = (TextView) viewer
@@ -346,8 +345,8 @@ public class HillDetailFragment extends DaggerFragment {
         ViewGroup classificationLayout = (LinearLayout) viewer
                 .findViewById(R.id.hill_classifications);
         classificationLayout.removeAllViews();
-        System.out.println(rowid);
-        hillDetail = dbAdapter.getHill(rowid);
+
+
         dateClimbed = (TextView) viewer
                 .findViewById(R.id.detail_date_climbed);
         ((View) dateClimbed.getParent()).setVisibility(View.GONE);
@@ -355,7 +354,7 @@ public class HillDetailFragment extends DaggerFragment {
         TextView saveNotes = (TextView) getActivity().findViewById(R.id.save_notes);
         // ((View) saveNotes.getParent().getParent()).setVisibility(View.GONE);
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
-        if (hillDetail.getBagging().get(0).getDateClimbed() != null) {
+        if (hillDetail.getBagging() != null && !hillDetail.getBagging().isEmpty()) {
 
             bagFeature(hillDetail);
         }
@@ -405,7 +404,7 @@ public class HillDetailFragment extends DaggerFragment {
 
 
         final long id = hillDetail.getHill().getH_id();
-        if (hillDetail.getBagging().get(0).getDateClimbed() != null) {
+        if (hillDetail.getBagging() != null && !hillDetail.getBagging().isEmpty()) {
 
             ctv.setChecked(true);
 

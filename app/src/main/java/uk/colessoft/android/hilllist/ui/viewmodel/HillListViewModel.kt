@@ -16,15 +16,16 @@ import javax.inject.Inject
 import androidx.lifecycle.Transformations
 
 
-class HillListViewModel @Inject constructor(private val repository: BritishHillsDatasource, val hillSearch: HillSearch) : HillHoldingViewModel() {
+class HillListViewModel @Inject constructor(override val repository: BritishHillsDatasource, val hillSearch: HillSearch) : HillHoldingViewModel() {
 
 
-    override val selected = MutableLiveData<HillDetail>()
+    override val selected : LiveData<HillDetail>
     val hills: LiveData<List<HillDetail>>
     private var currentOrder = HillsOrder.HEIGHT_DESC
     private var filterClimbed: IsHillClimbed? = null
     private var searchString: String? = null
     private val filterLiveData = MutableLiveData<SearchFilter>()
+    private val selectLiveData = MutableLiveData<Long>()
 
     init {
 
@@ -40,10 +41,19 @@ class HillListViewModel @Inject constructor(private val repository: BritishHills
                 }.invoke()
 
                 Transformations.map<MutableList<HillDetail>?, List<HillDetail>?>(
-                        repository.getHills(hillSearch.groupId, hillSearch.country, whereClause)) { result -> result?.let { sortHills(it, currentOrder) } }
+                        repository.getHills(hillSearch.groupId, hillSearch.country, whereClause)) { result -> result?.let {
+                    sortHills(it, currentOrder) }.also {
+                    if(selectLiveData.value == null) selectLiveData.postValue(result!!.get(0).hill.h_id)}
+                }
             }.invoke()
         }
         filterLiveData.postValue(SearchFilter(null, null, HillsOrder.HEIGHT_DESC))
+
+        selected = Transformations.switchMap(selectLiveData){
+            hillId -> repository.getHillReactive(hillId)
+        }
+
+
     }
 
 
@@ -60,13 +70,6 @@ class HillListViewModel @Inject constructor(private val repository: BritishHills
         }
     }
 
-    fun markHillClimbed(bagging: Bagging) {
-        repository.markHillClimbedRoom(bagging.b_id, bagging.dateClimbed, bagging.notes)
-    }
-
-    fun markHillNotClimbed(hillId: Long) {
-        repository.markHillNotClimbedRoom(hillId)
-    }
 
     fun markAllHillsClimbed() {
         hills.value?.forEach { hill -> repository.markHillClimbedRoom(hill.hill.h_id, Date(), "") }
@@ -97,7 +100,7 @@ class HillListViewModel @Inject constructor(private val repository: BritishHills
     }
 
     fun select(hill: HillDetail) {
-        selected.value = hill
+        selectLiveData.value = hill.hill.h_id
     }
 
 }

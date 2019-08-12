@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.domain.HillDetail;
 import uk.colessoft.android.hilllist.ui.fragment.HillListFragment;
 import uk.colessoft.android.hilllist.ui.fragment.HillDetailFragment;
 import uk.colessoft.android.hilllist.ui.fragment.ListHillsMapFragment;
@@ -19,17 +20,17 @@ public class ListHillsMapFragmentActivity extends AppCompatActivity implements
         setContentView(R.layout.hills_map_fragment);
     }
 
-    public void onHillSelected(long rowid) {
+    public void onHillSelected(HillDetail hillDetail) {
 
         HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.hill_detail_fragment);
 
         if (fragment == null || !fragment.isInLayout()) {
             Intent intent = new Intent(this, HillDetailFragmentActivity.class);
-            intent.putExtra("rowid", rowid);
+            //intent.putExtra("rowid", rowid);
             startActivity(intent);
         } else {
-            fragment.updateHill(rowid);
+            //fragment.updateHill(rowid);
         }
 
     }
@@ -39,7 +40,7 @@ public class ListHillsMapFragmentActivity extends AppCompatActivity implements
                 .findFragmentById(R.id.hill_detail_fragment);
 
         if (fragment != null && fragment.isInLayout()) {
-            fragment.updateHill(rowid);
+            //fragment.updateHill(rowid);
         }
     }
 }

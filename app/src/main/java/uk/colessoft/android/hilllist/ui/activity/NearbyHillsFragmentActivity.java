@@ -69,7 +69,7 @@ public class NearbyHillsFragmentActivity extends AppCompatActivity
 			startActivity(intent);
 		} else {
 
-			fragment.updateHill(rowid);
+			//fragment.updateHill(rowid);
 		}
 
 	}

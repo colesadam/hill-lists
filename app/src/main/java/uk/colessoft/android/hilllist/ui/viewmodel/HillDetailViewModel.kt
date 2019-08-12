@@ -16,7 +16,7 @@ import javax.inject.Inject
 import androidx.lifecycle.Transformations
 
 
-class HillDetailViewModel @Inject constructor(private val repository: BritishHillsDatasource, val hillId: Long) :  HillHoldingViewModel() {
+class HillDetailViewModel @Inject constructor(override val repository: BritishHillsDatasource, val hillId: Long) :  HillHoldingViewModel() {
 
 
     override val selected : LiveData<HillDetail>

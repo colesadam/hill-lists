@@ -118,7 +118,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     @Override
     public void onInfoWindowClick(Marker marker) {
         System.out.println("hill selected is "+marker.getTag());
-        (hillSelectedListener).onHillSelected((Integer) marker.getTag());
+        //(hillSelectedListener).onHillSelected((Integer) marker.getTag());
     }
 
     @Override
@@ -246,7 +246,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
         //If we are in fragment layer update hill details in detail fragment for current hillid
         if (fragment != null && fragment.isInLayout()) {
-            hillSelectedListener.onHillSelected(passedRowId);
+            //hillSelectedListener.onHillSelected(passedRowId);
         }
 
         final LatLngBounds bounds = new LatLngBounds(new LatLng(

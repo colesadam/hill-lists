@@ -31,6 +31,7 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.dao.IsHillClimbed;
+import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity;
 import uk.colessoft.android.hilllist.ui.activity.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.ui.activity.Main;
 import uk.colessoft.android.hilllist.ui.adapter.HillDetailListAdapter;
@@ -42,7 +43,7 @@ import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel;
 
 import static uk.colessoft.android.hilllist.database.HillsTables.KEY_HILLNAME;
 
-public class HillListFragment extends DaggerFragment{
+public class HillListFragment extends DaggerFragment {
 
     private int climbedCount = 0;
 
@@ -73,7 +74,7 @@ public class HillListFragment extends DaggerFragment{
 
 
     public interface OnHillSelectedListener {
-        void onHillSelected(long rowid);
+        void onHillSelected(HillDetail hillDetail);
     }
 
     public interface CheckBoxListener {
@@ -128,7 +129,17 @@ public class HillListFragment extends DaggerFragment{
             }
         };
 
+//        viewModel.getHills().observe(getActivity(),new Observer<List<HillDetail>>(){
+//
+//            @Override
+//            public void onChanged(List<HillDetail> hills) {
+//                viewModel.getHills().removeObserver(this);
+//                viewModel.select(hills.get(0));
+//            }}
+//            );
+
         viewModel.getHills().observe(getActivity(), nameObserver);
+
     }
 
     @Override
