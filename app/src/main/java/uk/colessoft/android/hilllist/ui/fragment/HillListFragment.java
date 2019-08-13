@@ -129,14 +129,6 @@ public class HillListFragment extends DaggerFragment {
             }
         };
 
-//        viewModel.getHills().observe(getActivity(),new Observer<List<HillDetail>>(){
-//
-//            @Override
-//            public void onChanged(List<HillDetail> hills) {
-//                viewModel.getHills().removeObserver(this);
-//                viewModel.select(hills.get(0));
-//            }}
-//            );
 
         viewModel.getHills().observe(getActivity(), nameObserver);
 

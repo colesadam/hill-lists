@@ -37,6 +37,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.domain.entity.Bagging;
 import uk.colessoft.android.hilllist.ui.activity.BusinessSearchMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.DetailGMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity;
@@ -61,7 +62,7 @@ public class HillDetailFragment extends DaggerFragment {
     private HillHoldingViewModel viewModel;
 
 
-    private HillDetail hillDetail;
+    private HillDetail selectedHill;
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -89,7 +90,7 @@ public class HillDetailFragment extends DaggerFragment {
     private void showMapSingle() {
         Intent intent = new Intent(getActivity(), DetailGMapActivity.class);
         intent.putExtra("rowid", thisId);
-        intent.putExtra("title", "Map of " + hillDetail.getHill().getHillname());
+        intent.putExtra("title", "Map of " + selectedHill.getHill().getHillname());
 
         startActivity(intent);
     }
@@ -99,8 +100,8 @@ public class HillDetailFragment extends DaggerFragment {
 //				Uri.parse(osLink));
 
         Intent intent = new Intent(getActivity(), OsMapActivity.class);
-        intent.putExtra("x", String.valueOf(hillDetail.getHill().getXcoord()));
-        intent.putExtra("y", String.valueOf(hillDetail.getHill().getYcoord()));
+        intent.putExtra("x", String.valueOf(selectedHill.getHill().getXcoord()));
+        intent.putExtra("y", String.valueOf(selectedHill.getHill().getYcoord()));
         startActivity(intent);
     }
 
@@ -125,7 +126,7 @@ public class HillDetailFragment extends DaggerFragment {
 
                     intent.putExtra("search_string", value);
                     intent.putExtra("title",
-                            value + " near " + hillDetail.getHill().getHillname());
+                            value + " near " + selectedHill.getHill().getHillname());
                     startActivity(intent);
 
                 });
@@ -190,17 +191,21 @@ public class HillDetailFragment extends DaggerFragment {
                 e.printStackTrace();
             }
 
-            dbAdapter.markHillClimbed(hillDetail.getHill().getH_id(), d, notes.getText()
-                    .toString());
 
-            Toast climbed;
-            climbed = Toast.makeText(getActivity().getApplication(),
-                    "Saved", Toast.LENGTH_SHORT);
-            climbed.show();
+            viewModel.markHillClimbed(new Bagging(hillDetail.getHill().getH_id(), d, notes.getText().toString()));
+            viewModel.getSelected().observe(getViewLifecycleOwner(), new Observer<HillDetail>() {
+                @Override
+                public void onChanged(HillDetail hillDetail) {
+                    Toast climbed;
+                    climbed = Toast.makeText(getActivity().getApplication(),
+                            "Saved", Toast.LENGTH_SHORT);
+                    climbed.show();
+                    viewModel.getSelected().removeObserver(this);
+                }
+            });
+
 
         });
-
-        notes.setText(hillDetail.getBagging().get(0).getNotes());
 
     }
 
@@ -243,23 +248,23 @@ public class HillDetailFragment extends DaggerFragment {
                 Button ok = (Button) dialog.findViewById(R.id.Button_ok);
                 Button cancel = (Button) dialog.findViewById(R.id.Button_cancel);
 
-                dbAdapter.markHillClimbed(hillDetail.getHill().getH_id(), new Date(), "");
+                dbAdapter.markHillClimbed(selectedHill.getHill().getH_id(), new Date(), "");
                 Toast climbed;
                 climbed = Toast.makeText(getActivity().getApplication(),
                         "Marked as Climbed", Toast.LENGTH_SHORT);
                 climbed.show();
-                hillDetail = dbAdapter.getHill(hillDetail.getHill().getH_id());
+                selectedHill = dbAdapter.getHill(selectedHill.getHill().getH_id());
 
-                bagFeature(hillDetail);
+                bagFeature(selectedHill);
             } else {
 
-                dbAdapter.markHillNotClimbed(hillDetail.getHill().getH_id());
+                dbAdapter.markHillNotClimbed(selectedHill.getHill().getH_id());
 
                 Toast climbed;
                 climbed = Toast.makeText(getActivity().getApplication(),
                         "Marked not Climbed", Toast.LENGTH_SHORT);
                 climbed.show();
-                noBagSenor(hillDetail);
+                noBagSenor(selectedHill);
             }
 
         });
@@ -306,6 +311,7 @@ public class HillDetailFragment extends DaggerFragment {
         final Observer<HillDetail> hillDetailObserver = new Observer<HillDetail>() {
             @Override
             public void onChanged(@Nullable final HillDetail hillDetail) {
+                selectedHill = hillDetail;
                 updateHill(hillDetail);
                 Log.d("ChangedData", "Hill returned:" + hillDetail.getHill().getHillname());
 
