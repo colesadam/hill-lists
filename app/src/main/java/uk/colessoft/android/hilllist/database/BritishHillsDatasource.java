@@ -14,11 +14,8 @@ import uk.colessoft.android.hilllist.dao.CountryClause;
 import uk.colessoft.android.hilllist.domain.HillDetail;
 
 public interface BritishHillsDatasource {
+
     void markHillClimbed(long hillNumber, Date dateClimbed, String notes);
-
-    void markHillClimbedRoom(long hillNumber, Date dateClimbed, String notes);
-
-    void markHillNotClimbedRoom(long hillNumber);
 
     void markHillNotClimbed(long hillNumber);
 

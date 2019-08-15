@@ -3,7 +3,6 @@ package uk.colessoft.android.hilllist.ui.fragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -33,8 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-import javax.inject.Inject;
-
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.domain.entity.Bagging;
@@ -44,7 +40,6 @@ import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity;
 import uk.colessoft.android.hilllist.ui.activity.HillImagesActivity;
 import uk.colessoft.android.hilllist.ui.activity.OsMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.PreferencesActivity;
-import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.domain.HillDetail;
 import uk.colessoft.android.hilllist.ui.viewmodel.HillDetailViewModel;
 import uk.colessoft.android.hilllist.ui.viewmodel.HillHoldingViewModel;
@@ -52,20 +47,22 @@ import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel;
 
 
 public class HillDetailFragment extends DaggerFragment {
-    @Inject
-    BritishHillsDatasource dbAdapter;
 
-    private boolean useMetricHeights;
     static final int DATE_DIALOG_ID = 0;
     static final int MARK_HILL_CLIMBED_DIALOG = 1;
 
     private HillHoldingViewModel viewModel;
-
-
+    private boolean useMetricHeights;
     private HillDetail selectedHill;
     private int mYear;
     private int mMonth;
     private int mDay;
+    private TextView dateClimbed;
+    private TextView hillnameView;
+    private View viewer;
+    private long thisId;
+    private CheckBox ctv;
+
     private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -77,15 +74,6 @@ public class HillDetailFragment extends DaggerFragment {
         }
     };
 
-    private TextView dateClimbed;
-
-    private TextView hillnameView;
-
-    private View viewer;
-
-    private long thisId;
-    private CheckBox ctv;
-
 
     private void showMapSingle() {
         Intent intent = new Intent(getActivity(), DetailGMapActivity.class);
@@ -96,8 +84,6 @@ public class HillDetailFragment extends DaggerFragment {
     }
 
     private void showOSMap() {
-//		Intent intent = new Intent("android.intent.action.VIEW",
-//				Uri.parse(osLink));
 
         Intent intent = new Intent(getActivity(), OsMapActivity.class);
         intent.putExtra("x", String.valueOf(selectedHill.getHill().getXcoord()));
@@ -139,17 +125,6 @@ public class HillDetailFragment extends DaggerFragment {
         search.show();
     }
 
-
-    private void noBagSenor(final HillDetail hillDetail) {
-
-
-        ((View) dateClimbed.getParent()).setVisibility(View.GONE);
-        // ((View) saveNotes.getParent().getParent()).setVisibility(View.GONE);
-        hillnameView = (TextView) viewer
-                .findViewById(R.id.detail_hill_name);
-        hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
-    }
-
     private void bagFeature(final HillDetail hillDetail) {
 
 
@@ -163,8 +138,7 @@ public class HillDetailFragment extends DaggerFragment {
                 R.id.detail_hill_notes);
 
         ((View) dateClimbed.getParent()).setVisibility(View.VISIBLE);
-        // ((View)
-        // saveNotes.getParent().getParent()).setVisibility(View.VISIBLE);
+
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Date realDate = hillDetail.getBagging().get(0).getDateClimbed();
         dateClimbed.setText(format.format(realDate));
@@ -187,36 +161,14 @@ public class HillDetailFragment extends DaggerFragment {
             try {
                 d = iso8601Format.parse(dateClimbed.getText().toString());
             } catch (ParseException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
+            observeHillOnce("Saved");
 
             viewModel.markHillClimbed(new Bagging(hillDetail.getHill().getH_id(), d, notes.getText().toString()));
-            viewModel.getSelected().observe(getViewLifecycleOwner(), new Observer<HillDetail>() {
-                @Override
-                public void onChanged(HillDetail hillDetail) {
-                    Toast climbed;
-                    climbed = Toast.makeText(getActivity().getApplication(),
-                            "Saved", Toast.LENGTH_SHORT);
-                    climbed.show();
-                    viewModel.getSelected().removeObserver(this);
-                }
-            });
-
-
         });
 
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-//        HillListViewModel viewModel = ViewModelProviders.of(this, hillDetailViewModelFactory.create(userId))
-//                .get(HillListViewModel.class);
-//        long hillId = getActivity().get
     }
 
     @Override
@@ -235,36 +187,15 @@ public class HillDetailFragment extends DaggerFragment {
 
             CheckBox xcv = (CheckBox) v;
             if (xcv.isChecked()) {
-                Context mContext = getActivity().getApplicationContext();
-                Dialog dialog = new Dialog(mContext);
 
-                dialog.setContentView(R.layout.hill_climbed_dialog);
-                dialog.setTitle("Mark HillDetail As Climbed");
+                observeHillOnce("Marked hill as climbed");
+                viewModel.markHillClimbed(new Bagging(selectedHill.getHill().getH_id(), new Date(), ""));
 
-                DatePicker datePicker = (DatePicker) dialog
-                        .findViewById(R.id.dialog_climbed_date_picker);
-                EditText notes = (EditText) dialog
-                        .findViewById(R.id.dialog_climbed_notes);
-                Button ok = (Button) dialog.findViewById(R.id.Button_ok);
-                Button cancel = (Button) dialog.findViewById(R.id.Button_cancel);
-
-                dbAdapter.markHillClimbed(selectedHill.getHill().getH_id(), new Date(), "");
-                Toast climbed;
-                climbed = Toast.makeText(getActivity().getApplication(),
-                        "Marked as Climbed", Toast.LENGTH_SHORT);
-                climbed.show();
-                selectedHill = dbAdapter.getHill(selectedHill.getHill().getH_id());
-
-                bagFeature(selectedHill);
             } else {
 
-                dbAdapter.markHillNotClimbed(selectedHill.getHill().getH_id());
+                observeHillOnce("Marked not climbed");
+                viewModel.markHillNotClimbed(selectedHill.getHill().getH_id());
 
-                Toast climbed;
-                climbed = Toast.makeText(getActivity().getApplication(),
-                        "Marked not Climbed", Toast.LENGTH_SHORT);
-                climbed.show();
-                noBagSenor(selectedHill);
             }
 
         });
@@ -290,12 +221,24 @@ public class HillDetailFragment extends DaggerFragment {
                         startActivity(intent);
 
                     }
-
                 }
                 return false;
             }
         });
         return viewer;
+    }
+
+    private void observeHillOnce(String toastMessage) {
+        viewModel.getSelected().observe(getViewLifecycleOwner(), new Observer<HillDetail>() {
+            @Override
+            public void onChanged(HillDetail hillDetail) {
+                Toast climbed;
+                climbed = Toast.makeText(getActivity().getApplication(),
+                        toastMessage, Toast.LENGTH_SHORT);
+                climbed.show();
+                viewModel.getSelected().removeObserver(this);
+            }
+        });
     }
 
     @Override
@@ -357,14 +300,11 @@ public class HillDetailFragment extends DaggerFragment {
                 .findViewById(R.id.detail_date_climbed);
         ((View) dateClimbed.getParent()).setVisibility(View.GONE);
 
-        TextView saveNotes = (TextView) getActivity().findViewById(R.id.save_notes);
-        // ((View) saveNotes.getParent().getParent()).setVisibility(View.GONE);
         hillnameView.setTextAppearance(getActivity(), R.style.hill_detail_title);
         if (hillDetail.getBagging() != null && !hillDetail.getBagging().isEmpty()) {
 
             bagFeature(hillDetail);
         }
-        String osLink = hillDetail.getHill().getHillBagging();
 
         hillnameView.setText(hillDetail.getHill().getHillname());
         if (useMetricHeights) {
@@ -408,15 +348,12 @@ public class HillDetailFragment extends DaggerFragment {
             classificationTextView.setPadding(5, 5, 5, 5);
         }
 
-
-        final long id = hillDetail.getHill().getH_id();
         if (hillDetail.getBagging() != null && !hillDetail.getBagging().isEmpty()) {
 
             ctv.setChecked(true);
 
         } else
             ctv.setChecked(false);
-
 
     }
 

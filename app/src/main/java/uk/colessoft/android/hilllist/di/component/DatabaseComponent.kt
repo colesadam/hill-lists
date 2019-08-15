@@ -6,7 +6,6 @@ import javax.inject.Singleton
 import dagger.Subcomponent
 import uk.colessoft.android.hilllist.ui.activity.BaggingExportActivity
 import uk.colessoft.android.hilllist.ui.activity.BusinessSearchMapActivity
-import uk.colessoft.android.hilllist.ui.activity.CheckHillListActivity
 import uk.colessoft.android.hilllist.ui.activity.DetailGMapActivity
 import uk.colessoft.android.hilllist.ui.activity.HillImagesActivity
 import uk.colessoft.android.hilllist.ui.activity.Main
@@ -26,7 +25,6 @@ interface DatabaseComponent {
     fun inject(activity: SplashScreenActivity)
     fun inject(activity: BaggingExportActivity)
     fun inject(activity: BusinessSearchMapActivity)
-    fun inject(activity: CheckHillListActivity)
     fun inject(activity: DetailGMapActivity)
     fun inject(main: Main)
     fun inject(hillImagesActivity: HillImagesActivity)

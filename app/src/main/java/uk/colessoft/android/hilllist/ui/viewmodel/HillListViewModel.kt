@@ -2,15 +2,12 @@ package uk.colessoft.android.hilllist.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import uk.colessoft.android.hilllist.dao.HillsOrder
 import uk.colessoft.android.hilllist.dao.IsHillClimbed
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource
 import uk.colessoft.android.hilllist.domain.HillDetail
 import uk.colessoft.android.hilllist.domain.HillSearch
-import uk.colessoft.android.hilllist.domain.entity.Bagging
 import java.util.*
 import javax.inject.Inject
 import androidx.lifecycle.Transformations
@@ -72,11 +69,11 @@ class HillListViewModel @Inject constructor(override val repository: BritishHill
 
 
     fun markAllHillsClimbed() {
-        hills.value?.forEach { hill -> repository.markHillClimbedRoom(hill.hill.h_id, Date(), "") }
+        hills.value?.forEach { hill -> repository.markHillClimbed(hill.hill.h_id, Date(), "") }
     }
 
     fun markAllHillsNotClimbed() {
-        hills.value?.forEach({ hill -> repository.markHillNotClimbedRoom(hill.hill.h_id) })
+        hills.value?.forEach({ hill -> repository.markHillNotClimbed(hill.hill.h_id) })
     }
 
     fun orderHills(order: HillsOrder) {

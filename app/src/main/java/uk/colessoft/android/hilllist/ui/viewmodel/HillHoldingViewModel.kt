@@ -11,10 +11,10 @@ abstract class HillHoldingViewModel: ViewModel() {
     abstract val repository: BritishHillsDatasource
 
     fun markHillClimbed(bagging: Bagging) {
-        repository.markHillClimbedRoom(bagging.b_id, bagging.dateClimbed, bagging.notes)
+        repository.markHillClimbed(bagging.b_id, bagging.dateClimbed, bagging.notes)
     }
 
     fun markHillNotClimbed(hillId: Long) {
-        repository.markHillNotClimbedRoom(hillId)
+        repository.markHillNotClimbed(hillId)
     }
 }

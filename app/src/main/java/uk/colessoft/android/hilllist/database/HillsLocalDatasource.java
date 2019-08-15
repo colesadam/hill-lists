@@ -114,36 +114,10 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     }
 
 
-    @Override
-    public void markHillClimbed(long hillNumber, Date dateClimbed, String notes) {
-        SupportSQLiteDatabase db = getWritableDatabase();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        ContentValues climbedValues = new ContentValues();
-        climbedValues.put("dateClimbed", dateFormat.format(dateClimbed));
-        climbedValues.put("tl_id", String.valueOf(hillNumber));
-        climbedValues.put("notes", notes);
-
-        SupportSQLiteQuery query = SupportSQLiteQueryBuilder.builder(BAGGING_TABLE).columns(new String[]{KEY_ID + "=?"}).selection(KEY_ID, new Object[]{String.valueOf(hillNumber)}).create();
-
-        Cursor existing = db.query(query);
-
-        db.beginTransaction();
-
-        if (existing.getCount() == 0) {
-            db.insert(BAGGING_TABLE, 0, climbedValues);
-        } else {
-            db.update(BAGGING_TABLE, 0, climbedValues, "tl_id='"
-                    + String.valueOf(hillNumber) + "'", null);
-        }
-        db.setTransactionSuccessful();
-        db.endTransaction();
-        existing.close();
-
-    }
 
     @Override
-    public void markHillClimbedRoom(long hillNumber, Date dateClimbed, String notes){
+    public void markHillClimbed(long hillNumber, Date dateClimbed, String notes){
         new markHillClimbedAsyncTask(baggingDao).execute(new Bagging(hillNumber, dateClimbed, notes));
     }
 
@@ -163,7 +137,7 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     }
 
     @Override
-    public void markHillNotClimbedRoom(long hillNumber){
+    public void markHillNotClimbed(long hillNumber){
         new markHillNotClimbedAsyncTask(baggingDao).execute(hillNumber);
     }
 
@@ -182,11 +156,6 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         }
     }
 
-    @Override
-    public void markHillNotClimbed(long hillNumber) {
-        SupportSQLiteDatabase db = getWritableDatabase();
-        db.delete(BAGGING_TABLE, "tl_id='" + hillNumber + "'", null);
-    }
 
     @Override
     public Cursor getAllHillsCursor() {
