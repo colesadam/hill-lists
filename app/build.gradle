@@ -48,8 +48,8 @@ android {
 
     defaultConfig {
         applicationId "uk.colessoft.android.hilllist"
-        minSdkVersion 19
-        targetSdkVersion 26
+        minSdkVersion 24
+        targetSdkVersion 28
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         javaCompileOptions {

@@ -10,6 +10,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import uk.colessoft.android.hilllist.utility.Util;
 
 import static android.content.ContentValues.TAG;
 
@@ -63,21 +70,37 @@ public class HillsTables {
     static void populateHillTypes(SupportSQLiteDatabase database, long startTime) {
 
         Cursor c = database.query("select * from " + HILLS_TABLE);
+
+        Set<String> columnKeys = Util.classesMap.keySet();
+        //Map<String,Integer> typesMap = columnKeys.stream().collect(Collectors.toMap(x -> x,x -> c.getColumnIndex(x)))
+        Map<String,Integer> typesMap = new HashMap<>();
+        for(String classification: columnKeys){
+            typesMap.put(classification,c.getColumnIndex(classification));
+        }
+
         SupportSQLiteStatement insertHillType = database.compileStatement("INSERT or IGNORE into " + HILLTYPES_TABLE + " VALUES(?,?)");
         SupportSQLiteStatement insertHillTypeLink = database.compileStatement("INSERT into " + TYPES_LINK_TABLE + " (" + KEY_HILL_ID + "," + KEY_TYPES_ID + ") values (?,?)");
+
+        database.beginTransaction();
+        for (String classification : columnKeys) {
+            insertHillType.bindString(2, classification);
+            insertHillType.bindLong(1, typesMap.get(classification));
+            insertHillType.executeInsert();
+        }
+        database.setTransactionSuccessful();
+        database.endTransaction();
 
         // Populate static hill types data
         database.beginTransaction();
         if (c.moveToFirst()) {
             do {
-                String[] classifications = c.getString(c.getColumnIndex(KEY_CLASSIFICATION)).replace("\"", "").split(",");
-                for (String classification : classifications) {
-                    insertHillType.bindString(2, classification);
-                    insertHillType.bindLong(1, c.getColumnIndex(classification));
-                    insertHillType.executeInsert();
+                Set<String> hillClassifiers = columnKeys.stream().filter(x -> c.getInt(typesMap.get(x)) == 1).collect(Collectors.toSet());
+
+                for (String classification : hillClassifiers) {
+
 
                     insertHillTypeLink.bindLong(1, c.getInt(0));
-                    insertHillTypeLink.bindLong(2, c.getColumnIndex(classification));
+                    insertHillTypeLink.bindLong(2, typesMap.get(classification));
                     insertHillTypeLink.executeInsert();
                 }
             } while (c.moveToNext());

@@ -103,7 +103,7 @@ public class Main extends BaseActivity {
 
 		viewforecasts.setOnClickListener(new View.OnClickListener() {
 
-			private final String forecastLink = "http://www.metoffice.gov.uk/public/weather/mountain-forecast/#?tab=mountainHome";
+			private final String forecastLink = "https://www.metoffice.gov.uk/weather/specialist-forecasts/mountain";
 
 			public void onClick(View v) {
 				Intent intent = new Intent("android.intent.action.VIEW", Uri

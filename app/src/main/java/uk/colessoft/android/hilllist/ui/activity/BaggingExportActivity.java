@@ -21,8 +21,9 @@ import javax.inject.Inject;
 
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
+import uk.colessoft.android.hilllist.ui.activity.dialogs.BaseActivity;
 
-public class BaggingExportActivity extends AppCompatActivity {
+public class BaggingExportActivity extends BaseActivity {
 
     private static final int READ_REQUEST_CODE = 42;
     private static final int WRITE_REQUEST_CODE = 43;

@@ -1,6 +1,7 @@
 package uk.colessoft.android.hilllist.ui.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.support.AndroidSupportInjection;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.domain.HillDetail;
@@ -134,6 +136,11 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     private BitmapDescriptor cmarker;
 
 
+    @Override
+    public void onAttach(Activity activity) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(activity);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

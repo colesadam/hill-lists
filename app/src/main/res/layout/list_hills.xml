@@ -5,14 +5,24 @@
 <LinearLayout
 	android:orientation="vertical" android:layout_width="match_parent"
 	android:layout_height="wrap_content">
-	<LinearLayout android:visibility="gone" android:id="@+id/location_progress" 
+
+	<ProgressBar
+		android:id="@+id/loadingProgressBar"
+		style="@android:style/Widget.ProgressBar.Large"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:indeterminate="true" />
+	<LinearLayout android:visibility="gone" android:id="@+id/location_progress"
 		android:orientation="horizontal" android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:layout_gravity="center_vertical"
 		android:gravity="center_vertical" android:background="@color/v_dark_grey"
 		android:padding="5dp">
-		<ProgressBar android:layout_height="wrap_content"
-			android:id="@+id/progressBar1" android:layout_width="wrap_content"
-			style="@android:style/Widget.ProgressBar.Small"></ProgressBar>
+
+		<ProgressBar
+			android:layout_height="wrap_content"
+			android:id="@+id/progressBar1"
+			android:layout_width="wrap_content"
+			style="@android:style/Widget.ProgressBar.Small" />
 		<TextView android:textColor="@color/red" android:layout_height="wrap_content" android:text="@string/refresh_location"
 			android:layout_width="match_parent" android:gravity="right"></TextView>
 	</LinearLayout>

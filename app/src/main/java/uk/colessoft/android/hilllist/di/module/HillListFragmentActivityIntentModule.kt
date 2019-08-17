@@ -11,9 +11,9 @@ import uk.colessoft.android.hilllist.domain.HillSearch
 class HillListFragmentActivityIntentModule {
     @Provides
     fun providesHillSearch(activity: HillListFragmentActivity): HillSearch {
-        val hillType = activity.intent.getSerializableExtra("hilltype") as String
+        val hillType: String? = activity.intent.getSerializableExtra("hilltype") as String?
         val country = {
-            val c: Int = activity.intent.getSerializableExtra("country") as Int
+            val c: Int? = activity.intent.getSerializableExtra("country") as Int?
             val x: CountryClause = when (c) {
                 Main.ENGLAND -> CountryClause.ENGLAND
                 Main.SCOTLAND -> CountryClause.SCOTLAND

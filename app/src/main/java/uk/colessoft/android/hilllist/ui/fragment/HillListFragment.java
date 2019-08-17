@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -65,6 +66,7 @@ public class HillListFragment extends DaggerFragment {
     private OnHillSelectedListener hillSelectedListener;
     private CheckBoxListener checkBoxListener;
     private HillListViewModel viewModel;
+    private ProgressBar progressBar;
 
     private int currentRowId;
     private ProgressDialog dialog;
@@ -126,6 +128,7 @@ public class HillListFragment extends DaggerFragment {
                 String updateTitle = hilllistType + " - " + String.valueOf(newHills.size())
                         + " hills found";
                 getActivity().setTitle(updateTitle);
+                progressBar.setVisibility(View.GONE);
             }
         };
 
@@ -152,6 +155,7 @@ public class HillListFragment extends DaggerFragment {
         View viewer = inflater.inflate(R.layout.list_hills, container, false);
         hillsView = viewer
                 .findViewById(R.id.myListView);
+        progressBar = viewer.findViewById(R.id.loadingProgressBar);
         hillsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         df3.isParseIntegerOnly();
         super.onCreate(savedInstanceState);

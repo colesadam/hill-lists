@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
 
+import dagger.android.support.AndroidSupportInjection;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
@@ -69,6 +70,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
     @Override
     public void onAttach(Activity activity) {
+        AndroidSupportInjection.inject(this);
         super.onAttach(activity);
         try {
             hillSelectedListener = (OnHillSelectedListener) activity;

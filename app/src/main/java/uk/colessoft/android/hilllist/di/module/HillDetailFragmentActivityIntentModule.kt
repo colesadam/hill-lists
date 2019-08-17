@@ -13,8 +13,6 @@ class HillDetailFragmentActivityIntentModule {
     @Provides
     fun providesHillId(activity: HillDetailFragmentActivity): Long {
         val rowid = activity.intent.getSerializableExtra("rowid") as Long
-
-
         return rowid
     }
 

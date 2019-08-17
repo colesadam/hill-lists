@@ -44,6 +44,7 @@ import uk.colessoft.android.hilllist.domain.HillDetail;
 import uk.colessoft.android.hilllist.ui.viewmodel.HillDetailViewModel;
 import uk.colessoft.android.hilllist.ui.viewmodel.HillHoldingViewModel;
 import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel;
+import uk.colessoft.android.hilllist.utility.Util;
 
 
 public class HillDetailFragment extends DaggerFragment {
@@ -332,7 +333,7 @@ public class HillDetailFragment extends DaggerFragment {
         String[] sClassifications = hillDetail.getHill().getClassification().replace("\"", "").split(",");
         TextView classificationTextView = null;
         for (String classification : sClassifications) {
-            String fullClassification = classesMap.get(classification);
+            String fullClassification = Util.classesMap.get(classification);
             if (fullClassification != null) {
                 classificationTextView = new TextView(getActivity());
                 // classificationTextView.setBackgroundResource(R.color.white);
@@ -362,62 +363,6 @@ public class HillDetailFragment extends DaggerFragment {
                 .append(mMonth + 1).append("/").append(mYear));
     }
 
-    private static final HashMap<String, String> classesMap = new HashMap<String, String>() {
-        {
-            put("M", "Munro");
-            put("MT", "Munro Top");
-            put("Ma", "Marilyn");
-            put("twinMa", "Marilyn twin-top");
-            put("sMa", "Sub-Marilyn");
-            put("Mur", "Murdo");
-            put("sMur", "Sub-Murdo");
-            put("ssMur", "double Sub-Murdo");
-            put("C", "Corbett");
-            put("CT", "Corbett Tops (all)");
-            put("CTM", "Corbett Top of Munro");
-            put("CTC", "Corbett Top of Corbett");
-            put("G", "Graham");
-            put("GT", "Graham Tops (all)");
-            put("GTM", "Graham Top of Munro");
-            put("GTC", "Graham Top of Corbett");
-            put("GTG", "Graham Top of Graham");
-            put("sG", "Sub-Graham");
-            put("ssG", "double Sub-Graham");
-            put("D", "Donald");
-            put("DT", "Donald Top");
-            put("N", "Nuttall");
-            put("Hew", "Hewitt");
-            put("sHew", "Sub-Hewitt");
-            put("ssHew", "double Sub-Hewitt");
-            put("W", "Wainwright");
-            put("WO", "Wainwright Outlying Fell");
-            put("Dewey", "Dewey");
-            put("B", "Birkett");
-            put("Hu", "HuMP");
-            put("twinHu", "HuMP twin-top");
-            put("CoH", "Historic County Top");
-            put("CoU", "Current County/UA Top");
-            put("CoA", "Administrative County Top");
-            put("CoL", "London Borough Top");
-            put("twinCoU", "Twin Current County/UA Top");
-            put("twinCoA", "Twin Administrative County Top");
-            put("twinCoL", "Twin London Borough Top");
-            put("xMT", "Deleted Munro Top");
-            put("xMa", "Deleted Marilyn");
-            put("xsMa", "Deleted Sub-Marilyn");
-            put("xC", "Deleted Corbett");
-            put("xCT", "Deleted Corbett Top");
-            put("xDT", "Deleted Donald Top");
-            put("xN", "Deleted Nuttall");
-            put("x5", "Deleted Dewey");
-            put("xHu", "Deleted HuMP");
-            put("xCoH", "Deleted County Top");
-            put("BL", "Buxton & Lewis");
-            put("Bg", "Bridge");
-            put("T100", "Trail 100");
-
-        }
-    };
 
     private void updateFromPreferences() {
         Context context = getActivity().getApplicationContext();

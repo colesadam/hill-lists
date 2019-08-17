@@ -40,9 +40,10 @@ import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.domain.Business;
 import uk.colessoft.android.hilllist.domain.HillDetail;
 import uk.colessoft.android.hilllist.domain.ScootXMLHandler;
+import uk.colessoft.android.hilllist.ui.activity.dialogs.BaseActivity;
 import uk.colessoft.android.hilllist.utility.LatLangBounds;
 
-public class BusinessSearchMapActivity extends AppCompatActivity implements GoogleMap.OnInfoWindowClickListener,LoaderManager.LoaderCallbacks<ArrayList>, OnMapReadyCallback {
+public class BusinessSearchMapActivity extends BaseActivity implements GoogleMap.OnInfoWindowClickListener,LoaderManager.LoaderCallbacks<ArrayList>, OnMapReadyCallback {
 
     //private MapView mapView;
     private double lat;

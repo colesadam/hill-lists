@@ -25,7 +25,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 	private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0x00001;
 	public static final int MAX = 20782;
 	private Thread splashThread;
-	private ProgressDialog progressDialog;
 
 	@Inject
     BritishHillsDatasource dbAdapter;
@@ -39,13 +38,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 		setContentView(R.layout.splash);
 		TextView link=(TextView) findViewById(R.id.TextView03);
 		Linkify.addLinks(link, Linkify.ALL);
-
-		progressDialog = new ProgressDialog(SplashScreenActivity.this);
-		progressDialog.setTitle("Updating Database");
-		progressDialog.setMax(MAX);
-		progressDialog.setCancelable(false);
-		progressDialog.setCanceledOnTouchOutside(false);
-		progressDialog.show();
 
 
 		splashThread = new Thread() {

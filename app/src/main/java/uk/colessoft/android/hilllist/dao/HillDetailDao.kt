@@ -36,7 +36,7 @@ abstract class HillDetailDao {
     }
 
     private fun whereClause(groupId: String?, country: CountryClause?, moreFilters: String?): String {
-        if ("T100" == groupId) return getT100(moreFilters)
+        if ("T100" == groupId) return "WHERE " + getT100(moreFilters)
 
         fun groupClause(groupId: String?): String {
             return groupId?.split(",")?.fold("") { currentValue, result ->
@@ -52,7 +52,7 @@ abstract class HillDetailDao {
     }
 
     private fun getT100(moreFilters: String?): String {
-        return "$hillQuery WHERE " + addToWhere(moreFilters, "T100='1'")
+        return addToWhere(moreFilters, "T100='1'")
     }
 
     private fun addToWhere(filter: String?, where: String): String {
