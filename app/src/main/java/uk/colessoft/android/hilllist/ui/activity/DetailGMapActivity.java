@@ -38,7 +38,7 @@ public class DetailGMapActivity extends BaseActivity implements GoogleMap.OnInfo
     private GoogleMap map;
 
     private HillDetail hillDetail;
-    private int rowid;
+    private long rowid;
     private boolean firstRun = true;
 
     @Override
@@ -86,7 +86,7 @@ public class DetailGMapActivity extends BaseActivity implements GoogleMap.OnInfo
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        rowid = getIntent().getExtras().getInt("rowid");
+        rowid = getIntent().getExtras().getLong("rowid");
         String title = getIntent().getExtras().getString("title");
         setTitle(title);
         hillDetail = dbAdapter.getHill(rowid);
@@ -207,7 +207,7 @@ public class DetailGMapActivity extends BaseActivity implements GoogleMap.OnInfo
         Intent intent = new Intent(DetailGMapActivity.this,
                 HillDetailFragmentActivity.class);
 
-        intent.putExtra("rowid", (Integer) marker.getTag());
+        intent.putExtra("rowid",  (Long)marker.getTag());
 
         startActivity(intent);
 

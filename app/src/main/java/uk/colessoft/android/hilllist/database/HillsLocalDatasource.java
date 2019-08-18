@@ -161,24 +161,24 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     public Cursor getAllHillsCursor() {
         Log.d(TAG, "getAllHillsCursor: ######## getting all hills");
         SupportSQLiteDatabase db = getReadableDatabase();
-        return db.query(HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
-                        + " ON (" + HILLS_TABLE + ".tl_id" + "=" + BAGGING_TABLE
-                        + ".tl_id)", new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
-                        KEY_NOTES, KEY_DATECLIMBED});
+        return db.query("select " + HILLS_TABLE + "." + KEY_ID + " as hill_id ,"+ KEY_LATITUDE +"," + KEY_LONGITUDE+","+ KEY_HEIGHTM+","+ KEY_HEIGHTF+","+ KEY_HILLNAME+","+
+                KEY_NOTES+","+ KEY_DATECLIMBED +" from "+ HILLS_TABLE + " LEFT OUTER JOIN " + BAGGING_TABLE
+                        + " ON (" + HILLS_TABLE + ".h_id" + "=" + BAGGING_TABLE
+                        + ".b_id)");
     }
 
     @Override
     public Cursor getHillsForNearby() {
         Log.d(TAG, "getHillsForNearby: ######## getting all hills");
         SupportSQLiteDatabase db = getReadableDatabase();
-        return db.query(HILLS_TABLE, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME});
+        return db.query("select " + HILLS_TABLE, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME});
 
     }
 
     @Override
     public Cursor getBaggedHillList() {
         SupportSQLiteDatabase db = getReadableDatabase();
-        return db.query(HILLS_TABLE + " INNER JOIN " + BAGGING_TABLE + " ON ("
+        return db.query("select " + HILLS_TABLE + " INNER JOIN " + BAGGING_TABLE + " ON ("
                         + HILLS_TABLE + ".tl_id" + "=" + BAGGING_TABLE + ".tl_id)",
                 new String[]{HILLS_TABLE + "." + KEY_ID, KEY_HILLNAME,
                         KEY_DATECLIMBED, KEY_NOTES});
@@ -432,7 +432,11 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
                 _section,"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""));
         System.out.println(result.getHill().getClassification());
         Date finalDateClimbed = dateClimbed;
-        result.setBagging(new ArrayList<Bagging>(){{add(new Bagging(_id, finalDateClimbed,notes));}});
+        if(finalDateClimbed != null) {
+            result.setBagging(new ArrayList<Bagging>() {{
+                add(new Bagging(_id, finalDateClimbed, notes));
+            }});
+        }
         return result;
 
     }

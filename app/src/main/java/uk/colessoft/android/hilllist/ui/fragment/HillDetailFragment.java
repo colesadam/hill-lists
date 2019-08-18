@@ -256,6 +256,7 @@ public class HillDetailFragment extends DaggerFragment {
             @Override
             public void onChanged(@Nullable final HillDetail hillDetail) {
                 selectedHill = hillDetail;
+                thisId = hillDetail.getHill().getH_id();
                 updateHill(hillDetail);
                 Log.d("ChangedData", "Hill returned:" + hillDetail.getHill().getHillname());
 

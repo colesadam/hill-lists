@@ -72,7 +72,7 @@ public class BusinessSearchMapActivity extends BaseActivity implements GoogleMap
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        int rowid = getIntent().getExtras().getInt("rowid");
+        long rowid = getIntent().getExtras().getLong("rowid");
         String title = getIntent().getExtras().getString("title");
         search_string = getIntent().getExtras().getString("search_string");
         setTitle(title);
