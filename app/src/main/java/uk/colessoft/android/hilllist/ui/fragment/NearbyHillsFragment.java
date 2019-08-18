@@ -63,7 +63,7 @@ public class NearbyHillsFragment extends DaggerFragment implements
 
 
     public interface OnHillSelectedListener {
-        void onHillSelected(int rowid);
+        void onHillSelected(long rowid);
     }
 
     @Override
@@ -343,9 +343,9 @@ public class NearbyHillsFragment extends DaggerFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        viewer = inflater.inflate(R.layout.list_hills, container, false);
+        viewer = inflater.inflate(R.layout.list_hills_legacy, container, false);
         hillListView = (ListView) viewer
-                .findViewById(R.id.myListView);
+                .findViewById(R.id.myListViewLegacy);
 
         return viewer;
     }
@@ -441,7 +441,7 @@ public class NearbyHillsFragment extends DaggerFragment implements
                 Context.LOCATION_SERVICE);
         locationListener = new MyLocationListener();
         updateFromPreferences();
-        locationProgress = viewer.findViewById(R.id.location_progress);
+        locationProgress = viewer.findViewById(R.id.location_progress2);
         locationProgress.setVisibility(View.VISIBLE);
         locationSet = false;
 
@@ -552,7 +552,7 @@ public class NearbyHillsFragment extends DaggerFragment implements
 
         if (fragment != null && fragment.isInLayout()) {
             if (nearbyHills != null && nearbyHills.size() > 0) {
-                hillSelectedListener.onHillSelected((Integer) (nearbyHills
+                hillSelectedListener.onHillSelected((Long) (nearbyHills
                         .get(0)).get("rowid"));
             }
         }

@@ -50,9 +50,6 @@ public class HillListFragment extends DaggerFragment {
 
     private List<HillDetail> hills;
 
-    @Inject
-    BritishHillsDatasource dbAdapter;
-
     private String where = null;
     private String orderBy;
 

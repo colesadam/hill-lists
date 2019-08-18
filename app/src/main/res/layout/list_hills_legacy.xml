@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+<LinearLayout
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<LinearLayout android:visibility="gone" android:id="@+id/location_progress2"
+		android:orientation="horizontal" android:layout_width="match_parent"
+		android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+		android:gravity="center_vertical" android:background="@color/v_dark_grey"
+		android:padding="5dp">
+
+		<ProgressBar
+			android:layout_height="wrap_content"
+			android:id="@+id/progressBar1egacy"
+			android:layout_width="wrap_content"
+			style="@android:style/Widget.ProgressBar.Small" />
+		<TextView android:textColor="@color/red" android:layout_height="wrap_content" android:text="@string/refresh_location"
+			android:layout_width="match_parent" android:gravity="right"></TextView>
+	</LinearLayout>
+	<ListView android:id="@+id/myListViewLegacy" android:layout_width="match_parent"
+		android:layout_height="wrap_content" android:textSize="15sp"
+		android:background="@color/cardview_light_background" />
+</LinearLayout>
+	</androidx.cardview.widget.CardView>

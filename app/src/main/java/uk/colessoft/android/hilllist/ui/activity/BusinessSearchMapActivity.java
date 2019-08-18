@@ -227,7 +227,7 @@ public class BusinessSearchMapActivity extends BaseActivity implements GoogleMap
         public ArrayList loadInBackground() {
             /* Create a URL we want to load some xml-data from. */
             try {
-                URL url = new URL("http://www.scoot.co.uk/api/find.php?lat=" + lat1
+                URL url = new URL("https://www.scoot.co.uk/api/find.php?lat=" + lat1
                         + "&long=" + lon1 + "&format=xml&what=" + searchString);
 
 				/* Get a SAXParser from the SAXPArserFactory. */

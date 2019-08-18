@@ -126,7 +126,7 @@ public class BusinessDetailActivity extends AppCompatActivity implements
 		public Business loadInBackground() {
 			try{
 			/* Create a URL we want to load some xml-data from. */
-			URL url = new URL("http://www.scoot.co.uk/api/find.php?lat=" + lat
+			URL url = new URL("https://www.scoot.co.uk/api/find.php?lat=" + lat
 					+ "&long=" + lon + "&format=xml&what=" + searchString);
 
 			/* Get a SAXParser from the SAXPArserFactory. */

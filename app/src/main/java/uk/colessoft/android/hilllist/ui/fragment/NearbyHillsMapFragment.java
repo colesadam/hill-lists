@@ -43,7 +43,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     private final List<Marker> markers = new ArrayList<>();
 
     public interface HillTappedListener {
-        void hillTapped(int rowid);
+        void hillTapped(long rowid);
     }
 
     @Override
@@ -191,7 +191,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
     }
 
 
-    public void moveMarker(int rowid) {
+    public void moveMarker(long rowid) {
 
         int index = 0;
         for (Marker item : markers) {
@@ -206,7 +206,7 @@ public class NearbyHillsMapFragment extends SupportMapFragment implements Google
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        ((HillTappedListener) getActivity()).hillTapped((Integer) marker.getTag());
+        ((HillTappedListener) getActivity()).hillTapped((Long) marker.getTag());
     }
 
     @Override

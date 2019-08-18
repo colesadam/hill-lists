@@ -8,11 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.ui.activity.dialogs.BaseActivity;
 import uk.colessoft.android.hilllist.ui.fragment.HillDetailFragment;
 import uk.colessoft.android.hilllist.ui.fragment.NearbyHillsFragment.MyLocationListener;
 import uk.colessoft.android.hilllist.ui.fragment.NearbyHillsFragment.OnLocationFoundListener;
 
-public class NearbyHillsFragmentActivity extends AppCompatActivity
+public class NearbyHillsFragmentActivity extends BaseActivity
 		implements
 		OnLocationFoundListener,
 		uk.colessoft.android.hilllist.ui.fragment.NearbyHillsFragment.OnHillSelectedListener {
@@ -59,7 +60,7 @@ public class NearbyHillsFragmentActivity extends AppCompatActivity
 
 	}
 
-	public void onHillSelected(int rowid) {
+	public void onHillSelected(long rowid) {
 		HillDetailFragment fragment = (HillDetailFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.hill_detail_fragment);
 

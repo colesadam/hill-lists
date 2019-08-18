@@ -10,11 +10,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.ui.activity.dialogs.BaseActivity;
 import uk.colessoft.android.hilllist.ui.fragment.NearbyHillsFragment;
 import uk.colessoft.android.hilllist.ui.fragment.NearbyHillsMapFragment;
 
 
-public class NearbyHillsMapFragmentActivity extends AppCompatActivity implements NearbyHillsFragment.OnLocationFoundListener, NearbyHillsFragment.OnHillSelectedListener, NearbyHillsMapFragment.HillTappedListener {
+public class NearbyHillsMapFragmentActivity extends BaseActivity implements NearbyHillsFragment.OnLocationFoundListener, NearbyHillsFragment.OnHillSelectedListener, NearbyHillsMapFragment.HillTappedListener {
     boolean useMetricHeights;
     boolean useMetricDistances;
 
@@ -42,7 +43,7 @@ public class NearbyHillsMapFragmentActivity extends AppCompatActivity implements
 
     }
 
-    public void onHillSelected(int rowid) {
+    public void onHillSelected(long rowid) {
         NearbyHillsMapFragment fragment = (NearbyHillsMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nearby_hills_map_fragment);
 
@@ -69,7 +70,7 @@ public class NearbyHillsMapFragmentActivity extends AppCompatActivity implements
 
 
     @Override
-    public void hillTapped(int rowid) {
+    public void hillTapped(long rowid) {
 
         Intent intent = new Intent(this, HillDetailFragmentActivity.class);
         intent.putExtra("rowid", rowid);
