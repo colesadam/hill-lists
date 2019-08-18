@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.dao.IsHillClimbed;
+import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity;
 import uk.colessoft.android.hilllist.ui.activity.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.ui.activity.Main;
@@ -51,13 +53,13 @@ public class HillListFragment extends DaggerFragment {
     private List<HillDetail> hills;
 
     private String where = null;
-    private String orderBy;
+    private String orderBy= "cast(" + HillsTables.KEY_HEIGHTM + " as float)" + " desc";;
 
     private RecyclerView hillsView;
     private boolean useMetricHeights;
-    private String hilltype;
+    //private String hilltype;
     private String hilllistType;
-    private String countryClause;
+    //private String countryClause;
     private final DecimalFormat df3 = new DecimalFormat();
     private int filterHills;
     private OnHillSelectedListener hillSelectedListener;
@@ -73,7 +75,7 @@ public class HillListFragment extends DaggerFragment {
 
 
     public interface OnHillSelectedListener {
-        void onHillSelected(HillDetail hillDetail);
+        void onHillSelected(Long hillId);
     }
 
     public interface CheckBoxListener {
@@ -183,11 +185,14 @@ public class HillListFragment extends DaggerFragment {
 
             }
             case (R.id.menu_list_alpha): {
+                orderBy = KEY_HILLNAME;
                 viewModel.orderHills(HillsOrder.NAME_ASC);
                 return true;
             }
 
             case (R.id.menu_list_height): {
+                orderBy = "cast(" + HillsTables.KEY_HEIGHTM + " as float)"
+                        + " desc";
                 viewModel.orderHills(HillsOrder.HEIGHT_DESC);
                 return true;
             }
@@ -208,9 +213,33 @@ public class HillListFragment extends DaggerFragment {
                 return true;
             }
             case (R.id.menu_show_map): {
+                String countryClause="";
+                switch ((Integer)getActivity().getIntent().getSerializableExtra("country")) {
+                    case Main.SCOTLAND: {
+                        countryClause = "cast(_Section as float) between 1 and 28.9";
+                        break;
+
+                    }
+                    case Main.WALES: {
+                        countryClause = "cast(_Section as float) between 30 and 32.9";
+                        break;
+
+                    }
+                    case Main.ENGLAND: {
+                        countryClause = "cast(_Section as float) between 33 and 42.9";
+                        break;
+
+                    }
+                    case Main.OTHER_GB: {
+                        countryClause = "_Section='29' OR (cast(_Section as float) between 43 and 45)";
+                        break;
+
+                    }
+
+                }
                 Intent intent = new Intent(getActivity(),
                         ListHillsMapFragmentActivity.class);
-                intent.putExtra("groupId", hilltype);
+                intent.putExtra("groupId", (String)getActivity().getIntent().getSerializableExtra("hilltype"));
                 intent.putExtra("orderBy", orderBy);
                 intent.putExtra("moreWhere", where);
                 intent.putExtra("countryClause", countryClause);
@@ -256,12 +285,30 @@ public class HillListFragment extends DaggerFragment {
                 return true;
             }
             case (R.id.menu_all_climbed): {
-                viewModel.markAllHillsClimbed();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Mark all hills in list as climbed?")
+                        .setMessage("THIS WILL OVERWRITE ALL BAGGING DATA FOR THESE HILLS.")
+                        .setPositiveButton("Go ahead", (dialog, which) -> {
+                            viewModel.markAllHillsClimbed();
+                            Log.d("HillListFragment", "Marking all hills climbed");
+                        })
+                        .setNegativeButton("Don't do it", (dialog, which) ->
+                                Log.d("HillListFragment", "Aborting bagger all..."))
+                        .show();
                 return true;
             }
 
             case (R.id.menu_none_climbed): {
-                viewModel.markAllHillsNotClimbed();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Mark all hills in list as unclimbed?")
+                        .setMessage("THIS WILL DELETE ALL BAGGING DATA FOR THESE HILLS.")
+                        .setPositiveButton("Go ahead", (dialog, which) -> {
+                            viewModel.markAllHillsNotClimbed();
+                            Log.d("HillListFragment", "Marking all hills unclimbed");
+                        })
+                        .setNegativeButton("Don't do it", (dialog, which) ->
+                                Log.d("HillListFragment", "Aborting unbagger all..."))
+                        .show();
                 return true;
             }
         }

@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity
 import uk.colessoft.android.hilllist.ui.activity.HillListFragmentActivity
+import uk.colessoft.android.hilllist.ui.activity.ListHillsMapFragmentActivity
 
 @Module
 abstract class AndroidInjectorsModule {
@@ -13,4 +14,7 @@ abstract class AndroidInjectorsModule {
 
     @ContributesAndroidInjector(modules = [HillDetailFragmentActivityIntentModule::class])
     abstract fun contributeHillDetailActivity(): HillDetailFragmentActivity
+
+    @ContributesAndroidInjector(modules = [ListHillsMapFragmentActivityIntentModule::class])
+    abstract fun contributeListHillsMapActivity(): ListHillsMapFragmentActivity
 }

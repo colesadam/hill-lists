@@ -18,6 +18,9 @@ abstract class ActivityBuilder {
     internal abstract fun bindDisplayHillListFragment(): HillListFragment
 
     @ContributesAndroidInjector
+    internal abstract fun bindListHillsMapFragment(): ListHillsMapFragment
+
+    @ContributesAndroidInjector
     internal abstract fun bindHillDetailFragment(): HillDetailFragment
 
     @ContributesAndroidInjector
@@ -33,9 +36,6 @@ abstract class ActivityBuilder {
     internal abstract fun bindHillImagesActivity(): HillImagesActivity
 
     @ContributesAndroidInjector
-    internal abstract fun bindListHillsMapFragment(): ListHillsMapFragment
-
-    @ContributesAndroidInjector
     internal abstract fun bindNearbyHillsFragment(): NearbyHillsFragment
 
     @ContributesAndroidInjector
@@ -46,5 +46,6 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     internal abstract fun bindNearbyHillsMapFragmentActivity(): NearbyHillsMapFragmentActivity
+
 
 }

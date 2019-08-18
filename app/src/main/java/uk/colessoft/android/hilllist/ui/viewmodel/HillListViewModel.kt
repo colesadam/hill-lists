@@ -96,8 +96,8 @@ class HillListViewModel @Inject constructor(override val repository: BritishHill
         hills.value
     }
 
-    fun select(hill: HillDetail) {
-        selectLiveData.value = hill.hill.h_id
+    fun select(hillId: Long) {
+        selectLiveData.value = hillId
     }
 
 }

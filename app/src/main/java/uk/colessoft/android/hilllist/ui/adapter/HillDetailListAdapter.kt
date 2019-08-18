@@ -59,7 +59,7 @@ class HillDetailListAdapter(private var dataset: List<HillDetail>, private var l
         }
         holder.view.setOnClickListener(object:View.OnClickListener {
             override fun onClick(v: View?) {
-            listener.onHillSelected(hill);
+            listener.onHillSelected(hill.hill.h_id);
         } })
 
         checked.setOnClickListener(object:View.OnClickListener {
