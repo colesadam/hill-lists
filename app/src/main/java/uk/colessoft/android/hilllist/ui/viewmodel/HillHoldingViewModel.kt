@@ -7,7 +7,7 @@ import uk.colessoft.android.hilllist.domain.HillDetail
 import uk.colessoft.android.hilllist.domain.entity.Bagging
 
 abstract class HillHoldingViewModel: ViewModel() {
-    abstract val selected : LiveData<HillDetail>
+    abstract val selected : LiveData<HillDetail>?
     abstract val repository: BritishHillsDatasource
 
     fun markHillClimbed(bagging: Bagging) {

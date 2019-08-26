@@ -44,11 +44,14 @@ abstract class HillDetailDao {
             }?.trim { it <= ' ' }?.dropLast(3) ?: ""
         }
 
-        return "WHERE " + addToWhere(moreFilters,
-                addToWhere(country?.sql,
-                        addToWhere(groupClause(groupId), "")
-                )
-        ).removeSuffix(" AND ")
+        if (groupId != null || country != null || moreFilters != null) {
+            return "WHERE " + addToWhere(moreFilters,
+                    addToWhere(country?.sql,
+                            addToWhere(groupClause(groupId), "")
+                    )
+            ).removeSuffix(" AND ")
+        } else return ""
+
     }
 
     private fun getT100(moreFilters: String?): String {

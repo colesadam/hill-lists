@@ -205,7 +205,7 @@ public class DetailGMapActivity extends BaseActivity implements GoogleMap.OnInfo
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent intent = new Intent(DetailGMapActivity.this,
-                HillDetailFragmentActivity.class);
+                HillDetailActivity.class);
 
         intent.putExtra("rowid",  (Long)marker.getTag());
 

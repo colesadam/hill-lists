@@ -29,14 +29,13 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.domain.entity.Bagging;
 import uk.colessoft.android.hilllist.ui.activity.BusinessSearchMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.DetailGMapActivity;
-import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity;
+import uk.colessoft.android.hilllist.ui.activity.HillDetailActivity;
 import uk.colessoft.android.hilllist.ui.activity.HillImagesActivity;
 import uk.colessoft.android.hilllist.ui.activity.OsMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.PreferencesActivity;
@@ -246,7 +245,7 @@ public class HillDetailFragment extends DaggerFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         Activity parent = getActivity();
-        if(parent instanceof HillDetailFragmentActivity) {
+        if(parent instanceof HillDetailActivity) {
             viewModel = ViewModelProviders.of(getActivity()).get(HillDetailViewModel.class);
         }else{
             viewModel = ViewModelProviders.of(getActivity()).get(HillListViewModel.class);

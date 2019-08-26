@@ -112,7 +112,7 @@ public class OtherGBHillsActivity extends AppCompatActivity {
 
 	private void showHills(String hilltype, String hilllistType) {
 		Intent intent = new Intent(OtherGBHillsActivity.this,
-				HillListFragmentActivity.class);
+				HillListActivity.class);
 		intent.putExtra("hilllistType", hilllistType);
 		intent.putExtra("hilltype", hilltype);
 		if (countryFlag)

@@ -12,11 +12,6 @@
         android:title="@string/list_by_height"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menu_show_map"
-        android:icon="@android:drawable/ic_menu_mapmode"
-        android:title="@string/show_map"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/menu_search"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search_list"

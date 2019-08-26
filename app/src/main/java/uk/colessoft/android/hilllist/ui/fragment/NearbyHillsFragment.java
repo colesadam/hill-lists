@@ -47,7 +47,7 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.ui.activity.Main;
-import uk.colessoft.android.hilllist.ui.activity.NearbyHillsMapFragmentActivity;
+import uk.colessoft.android.hilllist.ui.activity.NearbyHillsMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
@@ -264,7 +264,7 @@ public class NearbyHillsFragment extends DaggerFragment implements
             }
             case (R.id.menu_show_map): {
                 Intent intent = new Intent(getActivity(),
-                        NearbyHillsMapFragmentActivity.class);
+                        NearbyHillsMapActivity.class);
                 String[] rowIds;
                 int sindex = 0;
                 if (nearbyHills != null) {
@@ -536,7 +536,7 @@ public class NearbyHillsFragment extends DaggerFragment implements
         hillListView.setAdapter(nearbyHillsAdapter);
         hillListView.setOnItemClickListener((parent, view, pos, id) -> {
             HashMap entry = (HashMap) nearbyHills.get(pos);
-            int rowId = (Integer) entry.get("rowid");
+            long rowId = (Long) entry.get("rowid");
 
             hillSelectedListener.onHillSelected(rowId);
 
@@ -709,7 +709,7 @@ public class NearbyHillsFragment extends DaggerFragment implements
                     double distanceKm = DistanceCalculator
                             .calculationByDistance(lat1, lat / 1E6, lon1,
                                     lng / 1E6);
-                    int row_id = hillsCursor.getInt(hillsCursor
+                    long row_id = hillsCursor.getLong(hillsCursor
                             .getColumnIndex(HillsTables.KEY_HILL_ID));
                     Log.d(TAG, "############"+row_id);
                     if (distanceKm < nearRadius) {

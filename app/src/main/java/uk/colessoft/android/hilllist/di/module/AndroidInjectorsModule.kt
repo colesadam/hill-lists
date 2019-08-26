@@ -2,19 +2,23 @@ package uk.colessoft.android.hilllist.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity
-import uk.colessoft.android.hilllist.ui.activity.HillListFragmentActivity
-import uk.colessoft.android.hilllist.ui.activity.ListHillsMapFragmentActivity
+import uk.colessoft.android.hilllist.ui.activity.HillDetailActivity
+import uk.colessoft.android.hilllist.ui.activity.HillListActivity
+import uk.colessoft.android.hilllist.ui.activity.HillListMapActivity
+import uk.colessoft.android.hilllist.ui.activity.NearbyHillsActivity
 
 @Module
 abstract class AndroidInjectorsModule {
 
-    @ContributesAndroidInjector(modules = [HillListFragmentActivityIntentModule::class])
-    abstract fun contributeHillListActivity(): HillListFragmentActivity
+    @ContributesAndroidInjector(modules = [HillListActivityIntentModule::class])
+    abstract fun contributeHillListActivity(): HillListActivity
 
-    @ContributesAndroidInjector(modules = [HillDetailFragmentActivityIntentModule::class])
-    abstract fun contributeHillDetailActivity(): HillDetailFragmentActivity
+    @ContributesAndroidInjector(modules = [HillDetailActivityIntentModule::class])
+    abstract fun contributeHillDetailActivity(): HillDetailActivity
 
-    @ContributesAndroidInjector(modules = [ListHillsMapFragmentActivityIntentModule::class])
-    abstract fun contributeListHillsMapActivity(): ListHillsMapFragmentActivity
+    @ContributesAndroidInjector(modules = [HillListMapActivityIntentModule::class])
+    abstract fun contributeHillListMapActivity(): HillListMapActivity
+
+    @ContributesAndroidInjector(modules = [NearbyHillsActivityIntentModule::class])
+    abstract fun contributeNearbyHillsActivity(): NearbyHillsActivity
 }

@@ -42,10 +42,7 @@ abstract class ActivityBuilder {
     internal abstract fun bindNearbyHillsMapFragment(): NearbyHillsMapFragment
 
     @ContributesAndroidInjector
-    internal abstract fun bindNearbyHillsFragmentActivity(): NearbyHillsFragmentActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun bindNearbyHillsMapFragmentActivity(): NearbyHillsMapFragmentActivity
+    internal abstract fun bindNearbyHillsMapActivity(): NearbyHillsMapActivity
 
 
 }

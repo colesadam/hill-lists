@@ -13,14 +13,14 @@ import javax.inject.Inject
 import androidx.lifecycle.Transformations
 
 
-class HillListViewModel @Inject constructor(override val repository: BritishHillsDatasource, val hillSearch: HillSearch) : HillHoldingViewModel() {
+class HillListViewModel @Inject constructor(override val repository: BritishHillsDatasource, val hillSearch: HillSearch) : HillHoldingViewModel(),HillListingViewModel {
 
+    val hills: LiveData<List<HillDetail>>
 
     override val selected : LiveData<HillDetail>
-    val hills: LiveData<List<HillDetail>>
     private var currentOrder = HillsOrder.HEIGHT_DESC
     private var filterClimbed: IsHillClimbed? = null
-    private var searchString: String? = null
+    var searchString: String? = null
     private val filterLiveData = MutableLiveData<SearchFilter>()
     private val selectLiveData = MutableLiveData<Long>()
 
@@ -31,8 +31,11 @@ class HillListViewModel @Inject constructor(override val repository: BritishHill
             {
                 val whereClause = {
                     val climbedSql = filter?.climbed?.sql ?: ""
-                    val searchSql = filter?.searchString?.let { "${filter?.searchString}" }
-                            ?: ""
+                    val searchSql = {
+                        if(hillSearch.moreFilters != null) {
+                                    hillSearch.moreFilters
+                                } else filter?.searchString?.let { "${filter?.searchString}" }
+                            ?: ""}.invoke()
                     val and = filter?.climbed?.sql?.let { " AND " } ?: ""
                     "$climbedSql$and$searchSql"
                 }.invoke()
@@ -51,20 +54,6 @@ class HillListViewModel @Inject constructor(override val repository: BritishHill
         }
 
 
-    }
-
-
-    private fun sortHills(hills: List<HillDetail>, currentOrder: HillsOrder): List<HillDetail>? {
-        return when (currentOrder) {
-            HillsOrder.HEIGHT_ASC -> hills.sortedBy { it.hill.heightm }
-            HillsOrder.HEIGHT_DESC -> hills.sortedByDescending { it.hill.heightm }
-
-            HillsOrder.ID_ASC -> hills.sortedBy { it.hill.h_id }
-            HillsOrder.ID_DESC -> hills.sortedByDescending { it.hill.h_id }
-
-            HillsOrder.NAME_ASC -> hills.sortedBy { it.hill.hillname }
-            HillsOrder.NAME_DESC -> hills.sortedByDescending { it.hill.hillname }
-        }
     }
 
 
@@ -92,9 +81,6 @@ class HillListViewModel @Inject constructor(override val repository: BritishHill
         filterLiveData.value = SearchFilter(filterClimbed, searchString, currentOrder)
     }
 
-    fun reset() {
-        hills.value
-    }
 
     fun select(hillId: Long) {
         selectLiveData.value = hillId

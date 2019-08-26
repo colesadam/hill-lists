@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 
@@ -15,7 +14,7 @@ import uk.colessoft.android.hilllist.ui.fragment.NearbyHillsFragment;
 import uk.colessoft.android.hilllist.ui.fragment.NearbyHillsMapFragment;
 
 
-public class NearbyHillsMapFragmentActivity extends BaseActivity implements NearbyHillsFragment.OnLocationFoundListener, NearbyHillsFragment.OnHillSelectedListener, NearbyHillsMapFragment.HillTappedListener {
+public class NearbyHillsMapActivity extends BaseActivity implements NearbyHillsFragment.OnLocationFoundListener, NearbyHillsFragment.OnHillSelectedListener, NearbyHillsMapFragment.HillTappedListener {
     boolean useMetricHeights;
     boolean useMetricDistances;
 
@@ -72,7 +71,7 @@ public class NearbyHillsMapFragmentActivity extends BaseActivity implements Near
     @Override
     public void hillTapped(long rowid) {
 
-        Intent intent = new Intent(this, HillDetailFragmentActivity.class);
+        Intent intent = new Intent(this, HillDetailActivity.class);
         intent.putExtra("rowid", rowid);
         startActivity(intent);
 

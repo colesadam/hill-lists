@@ -22,7 +22,7 @@ import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel
 import uk.colessoft.android.hilllist.ui.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
-class HillDetailFragmentActivity : BaseActivity() {
+class HillDetailActivity : BaseActivity() {
 
     private val osLink: String? = null
 

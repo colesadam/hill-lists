@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
@@ -28,18 +27,13 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
 import uk.colessoft.android.hilllist.dao.IsHillClimbed;
 import uk.colessoft.android.hilllist.database.HillsTables;
-import uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity;
-import uk.colessoft.android.hilllist.ui.activity.ListHillsMapFragmentActivity;
 import uk.colessoft.android.hilllist.ui.activity.Main;
 import uk.colessoft.android.hilllist.ui.adapter.HillDetailListAdapter;
 import uk.colessoft.android.hilllist.dao.HillsOrder;
-import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.domain.entity.Bagging;
 import uk.colessoft.android.hilllist.domain.HillDetail;
 import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel;
@@ -211,43 +205,6 @@ public class HillListFragment extends DaggerFragment {
             case (R.id.menu_show_all): {
                 viewModel.filterClimbed(null);
                 return true;
-            }
-            case (R.id.menu_show_map): {
-                String countryClause="";
-                switch ((Integer)getActivity().getIntent().getSerializableExtra("country")) {
-                    case Main.SCOTLAND: {
-                        countryClause = "cast(_Section as float) between 1 and 28.9";
-                        break;
-
-                    }
-                    case Main.WALES: {
-                        countryClause = "cast(_Section as float) between 30 and 32.9";
-                        break;
-
-                    }
-                    case Main.ENGLAND: {
-                        countryClause = "cast(_Section as float) between 33 and 42.9";
-                        break;
-
-                    }
-                    case Main.OTHER_GB: {
-                        countryClause = "_Section='29' OR (cast(_Section as float) between 43 and 45)";
-                        break;
-
-                    }
-
-                }
-                Intent intent = new Intent(getActivity(),
-                        ListHillsMapFragmentActivity.class);
-                intent.putExtra("groupId", (String)getActivity().getIntent().getSerializableExtra("hilltype"));
-                intent.putExtra("orderBy", orderBy);
-                intent.putExtra("moreWhere", where);
-                intent.putExtra("countryClause", countryClause);
-                intent.putExtra("title", "Map of " + hilllistType);
-                intent.putExtra("selectedHill", currentRowId);
-                startActivity(intent);
-                return true;
-
             }
 
             case (R.id.menu_search): {

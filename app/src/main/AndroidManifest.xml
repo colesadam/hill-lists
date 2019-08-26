@@ -39,21 +39,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="uk.colessoft.android.hilllist.ui.activity.HillListFragmentActivity" />
+        <activity android:name="uk.colessoft.android.hilllist.ui.activity.HillListActivity" />
 
         <uses-library android:name="com.google.android.maps" />
 
         <activity
-            android:name="uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity"
+            android:name="uk.colessoft.android.hilllist.ui.activity.HillDetailActivity"
             android:label="Hill Details"
             android:launchMode="singleTop"/>
         <activity android:name="uk.colessoft.android.hilllist.ui.activity.Main" />
         <activity android:name="uk.colessoft.android.hilllist.ui.activity.AboutActivity" />
         <activity android:name="uk.colessoft.android.hilllist.ui.activity.BaggingExportActivity" />
         <activity android:name="uk.colessoft.android.hilllist.ui.activity.BusinessSearchMapActivity" />
-        <activity android:name="uk.colessoft.android.hilllist.ui.activity.NearbyHillsFragmentActivity" />
-        <activity android:name="uk.colessoft.android.hilllist.ui.activity.NearbyHillsMapFragmentActivity" />
-        <activity android:name="uk.colessoft.android.hilllist.ui.activity.ListHillsMapFragmentActivity" />
+        <activity android:name="uk.colessoft.android.hilllist.ui.activity.NearbyHillsActivity" />
+        <activity android:name="uk.colessoft.android.hilllist.ui.activity.NearbyHillsMapActivity" />
+        <activity android:name="uk.colessoft.android.hilllist.ui.activity.HillListMapActivity" />
         <activity android:name="uk.colessoft.android.hilllist.ui.activity.DetailGMapActivity" />
         <activity android:name="uk.colessoft.android.hilllist.ui.activity.BusinessDetailActivity" />
         <activity
@@ -81,10 +81,10 @@
         <activity
             android:name="uk.colessoft.android.hilllist.ui.activity.HillImagesActivity"
             android:label="@string/title_activity_hill_images"
-            android:parentActivityName="uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity">
+            android:parentActivityName="uk.colessoft.android.hilllist.ui.activity.HillDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uk.colessoft.android.hilllist.ui.activity.HillDetailFragmentActivity"
+                android:value="uk.colessoft.android.hilllist.ui.activity.HillDetailActivity"
                 />
         </activity>
     </application>

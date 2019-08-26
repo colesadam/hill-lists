@@ -81,7 +81,7 @@ public class Main extends BaseActivity {
 		View searchAll = findViewById(R.id.menu_search);
 
 		nearbyHills.setOnClickListener(v -> {
-            Intent intent = new Intent(Main.this, NearbyHillsFragmentActivity.class);
+            Intent intent = new Intent(Main.this, NearbyHillsActivity.class);
             startActivity(intent);
 
         });
@@ -151,7 +151,7 @@ public class Main extends BaseActivity {
 
 	private void search() {
 		final Intent intent = new Intent(Main.this,
-				HillListFragmentActivity.class);
+				HillListActivity.class);
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 

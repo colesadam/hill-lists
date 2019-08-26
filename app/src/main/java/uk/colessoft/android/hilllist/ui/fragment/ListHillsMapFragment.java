@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -59,11 +60,8 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     private OnHillSelectedListener hillSelectedListener;
     private View viewer;
     private ProgressDialog dialog;
-    private String hillType;
-    private String where;
-    private String orderBy;
-    private String countryClause;
-    private long passedRowId;
+
+    private Long passedRowId;
     private int selectedIndex = 0;
     private HillListViewModel viewModel;
 
@@ -71,6 +69,7 @@ public class ListHillsMapFragment extends SupportMapFragment implements
     private GoogleMap map;
     private BitmapDescriptor marker;
     private BitmapDescriptor cmarker;
+    private Observer<List<HillDetail>> nameObserver;
 
 
     @Override
@@ -87,6 +86,13 @@ public class ListHillsMapFragment extends SupportMapFragment implements
         AndroidSupportInjection.inject(this);
         super.onAttach(activity);
         viewModel = ViewModelProviders.of(getActivity()).get(HillListViewModel.class);
+
+        nameObserver = new Observer<List<HillDetail>>() {
+            @Override
+            public void onChanged(@Nullable final List<HillDetail> newHills) {
+                update(newHills);
+            }
+        };
 
         try {
             hillSelectedListener = (OnHillSelectedListener) activity;
@@ -117,9 +123,15 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
         String title;
 
-        title = getActivity().getIntent().getExtras().getString("title");
-        passedRowId = getActivity().getIntent().getExtras().getInt("selectedHill");
-        getActivity().setTitle(title);
+        String hilllistType = getActivity().getIntent().getExtras()
+                .getString("hilllistType");
+        if (!"".equals(hilllistType)) {
+            getActivity().setTitle(hilllistType);
+        } else
+            getActivity().setTitle("Results");
+
+        passedRowId = getActivity().getIntent().getExtras().getLong("selectedHill");
+
 
         marker = BitmapDescriptorFactory
                 .fromResource(R.drawable.yellow_hill);
@@ -137,18 +149,19 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        final Observer<List<HillDetail>> nameObserver = new Observer<List<HillDetail>>() {
-            @Override
-            public void onChanged(@Nullable final List<HillDetail> newHills) {
-                update(newHills);
-            }
-        };
-        viewModel.getHills().observe(getActivity(), nameObserver);
-
         map = googleMap;
+
+
+        passedRowId = getActivity().getIntent().getExtras().getLong("selectedHill");
+        if(passedRowId != 0)
+            viewModel.select(passedRowId);
+        viewModel.getHills().observe(getViewLifecycleOwner(), nameObserver);
+
+
         map.setOnInfoWindowClickListener(this);
         map.setOnMarkerClickListener(this);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+
     }
 
     @Override
@@ -159,17 +172,14 @@ public class ListHillsMapFragment extends SupportMapFragment implements
 
     private void update(List<HillDetail> hills) {
 
+        map.clear();
         LatLangBounds llb = new LatLangBounds();
-        // iterate over cursor and get hill positions
-        // Make sure there is at least one row.
 
-        // Iterate over each cursor.
         for (HillDetail hillDetail : hills) {
             double lat = hillDetail.getHill().getLatitude();
             double lng = hillDetail.getHill().getLongitude();
             llb.addLatLong(lat, lng);
             long row_id = hillDetail.getHill().getH_id();
-            if (passedRowId == 0) passedRowId = row_id;
             String hillname = hillDetail.getHill().getHillname();
 
             TinyHill tinyHill = new TinyHill();
