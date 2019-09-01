@@ -1,10 +1,14 @@
 package uk.colessoft.android.hilllist.ui.activity
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
@@ -28,11 +32,24 @@ class NearbyHillsActivity : BaseActivity(), OnLocationFoundListener, uk.colessof
     @Inject
     lateinit var locationRepository: LocationRepository
 
+    private val MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vm = ViewModelProviders.of(this, vmFactory)[NearbyHillListViewModel::class.java]
 
-        locationRepository.getLocation().observe(this, Observer { loc: Location? -> Log.i(this.toString(),"Location: ${loc!!.latitude} ${loc!!.longitude}") })
+        if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) run {
+
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+
+
+        }else observeLocation()
+
+
 
         setContentView(R.layout.nearby_hills_fragment)
 
@@ -72,6 +89,34 @@ class NearbyHillsActivity : BaseActivity(), OnLocationFoundListener, uk.colessof
             //fragment.updateHill(rowid);
         }
 
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    observeLocation()
+
+                } else {
+                    finish()
+                }
+
+            }
+        }
+    }
+
+    private fun observeLocation() {
+        locationRepository.getLocation().observe(this, Observer {
+
+            loc: Location? ->
+            run {
+                vm.location.value = loc
+                Log.i(this.toString(), "Location: ${loc!!.latitude} ${loc!!.longitude}")
+            }
+
+        })
     }
 
 }

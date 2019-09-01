@@ -35,8 +35,11 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector
     internal abstract fun bindHillImagesActivity(): HillImagesActivity
 
-//    @ContributesAndroidInjector
-//    internal abstract fun bindNearbyHillsFragment(): NearbyHillsFragment
+    @ContributesAndroidInjector
+    internal abstract fun bindNearbyHillsFragment(): NearbyHillsFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun bindNearbyHillsActivity(): NearbyHillsActivity
 
 
     @ContributesAndroidInjector

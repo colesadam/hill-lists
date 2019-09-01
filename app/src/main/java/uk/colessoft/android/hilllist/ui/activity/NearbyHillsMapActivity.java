@@ -22,7 +22,7 @@ public class NearbyHillsMapActivity extends BaseActivity implements NearbyHillsF
     double lon1;
     private boolean locationSet = false;
     private LocationManager lm;
-    private NearbyHillsFragment.MyLocationListener locationListener;
+//    private NearbyHillsFragment.MyLocationListener locationListener;
     private ProgressDialog dialog;
 
     MenuItem dist;

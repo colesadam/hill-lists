@@ -5,9 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.FusedLocationProviderClient
 
-class LocationRepository {
+class LocationRepository(val fusedLocationProviderClient: FusedLocationProviderClient) {
 
-    private var fusedLocationProviderClient: FusedLocationProviderClient?= null
     private var location : MutableLiveData<Location> = MutableLiveData()
 
     fun getLocation() : LiveData<Location> {

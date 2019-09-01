@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import androidx.annotation.NonNull;
 import android.util.Log;
+import android.util.Pair;
 
 import com.opencsv.CSVReader;
 
@@ -25,6 +26,7 @@ import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,7 @@ import uk.colessoft.android.hilllist.dao.HillDetailDao;
 import uk.colessoft.android.hilllist.domain.entity.Bagging;
 import uk.colessoft.android.hilllist.domain.entity.Hill;
 import uk.colessoft.android.hilllist.domain.HillDetail;
+import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
 import static android.content.ContentValues.TAG;
 
@@ -218,10 +221,19 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     }
 
     @Override
-    public LiveData<List<HillDetail>> getHills(Float latitude, Float Longitude, Float range) {
-        return Transformations.map(hillDetailDao.getHills(),hills -> {
-            return hills.stream().filter(p -> p.getHill().getLatitude() > 2).collect(Collectors.toList());
-        });
+    public LiveData<List<Pair<Double,HillDetail>>> getHills(Double latitude, Double longitude, Float range) {
+        return Transformations.map(
+                hillDetailDao.getHills(),hills ->
+                        hills.stream().map(hillDetail -> new Pair<>(getDistanceKm(hillDetail,latitude,longitude),hillDetail))
+                                .filter(hillPair -> hillPair.first <= range).collect(Collectors.toList()));
+    }
+
+    private double getDistanceKm(HillDetail hillDetail, Double lat1, Double lon1) {
+        Double lat = hillDetail.getHill().getLatitude();
+        Double lng = hillDetail.getHill().getLongitude();
+
+        return DistanceCalculator.calculationByDistance(
+                lat1, lat, lon1, lng );
     }
 
     @Override

@@ -17,13 +17,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.Loader;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,26 +45,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.domain.HillDetail;
 import uk.colessoft.android.hilllist.ui.activity.Main;
 import uk.colessoft.android.hilllist.ui.activity.NearbyHillsMapActivity;
 import uk.colessoft.android.hilllist.ui.activity.PreferencesActivity;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsTables;
+import uk.colessoft.android.hilllist.ui.adapter.HillDetailListAdapter;
+import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel;
+import uk.colessoft.android.hilllist.ui.viewmodel.NearbyHillListViewModel;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
 import static android.content.ContentValues.TAG;
 
-public class NearbyHillsFragment extends DaggerFragment implements
-        LoaderManager.LoaderCallbacks<ArrayList<Map<String, ?>>> {
+public class NearbyHillsFragment extends DaggerFragment {
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0x00001;
     private SimpleAdapter nearbyHillsAdapter;
+    private NearbyHillListViewModel viewModel;
 
 
     public interface OnHillSelectedListener {
@@ -81,8 +92,7 @@ public class NearbyHillsFragment extends DaggerFragment implements
     private View viewer;
     private ListView hillListView;
     private LocationManager lm;
-    private MyLocationListener locationListener;
-    private ArrayList<Map<String, ?>> nearbyHills;
+    private List<Map<String, ?>> nearbyHills;
     private double lat1;
     private double lon1;
     private double nearRadius = 16;
@@ -102,41 +112,47 @@ public class NearbyHillsFragment extends DaggerFragment implements
     private OnHillSelectedListener hillSelectedListener;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        viewModel = ViewModelProviders.of(getActivity()).get(NearbyHillListViewModel.class);
+
+        final Observer<List<Pair<Double,HillDetail>>> nameObserver = newHills -> {
+
+            Log.d("ChangedData", "Nearby Hills returned:" + newHills.size());
+            nearbyHills = newHills.stream().map(hillDetail -> {
+                HashMap<String, Object> hillExtract = new HashMap();
+                hillExtract.put("hillname", hillDetail.second.getHill().getHillname());
+                if (useMetricHeights) {
+                    hillExtract.put("height", hillDetail.second.getHill().getHeightm());
+                } else {
+                    hillExtract.put("height", hillDetail.second.getHill().getHeightf());
+                }
+                hillExtract.put("rowid", hillDetail.second.getHill().getH_id());
+
+                if (useMetricDistances) {
+                    hillExtract.put("distance",
+                            Double.parseDouble(df2.format(hillDetail.first)));
+                } else {
+                    hillExtract.put("distance",
+                            Double.parseDouble(df2.format(hillDetail.first / 1.601)));
+                }
+                return hillExtract;
+            }).collect(Collectors.toList());
+            updateList();
+
+        };
+
+        viewModel.getHills().observe(getActivity(), nameObserver);
+
+
 
         try {
-            hillSelectedListener = (OnHillSelectedListener) activity;
+            hillSelectedListener = (OnHillSelectedListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement OnHillSelectedListener");
         }
-        try {
-            OnLocationFoundListener locationFoundListener = (OnLocationFoundListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement LocationFoundListener");
-        }
 
-    }
-
-    @Override
-    public void onPause() {
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-
-
-        } else {
-            lm.removeUpdates(locationListener);
-        }
-
-
-        super.onPause();
     }
 
     @Override
@@ -144,7 +160,6 @@ public class NearbyHillsFragment extends DaggerFragment implements
 
         inflater.inflate(R.menu.hill_lists_menu, menu);
         dist = menu.findItem(R.id.menu_by_distance);
-        // dist=(MenuItem)findViewById(R.id.menu_by_distance);
         dist.setVisible(true);
         menu.findItem(R.id.menu_set_range).setVisible(true);
 
@@ -152,7 +167,6 @@ public class NearbyHillsFragment extends DaggerFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
         super.onOptionsItemSelected(item);
 
         int index = hillListView.getSelectedItemPosition();
@@ -309,8 +323,8 @@ public class NearbyHillsFragment extends DaggerFragment implements
                                 nearbyHills = backedUpHills;
                                 searched = false;
                             } else {
-                                backedUpHills = (ArrayList<Map<String, ?>>) nearbyHills
-                                        .clone();
+//                                backedUpHills = (ArrayList<Map<String, ?>>) nearbyHills
+//                                        .clone();
                                 searched = true;
                             }
                             ArrayList<Map<String, ?>> newList = new ArrayList();
@@ -372,7 +386,6 @@ public class NearbyHillsFragment extends DaggerFragment implements
                         lat1, lat / 1E6, lon1, lng / 1E6);
                 int row_id = hillsCursor.getInt(hillsCursor
                         .getColumnIndex(HillsTables.KEY_HILL_ID));
-                Log.d(TAG, "############"+row_id);
                 if (distanceKm < nearRadius) {
 
                     String hillname = hillsCursor.getString(hillsCursor
@@ -437,66 +450,44 @@ public class NearbyHillsFragment extends DaggerFragment implements
 
         super.onResume();
 
-        lm = (LocationManager) getActivity().getSystemService(
-                Context.LOCATION_SERVICE);
-        locationListener = new MyLocationListener();
+//        lm = (LocationManager) getActivity().getSystemService(
+//                Context.LOCATION_SERVICE);
+//        locationListener = new MyLocationListener();
         updateFromPreferences();
-        locationProgress = viewer.findViewById(R.id.location_progress2);
-        locationProgress.setVisibility(View.VISIBLE);
-        locationSet = false;
+//        locationProgress = viewer.findViewById(R.id.location_progress2);
+//        locationProgress.setVisibility(View.VISIBLE);
+//        locationSet = false;
 
 
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-
-
-        } else {
-            LocationProvider lp1 = lm.getProvider(LocationManager.GPS_PROVIDER);
-            LocationProvider lp2 = lm.getProvider(LocationManager.NETWORK_PROVIDER);
-            if (lp1 != null) {
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 120000,
-                        100,
-                        locationListener);
-            }
-            if (lp2 != null) {
-                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 120000,
-                        100,
-                        locationListener);
-            }
-
-            Runnable showWaitDialog = () -> {
-
-                while (!locationSet) {
-                    // Wait for first GPS Fix (do nothing until loc != null)
-                }
-
-                Message m1;
-                m1 = handler.obtainMessage();
-                m1.arg1 = 0;
-
-                handler.sendMessage(m1);
-
-            };
+//            Runnable showWaitDialog = () -> {
+//
+//                while (!locationSet) {
+//                    // Wait for first GPS Fix (do nothing until loc != null)
+//                }
+//
+//                Message m1;
+//                m1 = handler.obtainMessage();
+//                m1.arg1 = 0;
+//
+//                handler.sendMessage(m1);
+//
+//            };
              //locationFoundListener.showDialog();
-
-            Thread t = new Thread(showWaitDialog);
-            t.start();
-
-            Location lastLocation = lm
-                    .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (lastLocation != null) {
-                lat1 = lastLocation.getLatitude();
-                lon1 = lastLocation.getLongitude();
-                locationSet = true;
-
-                startLoader();
-            }
-        }
+//
+//            Thread t = new Thread(showWaitDialog);
+//            t.start();
+//
+//            Location lastLocation = lm
+//                    .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//            if (lastLocation != null) {
+//                lat1 = lastLocation.getLatitude();
+//                lon1 = lastLocation.getLongitude();
+//                locationSet = true;
+//
+//                startLoader();
+//            }
+      //  }
 
 
 
@@ -540,11 +531,8 @@ public class NearbyHillsFragment extends DaggerFragment implements
 
             hillSelectedListener.onHillSelected(rowId);
 
-            // finish();
         });
 
-        Fragment fragment2 = getActivity().getSupportFragmentManager()
-                .findFragmentById(R.id.hill_detail_fragment);
 
         HillDetailFragment fragment = (HillDetailFragment) getActivity()
                 .getSupportFragmentManager().findFragmentById(
@@ -563,38 +551,38 @@ public class NearbyHillsFragment extends DaggerFragment implements
 
         void showDialog();
     }
+//
+//    private void startLoader() {
+//        getLoaderManager().restartLoader(0, null, this);
+//    }
 
-    private void startLoader() {
-        getLoaderManager().restartLoader(0, null, this);
-    }
-
-    public class MyLocationListener implements LocationListener {
-
-        public void onLocationChanged(Location location) {
-            lat1 = location.getLatitude();
-            lon1 = location.getLongitude();
-            locationSet = true;
-
-            startLoader();
-
-        }
-
-        public void onProviderDisabled(String provider) {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void onProviderEnabled(String provider) {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            // TODO Auto-generated method stub
-
-        }
-
-    }
+//    public class MyLocationListener implements LocationListener {
+//
+//        public void onLocationChanged(Location location) {
+//            lat1 = location.getLatitude();
+//            lon1 = location.getLongitude();
+//            locationSet = true;
+//
+//            startLoader();
+//
+//        }
+//
+//        public void onProviderDisabled(String provider) {
+//            // TODO Auto-generated method stub
+//
+//        }
+//
+//        public void onProviderEnabled(String provider) {
+//            // TODO Auto-generated method stub
+//
+//        }
+//
+//        public void onStatusChanged(String provider, int status, Bundle extras) {
+//            // TODO Auto-generated method stub
+//
+//        }
+//
+//    }
 
     private String convText(TextView v, String text, DecimalFormat df) {
 
@@ -647,158 +635,157 @@ public class NearbyHillsFragment extends DaggerFragment implements
         useMetricDistances = prefs.getBoolean(
                 PreferencesActivity.PREF_METRIC_DISTANCES, false);
     }
-
-    private static class UpdateHillsTaskLoader extends
-            AsyncTaskLoader<ArrayList<Map<String, ?>>> {
-        private ArrayList<Map<String, ?>> nearbyHills;
-        private String where = null;
-        private String orderBy;
-        private String hilltype;
-        private String countryClause;
-        private int filterHills;
-        private BritishHillsDatasource dbAdapter;
-        private double lat1;
-        private double lon1;
-        private double nearRadius;
-        private boolean useMetricHeights;
-        private boolean useMetricDistances;
-        private DecimalFormat df2;
-
-        public UpdateHillsTaskLoader(Context context) {
-            super(context);
-            // TODO Auto-generated constructor stub
-        }
-
-        public UpdateHillsTaskLoader(Context context, String orderBy,
-                                     int filterHills, BritishHillsDatasource dbAdapter,
-                                     boolean useMetricDistances, boolean useMetricHeights,
-                                     double lat1, double lon1, double nearRadius, DecimalFormat df2) {
-            super(context);
-
-            this.orderBy = orderBy;
-            this.filterHills = filterHills;
-            this.dbAdapter = dbAdapter;
-            this.lat1 = lat1;
-            this.lon1 = lon1;
-            this.nearRadius = nearRadius;
-            this.useMetricHeights = useMetricHeights;
-            this.useMetricDistances = useMetricDistances;
-            this.df2 = df2;
-
-        }
-
-        @Override
-        public ArrayList<Map<String, ?>> loadInBackground() {
-            Cursor hillsCursor = dbAdapter.getHillsForNearby();
-
-            nearbyHills = new ArrayList();
-
-
-            // iterate over cursor and get hill positions
-            // Make sure there is at least one row.
-            if (hillsCursor.moveToFirst()) {
-                Log.d(TAG, "loadInBackground: something returned");
-                // Iterate over each cursor.
-                do {
-
-                    Double lat = hillsCursor.getDouble(hillsCursor
-                            .getColumnIndex(HillsTables.KEY_LATITUDE)) * 1E6;
-                    Double lng = hillsCursor.getDouble(hillsCursor
-                            .getColumnIndex(HillsTables.KEY_LONGITUDE)) * 1E6;
-
-                    double distanceKm = DistanceCalculator
-                            .calculationByDistance(lat1, lat / 1E6, lon1,
-                                    lng / 1E6);
-                    long row_id = hillsCursor.getLong(hillsCursor
-                            .getColumnIndex(HillsTables.KEY_HILL_ID));
-                    Log.d(TAG, "############"+row_id);
-                    if (distanceKm < nearRadius) {
-
-                        String hillname = hillsCursor.getString(hillsCursor
-                                .getColumnIndex(HillsTables.KEY_HILLNAME));
-                        float height;
-                        if (useMetricHeights) {
-                            height = hillsCursor.getFloat(hillsCursor
-                                    .getColumnIndex(HillsTables.KEY_HEIGHTM));
-                        } else {
-                            height = hillsCursor.getFloat(hillsCursor
-                                    .getColumnIndex(HillsTables.KEY_HEIGHTF));
-
-                        }
-                        HashMap hillExtract = new HashMap();
-                        hillExtract.put("hillname", hillname);
-                        hillExtract.put("height", height);
-                        hillExtract.put("rowid", row_id);
-
-                        if (useMetricDistances) {
-                            hillExtract.put("distance",
-                                    Double.parseDouble(df2.format(distanceKm)));
-                        } else {
-                            hillExtract.put("distance",
-                                    Double.parseDouble(df2.format(distanceKm / 1.601)));
-                        }
-                        nearbyHills.add(hillExtract);
-
-                    }
-
-                } while (hillsCursor.moveToNext());
-                switch (orderBy) {
-                    case HillsTables.KEY_HEIGHTM:
-                        Collections.sort(nearbyHills,
-                                new HillHashMapHeightComparator());
-                        break;
-                    case HillsTables.KEY_HILLNAME:
-                        Collections.sort(nearbyHills,
-                                new HillHashMapAlphaComparator());
-                        break;
-                    case "distance":
-                        Collections.sort(nearbyHills,
-                                new HillHashMapDistanceComparator());
-                        break;
-                }
-            }
-
-            return nearbyHills;
-        }
-
-        @Override
-        protected void onStartLoading() {
-            if (nearbyHills != null) {
-                deliverResult(nearbyHills);
-            }
-
-            if (takeContentChanged() || nearbyHills == null) {
-                forceLoad();
-            }
-        }
-
-    }
-
-    public Loader<ArrayList<Map<String, ?>>> onCreateLoader(int id, Bundle args) {
-
-        return new UpdateHillsTaskLoader(getActivity(), orderBy, filterHills,
-                dbAdapter, useMetricDistances, useMetricHeights, lat1, lon1,
-                nearRadius, df2);
-
-    }
-
-    public void onLoaderReset(Loader<ArrayList<Map<String, ?>>> loader) {
-
-        // updateList();
-
-    }
-
-    public void onLoadFinished(Loader<ArrayList<Map<String, ?>>> loader,
-                               ArrayList<Map<String, ?>> data) {
-        refresh(data);
-
-    }
-
-    private void refresh(ArrayList<Map<String, ?>> data) {
-        nearbyHills = data;
-        updateList();
-
-    }
+//
+//    private static class UpdateHillsTaskLoader extends
+//            AsyncTaskLoader<ArrayList<Map<String, ?>>> {
+//        private ArrayList<Map<String, ?>> nearbyHills;
+//        private String where = null;
+//        private String orderBy;
+//        private String hilltype;
+//        private String countryClause;
+//        private int filterHills;
+//        private BritishHillsDatasource dbAdapter;
+//        private double lat1;
+//        private double lon1;
+//        private double nearRadius;
+//        private boolean useMetricHeights;
+//        private boolean useMetricDistances;
+//        private DecimalFormat df2;
+//
+//        public UpdateHillsTaskLoader(Context context) {
+//            super(context);
+//            // TODO Auto-generated constructor stub
+//        }
+//
+//        public UpdateHillsTaskLoader(Context context, String orderBy,
+//                                     int filterHills, BritishHillsDatasource dbAdapter,
+//                                     boolean useMetricDistances, boolean useMetricHeights,
+//                                     double lat1, double lon1, double nearRadius, DecimalFormat df2) {
+//            super(context);
+//
+//            this.orderBy = orderBy;
+//            this.filterHills = filterHills;
+//            this.dbAdapter = dbAdapter;
+//            this.lat1 = lat1;
+//            this.lon1 = lon1;
+//            this.nearRadius = nearRadius;
+//            this.useMetricHeights = useMetricHeights;
+//            this.useMetricDistances = useMetricDistances;
+//            this.df2 = df2;
+//
+//        }
+//
+//        @Override
+//        public ArrayList<Map<String, ?>> loadInBackground() {
+//            Cursor hillsCursor = dbAdapter.getHillsForNearby();
+//
+//            nearbyHills = new ArrayList();
+//
+//
+//            // iterate over cursor and get hill positions
+//            // Make sure there is at least one row.
+//            if (hillsCursor.moveToFirst()) {
+//                Log.d(TAG, "loadInBackground: something returned");
+//                // Iterate over each cursor.
+//                do {
+//
+//                    Double lat = hillsCursor.getDouble(hillsCursor
+//                            .getColumnIndex(HillsTables.KEY_LATITUDE)) * 1E6;
+//                    Double lng = hillsCursor.getDouble(hillsCursor
+//                            .getColumnIndex(HillsTables.KEY_LONGITUDE)) * 1E6;
+//
+//                    double distanceKm = DistanceCalculator
+//                            .calculationByDistance(lat1, lat / 1E6, lon1,
+//                                    lng / 1E6);
+//                    long row_id = hillsCursor.getLong(hillsCursor
+//                            .getColumnIndex(HillsTables.KEY_HILL_ID));
+//                    if (distanceKm < nearRadius) {
+//
+//                        String hillname = hillsCursor.getString(hillsCursor
+//                                .getColumnIndex(HillsTables.KEY_HILLNAME));
+//                        float height;
+//                        if (useMetricHeights) {
+//                            height = hillsCursor.getFloat(hillsCursor
+//                                    .getColumnIndex(HillsTables.KEY_HEIGHTM));
+//                        } else {
+//                            height = hillsCursor.getFloat(hillsCursor
+//                                    .getColumnIndex(HillsTables.KEY_HEIGHTF));
+//
+//                        }
+//                        HashMap hillExtract = new HashMap();
+//                        hillExtract.put("hillname", hillname);
+//                        hillExtract.put("height", height);
+//                        hillExtract.put("rowid", row_id);
+//
+//                        if (useMetricDistances) {
+//                            hillExtract.put("distance",
+//                                    Double.parseDouble(df2.format(distanceKm)));
+//                        } else {
+//                            hillExtract.put("distance",
+//                                    Double.parseDouble(df2.format(distanceKm / 1.601)));
+//                        }
+//                        nearbyHills.add(hillExtract);
+//
+//                    }
+//
+//                } while (hillsCursor.moveToNext());
+//                switch (orderBy) {
+//                    case HillsTables.KEY_HEIGHTM:
+//                        Collections.sort(nearbyHills,
+//                                new HillHashMapHeightComparator());
+//                        break;
+//                    case HillsTables.KEY_HILLNAME:
+//                        Collections.sort(nearbyHills,
+//                                new HillHashMapAlphaComparator());
+//                        break;
+//                    case "distance":
+//                        Collections.sort(nearbyHills,
+//                                new HillHashMapDistanceComparator());
+//                        break;
+//                }
+//            }
+//
+//            return nearbyHills;
+//        }
+//
+//        @Override
+//        protected void onStartLoading() {
+//            if (nearbyHills != null) {
+//                deliverResult(nearbyHills);
+//            }
+//
+//            if (takeContentChanged() || nearbyHills == null) {
+//                forceLoad();
+//            }
+//        }
+//
+//    }
+//
+//    public Loader<ArrayList<Map<String, ?>>> onCreateLoader(int id, Bundle args) {
+//
+//        return new UpdateHillsTaskLoader(getActivity(), orderBy, filterHills,
+//                dbAdapter, useMetricDistances, useMetricHeights, lat1, lon1,
+//                nearRadius, df2);
+//
+//    }
+//
+//    public void onLoaderReset(Loader<ArrayList<Map<String, ?>>> loader) {
+//
+//        // updateList();
+//
+//    }
+//
+//    public void onLoadFinished(Loader<ArrayList<Map<String, ?>>> loader,
+//                               ArrayList<Map<String, ?>> data) {
+//        refresh(data);
+//
+//    }
+//
+//    private void refresh(ArrayList<Map<String, ?>> data) {
+//        nearbyHills = data;
+//        updateList();
+//
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
