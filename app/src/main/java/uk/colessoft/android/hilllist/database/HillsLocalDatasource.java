@@ -1,6 +1,7 @@
 package uk.colessoft.android.hilllist.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.SupportSQLiteQuery;
@@ -25,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -102,7 +104,6 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     @Inject
     public BaggingDao baggingDao;
 
-    private Handler handler;
     protected static HillsLocalDatasource sInstance;
 
     private SupportSQLiteDatabase getWritableDatabase() {
@@ -112,8 +113,6 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     private SupportSQLiteDatabase getReadableDatabase() {
         return dbHelper.getReadableDatabase();
     }
-
-
 
 
     @Override
@@ -184,86 +183,6 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     }
 
     @Override
-    public Cursor getHillGroup(String groupId, String countryClause, String moreFilters, String orderBy, int filter) {
-
-        if ("T100".equals(groupId)) return getT100(moreFilters, orderBy, filter);
-
-        String where = "";
-        String includeTypes = " join "
-                + typesLink + " on " + hillsKeyId + "=" + typesLinkKeyHillId + " join "
-                + hillTypes + " on " + typesLinkKeyId + "=" + hillTypesKeyId;
-
-        if (filter == 1)
-            where = KEY_DATECLIMBED + " NOT NULL";
-        else if (filter == 2)
-            where = KEY_DATECLIMBED + " IS NULL";
-
-        if (groupId != null) {
-            String[] groups = groupId.split(",");
-            String groupSelector = "";
-            for (String group : groups) {
-                groupSelector += hillTypesTitle + " = '" + group + "' OR ";
-            }
-            groupSelector = groupSelector.trim().substring(0, groupSelector.length() - 3);
-            where = addToWhere("(" + groupSelector + ")", where);
-        } else {
-            includeTypes = "";
-        }
-
-
-        //exclude ROI for now
-        if (countryClause == null) {
-            countryClause = "cast(_Section as float) <45";
-        }
-
-        where = addToWhere(countryClause, where);
-        where = addToWhere(moreFilters, where);
-
-        SupportSQLiteDatabase db = getReadableDatabase();
-
-        return db.query("select "+ HILLS_TABLE + "." + KEY_ID + " as hill_id,"+ HILLS_TABLE + "." + KEY_ID + " as _id,"+ HILLS_TABLE + "." + KEY_ID+","+ KEY_LATITUDE+","+ KEY_LONGITUDE+","+ KEY_HEIGHTM+","+ KEY_HEIGHTF+","+ KEY_HILLNAME+","+
-                KEY_NOTES+","+ KEY_DATECLIMBED+ " from " + hills + includeTypes + " left join "
-                        + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId + " where " + where + " order by " + orderBy, new String[]{});
-    }
-
-    @Override
-    public Cursor getT100(String moreFilters, String orderBy, int filter) {
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-
-        String where = "T100='1'";
-
-        if (filter == 1)
-            where = KEY_DATECLIMBED + " NOT NULL";
-        else if (filter == 2)
-            where = KEY_DATECLIMBED + " IS NULL";
-
-
-        queryBuilder.setTables(hills + " left join "
-                + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId);
-
-        where = addToWhere(moreFilters, where);
-
-        SupportSQLiteDatabase db = getReadableDatabase();
-
-        return db.query(hills + " left join "
-                        + baggingTable + " on " + hillsKeyId + "=" + baggingKeyId + " where " +  where + " order by "+ orderBy, new String[]{HILLS_TABLE + "." + KEY_ID + " as hill_id", HILLS_TABLE + "." + KEY_ID, KEY_LATITUDE, KEY_LONGITUDE, KEY_HEIGHTM, KEY_HEIGHTF, KEY_HILLNAME,
-                        KEY_NOTES, KEY_DATECLIMBED});
-    }
-
-
-    @NonNull
-    private String addToWhere(String filter, String where) {
-        if (!"".equals(where) && filter != null && !"".equals(filter))
-            where = where + " AND ";
-        where = where + nonNull(filter);
-        return where;
-    }
-
-    private String nonNull(String filter) {
-        return filter == null ? "" : filter;
-    }
-
-    @Override
     public HillDetail getHill(long _rowIndex) {
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
@@ -296,6 +215,13 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
     @Override
     public LiveData<List<HillDetail>> getHills(String groupId, CountryClause country, String moreFilters) {
         return hillDetailDao.getHills(groupId, country, moreFilters);
+    }
+
+    @Override
+    public LiveData<List<HillDetail>> getHills(Float latitude, Float Longitude, Float range) {
+        return Transformations.map(hillDetailDao.getHills(),hills -> {
+            return hills.stream().filter(p -> p.getHill().getLatitude() > 2).collect(Collectors.toList());
+        });
     }
 
     @Override
@@ -438,12 +364,6 @@ public class HillsLocalDatasource implements BritishHillsDatasource {
         }
         return result;
 
-    }
-
-    @Override
-    public void touch(Handler handler) {
-        this.handler = handler;
-        getReadableDatabase();
     }
 
 }

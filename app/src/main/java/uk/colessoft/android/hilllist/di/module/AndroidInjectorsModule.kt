@@ -19,6 +19,4 @@ abstract class AndroidInjectorsModule {
     @ContributesAndroidInjector(modules = [HillListMapActivityIntentModule::class])
     abstract fun contributeHillListMapActivity(): HillListMapActivity
 
-    @ContributesAndroidInjector(modules = [NearbyHillsActivityIntentModule::class])
-    abstract fun contributeNearbyHillsActivity(): NearbyHillsActivity
 }

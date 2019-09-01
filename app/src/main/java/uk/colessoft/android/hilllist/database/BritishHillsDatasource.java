@@ -25,19 +25,14 @@ public interface BritishHillsDatasource {
 
     Cursor getBaggedHillList();
 
-    Cursor getHillGroup(String groupId, String countryClause,
-                        String moreWhere, String orderBy, int filter);
-
-    Cursor getT100(String moreWhere, String orderBy, int filter);
-
     HillDetail getHill(long _rowIndex) throws SQLException;
 
     LiveData<HillDetail> getHillReactive(long hillId);
 
     LiveData<List<HillDetail>> getHills(String groupId, CountryClause country, String moreFilters);
 
-    void importBagging(final Reader fileReader);
+    LiveData<List<HillDetail>> getHills(Float latitude, Float Longitude, Float range);
 
-    void touch(Handler handler);
+    void importBagging(final Reader fileReader);
 
 }

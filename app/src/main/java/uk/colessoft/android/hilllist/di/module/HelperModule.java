@@ -6,6 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource;
 import uk.colessoft.android.hilllist.database.HillsLocalDatasource;
+import uk.colessoft.android.hilllist.utility.LocationRepository;
 
 @Module
 public class HelperModule {
@@ -14,5 +15,11 @@ public class HelperModule {
     @Singleton
     public  BritishHillsDatasource bindDatasource(HillsLocalDatasource datasource){
         return datasource;
+    }
+
+    @Provides
+    @Singleton
+    public LocationRepository bindLocationRepository(LocationRepository repository){
+        return repository;
     }
 }

@@ -21,6 +21,9 @@ abstract class HillDetailDao {
             JOIN hilltypes ON typeslink.type_Id = ht_id"""
         }
 
+    @Query("SELECT DISTINCT h_id, latitude, longitude,Metres,Feet,name,notes,dateClimbed,b_id from hills JOIN typeslink ON typeslink.hill_id = h_id LEFT JOIN bagging ON b_id = h_id JOIN hilltypes ON typeslink.type_Id = ht_id")
+    abstract fun getHills(): LiveData<List<HillDetail>>
+
     @Transaction
     @Query("SELECT * FROM hills WHERE h_id = :hillId")
     abstract fun getHillDetail(hillId: Long): LiveData<HillDetail>
