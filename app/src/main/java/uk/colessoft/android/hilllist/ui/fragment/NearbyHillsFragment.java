@@ -62,6 +62,7 @@ import uk.colessoft.android.hilllist.database.HillsTables;
 import uk.colessoft.android.hilllist.ui.adapter.HillDetailListAdapter;
 import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel;
 import uk.colessoft.android.hilllist.ui.viewmodel.NearbyHillListViewModel;
+import uk.colessoft.android.hilllist.ui.viewmodel.NearbyHillsOrder;
 import uk.colessoft.android.hilllist.utility.DistanceCalculator;
 
 import static android.content.ContentValues.TAG;
@@ -245,34 +246,21 @@ public class NearbyHillsFragment extends DaggerFragment {
 
             case (R.id.menu_list_alpha): {
 
-                orderBy = HillsTables.KEY_HILLNAME;
-                if (nearbyHills != null && !nearbyHills.isEmpty()) {
-                    Collections.sort(nearbyHills, new HillHashMapAlphaComparator());
-                    updateList();
-                }
+                viewModel.orderHills(NearbyHillsOrder.NAME_ASC);
                 return true;
 
             }
             case (R.id.menu_list_height): {
+                viewModel.orderHills(NearbyHillsOrder.HEIGHT_DESC);
 
-                orderBy = HillsTables.KEY_HEIGHTM;
-                if (nearbyHills != null && !nearbyHills.isEmpty()) {
-                    Collections
-                            .sort(nearbyHills, new HillHashMapHeightComparator());
-                    updateList();
-                }
                 return true;
 
             }
 
             case (R.id.menu_by_distance): {
 
-                orderBy = "distance";
-                if (nearbyHills != null && !nearbyHills.isEmpty()) {
-                    Collections.sort(nearbyHills,
-                            new HillHashMapDistanceComparator());
-                    updateList();
-                }
+                viewModel.orderHills(NearbyHillsOrder.DIST_ASC);
+
                 return true;
 
             }
@@ -346,6 +334,34 @@ public class NearbyHillsFragment extends DaggerFragment {
 
                 AlertDialog search = alert.create();
                 search.show();
+                return true;
+            }
+
+            case (R.id.menu_all_climbed): {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Mark all hills in list as climbed?")
+                        .setMessage("THIS WILL OVERWRITE ALL BAGGING DATA FOR THESE HILLS.")
+                        .setPositiveButton("Go ahead", (dialog, which) -> {
+                            viewModel.markAllHillsClimbed();
+                            Log.d("HillListFragment", "Marking all hills climbed");
+                        })
+                        .setNegativeButton("Don't do it", (dialog, which) ->
+                                Log.d("HillListFragment", "Aborting bagger all..."))
+                        .show();
+                return true;
+            }
+
+            case (R.id.menu_none_climbed): {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Mark all hills in list as unclimbed?")
+                        .setMessage("THIS WILL DELETE ALL BAGGING DATA FOR THESE HILLS.")
+                        .setPositiveButton("Go ahead", (dialog, which) -> {
+                            viewModel.markAllHillsNotClimbed();
+                            Log.d("HillListFragment", "Marking all hills unclimbed");
+                        })
+                        .setNegativeButton("Don't do it", (dialog, which) ->
+                                Log.d("HillListFragment", "Aborting unbagger all..."))
+                        .show();
                 return true;
             }
         }
