@@ -53,6 +53,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
 import uk.colessoft.android.hilllist.R;
+import uk.colessoft.android.hilllist.dao.IsHillClimbed;
 import uk.colessoft.android.hilllist.domain.HillDetail;
 import uk.colessoft.android.hilllist.ui.activity.Main;
 import uk.colessoft.android.hilllist.ui.activity.NearbyHillsMapActivity;
@@ -96,7 +97,7 @@ public class NearbyHillsFragment extends DaggerFragment {
     private List<Map<String, ?>> nearbyHills;
     private double lat1;
     private double lon1;
-    private double nearRadius = 16;
+    private float nearRadius = 16.093F;
     private final DecimalFormat df2 = new DecimalFormat("#,###,###,##0.0");
     private final DecimalFormat df1 = new DecimalFormat("#,###,###,##0");
     private final DecimalFormat df3 = new DecimalFormat();
@@ -182,7 +183,7 @@ public class NearbyHillsFragment extends DaggerFragment {
 
             }
             case (R.id.menu_range_10miles): {
-                nearRadius = 16;
+                nearRadius = 16.093F;
                 if (useMetricDistances) {
                     getActivity().setTitle(
                             "Hills within " + df1.format(nearRadius) + "km");
@@ -190,13 +191,12 @@ public class NearbyHillsFragment extends DaggerFragment {
                     getActivity().setTitle(
                             "Hills within " + df1.format(nearRadius / 1.601)
                                     + " miles");
-                getNearHills();
-                updateList();
+                viewModel.filterDistance(nearRadius);
                 return true;
             }
 
             case (R.id.menu_range_25miles): {
-                nearRadius = 40;
+                nearRadius = 40.234F;
                 if (useMetricDistances) {
                     getActivity().setTitle(
                             "Hills within " + df1.format(nearRadius) + "km");
@@ -204,14 +204,13 @@ public class NearbyHillsFragment extends DaggerFragment {
                     getActivity().setTitle(
                             "Hills within " + df1.format(nearRadius / 1.601)
                                     + " miles");
-                getNearHills();
-                updateList();
+                viewModel.filterDistance(nearRadius);
                 return true;
 
             }
 
             case (R.id.menu_range_50miles): {
-                nearRadius = 80;
+                nearRadius = 80.467F;
                 if (useMetricDistances) {
                     getActivity().setTitle(
                             "Hills within " + df1.format(nearRadius) + "km");
@@ -219,50 +218,38 @@ public class NearbyHillsFragment extends DaggerFragment {
                     getActivity().setTitle(
                             "Hills within " + df1.format(nearRadius / 1.601)
                                     + " miles");
-                getNearHills();
-
-                updateList();
+                viewModel.filterDistance(nearRadius);
                 return true;
-
             }
 
             case (R.id.menu_show_climbed): {
-
-                int CLIMBED_HILLS = 1;
-                filterHills = CLIMBED_HILLS;
+                viewModel.filterClimbed(IsHillClimbed.YES);
                 return true;
             }
 
             case (R.id.menu_show_not_climbed): {
-                int UNCLIMBED_HILLS = 2;
-                filterHills = UNCLIMBED_HILLS;
+                viewModel.filterClimbed(IsHillClimbed.NO);
                 return true;
             }
 
             case (R.id.menu_show_all): {
-                filterHills = ALL_HILLS;
+                viewModel.filterClimbed(null);
                 return true;
             }
 
             case (R.id.menu_list_alpha): {
-
                 viewModel.orderHills(NearbyHillsOrder.NAME_ASC);
                 return true;
-
             }
+
             case (R.id.menu_list_height): {
                 viewModel.orderHills(NearbyHillsOrder.HEIGHT_DESC);
-
                 return true;
-
             }
 
             case (R.id.menu_by_distance): {
-
                 viewModel.orderHills(NearbyHillsOrder.DIST_ASC);
-
                 return true;
-
             }
             case (R.id.menu_show_map): {
                 Intent intent = new Intent(getActivity(),
@@ -296,34 +283,14 @@ public class NearbyHillsFragment extends DaggerFragment {
 
                 alert.setTitle("Search");
 
-                // Set an EditText view to get user input
                 final EditText searchText = new EditText(getActivity());
-
                 alert.setView(searchText);
 
                 alert.setPositiveButton("Ok",
                         (dialog12, whichButton) -> {
                             String value = searchText.getText().toString()
                                     .toLowerCase();
-                            // go back to original list if we've already
-                            // whittled down through search.
-                            if (searched) {
-                                nearbyHills = backedUpHills;
-                                searched = false;
-                            } else {
-//                                backedUpHills = (ArrayList<Map<String, ?>>) nearbyHills
-//                                        .clone();
-                                searched = true;
-                            }
-                            ArrayList<Map<String, ?>> newList = new ArrayList();
-                            for (Map hs : nearbyHills) {
-                                String hillname = (String) (hs.get("hillname"));
-                                if (hillname.toLowerCase().contains(value)) {
-                                    newList.add(hs);
-                                }
-                            }
-                            nearbyHills = newList;
-                            updateList();
+                            viewModel.searchHills(value);
 
                         });
 
@@ -380,75 +347,6 @@ public class NearbyHillsFragment extends DaggerFragment {
         return viewer;
     }
 
-    private void getNearHills() {
-
-        Cursor hillsCursor = dbAdapter.getHillsForNearby();
-
-        nearbyHills = new ArrayList();
-
-        Log.d(TAG, "getNearHills: got hills");
-        // iterate over cursor and get hill positions
-        // Make sure there is at least one row.
-        if (hillsCursor.moveToFirst()) {
-            Log.d(TAG, "getNearHills: something returned");
-            // Iterate over each cursor.
-            do {
-                Double lat = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(HillsTables.KEY_LATITUDE)) * 1E6;
-                Double lng = hillsCursor.getDouble(hillsCursor
-                        .getColumnIndex(HillsTables.KEY_LONGITUDE)) * 1E6;
-
-                double distanceKm = DistanceCalculator.calculationByDistance(
-                        lat1, lat / 1E6, lon1, lng / 1E6);
-                int row_id = hillsCursor.getInt(hillsCursor
-                        .getColumnIndex(HillsTables.KEY_HILL_ID));
-                if (distanceKm < nearRadius) {
-
-                    String hillname = hillsCursor.getString(hillsCursor
-                            .getColumnIndex(HillsTables.KEY_HILLNAME));
-                    float height;
-                    if (useMetricHeights) {
-                        height = hillsCursor.getFloat(hillsCursor
-                                .getColumnIndex(HillsTables.KEY_HEIGHTM));
-                    } else {
-                        height = hillsCursor.getFloat(hillsCursor
-                                .getColumnIndex(HillsTables.KEY_HEIGHTF));
-
-                    }
-                    HashMap<String, Object> hillExtract = new HashMap();
-                    hillExtract.put("hillname", hillname);
-                    hillExtract.put("height", height);
-                    hillExtract.put("rowid", row_id);
-
-                    if (useMetricDistances) {
-                        hillExtract.put("distance",
-                                Double.parseDouble(df2.format(distanceKm)));
-                    } else {
-                        hillExtract.put("distance",
-                                Double.parseDouble(df2.format(distanceKm / 1.601)));
-                    }
-                    nearbyHills.add(hillExtract);
-
-                }
-
-            } while (hillsCursor.moveToNext());
-            switch (orderBy) {
-                case HillsTables.KEY_HEIGHTM:
-                    Collections
-                            .sort(nearbyHills, new HillHashMapHeightComparator());
-                    break;
-                case HillsTables.KEY_HILLNAME:
-                    Collections.sort(nearbyHills, new HillHashMapAlphaComparator());
-                    break;
-                case "distance":
-                    Collections.sort(nearbyHills,
-                            new HillHashMapDistanceComparator());
-                    break;
-            }
-        }
-
-
-    }
 
     private final Handler handler = new Handler() {
 
@@ -465,48 +363,7 @@ public class NearbyHillsFragment extends DaggerFragment {
     public void onResume() {
 
         super.onResume();
-
-//        lm = (LocationManager) getActivity().getSystemService(
-//                Context.LOCATION_SERVICE);
-//        locationListener = new MyLocationListener();
         updateFromPreferences();
-//        locationProgress = viewer.findViewById(R.id.location_progress2);
-//        locationProgress.setVisibility(View.VISIBLE);
-//        locationSet = false;
-
-
-
-//            Runnable showWaitDialog = () -> {
-//
-//                while (!locationSet) {
-//                    // Wait for first GPS Fix (do nothing until loc != null)
-//                }
-//
-//                Message m1;
-//                m1 = handler.obtainMessage();
-//                m1.arg1 = 0;
-//
-//                handler.sendMessage(m1);
-//
-//            };
-             //locationFoundListener.showDialog();
-//
-//            Thread t = new Thread(showWaitDialog);
-//            t.start();
-//
-//            Location lastLocation = lm
-//                    .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//            if (lastLocation != null) {
-//                lat1 = lastLocation.getLatitude();
-//                lon1 = lastLocation.getLongitude();
-//                locationSet = true;
-//
-//                startLoader();
-//            }
-      //  }
-
-
-
     }
 
     private void updateList() {
@@ -567,77 +424,13 @@ public class NearbyHillsFragment extends DaggerFragment {
 
         void showDialog();
     }
-//
-//    private void startLoader() {
-//        getLoaderManager().restartLoader(0, null, this);
-//    }
 
-//    public class MyLocationListener implements LocationListener {
-//
-//        public void onLocationChanged(Location location) {
-//            lat1 = location.getLatitude();
-//            lon1 = location.getLongitude();
-//            locationSet = true;
-//
-//            startLoader();
-//
-//        }
-//
-//        public void onProviderDisabled(String provider) {
-//            // TODO Auto-generated method stub
-//
-//        }
-//
-//        public void onProviderEnabled(String provider) {
-//            // TODO Auto-generated method stub
-//
-//        }
-//
-//        public void onStatusChanged(String provider, int status, Bundle extras) {
-//            // TODO Auto-generated method stub
-//
-//        }
-//
-//    }
 
     private String convText(TextView v, String text, DecimalFormat df) {
 
         double dblAmt;
         dblAmt = Double.valueOf(text);
         return df.format(dblAmt);
-
-    }
-
-    private static class HillHashMapHeightComparator implements Comparator {
-
-        public int compare(Object hill1, Object hill2) {
-
-            Float height1 = (Float) ((HashMap) hill1).get("height");
-            Float height2 = (Float) ((HashMap) hill2).get("height");
-            return (height2.compareTo(height1));
-        }
-
-    }
-
-    private static class HillHashMapDistanceComparator implements Comparator {
-
-        public int compare(Object hill1, Object hill2) {
-
-            Double distance1 = (Double) ((HashMap) hill1).get("distance");
-            Double distance2 = (Double) ((HashMap) hill2).get("distance");
-            return (distance1.compareTo(distance2));
-        }
-
-    }
-
-    private static class HillHashMapAlphaComparator implements Comparator {
-
-        public int compare(Object hill1, Object hill2) {
-            String hillname1 = (String) ((HashMap) hill1).get("hillname");
-            String hillname2 = (String) ((HashMap) hill2).get("hillname");
-            return (hillname1.compareTo(hillname2));
-
-        }
 
     }
 
@@ -651,157 +444,6 @@ public class NearbyHillsFragment extends DaggerFragment {
         useMetricDistances = prefs.getBoolean(
                 PreferencesActivity.PREF_METRIC_DISTANCES, false);
     }
-//
-//    private static class UpdateHillsTaskLoader extends
-//            AsyncTaskLoader<ArrayList<Map<String, ?>>> {
-//        private ArrayList<Map<String, ?>> nearbyHills;
-//        private String where = null;
-//        private String orderBy;
-//        private String hilltype;
-//        private String countryClause;
-//        private int filterHills;
-//        private BritishHillsDatasource dbAdapter;
-//        private double lat1;
-//        private double lon1;
-//        private double nearRadius;
-//        private boolean useMetricHeights;
-//        private boolean useMetricDistances;
-//        private DecimalFormat df2;
-//
-//        public UpdateHillsTaskLoader(Context context) {
-//            super(context);
-//            // TODO Auto-generated constructor stub
-//        }
-//
-//        public UpdateHillsTaskLoader(Context context, String orderBy,
-//                                     int filterHills, BritishHillsDatasource dbAdapter,
-//                                     boolean useMetricDistances, boolean useMetricHeights,
-//                                     double lat1, double lon1, double nearRadius, DecimalFormat df2) {
-//            super(context);
-//
-//            this.orderBy = orderBy;
-//            this.filterHills = filterHills;
-//            this.dbAdapter = dbAdapter;
-//            this.lat1 = lat1;
-//            this.lon1 = lon1;
-//            this.nearRadius = nearRadius;
-//            this.useMetricHeights = useMetricHeights;
-//            this.useMetricDistances = useMetricDistances;
-//            this.df2 = df2;
-//
-//        }
-//
-//        @Override
-//        public ArrayList<Map<String, ?>> loadInBackground() {
-//            Cursor hillsCursor = dbAdapter.getHillsForNearby();
-//
-//            nearbyHills = new ArrayList();
-//
-//
-//            // iterate over cursor and get hill positions
-//            // Make sure there is at least one row.
-//            if (hillsCursor.moveToFirst()) {
-//                Log.d(TAG, "loadInBackground: something returned");
-//                // Iterate over each cursor.
-//                do {
-//
-//                    Double lat = hillsCursor.getDouble(hillsCursor
-//                            .getColumnIndex(HillsTables.KEY_LATITUDE)) * 1E6;
-//                    Double lng = hillsCursor.getDouble(hillsCursor
-//                            .getColumnIndex(HillsTables.KEY_LONGITUDE)) * 1E6;
-//
-//                    double distanceKm = DistanceCalculator
-//                            .calculationByDistance(lat1, lat / 1E6, lon1,
-//                                    lng / 1E6);
-//                    long row_id = hillsCursor.getLong(hillsCursor
-//                            .getColumnIndex(HillsTables.KEY_HILL_ID));
-//                    if (distanceKm < nearRadius) {
-//
-//                        String hillname = hillsCursor.getString(hillsCursor
-//                                .getColumnIndex(HillsTables.KEY_HILLNAME));
-//                        float height;
-//                        if (useMetricHeights) {
-//                            height = hillsCursor.getFloat(hillsCursor
-//                                    .getColumnIndex(HillsTables.KEY_HEIGHTM));
-//                        } else {
-//                            height = hillsCursor.getFloat(hillsCursor
-//                                    .getColumnIndex(HillsTables.KEY_HEIGHTF));
-//
-//                        }
-//                        HashMap hillExtract = new HashMap();
-//                        hillExtract.put("hillname", hillname);
-//                        hillExtract.put("height", height);
-//                        hillExtract.put("rowid", row_id);
-//
-//                        if (useMetricDistances) {
-//                            hillExtract.put("distance",
-//                                    Double.parseDouble(df2.format(distanceKm)));
-//                        } else {
-//                            hillExtract.put("distance",
-//                                    Double.parseDouble(df2.format(distanceKm / 1.601)));
-//                        }
-//                        nearbyHills.add(hillExtract);
-//
-//                    }
-//
-//                } while (hillsCursor.moveToNext());
-//                switch (orderBy) {
-//                    case HillsTables.KEY_HEIGHTM:
-//                        Collections.sort(nearbyHills,
-//                                new HillHashMapHeightComparator());
-//                        break;
-//                    case HillsTables.KEY_HILLNAME:
-//                        Collections.sort(nearbyHills,
-//                                new HillHashMapAlphaComparator());
-//                        break;
-//                    case "distance":
-//                        Collections.sort(nearbyHills,
-//                                new HillHashMapDistanceComparator());
-//                        break;
-//                }
-//            }
-//
-//            return nearbyHills;
-//        }
-//
-//        @Override
-//        protected void onStartLoading() {
-//            if (nearbyHills != null) {
-//                deliverResult(nearbyHills);
-//            }
-//
-//            if (takeContentChanged() || nearbyHills == null) {
-//                forceLoad();
-//            }
-//        }
-//
-//    }
-//
-//    public Loader<ArrayList<Map<String, ?>>> onCreateLoader(int id, Bundle args) {
-//
-//        return new UpdateHillsTaskLoader(getActivity(), orderBy, filterHills,
-//                dbAdapter, useMetricDistances, useMetricHeights, lat1, lon1,
-//                nearRadius, df2);
-//
-//    }
-//
-//    public void onLoaderReset(Loader<ArrayList<Map<String, ?>>> loader) {
-//
-//        // updateList();
-//
-//    }
-//
-//    public void onLoadFinished(Loader<ArrayList<Map<String, ?>>> loader,
-//                               ArrayList<Map<String, ?>> data) {
-//        refresh(data);
-//
-//    }
-//
-//    private void refresh(ArrayList<Map<String, ?>> data) {
-//        nearbyHills = data;
-//        updateList();
-//
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,

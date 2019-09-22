@@ -4,5 +4,5 @@ import uk.colessoft.android.hilllist.dao.HillsOrder
 import uk.colessoft.android.hilllist.dao.IsHillClimbed
 
 
-data class SearchFilter(val climbed: IsHillClimbed?, val searchString: String?, val order: HillsOrder, val distance: Float? = null) {
+data class NearbySearchFilter(val climbed: IsHillClimbed?, val searchString: String?, val order: NearbyHillsOrder, val distance: Float) {
 }

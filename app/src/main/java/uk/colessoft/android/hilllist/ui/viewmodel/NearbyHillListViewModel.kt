@@ -1,17 +1,13 @@
 package uk.colessoft.android.hilllist.ui.viewmodel
 
 import android.location.Location
-import android.util.Log
 import android.util.Pair
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import uk.colessoft.android.hilllist.dao.HillsOrder
 import uk.colessoft.android.hilllist.dao.IsHillClimbed
 import uk.colessoft.android.hilllist.database.BritishHillsDatasource
 import uk.colessoft.android.hilllist.domain.HillDetail
-import uk.colessoft.android.hilllist.domain.HillSearch
 import java.util.*
 import javax.inject.Inject
 
@@ -19,28 +15,33 @@ class NearbyHillListViewModel @Inject constructor(override val repository: Briti
 
     override val selected: LiveData<HillDetail>? = null
     private var currentOrder = NearbyHillsOrder.DIST_ASC
+    private var currentDistance = 16.093F
     private var filterClimbed: IsHillClimbed? = null
-    var searchString: String? = null
+    private var searchString: String? = null
+
     var location = MutableLiveData<Location>()
     val hills: LiveData<List<Pair<Double, HillDetail>>?>
-    var originalHills: List<Pair<Double, HillDetail>>? = null
 
 
-    private val filterLiveData = MutableLiveData<SearchFilter>()
+    private val filterLiveData = MutableLiveData<NearbySearchFilter>()
     private val selectLiveData = MutableLiveData<Long>()
 
     init {
         hills = Transformations.switchMap(DoubleTrigger(location,filterLiveData))
-        { loc ->
+        { locFilterPair ->
             {
                 Transformations.map<List<Pair<Double, HillDetail>>?, List<Pair<Double, HillDetail>>?>(
-                        repository.getHills(loc!!.first!!.latitude, loc.first!!.longitude, 16.0934F)) { result ->
+                        repository.getHills(locFilterPair!!.first!!.latitude, locFilterPair.first!!.longitude, currentDistance)) { result ->
 
-                    result?.let{sortNearbyHills(result, currentOrder)}
+                    result?.let{sortNearbyHills(result, currentOrder)}!!.filter {
+                        when(filterClimbed) {
+                            IsHillClimbed.YES -> it.second!!.bagging!!.isNotEmpty()
+                            IsHillClimbed.NO -> it.second!!.bagging!!.isNullOrEmpty()
+                            else -> true
+                        } }.filter { if(searchString == null) true else it.second.hill.hillname!!.contains(searchString!!,true) }
                 }
             }.invoke()
         }
-        originalHills = hills.value
     }
 
 
@@ -57,15 +58,20 @@ class NearbyHillListViewModel @Inject constructor(override val repository: Briti
         location.value = location.value
     }
 
-//    fun filterClimbed(climbed: IsHillClimbed?) {
-//        filterClimbed = climbed
-//        filterLiveData.value = SearchFilter(filterClimbed, searchString, currentOrder)
-//    }
-//
-//    fun searchHills(search: String?) {
-//        this.searchString = search
-//        filterLiveData.value = SearchFilter(filterClimbed, searchString, currentOrder)
-//    }
+    fun filterClimbed(climbed: IsHillClimbed?) {
+        filterClimbed = climbed
+        filterLiveData.value = NearbySearchFilter(filterClimbed, searchString, currentOrder, currentDistance)
+    }
+
+    fun searchHills(search: String?) {
+        this.searchString = search
+        filterLiveData.value = NearbySearchFilter(filterClimbed, searchString, currentOrder, currentDistance)
+    }
+
+    fun filterDistance(distance: Float){
+        currentDistance = distance
+        filterLiveData.value = NearbySearchFilter(filterClimbed, searchString, currentOrder, currentDistance)
+    }
 
 
     fun select(hillId: Long) {
