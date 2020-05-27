@@ -10,7 +10,7 @@ class LocationRepository(val fusedLocationProviderClient: FusedLocationProviderC
     private var location : MutableLiveData<Location> = MutableLiveData()
 
     fun getLocation() : LiveData<Location> {
-        fusedLocationProviderClient!!.lastLocation
+        fusedLocationProviderClient.lastLocation
                 .addOnSuccessListener {loc: Location? ->
                     location.value = loc
 

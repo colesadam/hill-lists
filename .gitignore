@@ -43,3 +43,5 @@ captures/
 keystore.properties
 /.idea/
 /.settings/
+
+**/.DS_Store

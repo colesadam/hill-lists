@@ -34,7 +34,7 @@ class HillListViewModel @Inject constructor(override val repository: BritishHill
                     val searchSql = {
                         if(hillSearch.moreFilters != null) {
                                     hillSearch.moreFilters
-                                } else filter?.searchString?.let { "${filter?.searchString}" }
+                                } else filter?.searchString?.let { "${filter.searchString}" }
                             ?: ""}.invoke()
                     val and = filter?.climbed?.sql?.let { " AND " } ?: ""
                     "$climbedSql$and$searchSql"

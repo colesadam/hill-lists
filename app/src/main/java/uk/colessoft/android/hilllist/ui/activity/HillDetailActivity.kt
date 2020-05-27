@@ -10,9 +10,6 @@ import android.widget.DatePicker
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 
-import java.util.Date
-import java.util.HashMap
-
 import uk.colessoft.android.hilllist.R
 import uk.colessoft.android.hilllist.ui.activity.dialogs.BaseActivity
 import uk.colessoft.android.hilllist.ui.fragment.HillDetailFragment
@@ -20,6 +17,7 @@ import uk.colessoft.android.hilllist.domain.HillDetail
 import uk.colessoft.android.hilllist.ui.viewmodel.HillDetailViewModel
 import uk.colessoft.android.hilllist.ui.viewmodel.HillListViewModel
 import uk.colessoft.android.hilllist.ui.viewmodel.ViewModelFactory
+import java.util.*
 import javax.inject.Inject
 
 class HillDetailActivity : BaseActivity() {
@@ -41,6 +39,8 @@ class HillDetailActivity : BaseActivity() {
 
     private val realDate = Date()
 
+    private val calendar = GregorianCalendar()
+
     private val hillnameView: TextView? = null
 
     private val hillheight: TextView? = null
@@ -52,11 +52,12 @@ class HillDetailActivity : BaseActivity() {
 
 
     override fun onCreateDialog(id: Int): Dialog? {
+        calendar.setTime(realDate)
         when (id) {
             DATE_DIALOG_ID -> {
-                mYear = realDate.year + 1900
-                mMonth = realDate.month
-                mDay = realDate.date
+                mYear = calendar.get(Calendar.YEAR)
+                mMonth = calendar.get(Calendar.MONTH)
+                mDay = calendar.get(Calendar.DAY_OF_MONTH)
 
                 return DatePickerDialog(this, mDateSetListener,
                         mYear, mMonth, mDay)
